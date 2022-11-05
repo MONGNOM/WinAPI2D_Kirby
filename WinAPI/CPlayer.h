@@ -3,14 +3,22 @@
 
 class CImage;
 class CAnimator;
+class CMonster;
+
+enum class Playerstate { Idle, Run, Jump, Eat, Shot, Change, Takehit };
+
 
 class CPlayer : public CGameObject
 {
+
+	friend CMonster;
 public:
 	CPlayer();
 	virtual ~CPlayer();
 
 private:
+
+	
 	CAnimator* m_pAnimator;
 	CImage* m_pIdleImage;
 	CImage* m_pMoveImage;
@@ -21,12 +29,14 @@ private:
 
 	float m_fSpeed = 200.0f;
 
+
 private:
 	void Init() override;
 	void Update() override;
 	void Render() override;
 	void Release() override;
 
+	void Eat();
 	void AnimatorUpdate();
 	void CreateMissile();
 
