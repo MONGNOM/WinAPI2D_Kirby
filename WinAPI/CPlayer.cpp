@@ -10,8 +10,11 @@
 #include "CCollider.h"
 #include "CImage.h"
 #include "CAnimator.h"
+#include "CMonster.h"
 
 #include "CMissile.h"
+#include "KirbyEat.h"
+
 
 CPlayer::CPlayer()
 {
@@ -26,6 +29,7 @@ CPlayer::CPlayer()
 	m_vecMoveDir = Vector(0, 0);
 	m_vecLookDir = Vector(0, -1);
 	m_bIsMove = false;
+
 }
 
 CPlayer::~CPlayer()
@@ -58,7 +62,7 @@ void CPlayer::Init()
 	m_pAnimator->Play(L"IdleDown", false);
 	AddComponent(m_pAnimator);
 
-	AddCollider(ColliderType::Rect, Vector(90, 90), Vector(0, 0));
+	AddCollider(ColliderType::Rect, Vector(40, 50), Vector(0, 0));
 }
 
 void CPlayer::Update()
@@ -82,29 +86,22 @@ void CPlayer::Update()
 		m_vecMoveDir.x = 0;
 	}
 
-	if (BUTTONSTAY(VK_UP))
-	{
-		m_vecPos.y -= m_fSpeed * DT;
-		m_bIsMove = true;
-		m_vecMoveDir.y = +1;
-	}
-	else if (BUTTONSTAY(VK_DOWN))
-	{
-		m_vecPos.y += m_fSpeed * DT;
-		m_bIsMove = true;
-		m_vecMoveDir.y = -1;
-	}
-	else
-	{
-		m_vecMoveDir.y = 0;
-	}
-
 	if (BUTTONDOWN(VK_SPACE))
 	{
-		CreateMissile();
+		Eat();
 	}
-
+		
 	AnimatorUpdate();
+}
+
+void CPlayer::Eat()
+{
+	KirbyEat* m_KE = new KirbyEat;
+	m_KE->SetPos(m_vecPos.x + 50, m_vecPos.y);
+	m_KE->SetScale(10, 10);
+	ADDOBJECT(m_KE);
+		// 동적 할당 삭제만 하면 된다잉  잘했다
+		// delete m_KE;
 }
 
 void CPlayer::Render()
@@ -113,7 +110,9 @@ void CPlayer::Render()
 
 void CPlayer::Release()
 {
+	
 }
+
 
 void CPlayer::AnimatorUpdate()
 {
@@ -121,7 +120,7 @@ void CPlayer::AnimatorUpdate()
 		m_vecLookDir = m_vecMoveDir;
 
 	wstring str = L"";
-
+	
 	if (m_bIsMove)	str += L"Move";
 	else			str += L"Idle";
 
@@ -166,6 +165,10 @@ void CPlayer::CreateMissile()
 
 void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 {
+	if (pOtherCollider->GetObjName() == L"몬스터")
+	{
+		Logger::Debug(L"몬스터와 부딪혀 데미지를 입습니다.");
+	}
 }
 
 void CPlayer::OnCollisionStay(CCollider* pOtherCollider)

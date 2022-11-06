@@ -176,6 +176,7 @@
     <ClInclude Include="CUI.h" />
     <ClInclude Include="CUIManager.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="KirbyEat.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SingleTon.h" />
@@ -220,6 +221,7 @@
     <ClCompile Include="CTimeManager.cpp" />
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CUIManager.cpp" />
+    <ClCompile Include="KirbyEat.cpp" />
     <ClCompile Include="WinAPI.cpp" />
   </ItemGroup>
   <ItemGroup>

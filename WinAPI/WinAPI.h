@@ -45,6 +45,7 @@ enum class Layer
 	Player,
 	Missile,
 	Monster,
+	Eat,
 
 	Ui,
 	Size,
