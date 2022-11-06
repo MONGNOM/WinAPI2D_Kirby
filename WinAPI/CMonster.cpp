@@ -61,6 +61,12 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 		
 	}
 	SetDir(Vector(-1, 0));
+
+	if (pOtherCollider->GetObjName() == L"Shot")
+	{
+		Logger::Debug(L"몬스터가 미사일에 맞았습니다");
+		DELETEOBJECT(this);
+	}
 }
 
 void CMonster::OnCollisionStay(CCollider* pOtherCollider)
@@ -69,9 +75,7 @@ void CMonster::OnCollisionStay(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"먹기")
 	{
 		Logger::Debug(L"몬스터가 빨려들어가고있습니다.");
-		
 	}
-	SetDir(Vector(-2, 0));
 }
 
 void CMonster::OnCollisionExit(CCollider* pOtherCollider)
@@ -82,6 +86,7 @@ void CMonster::OnCollisionExit(CCollider* pOtherCollider)
 		DELETEOBJECT(this);
 
 	}
+
 }
 
 void CMonster::SetDir(Vector dir)

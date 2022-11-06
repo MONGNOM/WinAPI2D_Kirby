@@ -44,6 +44,7 @@ enum class Layer
 	Tile,
 	Player,
 	Missile,
+	Shot,
 	Monster,
 	Eat,
 

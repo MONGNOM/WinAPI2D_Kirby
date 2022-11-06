@@ -52,6 +52,9 @@
     <Filter Include="GameObject\Stage01">
       <UniqueIdentifier>{f2ad0501-d505-4b88-af0d-880a4673ef5b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Stage01\kirby">
+      <UniqueIdentifier>{f641c64f-3b0f-4e1c-b6f3-d9cfb67df20e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -168,9 +171,6 @@
     <ClInclude Include="CMonster.h">
       <Filter>GameObject\Stage01</Filter>
     </ClInclude>
-    <ClInclude Include="CPlayer.h">
-      <Filter>GameObject\Stage01</Filter>
-    </ClInclude>
     <ClInclude Include="CTilePanel.h">
       <Filter>Engine\Asset\UI</Filter>
     </ClInclude>
@@ -183,8 +183,17 @@
     <ClInclude Include="CSoundManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="KirbyShot.h">
+      <Filter>GameObject\Stage01\kirby</Filter>
+    </ClInclude>
     <ClInclude Include="KirbyEat.h">
-      <Filter>GameObject\Stage01</Filter>
+      <Filter>GameObject\Stage01\kirby</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>GameObject\Stage01\kirby</Filter>
+    </ClInclude>
+    <ClInclude Include="KirbyStatus.h">
+      <Filter>GameObject\Stage01\kirby</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -284,9 +293,6 @@
     <ClCompile Include="CMonster.cpp">
       <Filter>GameObject\Stage01</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayer.cpp">
-      <Filter>GameObject\Stage01</Filter>
-    </ClCompile>
     <ClCompile Include="CTileButton.cpp">
       <Filter>Engine\Asset\UI</Filter>
     </ClCompile>
@@ -299,8 +305,17 @@
     <ClCompile Include="CSoundManager.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="KirbyShot.cpp">
+      <Filter>GameObject\Stage01\kirby</Filter>
+    </ClCompile>
     <ClCompile Include="KirbyEat.cpp">
-      <Filter>GameObject\Stage01</Filter>
+      <Filter>GameObject\Stage01\kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>GameObject\Stage01\kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="KirbyStatus.cpp">
+      <Filter>GameObject\Stage01\kirby</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

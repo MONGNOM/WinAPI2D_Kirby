@@ -12,12 +12,18 @@ public:
 	virtual~KirbyEat();
 
 private:
-	
+
+	Vector m_vecDir;
+
 
 	void Init() override;
 	void Update() override;
 	void Render() override;
 	void Release() override;
+
+
+public:
+	void SetDir(Vector dir);
 
 	void OnCollisionEnter(CCollider* pOtherCollider) override;
 	void OnCollisionStay(CCollider* pOtherCollider) override;

@@ -14,6 +14,11 @@
 
 #include "CMissile.h"
 #include "KirbyEat.h"
+#include "Cassert"
+#include "KirbyShot.h"
+
+
+
 
 
 CPlayer::CPlayer()
@@ -59,7 +64,7 @@ void CPlayer::Init()
 	m_pAnimator->CreateAnimation(L"MoveLeftDown", m_pMoveImage, Vector(0.f, 395.f), Vector(80.f, 75.f), Vector(84.f, 0.f), 0.05f, 16);
 	m_pAnimator->CreateAnimation(L"MoveLeft", m_pMoveImage, Vector(0.f, 474.f), Vector(80.f, 75.f), Vector(84.f, 0.f), 0.05f, 16);
 	m_pAnimator->CreateAnimation(L"MoveLeftUp", m_pMoveImage, Vector(0.f, 553.f), Vector(80.f, 75.f), Vector(84.f, 0.f), 0.05f, 16);
-	m_pAnimator->Play(L"IdleDown", false);
+	m_pAnimator->Play(L"IdleRight", false);
 	AddComponent(m_pAnimator);
 
 	AddCollider(ColliderType::Rect, Vector(40, 50), Vector(0, 0));
@@ -68,9 +73,14 @@ void CPlayer::Init()
 void CPlayer::Update()
 {
 	m_bIsMove = false;
+	//=============
+	// 달리기 구현
+	// ㄴ 왼쪽	 [-> + ->]
+	// ㄴ 오른쪽  [<- + <-]
+	//=============
 
 	if (BUTTONSTAY(VK_LEFT))
-	{
+	{	
 		m_vecPos.x -= m_fSpeed * DT;
 		m_bIsMove = true;
 		m_vecMoveDir.x = -1;
@@ -86,22 +96,53 @@ void CPlayer::Update()
 		m_vecMoveDir.x = 0;
 	}
 
-	if (BUTTONDOWN(VK_SPACE))
+	if (BUTTONSTAY('S'))
 	{
-		Eat();
-	}
+		//=============
+		// 평범한상태 bool 변수를 통해서 이동키를 false로 만들어서 작동못하게 막는다 
+		Eat(); 
+		m_bIsMove = true;
 		
+		
+		if(1)	// 먹었을때 구현 ==> Eat()에서 몬스터와 접촉하고 몬스터를 먹었다출력이 나오면 구현 
+		Shot();
+		//=============
+
+	}
+
+	if (BUTTONDOWN('A'))
+	{
+		//=============
+		// 점프구현
+		// 1. 중력구현 
+		// 2. 땅타일과 마찰 구현 
+		// 3. 땅타일과 떨어졌을때 점프 구현 
+		// 4. 땅과 접촉해있을때 땅 밑으로 떨어지지 않도록 구현
+		// 5. 2단점프 구현[공중부양] ==> [VK_UP] && [A+A]
+		// 6. 2단점프 + 공격 [A+A+S] && [VK_UP] 
+		//=============
+	}
+
+
+
 	AnimatorUpdate();
 }
 
 void CPlayer::Eat()
 {
+	Logger::Debug(L"공격오브젝트 생성");
+
 	KirbyEat* m_KE = new KirbyEat;
-	m_KE->SetPos(m_vecPos.x + 50, m_vecPos.y);
-	m_KE->SetScale(10, 10);
+	if (m_vecLookDir.x > 0) 
+	m_KE->SetPos(m_vecPos.x +100, m_vecPos.y);
+	else if (m_vecLookDir.x < 0)
+	m_KE->SetPos(m_vecPos.x - 100, m_vecPos.y);
+	
+	m_KE->SetDir(Vector(m_vecPos.x, m_vecMoveDir.y));
 	ADDOBJECT(m_KE);
-		// 동적 할당 삭제만 하면 된다잉  잘했다
-		// delete m_KE;
+
+	// 동적 할당 삭제만 하면 된다잉  잘했다
+	// delete m_KE;
 }
 
 void CPlayer::Render()
@@ -133,34 +174,14 @@ void CPlayer::AnimatorUpdate()
 	m_pAnimator->Play(str, false);
 }
 
-void CPlayer::CreateMissile()
+void CPlayer::Shot()
 {
-	Logger::Debug(L"미사일 생성");
+	Logger::Debug(L"Shot");
+	KirbyShot* Shot = new KirbyShot;
+	Shot->SetPos(m_vecPos);
+	Shot->SetDir(Vector(m_vecLookDir.x, m_vecMoveDir.y));
+	ADDOBJECT(Shot);
 
-	CMissile* pMissile = new CMissile();
-	pMissile->SetPos(m_vecPos);
-	pMissile->SetDir(Vector(1, 0));
-	ADDOBJECT(pMissile);
-
-	CMissile* pMissile1 = new CMissile();
-	pMissile1->SetPos(m_vecPos);
-	pMissile1->SetDir(Vector(1, -1));
-	ADDOBJECT(pMissile1);
-
-	CMissile* pMissile2 = new CMissile();
-	pMissile2->SetPos(m_vecPos);
-	pMissile2->SetDir(Vector(1, 1));
-	ADDOBJECT(pMissile2);
-
-	CMissile* pMissile3 = new CMissile();
-	pMissile3->SetPos(m_vecPos);
-	pMissile3->SetDir(Vector(3, 1));
-	ADDOBJECT(pMissile3);
-
-	CMissile* pMissile4 = new CMissile();
-	pMissile4->SetPos(m_vecPos);
-	pMissile4->SetDir(Vector(3, -1));
-	ADDOBJECT(pMissile4);
 }
 
 void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
@@ -169,6 +190,7 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 	{
 		Logger::Debug(L"몬스터와 부딪혀 데미지를 입습니다.");
 	}
+
 }
 
 void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
