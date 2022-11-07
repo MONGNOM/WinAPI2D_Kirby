@@ -28,6 +28,7 @@ CPlayer::CPlayer()
 	m_layer = Layer::Player;
 	m_strName = L"플레이어";
 
+	m_Eat = true;
 	m_pIdleImage = nullptr;
 	m_pMoveImage = nullptr;
 
@@ -64,7 +65,7 @@ void CPlayer::Init()
 	m_pAnimator->CreateAnimation(L"MoveLeftDown", m_pMoveImage, Vector(0.f, 395.f), Vector(80.f, 75.f), Vector(84.f, 0.f), 0.05f, 16);
 	m_pAnimator->CreateAnimation(L"MoveLeft", m_pMoveImage, Vector(0.f, 474.f), Vector(80.f, 75.f), Vector(84.f, 0.f), 0.05f, 16);
 	m_pAnimator->CreateAnimation(L"MoveLeftUp", m_pMoveImage, Vector(0.f, 553.f), Vector(80.f, 75.f), Vector(84.f, 0.f), 0.05f, 16);
-	m_pAnimator->Play(L"IdleRight", false);
+	m_pAnimator->Play(L"IdleDown", false);
 	AddComponent(m_pAnimator);
 
 	AddCollider(ColliderType::Rect, Vector(40, 50), Vector(0, 0));
@@ -80,13 +81,25 @@ void CPlayer::Update()
 	//=============
 
 	if (BUTTONSTAY(VK_LEFT))
-	{	
+	{
+		if (BUTTONSTAY('S'))
+		{
+			m_vecMoveDir.x = 0;
+			m_bIsMove = false;
+			m_vecPos.x += m_fSpeed * DT;
+		}
 		m_vecPos.x -= m_fSpeed * DT;
 		m_bIsMove = true;
 		m_vecMoveDir.x = -1;
 	}
 	else if (BUTTONSTAY(VK_RIGHT))
 	{
+		if (BUTTONSTAY('S'))
+		{
+			m_vecMoveDir.x = 0;
+			m_bIsMove = false;
+			m_vecPos.x -= m_fSpeed * DT;
+		}
 		m_vecPos.x += m_fSpeed * DT;
 		m_bIsMove = true;
 		m_vecMoveDir.x = +1;
@@ -96,36 +109,21 @@ void CPlayer::Update()
 		m_vecMoveDir.x = 0;
 	}
 
-	if (BUTTONSTAY('S'))
+	if (BUTTONDOWN('S'))
 	{
-		//=============
-		// 평범한상태 bool 변수를 통해서 이동키를 false로 만들어서 작동못하게 막는다 
-		Eat(); 
-		m_bIsMove = true;
-		
-		
-		if(1)	// 먹었을때 구현 ==> Eat()에서 몬스터와 접촉하고 몬스터를 먹었다출력이 나오면 구현 
-		Shot();
-		//=============
+		if (m_Eat)  //true
+		{
+			Eat();
+		}
+		else // false
+		{
+			Shot();
+			m_Eat = true;
+		}
 
 	}
 
-	if (BUTTONDOWN('A'))
-	{
-		//=============
-		// 점프구현
-		// 1. 중력구현 
-		// 2. 땅타일과 마찰 구현 
-		// 3. 땅타일과 떨어졌을때 점프 구현 
-		// 4. 땅과 접촉해있을때 땅 밑으로 떨어지지 않도록 구현
-		// 5. 2단점프 구현[공중부양] ==> [VK_UP] && [A+A]
-		// 6. 2단점프 + 공격 [A+A+S] && [VK_UP] 
-		//=============
-	}
-
-
-
-	AnimatorUpdate();
+		AnimatorUpdate();
 }
 
 void CPlayer::Eat()
@@ -134,9 +132,9 @@ void CPlayer::Eat()
 
 	KirbyEat* m_KE = new KirbyEat;
 	if (m_vecLookDir.x > 0) 
-	m_KE->SetPos(m_vecPos.x +100, m_vecPos.y);
+		m_KE->SetPos(m_vecPos.x +100, m_vecPos.y);
 	else if (m_vecLookDir.x < 0)
-	m_KE->SetPos(m_vecPos.x - 100, m_vecPos.y);
+		m_KE->SetPos(m_vecPos.x - 100, m_vecPos.y);
 	
 	m_KE->SetDir(Vector(m_vecPos.x, m_vecMoveDir.y));
 	ADDOBJECT(m_KE);
@@ -181,7 +179,6 @@ void CPlayer::Shot()
 	Shot->SetPos(m_vecPos);
 	Shot->SetDir(Vector(m_vecLookDir.x, m_vecMoveDir.y));
 	ADDOBJECT(Shot);
-
 }
 
 void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
@@ -191,6 +188,11 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 		Logger::Debug(L"몬스터와 부딪혀 데미지를 입습니다.");
 	}
 
+	/*if (pOtherCollider->GetObjName() == L"땅")
+	{
+		Logger::Debug(L"벽이라서 지나갈 수 없다");
+		 벽 구현 ==> m_vecPos.x -= 1;
+	}*/
 }
 
 void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
@@ -199,4 +201,10 @@ void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
 
 void CPlayer::OnCollisionExit(CCollider* pOtherCollider)
 {
+	if (pOtherCollider->GetObjName() == L"몬스터")
+	{
+		m_Eat = false;
+		Logger::Debug(L"몬스터를 먹었습니다.");
+	}
+
 }
