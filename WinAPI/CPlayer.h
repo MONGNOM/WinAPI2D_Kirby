@@ -20,6 +20,7 @@ public:
 
 private:
 	
+	bool m_Gravity;
 	CAnimator* m_pAnimator;
 	
 	CImage* m_pIdleImage;
@@ -31,10 +32,13 @@ private:
 	float m_fSpeed = 200.0f;
 	bool m_Eat;
 	
+	
 
 	float JumpTime;
 	bool Jumpgo;
-	float JumpPower;
+	float LastJumpTime;
+	float LastRunTime;
+	float GravityJumpTime;
 
 
 private:
@@ -43,8 +47,7 @@ private:
 	void Render() override;
 	void Release() override;
 
-	void fly();
-	void jump();
+	void Gravity();
 	void Eat();
 	void AnimatorUpdate();
 	void Shot();

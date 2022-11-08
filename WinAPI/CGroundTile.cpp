@@ -7,6 +7,7 @@
 
 CGroundTile::CGroundTile()
 {
+	m_strName  = L"땅";
 }
 
 CGroundTile::~CGroundTile()
@@ -42,17 +43,32 @@ void CGroundTile::Release()
 void CGroundTile::OnCollisionEnter(CCollider* pOther)
 {
 	// 땅타일과 충돌했을 경우 처리
-	
+	if (pOther->GetObjName() == L"플레이어")
+	{
+		Logger::Debug(L"땅과 접촉했다.");
+	}
+	if (pOther->GetObjName() == L"땅")
+	{
+		/*Logger::Debug(L"땅을 밟고 있다.");*/
+	}
 }
 
 void CGroundTile::OnCollisionStay(CCollider* pOther)
 {
 	// 땅타일과 충돌했을 경우 처리
+	if (pOther->GetObjName() == L"땅")
+	{
+		/*Logger::Debug(L"땅을 밟고 있다.");*/
+	
+	}
 	
 }
 
 void CGroundTile::OnCollisionExit(CCollider* pOther)
 {
-	// 땅타일과 충돌했을 경우 처리
+	if (pOther->GetObjName() == L"플레이어")
+	{
+		Logger::Debug(L"땅과 떨어졌다.");
+	}
 
 }

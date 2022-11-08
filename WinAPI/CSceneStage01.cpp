@@ -25,6 +25,8 @@ CSceneStage01::~CSceneStage01()
 {
 }
 
+
+
 void CSceneStage01::Init()
 {
 	

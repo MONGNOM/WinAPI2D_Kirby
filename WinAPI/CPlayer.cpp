@@ -37,6 +37,11 @@ CPlayer::CPlayer()
 	m_bIsMove = false;
 	Jumpgo = false;
 	JumpTime = 0.f;
+
+	LastJumpTime = 0.f;
+	LastRunTime += DT;
+	m_Gravity = true;
+
 	
 }
 
@@ -70,11 +75,13 @@ void CPlayer::Init()
 	m_pAnimator->Play(L"IdleDown", false);
 	AddComponent(m_pAnimator);
 
-	AddCollider(ColliderType::Rect, Vector(40, 50), Vector(0, 0));
+	AddCollider(ColliderType::Rect, Vector(20, 20), Vector(0, 0));
 }
 
 void CPlayer::Update()
 {
+	Gravity();
+
 	m_bIsMove = false;
 	//=============
 	// ´Þ¸®±â ±¸Çö
@@ -84,32 +91,59 @@ void CPlayer::Update()
 
 	if (BUTTONSTAY(VK_LEFT))
 	{
-		if (BUTTONSTAY('S'))
+
+		if (BUTTONSTAY('R')/*LastRunTime >= 0.15f  && BUTTONSTAY(VK_LEFT)*/)
+		{
+			m_vecPos.x -= m_fSpeed * DT * 2.f;
+			m_bIsMove = true;
+			m_vecMoveDir.x = -1;
+			LastRunTime = 0;
+		}
+		else if (BUTTONSTAY('S'))
 		{
 			m_vecMoveDir.x = 0;
 			m_bIsMove = false;
-			m_vecPos.x += m_fSpeed * DT;
 		}
-		m_vecPos.x -= m_fSpeed * DT;
-		m_bIsMove = true;
-		m_vecMoveDir.x = -1;
+		else
+		{
+			m_vecPos.x -= m_fSpeed * DT;
+			m_bIsMove = true;
+			m_vecMoveDir.x = -1;
+			LastRunTime = 0;
+
+		}
 	}
+
 	else if (BUTTONSTAY(VK_RIGHT))
 	{
-		if (BUTTONSTAY('S'))
+		
+		if(BUTTONSTAY('R')/*LastRunTime <= 0.15f && BUTTONSTAY(VK_RIGHT)*/)
+		{
+			m_vecPos.x += m_fSpeed * DT *2.f;
+			m_bIsMove = true;
+			m_vecMoveDir.x = +1;
+			LastRunTime = 0;
+		}
+		else if (BUTTONSTAY('S'))
 		{
 			m_vecMoveDir.x = 0;
 			m_bIsMove = false;
-			m_vecPos.x -= m_fSpeed * DT;
 		}
-		m_vecPos.x += m_fSpeed * DT;
-		m_bIsMove = true;
-		m_vecMoveDir.x = +1;
+		else
+		{
+			m_vecPos.x += m_fSpeed * DT;
+			m_bIsMove = true;
+			m_vecMoveDir.x = +1;
+
+		}
 	}
+
 	else
 	{
 		m_vecMoveDir.x = 0;
 	}
+
+	
 
 	if (BUTTONDOWN('S'))
 	{
@@ -128,42 +162,43 @@ void CPlayer::Update()
 	if (BUTTONDOWN('A'))
 	{
 		Jumpgo = true;
+		
 	}
 
 
 	if (Jumpgo == true)
 	{
+		
 		JumpTime += DT;
-		if (JumpTime <= 0.3f)
+
+		 if (JumpTime <= 0.3f)
 		{
-			m_vecPos.y -= m_fSpeed * DT * 2;
-		}
-		else if (JumpTime >= 0.3f && JumpTime <= 0.6f)
-		{
-			m_vecPos.y += m_fSpeed * DT * 2;
+			Logger::Debug(L"Á¡ÇÁ");
+
+			m_vecPos.y -= m_fSpeed * DT * 4;
+
 		}
 		else
 		{
 			JumpTime = 0;
 			Jumpgo = false;
-
 		}
 		
-
-
-
 	}
 
 
 		AnimatorUpdate();
+
 }
 
-void CPlayer::fly()
-{
-}
 
-void CPlayer::jump()
+void CPlayer::Gravity()
 {
+	if (m_Gravity == true)
+	{
+		m_vecPos.y += m_fSpeed * DT * 2;
+	}
+	else; 
 
 }
 
@@ -173,7 +208,7 @@ void CPlayer::Eat()
 
 	KirbyEat* m_KE = new KirbyEat;
 	if (m_vecLookDir.x > 0) 
-		m_KE->SetPos(m_vecPos.x +100, m_vecPos.y);
+		m_KE->SetPos(m_vecPos.x + 100, m_vecPos.y);
 	else if (m_vecLookDir.x < 0)
 		m_KE->SetPos(m_vecPos.x - 100, m_vecPos.y);
 	
@@ -228,25 +263,6 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 	{
 		Logger::Debug(L"¸ó½ºÅÍ¿Í ºÎµúÇô µ¥¹ÌÁö¸¦ ÀÔ½À´Ï´Ù.");
 	}
-
-	if (pOtherCollider->GetObjName() == L"¶¥")
-	{
-		Logger::Debug(L"¶¥°ú Á¢ÃËÇß´Ù");
-	;
-	}
-}
-
-void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
-{
-	if (pOtherCollider->GetObjName() == L"¶¥")
-	{
-		Logger::Debug(L"¶¥À» ¹â°í ÀÖ´Ù.");
-
-	}
-}
-
-void CPlayer::OnCollisionExit(CCollider* pOtherCollider)
-{
 	if (pOtherCollider->GetObjName() == L"¸ó½ºÅÍ")
 	{
 		m_Eat = false;
@@ -254,7 +270,26 @@ void CPlayer::OnCollisionExit(CCollider* pOtherCollider)
 	}
 	if (pOtherCollider->GetObjName() == L"¶¥")
 	{
-		Logger::Debug(L"¶¥°ú ¶³¾îÁ³´Ù.");
+		
+		m_Gravity = false;
+	}
+}
+
+void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
+{
+	if (pOtherCollider->GetObjName() == L"¶¥")
+	{	
+		m_vecPos.y = m_vecPos.y;
+		m_Gravity = false;
+	}
+}
+
+void CPlayer::OnCollisionExit(CCollider* pOtherCollider)
+{
+	if (pOtherCollider->GetObjName() == L"¶¥")
+	{
+		
+		m_Gravity = true;
 
 	}
 }
