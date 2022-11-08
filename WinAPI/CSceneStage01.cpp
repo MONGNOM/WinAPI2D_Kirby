@@ -33,19 +33,19 @@ void CSceneStage01::Init()
 void CSceneStage01::Enter()
 {
 	pPlayer = new CPlayer();
-	pPlayer->SetPos(200, WINSIZEY + 88);
+	pPlayer->SetPos(WINSIZEX * 0.5f, WINSIZEY * 0.5f);
 	AddGameObject(pPlayer);
 
 	CMonster* pMonster = new CMonster();
-	pMonster->SetPos(1000, WINSIZEY + 88);
+	pMonster->SetPos(800, WINSIZEY * 0.5f);
 	AddGameObject(pMonster);
 
 	CCameraController* pCamController = new CCameraController;
 	AddGameObject(pCamController);
 
-	CImageObject* BackGround = new CImageObject;
+	/*CImageObject* BackGround = new CImageObject;
 	BackGround->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\stage01_map.png"));
-	AddGameObject(BackGround);
+	AddGameObject(BackGround);*/
 	CAMERA->SetTargetObj(pPlayer);
 	CAMERA->FadeIn(0.25f);
 	LoadTile(GETPATH + L"Tile\\Stage01.tile");

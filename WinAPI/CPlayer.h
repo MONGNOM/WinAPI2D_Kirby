@@ -30,7 +30,11 @@ private:
 	bool m_bIsMove;
 	float m_fSpeed = 200.0f;
 	bool m_Eat;
+	
 
+	float JumpTime;
+	bool Jumpgo;
+	float JumpPower;
 
 
 private:
@@ -39,7 +43,8 @@ private:
 	void Render() override;
 	void Release() override;
 
-
+	void fly();
+	void jump();
 	void Eat();
 	void AnimatorUpdate();
 	void Shot();

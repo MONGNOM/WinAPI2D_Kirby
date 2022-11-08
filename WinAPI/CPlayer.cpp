@@ -35,7 +35,9 @@ CPlayer::CPlayer()
 	m_vecMoveDir = Vector(0, 0);
 	m_vecLookDir = Vector(0, -1);
 	m_bIsMove = false;
-
+	Jumpgo = false;
+	JumpTime = 0.f;
+	
 }
 
 CPlayer::~CPlayer()
@@ -123,7 +125,46 @@ void CPlayer::Update()
 
 	}
 
+	if (BUTTONDOWN('A'))
+	{
+		Jumpgo = true;
+	}
+
+
+	if (Jumpgo == true)
+	{
+		JumpTime += DT;
+		if (JumpTime <= 0.3f)
+		{
+			m_vecPos.y -= m_fSpeed * DT * 2;
+		}
+		else if (JumpTime >= 0.3f && JumpTime <= 0.6f)
+		{
+			m_vecPos.y += m_fSpeed * DT * 2;
+		}
+		else
+		{
+			JumpTime = 0;
+			Jumpgo = false;
+
+		}
+		
+
+
+
+	}
+
+
 		AnimatorUpdate();
+}
+
+void CPlayer::fly()
+{
+}
+
+void CPlayer::jump()
+{
+
 }
 
 void CPlayer::Eat()
@@ -188,15 +229,20 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 		Logger::Debug(L"¸ó½ºÅÍ¿Í ºÎµúÇô µ¥¹ÌÁö¸¦ ÀÔ½À´Ï´Ù.");
 	}
 
-	/*if (pOtherCollider->GetObjName() == L"¶¥")
+	if (pOtherCollider->GetObjName() == L"¶¥")
 	{
-		Logger::Debug(L"º®ÀÌ¶ó¼­ Áö³ª°¥ ¼ö ¾ø´Ù");
-		 º® ±¸Çö ==> m_vecPos.x -= 1;
-	}*/
+		Logger::Debug(L"¶¥°ú Á¢ÃËÇß´Ù");
+	;
+	}
 }
 
 void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
 {
+	if (pOtherCollider->GetObjName() == L"¶¥")
+	{
+		Logger::Debug(L"¶¥À» ¹â°í ÀÖ´Ù.");
+
+	}
 }
 
 void CPlayer::OnCollisionExit(CCollider* pOtherCollider)
@@ -206,5 +252,9 @@ void CPlayer::OnCollisionExit(CCollider* pOtherCollider)
 		m_Eat = false;
 		Logger::Debug(L"¸ó½ºÅÍ¸¦ ¸Ô¾ú½À´Ï´Ù.");
 	}
+	if (pOtherCollider->GetObjName() == L"¶¥")
+	{
+		Logger::Debug(L"¶¥°ú ¶³¾îÁ³´Ù.");
 
+	}
 }
