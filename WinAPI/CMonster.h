@@ -15,14 +15,16 @@ public:
 
 private:
 
+	bool m_Gravity = true;
 	Vector m_vecDir;
 	float m_fVelocity;
+	float m_fSpeed = 200.0f;
 
 	void Init() override;
 	void Update() override;
 	void Render() override;
 	void Release() override;
-
+	void Gravity();
 
 
 	void OnCollisionEnter(CCollider* pOtherCollider) override;

@@ -26,6 +26,11 @@ void KirbyEat::Init()
 
 void KirbyEat::Update()
 {
+	if (BUTTONUP('S'))
+	{
+		DELETEOBJECT(this);
+
+	}
 }
 
 void KirbyEat::Render()
@@ -42,14 +47,9 @@ void KirbyEat::SetDir(Vector dir)
 }
 
 
-
 void KirbyEat::OnCollisionEnter(CCollider* pOtherCollider)
 {
-	if (pOtherCollider->GetObjName() == L"플레이어")
-	{
-		Logger::Debug(L"공격 포인트 삭제");
-		DELETEOBJECT(this);
-	}
+
 }
 
 
@@ -57,10 +57,17 @@ void KirbyEat::OnCollisionEnter(CCollider* pOtherCollider)
 
 void KirbyEat::OnCollisionStay(CCollider* pOtherCollider)
 {
-	
 }
 
 void KirbyEat::OnCollisionExit(CCollider* pOtherCollider)
 {
-
+	if (pOtherCollider->GetObjName() == L"몬스터")
+	{
+		
+		Logger::Debug(L"몬스터를 먹었습니다.");
+	}
+	if (pOtherCollider->GetObjName() == L"플레이어")
+	{
+		CGameObject* pl = pOtherCollider->GetOwner();
+	}
 }

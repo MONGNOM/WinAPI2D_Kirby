@@ -21,7 +21,6 @@ private:
 	void Render() override;
 	void Release() override;
 
-
 public:
 	void SetDir(Vector dir);
 

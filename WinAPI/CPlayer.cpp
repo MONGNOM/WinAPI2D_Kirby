@@ -23,6 +23,7 @@
 
 CPlayer::CPlayer()
 {
+	ontile = 0;
 	m_vecPos = Vector(0, 0);
 	m_vecScale = Vector(100, 100);
 	m_layer = Layer::Player;
@@ -39,7 +40,7 @@ CPlayer::CPlayer()
 	JumpTime = 0.f;
 
 	LastJumpTime = 0.f;
-	LastRunTime += DT;
+	LastRunTime;
 	m_Gravity = true;
 
 	
@@ -83,16 +84,32 @@ void CPlayer::Update()
 	Gravity();
 
 	m_bIsMove = false;
-	//=============
-	// 달리기 구현
+
+	//======보류 명단=======
+	// 1. 달리기 구현
 	// ㄴ 왼쪽	 [-> + ->]
 	// ㄴ 오른쪽  [<- + <-]
-	//=============
+
+	// 2. 먹기 오류 
+	// ㄴ 플레이어가 닿는 판정을 어떤걸로 바꿔야함
+	
+	// 3. 벽과 땅 타일 구분  == 미완 [수정필요] 부딪히는 곳에따라 
+	// 
+	//======================
+	
+	// 1. 뒷 배경 넣기 구현
+	// 2. 일반 몬스터 구현
+	// 3. 특수 몬스터 구현 
+	// 4. 흡수 기능 ==> 먹기 후 (VK_DOWN) 일반 == 평상시  특수 == 변신
+	// 5. 변신 구현 = 불 얼음 스파크 소드 하나씩 함수 만들어서 대입
+	// 6. 보류
+	// 7. 이미지 입히기
+
 
 	if (BUTTONSTAY(VK_LEFT))
 	{
-
-		if (BUTTONSTAY('R')/*LastRunTime >= 0.15f  && BUTTONSTAY(VK_LEFT)*/)
+		LastRunTime += DT;
+		if (BUTTONSTAY('R')/*LastRunTime <= 0.15f && BUTTONSTAY(VK_LEFT)*/)
 		{
 			m_vecPos.x -= m_fSpeed * DT * 2.f;
 			m_bIsMove = true;
@@ -109,8 +126,6 @@ void CPlayer::Update()
 			m_vecPos.x -= m_fSpeed * DT;
 			m_bIsMove = true;
 			m_vecMoveDir.x = -1;
-			LastRunTime = 0;
-
 		}
 	}
 
@@ -118,7 +133,7 @@ void CPlayer::Update()
 	{
 		
 		if(BUTTONSTAY('R')/*LastRunTime <= 0.15f && BUTTONSTAY(VK_RIGHT)*/)
-		{
+		{ 
 			m_vecPos.x += m_fSpeed * DT *2.f;
 			m_bIsMove = true;
 			m_vecMoveDir.x = +1;
@@ -154,7 +169,6 @@ void CPlayer::Update()
 		else // false
 		{
 			Shot();
-			m_Eat = true;
 		}
 
 	}
@@ -198,7 +212,7 @@ void CPlayer::Gravity()
 	{
 		m_vecPos.y += m_fSpeed * DT * 2;
 	}
-	else; 
+	else;
 
 }
 
@@ -207,17 +221,21 @@ void CPlayer::Eat()
 	Logger::Debug(L"공격오브젝트 생성");
 
 	KirbyEat* m_KE = new KirbyEat;
-	if (m_vecLookDir.x > 0) 
+	if (m_vecLookDir.x > 0)
 		m_KE->SetPos(m_vecPos.x + 100, m_vecPos.y);
 	else if (m_vecLookDir.x < 0)
-		m_KE->SetPos(m_vecPos.x - 100, m_vecPos.y);
-	
+	m_KE->SetPos(m_vecPos.x - 100, m_vecPos.y);
+
 	m_KE->SetDir(Vector(m_vecPos.x, m_vecMoveDir.y));
 	ADDOBJECT(m_KE);
 
+	// 다른 클래스의 온콜리전익싯을 가져올수있나
+}
+
+
 	// 동적 할당 삭제만 하면 된다잉  잘했다
 	// delete m_KE;
-}
+
 
 void CPlayer::Render()
 {
@@ -255,41 +273,63 @@ void CPlayer::Shot()
 	Shot->SetPos(m_vecPos);
 	Shot->SetDir(Vector(m_vecLookDir.x, m_vecMoveDir.y));
 	ADDOBJECT(Shot);
+	m_Eat = true;
+
 }
 
 void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 {
+	
 	if (pOtherCollider->GetObjName() == L"몬스터")
 	{
 		Logger::Debug(L"몬스터와 부딪혀 데미지를 입습니다.");
-	}
-	if (pOtherCollider->GetObjName() == L"몬스터")
-	{
 		m_Eat = false;
-		Logger::Debug(L"몬스터를 먹었습니다.");
+		
+		 
 	}
+	
 	if (pOtherCollider->GetObjName() == L"땅")
 	{
-		
+		if(ontile >= 1)
 		m_Gravity = false;
+		++ontile;
 	}
+	if (pOtherCollider->GetObjName() == L"벽")
+	{
+		CGameObject* B = pOtherCollider->GetOwner();
+		
+	}
+	
 }
 
 void CPlayer::OnCollisionStay(CCollider* pOtherCollider)
 {
 	if (pOtherCollider->GetObjName() == L"땅")
 	{	
-		m_vecPos.y = m_vecPos.y;
+		
+
+		if (ontile >= 1)
 		m_Gravity = false;
+
 	}
+
+
 }
 
 void CPlayer::OnCollisionExit(CCollider* pOtherCollider)
 {
 	if (pOtherCollider->GetObjName() == L"땅")
 	{
-		
-		m_Gravity = true;
+		--ontile;
+		if (ontile == 0)
+		{
+			m_Gravity = true;
+		}
+	}
 
+	if (pOtherCollider->GetObjName() == L"몬스터")
+	{
+		Logger::Debug(L"몬스터를 삼켰다?");
+		m_Eat = false;
 	}
 }

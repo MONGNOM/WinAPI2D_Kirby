@@ -195,6 +195,12 @@
     <ClInclude Include="KirbyStatus.h">
       <Filter>GameObject\Stage01\kirby</Filter>
     </ClInclude>
+    <ClInclude Include="CBlock.h">
+      <Filter>Engine\Asset\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="CGoalTile.h">
+      <Filter>Engine\Asset\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -316,6 +322,12 @@
     </ClCompile>
     <ClCompile Include="KirbyStatus.cpp">
       <Filter>GameObject\Stage01\kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlock.cpp">
+      <Filter>Engine\Asset\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="CGoalTile.cpp">
+      <Filter>Engine\Asset\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

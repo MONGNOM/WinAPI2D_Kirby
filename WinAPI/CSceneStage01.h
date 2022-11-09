@@ -11,6 +11,8 @@ public:
 
 private:
 	CPlayer* pPlayer;
+	Vector* p;
+
 
 private:
 	void Init()		override;

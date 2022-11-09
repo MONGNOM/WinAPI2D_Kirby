@@ -5,6 +5,7 @@
 #include "CGameObject.h"
 #include "CTile.h"
 #include "CGroundTile.h"
+#include "CBlock.h"
 
 CScene::CScene()
 {
@@ -186,6 +187,14 @@ void CScene::LoadTile(const wstring& strPath)
 			newTile->SetTileIndex(loadTile.GetTileIndex());
 
 			AddGameObject(newTile);
+		}
+		else if (TypeTile::Wall == loadTile.GetType())
+		{
+			CBlock* newTile1 = new CBlock;
+			newTile1->SetTilePos(loadTile.GetTilePosX(), loadTile.GetTilePosY());
+			newTile1->SetTileIndex(loadTile.GetTileIndex());
+
+			AddGameObject(newTile1);
 		}
 	}
 

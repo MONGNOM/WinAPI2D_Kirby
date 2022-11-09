@@ -32,6 +32,18 @@ void CMonster::Update()
 }
 
 
+
+void CMonster::Gravity()
+{
+	if (m_Gravity == true)
+	{
+		m_vecPos.y += m_fSpeed * DT * 2;
+	}
+	else;
+
+}
+
+
 void CMonster::Render()
 {
 	RENDER->FrameRect(
@@ -51,7 +63,7 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 	
 	if (pOtherCollider->GetObjName() == L"플레이어")
 	{
-		Logger::Debug(L"몬스터가 플레이어와 상호작용 하여 사라집니다.");
+		Logger::Debug(L"몬스터가 플레이어와 부딪혀 데미지를 입습니다.");
 		DELETEOBJECT(this);
 	}
 
@@ -67,6 +79,11 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 		Logger::Debug(L"몬스터가 미사일에 맞았습니다");
 		DELETEOBJECT(this);
 	}
+	if (pOtherCollider->GetObjName() == L"땅")
+	{
+
+		m_Gravity = false;
+	}
 }
 
 void CMonster::OnCollisionStay(CCollider* pOtherCollider)
@@ -75,6 +92,11 @@ void CMonster::OnCollisionStay(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"먹기")
 	{
 		Logger::Debug(L"몬스터가 빨려들어가고있습니다.");
+	}
+	if (pOtherCollider->GetObjName() == L"땅")
+	{
+
+		m_Gravity = false;
 	}
 }
 

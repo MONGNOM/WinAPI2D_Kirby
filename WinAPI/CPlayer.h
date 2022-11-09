@@ -12,7 +12,7 @@ enum class Playerstate { Idle, Run, Jump, Eat, Shot, Change, Takehit };
 
 class CPlayer : public CGameObject
 {
-
+	friend KirbyEat;
 	friend CMonster;
 public:
 	CPlayer();
@@ -30,8 +30,10 @@ private:
 	Vector m_vecLookDir;
 	bool m_bIsMove;
 	float m_fSpeed = 200.0f;
+
+	int ontile;
+protected:
 	bool m_Eat;
-	
 	
 
 	float JumpTime;
