@@ -15,6 +15,9 @@
 #include "CButton.h"
 #include "CPanel.h"
 #include "CImageObject.h"
+#include "CGround.h"
+#include "CBackGround.h"
+#include "CLightMonster.h"
 
 CSceneStage01::CSceneStage01()
 {
@@ -35,24 +38,32 @@ void CSceneStage01::Init()
 
 void CSceneStage01::Enter()
 {
-	pPlayer = new CPlayer();
-	pPlayer->SetPos(WINSIZEX * 0.5f, 750);
-	AddGameObject(pPlayer);
 
 	CMonster* pMonster = new CMonster();
-	pMonster->SetPos(800, WINSIZEY * 0.5f);
+	pMonster->SetPos(700, 300);
 	AddGameObject(pMonster);
+
+	CLightMonster* pMonster1 = new CLightMonster();
+	pMonster1->SetPos(450, 300);
+	AddGameObject(pMonster1);
 
 	CCameraController* pCamController = new CCameraController;
 	AddGameObject(pCamController);
 
-	CImageObject* BackGround = new CImageObject;
-	BackGround->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\123.png"));
+	CGround* Ground = new CGround;
+	Ground->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\Ground.png"));
+	AddGameObject(Ground);
+
+	CBackGround* BackGround = new CBackGround;
+	BackGround->SetImage(RESOURCE->LoadImg(L"BbackGround", L"Image\\BackGround_1.png"));
 	AddGameObject(BackGround);
 
-	CImageObject* BBackGround = new CImageObject;
-	BBackGround->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\BB123.png"));
-	AddGameObject(BBackGround);
+	pPlayer = new CPlayer();
+	pPlayer->SetPos(265 , 420);
+	AddGameObject(pPlayer);
+
+
+
 	CAMERA->SetTargetObj(pPlayer);
 	CAMERA->FadeIn(0.25f);
 	LoadTile(GETPATH + L"Tile\\Stage01.tile");

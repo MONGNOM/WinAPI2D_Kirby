@@ -41,13 +41,15 @@ enum class GroupScene
 enum class Layer
 {
 	Default,
+	BackGround,
+	Ground,
 	Tile,
 	Player,
 	Missile,
 	Shot,
 	Monster,
+	SpecialMonster,
 	Eat,
-
 	Ui,
 	Size,
 };

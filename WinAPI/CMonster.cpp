@@ -25,6 +25,8 @@ void CMonster::Init()
 
 void CMonster::Update()
 {
+	Gravity();
+
 	m_vecPos += m_vecDir * m_fVelocity * DT;
 
 
@@ -39,7 +41,7 @@ void CMonster::Gravity()
 	{
 		m_vecPos.y += m_fSpeed * DT * 2;
 	}
-	else;
+
 
 }
 
@@ -70,9 +72,14 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"먹기")
 	{
 		Logger::Debug(L"몬스터가 빨려가기 시작합니다.");
+		CGameObject* pl = pOtherCollider->GetOwner();
+		if(pl->GetPos().x <= m_vecPos.x )
+			SetDir(Vector(-1, 0));
+		else if (pl->GetPos().x >= m_vecPos.x)
+			SetDir(Vector(1, 0));
+
 		
 	}
-	SetDir(Vector(-1, 0));
 
 	if (pOtherCollider->GetObjName() == L"Shot")
 	{

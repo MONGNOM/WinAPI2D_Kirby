@@ -11,7 +11,7 @@ public:
 
 private:
 	CPlayer* pPlayer;
-	Vector* p;
+
 
 
 private:

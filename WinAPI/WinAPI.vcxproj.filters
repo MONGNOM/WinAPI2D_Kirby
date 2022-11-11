@@ -55,6 +55,9 @@
     <Filter Include="GameObject\Stage01\kirby">
       <UniqueIdentifier>{f641c64f-3b0f-4e1c-b6f3-d9cfb67df20e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Stage01\Monster">
+      <UniqueIdentifier>{a64feac8-e534-457b-9874-ed55bb0aeea4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -165,12 +168,6 @@
     <ClInclude Include="CCameraController.h">
       <Filter>GameObject\Common</Filter>
     </ClInclude>
-    <ClInclude Include="CMissile.h">
-      <Filter>GameObject\Stage01</Filter>
-    </ClInclude>
-    <ClInclude Include="CMonster.h">
-      <Filter>GameObject\Stage01</Filter>
-    </ClInclude>
     <ClInclude Include="CTilePanel.h">
       <Filter>Engine\Asset\UI</Filter>
     </ClInclude>
@@ -200,6 +197,21 @@
     </ClInclude>
     <ClInclude Include="CGoalTile.h">
       <Filter>Engine\Asset\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="CBackGround.h">
+      <Filter>GameObject\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CGround.h">
+      <Filter>GameObject\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>GameObject\Stage01\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CLightMonster.h">
+      <Filter>GameObject\Stage01\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CMissile.h">
+      <Filter>GameObject\Stage01\kirby</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -296,9 +308,6 @@
     <ClCompile Include="CMissile.cpp">
       <Filter>GameObject\Stage01</Filter>
     </ClCompile>
-    <ClCompile Include="CMonster.cpp">
-      <Filter>GameObject\Stage01</Filter>
-    </ClCompile>
     <ClCompile Include="CTileButton.cpp">
       <Filter>Engine\Asset\UI</Filter>
     </ClCompile>
@@ -328,6 +337,18 @@
     </ClCompile>
     <ClCompile Include="CGoalTile.cpp">
       <Filter>Engine\Asset\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="CBackGround.cpp">
+      <Filter>GameObject\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="CGround.cpp">
+      <Filter>GameObject\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>GameObject\Stage01\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CLightMonster.cpp">
+      <Filter>GameObject\Stage01\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

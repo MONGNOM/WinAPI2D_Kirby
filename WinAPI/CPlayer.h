@@ -19,7 +19,9 @@ public:
 	virtual ~CPlayer();
 
 private:
-	
+
+	bool m_Basic;
+	bool m_LightChange;
 	bool m_Gravity;
 	CAnimator* m_pAnimator;
 	
@@ -34,7 +36,7 @@ private:
 	int ontile;
 protected:
 	bool m_Eat;
-	
+
 
 	float JumpTime;
 	bool Jumpgo;
@@ -49,6 +51,8 @@ private:
 	void Render() override;
 	void Release() override;
 
+
+	void LightChange();
 	void Gravity();
 	void Eat();
 	void AnimatorUpdate();
@@ -58,3 +62,4 @@ private:
 	void OnCollisionStay(CCollider* pOtherCollider) override;
 	void OnCollisionExit(CCollider* pOtherCollider) override;
 };
+

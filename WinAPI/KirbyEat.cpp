@@ -49,7 +49,9 @@ void KirbyEat::SetDir(Vector dir)
 
 void KirbyEat::OnCollisionEnter(CCollider* pOtherCollider)
 {
-
+	if (pOtherCollider->GetObjName() == L"몬스터")
+	{
+	}
 }
 
 
@@ -57,17 +59,10 @@ void KirbyEat::OnCollisionEnter(CCollider* pOtherCollider)
 
 void KirbyEat::OnCollisionStay(CCollider* pOtherCollider)
 {
+
 }
 
 void KirbyEat::OnCollisionExit(CCollider* pOtherCollider)
 {
-	if (pOtherCollider->GetObjName() == L"몬스터")
-	{
-		
-		Logger::Debug(L"몬스터를 먹었습니다.");
-	}
-	if (pOtherCollider->GetObjName() == L"플레이어")
-	{
-		CGameObject* pl = pOtherCollider->GetOwner();
-	}
+	
 }

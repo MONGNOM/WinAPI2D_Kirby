@@ -54,7 +54,7 @@ void CBlock::OnCollisionEnter(CCollider* pOther)
 	
 		//조건 왼쪽이면 충돌시 왼쪽으로 밀기 && 반대방향도 마찬가지
 		CGameObject* pl = pOther->GetOwner();
-		if (GetTilePosX() <= pl->GetPos().x)
+		if (GetTilePosX() < pl->GetPos().x)
 			pl->SetPos(pl->GetPos().x + 5, pl->GetPos().y);
 		else
 			pl->SetPos(pl->GetPos().x - 5, pl->GetPos().y);
@@ -72,7 +72,7 @@ void CBlock::OnCollisionStay(CCollider* pOther)
 
 		//조건 왼쪽이면 충돌시 왼쪽으로 밀기 && 반대방향도 마찬가지
 		CGameObject* pl = pOther->GetOwner();
-		if (GetTilePosX() <= pl->GetPos().x)
+		if (GetTilePosX() < pl->GetPos().x)
 			pl->SetPos(pl->GetPos().x + 5, pl->GetPos().y);
 		else
 			pl->SetPos(pl->GetPos().x - 5, pl->GetPos().y);
@@ -83,15 +83,5 @@ void CBlock::OnCollisionStay(CCollider* pOther)
 
 void CBlock::OnCollisionExit(CCollider* pOther)
 {
-	/*if (pOther->GetObjName() == L"플레이어")
-	{
-		CGameObject* pl = pOther->GetOwner();
-		pl->SetPos(pl->GetPos().x - 1, pl->GetPos().y);
-		 조건 왼쪽이면 충돌시 왼쪽으로 밀기 && 반대방향도 마찬가지
-		if (GetTilePosX() <= pl->GetPos().x)
-			pl->GetPos().x + 1;
-		else if (GetTilePosX() >= pl->GetPos().x)
-			pl->GetPos().x - 1;
-
-	}*/
+	
 }
