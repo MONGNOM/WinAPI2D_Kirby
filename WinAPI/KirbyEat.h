@@ -14,8 +14,15 @@ public:
 private:
 
 	Vector m_vecDir;
+	Vector m_vecMoveDir;
+	Vector m_vecLookDir;
+	CAnimator* m_pAnimator;
 
+	CImage* m_pIdleImage;
+	CImage* m_pMoveImage;
+	bool m_bIsMove;
 
+	void AnimatorUpdate();
 	void Init() override;
 	void Update() override;
 	void Render() override;

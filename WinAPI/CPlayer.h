@@ -25,8 +25,14 @@ private:
 	bool m_Gravity;
 	CAnimator* m_pAnimator;
 	
-	CImage* m_pIdleImage;
+	CImage* m_pIdleImageR;
+	CImage* m_pIdleImageD;
+	CImage* m_pIdleImageU;
+	CImage* m_pIdleImageL;
 	CImage* m_pMoveImage;
+	CImage* m_pAttackImage;
+	CImage* m_pChangeImage;
+
 
 	Vector m_vecMoveDir;
 	Vector m_vecLookDir;
