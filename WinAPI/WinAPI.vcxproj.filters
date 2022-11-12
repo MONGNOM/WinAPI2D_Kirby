@@ -213,6 +213,12 @@
     <ClInclude Include="CMissile.h">
       <Filter>GameObject\Stage01\kirby</Filter>
     </ClInclude>
+    <ClInclude Include="CLightKirby.h">
+      <Filter>GameObject\Stage01\kirby</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameManager.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -349,6 +355,12 @@
     </ClCompile>
     <ClCompile Include="CLightMonster.cpp">
       <Filter>GameObject\Stage01\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CLightKirby.cpp">
+      <Filter>GameObject\Stage01\kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameManager.cpp">
+      <Filter>Engine\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

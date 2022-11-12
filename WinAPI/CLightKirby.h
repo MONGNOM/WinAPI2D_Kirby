@@ -1,22 +1,20 @@
 #pragma once
 #include "CGameObject.h"
+#include "CPlayer.h"
 
 class CImage;
 class CAnimator;
 class CMonster;
 class KirbyEat;
-class CLightKirby;
 
-enum class Playerstate { Idle, Run, Jump, Eat, Shot, Change, Takehit };
-
-
-class CPlayer : public CGameObject
+class CLightKirby : public CPlayer
 {
 	friend KirbyEat;
+	friend CPlayer;
 	friend CMonster;
 public:
-	CPlayer();
-	virtual ~CPlayer();
+	CLightKirby();
+	virtual ~CLightKirby();
 
 private:
 
@@ -24,7 +22,7 @@ private:
 	bool m_LightChange;
 	bool m_Gravity;
 	CAnimator* m_pAnimator;
-	
+
 	CImage* m_pIdleImageR;
 	CImage* m_pIdleImageD;
 	CImage* m_pIdleImageU;
@@ -33,7 +31,6 @@ private:
 	CImage* m_pAttackImage;
 	CImage* m_pChangeImage;
 
-	CLightKirby* LightKirby;
 
 	Vector m_vecMoveDir;
 	Vector m_vecLookDir;

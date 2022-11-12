@@ -20,12 +20,16 @@ void CCollisionManager::Init()
 	CheckLayer(Layer::Monster, Layer::Eat);
 	CheckLayer(Layer::Monster, Layer::Shot);
 	CheckLayer(Layer::Monster, Layer::Player);
+	CheckLayer(Layer::Monster, Layer::LPlayer);
 	CheckLayer(Layer::SpecialMonster, Layer::Eat);
 	CheckLayer(Layer::SpecialMonster, Layer::Shot);
 	CheckLayer(Layer::SpecialMonster, Layer::Player);
 	CheckLayer(Layer::Player, Layer::Monster);
 	CheckLayer(Layer::Player, Layer::SpecialMonster);
 	CheckLayer(Layer::Player, Layer::Tile);
+	CheckLayer(Layer::LPlayer, Layer::Monster);
+	CheckLayer(Layer::LPlayer, Layer::SpecialMonster);
+	CheckLayer(Layer::LPlayer, Layer::Tile);
 	CheckLayer(Layer::Tile, Layer::Player);
 	CheckLayer(Layer::Tile, Layer::Monster);
 	CheckLayer(Layer::Tile, Layer::SpecialMonster);

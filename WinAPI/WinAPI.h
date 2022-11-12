@@ -45,6 +45,7 @@ enum class Layer
 	Ground,
 	Tile,
 	Player,
+	LPlayer,
 	Missile,
 	Shot,
 	Monster,
