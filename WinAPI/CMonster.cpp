@@ -76,9 +76,13 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 		if(pl->GetPos().x <= m_vecPos.x )
 			SetDir(Vector(-1, 0));
 		else if (pl->GetPos().x >= m_vecPos.x)
-			SetDir(Vector(1, 0));
+			SetDir(Vector(1, 0));	
+	}
 
-		
+	if (pOtherCollider->GetObjName() == L"빛 공격")
+	{
+		Logger::Debug(L"몬스터가 빛공격을 당했습니다.");
+		DELETEOBJECT(this);
 	}
 
 	if (pOtherCollider->GetObjName() == L"Shot")
@@ -111,7 +115,8 @@ void CMonster::OnCollisionExit(CCollider* pOtherCollider)
 {
 	if (pOtherCollider->GetObjName() == L"먹기")
 	{
-		Logger::Debug(L"몬스터를 먹었습니다.");
+		CGameObject* eat = pOtherCollider->GetOwner();
+		Logger::Debug(L"!@!@!@!2몬스터를 먹는다아아아!@!@!@!@");
 		DELETEOBJECT(this);
 
 	}

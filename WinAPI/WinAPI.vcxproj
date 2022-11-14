@@ -186,6 +186,7 @@
     <ClInclude Include="KirbyEat.h" />
     <ClInclude Include="KirbyShot.h" />
     <ClInclude Include="KirbyStatus.h" />
+    <ClInclude Include="LightKirbyShot.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SingleTon.h" />
@@ -240,6 +241,7 @@
     <ClCompile Include="KirbyEat.cpp" />
     <ClCompile Include="KirbyShot.cpp" />
     <ClCompile Include="KirbyStatus.cpp" />
+    <ClCompile Include="LightKirbyShot.cpp" />
     <ClCompile Include="WinAPI.cpp" />
   </ItemGroup>
   <ItemGroup>

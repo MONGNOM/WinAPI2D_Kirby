@@ -50,6 +50,7 @@ enum class Layer
 	Shot,
 	Monster,
 	SpecialMonster,
+	LightShot,
 	Eat,
 	Ui,
 	Size,

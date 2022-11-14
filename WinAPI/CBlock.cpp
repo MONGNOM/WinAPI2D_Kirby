@@ -54,9 +54,9 @@ void CBlock::OnCollisionEnter(CCollider* pOther)
 	
 		//조건 왼쪽이면 충돌시 왼쪽으로 밀기 && 반대방향도 마찬가지
 		CGameObject* pl = pOther->GetOwner();
-		if (GetTilePosX() < pl->GetPos().x)
+		if (GetTilePosX() <= pl->GetPos().x && GetTilePosY() >= pl->GetPos().y)
 			pl->SetPos(pl->GetPos().x + 5, pl->GetPos().y);
-		else
+		else  //(GetTilePosX() > pl->GetPos().x && GetTilePosY() > pl->GetPos().y)
 			pl->SetPos(pl->GetPos().x - 5, pl->GetPos().y);
 
 		 
@@ -72,9 +72,9 @@ void CBlock::OnCollisionStay(CCollider* pOther)
 
 		//조건 왼쪽이면 충돌시 왼쪽으로 밀기 && 반대방향도 마찬가지
 		CGameObject* pl = pOther->GetOwner();
-		if (GetTilePosX() < pl->GetPos().x)
+		if (GetTilePosX() < pl->GetPos().x && GetTilePosY() > pl->GetPos().y)
 			pl->SetPos(pl->GetPos().x + 5, pl->GetPos().y);
-		else
+		else if (GetTilePosX() > pl->GetPos().x && GetTilePosY() > pl->GetPos().y)
 			pl->SetPos(pl->GetPos().x - 5, pl->GetPos().y);
 
 

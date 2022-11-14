@@ -35,7 +35,8 @@ CPlayer::CPlayer()
 	m_pIdleImageD = nullptr;
 	m_pIdleImageU = nullptr;
 	m_pIdleImageL = nullptr;
-	m_pMoveImage = nullptr;
+	m_pMoveImageR = nullptr;
+	m_pMoveImageL = nullptr;
 	m_pAttackImage = nullptr;
 
 	m_vecMoveDir = Vector(0, 0);
@@ -60,52 +61,42 @@ CPlayer::~CPlayer()
 
 void CPlayer::Init()
 {
-	m_pIdleImageR = RESOURCE->LoadImg(L"PlayerIdleR", L"Image\\ICERA.png");
-	m_pIdleImageD = RESOURCE->LoadImg(L"PlayerIdleD", L"Image\\ICE1.png");
-	m_pIdleImageU = RESOURCE->LoadImg(L"PlayerIdleU", L"Image\\ICE1.png");
-	m_pIdleImageL = RESOURCE->LoadImg(L"PlayerIdleL", L"Image\\iceLS.png");
-	m_pMoveImage  =	RESOURCE->LoadImg(L"PlayerMove", L"Image\\ICERA.png");
-	m_pAttackImage = RESOURCE->LoadImg(L"PlayerAttack", L"Image\\ICERA.png");
+	m_pIdleImageR = RESOURCE->LoadImg(L"PlayerIdleR", L"Image\\KirbyIdleR.png");
+	m_pIdleImageD = RESOURCE->LoadImg(L"PlayerIdleD", L"Image\\KirbyIdleR.png");
+	m_pIdleImageU = RESOURCE->LoadImg(L"PlayerIdleU", L"Image\\KirbyIdleR.png");
+	m_pIdleImageL = RESOURCE->LoadImg(L"PlayerIdleL", L"Image\\KirbyIdleL.png");
+	m_pMoveImageR = RESOURCE->LoadImg(L"PlayerMoveR", L"Image\\KirbyRW.png");
+	m_pMoveImageL = RESOURCE->LoadImg(L"PlayerMoveL", L"Image\\KirbyLW.png");
+	m_pAttackImage = RESOURCE->LoadImg(L"PlayerAttack", L"Image\\iceRA.png");
 	
-
-
+	// 캐릭터 45x43픽셀
+	
 	m_pAnimator = new CAnimator;
-		m_pAnimator->CreateAnimation(L"IdleUp", m_pIdleImageR, Vector(0.f, 0.f), Vector(33.f, 33.f), Vector(29.5f, 0.f), 0.08f, 8);
-		m_pAnimator->CreateAnimation(L"IdleRight", m_pIdleImageR, Vector(0.f, 0.f), Vector(33.f, 33.f), Vector(29.5f, 0.f), 0.08f, 8);
-		m_pAnimator->CreateAnimation(L"IdleDown", m_pIdleImageR, Vector(0.f, 0.f), Vector(33.f, 33.f), Vector(29.5f, 0.f), 0.08f, 8);
-		m_pAnimator->CreateAnimation(L"IdleLeft", m_pIdleImageL, Vector(0.f, 0.f), Vector(25.f, 29.f), Vector(28.f, 0.f), 1.f, 2);
+		m_pAnimator->CreateAnimation(L"IdleUp", m_pIdleImageD, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
+		m_pAnimator->CreateAnimation(L"IdleRight", m_pIdleImageD, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
+		m_pAnimator->CreateAnimation(L"IdleDown", m_pIdleImageD, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
+		m_pAnimator->CreateAnimation(L"IdleLeft", m_pIdleImageL, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
 
-		m_pAnimator->CreateAnimation(L"MoveUp", m_pMoveImage, Vector(0.f, 0.f), Vector(33.f, 33.f), Vector(29.5f, 0.f), 0.08f, 8);
-		m_pAnimator->CreateAnimation(L"MoveRight", m_pMoveImage, Vector(0.f, 0.f), Vector(33.f, 33.f), Vector(29.5f, 0.f), 0.08f, 8);
-		m_pAnimator->CreateAnimation(L"MoveDown", m_pMoveImage, Vector(0.f, 0.f), Vector(33.f, 33.f), Vector(29.5f, 0.f), 0.08f, 8);
-		m_pAnimator->CreateAnimation(L"MoveLeft", m_pMoveImage, Vector(0.f, 0.f), Vector(33.f, 33.f), Vector(29.5f, 0.f), 0.08f, 8);
+		m_pAnimator->CreateAnimation(L"MoveUp", m_pMoveImageR, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
+		m_pAnimator->CreateAnimation(L"MoveRight", m_pMoveImageR, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
+		m_pAnimator->CreateAnimation(L"MoveDown", m_pMoveImageR, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
+		m_pAnimator->CreateAnimation(L"MoveLeft", m_pMoveImageL, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
 
-		m_pAnimator->CreateAnimation(L"IdleRightAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(30.f, 43.f), Vector(30.f, 0.f), 0.05f, 10);
-		m_pAnimator->CreateAnimation(L"IdleLeftAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(30.f, 43.f), Vector(30.f, 0.f), 0.05f, 10);
-		m_pAnimator->CreateAnimation(L"IdleDownAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(30.f, 43.f), Vector(30.f, 0.f), 0.05f, 10);
-		m_pAnimator->CreateAnimation(L"IdleUpAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(30.f, 43.f), Vector(30.f, 0.f), 0.05f, 10);
+		m_pAnimator->CreateAnimation(L"IdleRightAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 0.03f, 1);
+		m_pAnimator->CreateAnimation(L"IdleLeftAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
+		m_pAnimator->CreateAnimation(L"IdleDownAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
+		m_pAnimator->CreateAnimation(L"IdleUpAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
 
-		m_pAnimator->CreateAnimation(L"MoveRightAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(30.f, 43.f), Vector(30.f, 0.f), 0.05f, 10);
-		m_pAnimator->CreateAnimation(L"MoveLeftAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(30.f, 43.f), Vector(30.f, 0.f), 0.05f, 10);
-		m_pAnimator->CreateAnimation(L"MoveUpAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(30.f, 43.f), Vector(30.f, 0.f), 0.05f, 10);
-		m_pAnimator->CreateAnimation(L"MoveDownAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(30.f, 43.f), Vector(30.f, 0.f), 0.05f, 10);
-
-		m_pAnimator->CreateAnimation(L"IdleUpChange", m_pChangeImage, Vector(0.f, 0.f), Vector(100.f, 99.f), Vector(100.f, 0.f), 10.f, 6);
-		m_pAnimator->CreateAnimation(L"IdleRightChange", m_pChangeImage, Vector(0.f, 0.f), Vector(100.f, 99.f), Vector(100.f, 0.f), 10.f, 6);
-		m_pAnimator->CreateAnimation(L"IdleDownChange", m_pChangeImage, Vector(0.f, 0.f), Vector(100.f, 99.f), Vector(100.f, 0.f), 10.f, 6);
-		m_pAnimator->CreateAnimation(L"IdleLeftChange", m_pChangeImage, Vector(0.f, 0.f), Vector(100.f, 99.f), Vector(100.f, 0.f), 10.f, 6);
-
-
-		m_pAnimator->CreateAnimation(L"MoveUpChange", m_pChangeImage, Vector(0.f, 0.f), Vector(100.f, 99.f), Vector(100.f, 0.f), 10.f, 6);
-		m_pAnimator->CreateAnimation(L"MoveRightChange", m_pChangeImage, Vector(0.f, 0.f), Vector(100.f, 99.f), Vector(100.f, 0.f), 10.f, 6);
-		m_pAnimator->CreateAnimation(L"MoveDownChange", m_pChangeImage, Vector(0.f, 0.f), Vector(100.f, 99.f), Vector(100.f, 0.f), 10.f, 6);
-		m_pAnimator->CreateAnimation(L"MoveLeftChange", m_pChangeImage, Vector(0.f, 0.f), Vector(100.f, 99.f), Vector(100.f, 0.f), 10.f, 6);
+		m_pAnimator->CreateAnimation(L"MoveRightAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(10.f, 10.f), Vector(45.f, 0.f), 10.0f, 3);
+		m_pAnimator->CreateAnimation(L"MoveLeftAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
+		m_pAnimator->CreateAnimation(L"MoveUpAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
+		m_pAnimator->CreateAnimation(L"MoveDownAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
 
 
 	m_pAnimator->Play(L"IdleUp", false);
 	AddComponent(m_pAnimator);
 
-	AddCollider(ColliderType::Rect, Vector(50, 55), Vector(0, 20));
+	AddCollider(ColliderType::Rect, Vector(45, 45), Vector(0, 0));
 }
 
 void CPlayer::Update()
@@ -127,13 +118,9 @@ void CPlayer::Update()
 	//========[제일 중요한 구현]변신===========
 	// ㄴ 변신 시스템을 변신 할 때 [일반 플레이어 작동 불로 다 멈춤] ==> 변신 풀리면 변신 플레이어 멈춤
 	// ㄴ 스테이지 1에서 일반플레이어[일반커비]를 삭제 할 때 다른 클래스의 플레이어를 추가[빛커비]
-	// ㄴ 
-	// 	// 1. 특정 몬스터를 먹는다. == 먹는다.
-	// 2. 몬스터를 흡수한다.	== 먹고 흡수한다.
-	// 3. 특정 몬스터에 맞는 변신을 한다. == 먹고 흡수하는데 몬스터를 특정 시켜줘야한다.
-	// ㄴ 변신할 모습마다 함수로 만들고 조건에 그 특정 몬스터를 먹었을때 이걸로 변신한다.
-	// ㄴ 변신하면 이미지가 바뀌어야 한다.
-	//=======================
+	// 빛으로 변신했을때 공격을 안한다. ???
+	
+	//========================================
 	
 	//======해야 할 명단=======
 	// 5. 기본 ==> 변신 이미지 바꿀수 있게 해줘야하는데 ==> 모르겠따
@@ -223,20 +210,11 @@ void CPlayer::Update()
 			Logger::Debug(L"커비가 빛으로 변신했다");
 			DeleteObject(this);
 			m_Basic = false;
-			LightChange();
+			ChangePlayer();
 		}
+		
 	}
 
-	if (BUTTONDOWN('D'))
-	{
-		if (m_LightChange == true)
-		{
-			Logger::Debug(L"특수능력을 뱉었다");
-			m_Basic = true;
-			m_LightChange = false;
-			m_Eat = true;
-		}
-	}
 
 	if (BUTTONDOWN('S'))
 	{
@@ -250,13 +228,6 @@ void CPlayer::Update()
 			{
 				Shot();
 			}
-		}
-
-		if (m_LightChange == true)
-		{
-			DeleteObject(this);
-			LightChange();
-		
 		}
 
 	}
@@ -286,23 +257,13 @@ void CPlayer::Update()
 		AnimatorUpdate();
 }
 
-void CPlayer::LightChange()
-{
-	// 빛 몬스터 변신하면 행동 그리고 기본행동을 제안시키고 여기에 구현된 행동을 시킨다. 
-	// 라이트 어택 클래스 만들어서 오브젝트 하나 더 만들자
-	// 변신을 어케하지
-
-	ADDOBJECT(LightKirby);
-
-}
 
 void CPlayer::Gravity()
 {
 	if (m_Gravity == true)
-	{
 		m_vecPos.y += m_fSpeed * DT * 2;
-	}
-	else;
+	
+
 }
 	
 void CPlayer::Render()
@@ -332,7 +293,7 @@ void CPlayer::AnimatorUpdate()
 	else if (m_vecLookDir.y < 0) str += L"Down";
 
 
-	if (BUTTONDOWN('S')) str += L"Attack";
+	if (BUTTONSTAY('S')) str += L"Attack";
 
 	m_pAnimator->Play(str, false);
 }
@@ -346,6 +307,17 @@ void CPlayer::Shot()
 	ADDOBJECT(Shot);
 	m_Eat = true;
   
+}
+
+void CPlayer::ChangePlayer()
+{
+	CGameObject* lightKirby = new CLightKirby();
+	lightKirby->SetPos(m_vecPos);
+	ADDOBJECT(lightKirby);
+
+	CAMERA->SetTargetObj(lightKirby);
+
+	DELETEOBJECT(this);
 }
 
 void CPlayer::Eat()

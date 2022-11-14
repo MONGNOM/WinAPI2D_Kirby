@@ -2,15 +2,23 @@
 #include "CScene.h"
 
 class CPlayer;
+class CLightKirby;
 
 class CSceneStage01 : public CScene
 {
+
+	friend CPlayer;
+	friend CLightKirby;
+
 public:
 	CSceneStage01();
 	virtual ~CSceneStage01();
 
 private:
 	CPlayer* pPlayer;
+	CLightKirby* LPlayer;
+	bool m_LightChange;
+	bool m_Basic;
 
 
 

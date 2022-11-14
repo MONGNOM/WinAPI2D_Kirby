@@ -6,17 +6,22 @@ class CImage;
 class CAnimator;
 class CMonster;
 class KirbyEat;
+class CSceneStage01;
 
 class CLightKirby : public CPlayer
 {
 	friend KirbyEat;
 	friend CPlayer;
 	friend CMonster;
+	friend CSceneStage01;
 public:
 	CLightKirby();
 	virtual ~CLightKirby();
 
 private:
+
+protected:
+	bool m_Eat;
 
 	bool m_Basic;
 	bool m_LightChange;
@@ -38,9 +43,6 @@ private:
 	float m_fSpeed = 200.0f;
 
 	int ontile;
-protected:
-	bool m_Eat;
-
 
 	float JumpTime;
 	bool Jumpgo;
@@ -56,11 +58,10 @@ private:
 	void Release() override;
 
 
-	void LightChange();
+	void BasicKirby();
 	void Gravity();
-	void Eat();
 	void AnimatorUpdate();
-	void Shot();
+	void LigthAttack();
 
 	void OnCollisionEnter(CCollider* pOtherCollider) override;
 	void OnCollisionStay(CCollider* pOtherCollider) override;

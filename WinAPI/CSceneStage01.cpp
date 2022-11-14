@@ -18,10 +18,14 @@
 #include "CGround.h"
 #include "CBackGround.h"
 #include "CLightMonster.h"
+#include "CLightKirby.h"
 
 CSceneStage01::CSceneStage01()
 {
 	pPlayer = nullptr;
+	LPlayer = nullptr;
+	m_LightChange = false;
+	m_Basic = true;
 
 }
 
@@ -59,25 +63,25 @@ void CSceneStage01::Enter()
 	AddGameObject(BackGround);
 
 	pPlayer = new CPlayer();
-	pPlayer->SetPos(265 , 420);
-	AddGameObject(pPlayer);
-
-
-
+	pPlayer->SetPos(250, 500);
+	ADDOBJECT(pPlayer);
+	
 	CAMERA->SetTargetObj(pPlayer);
+	
 	CAMERA->FadeIn(0.25f);
 	LoadTile(GETPATH + L"Tile\\Stage01.tile");
+
 
 }
 
 void CSceneStage01::Update()
 {
+	
 	if (BUTTONDOWN(VK_ESCAPE))
 	{
 		CAMERA->FadeOut(0.25f);
 		DELAYCHANGESCENE(GroupScene::Title, 0.25f);
 	}
-	
 
 }
 

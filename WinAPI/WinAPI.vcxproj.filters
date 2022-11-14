@@ -219,6 +219,9 @@
     <ClInclude Include="CGameManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="LightKirbyShot.h">
+      <Filter>GameObject\Stage01\kirby</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -361,6 +364,9 @@
     </ClCompile>
     <ClCompile Include="CGameManager.cpp">
       <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="LightKirbyShot.cpp">
+      <Filter>GameObject\Stage01\kirby</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -29,7 +29,8 @@ private:
 	CImage* m_pIdleImageD;
 	CImage* m_pIdleImageU;
 	CImage* m_pIdleImageL;
-	CImage* m_pMoveImage;
+	CImage* m_pMoveImageR;
+	CImage* m_pMoveImageL;
 	CImage* m_pAttackImage;
 	CImage* m_pChangeImage;
 
@@ -59,11 +60,12 @@ private:
 	void Release() override;
 
 
-	void LightChange();
+
 	void Gravity();
 	void Eat();
 	void AnimatorUpdate();
 	void Shot();
+	void ChangePlayer();
 
 	void OnCollisionEnter(CCollider* pOtherCollider) override;
 	void OnCollisionStay(CCollider* pOtherCollider) override;

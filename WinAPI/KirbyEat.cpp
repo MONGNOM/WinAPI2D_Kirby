@@ -40,6 +40,7 @@ void KirbyEat::Update()
 {
 	if (BUTTONUP('S'))
 	{
+		// 플레이어에 있는 샷 이랑 먹는거 여기로 가져오면 될듯
 		DELETEOBJECT(this);
 
 	}
@@ -85,6 +86,7 @@ void KirbyEat::OnCollisionEnter(CCollider* pOtherCollider)
 {
 	if (pOtherCollider->GetObjName() == L"몬스터")
 	{
+
 	}
 }
 
