@@ -4,6 +4,8 @@
 #include "CRenderManager.h"
 #include "CCollider.h"
 #include "CPlayer.h"
+#include "CImage.h"
+#include "CAnimator.h"
 
 CMonster::CMonster()
 {
@@ -12,6 +14,15 @@ CMonster::CMonster()
 	m_layer = Layer::Monster;
 	m_vecDir = Vector(0, 0);
 	m_fVelocity = 300;
+	m_mMoveImage = nullptr;
+	m_mDieImage = nullptr;
+	m_vecMoveDir = Vector(0, 0);
+	m_vecLookDir = Vector(0, -1);
+	m_bIsMove = false;
+	m_mHp = 1;
+	DieTime = 0;
+	HP = false;
+	Iscrash = false;
 }
 
 CMonster::~CMonster()
@@ -20,7 +31,29 @@ CMonster::~CMonster()
 
 void CMonster::Init()
 {
-	AddCollider(ColliderType::Rect, Vector(90, 90), Vector(0, 0));
+	m_mMoveImage = RESOURCE->LoadImg(L"BasicMonsterMove", L"Image\\Monster\\BasicMonster\\BasicMonster.png");
+	m_mDieImage = RESOURCE->LoadImg(L"BasicMonsterDie", L"Image\\Monster\\BasicMonster\\BasicMonsterDie.png");
+
+
+
+	m_pAnimator = new CAnimator;
+
+
+	m_pAnimator->CreateAnimation(L"IdleLeft", m_mMoveImage, Vector(0.f, 100.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 6);
+	m_pAnimator->CreateAnimation(L"IdleRight", m_mMoveImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 6);
+	m_pAnimator->CreateAnimation(L"MoveRight", m_mMoveImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 6);
+	m_pAnimator->CreateAnimation(L"MoveLeft", m_mMoveImage, Vector(0.f, 100.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 6);
+
+	m_pAnimator->CreateAnimation(L"IdleLeftDie", m_mDieImage, Vector(0.f, 100.f), Vector(60.f, 60.f), Vector(60.f, 0.f), 1.f, 2);
+	m_pAnimator->CreateAnimation(L"IdleRightDie", m_mDieImage, Vector(0.f, 0.f), Vector(60.f, 60.f), Vector(60.f, 0.f), 0.5f, 2);
+	m_pAnimator->CreateAnimation(L"MoveRightDie", m_mDieImage, Vector(0.f, 0.f), Vector(60.f, 60.f), Vector(60.f, 0.f), 0.5f, 2);
+	m_pAnimator->CreateAnimation(L"MoveLeftDie", m_mDieImage, Vector(0.f, 100.f), Vector(60.f, 60.f), Vector(60.f, 0.f), 0.5f, 2);
+
+
+	m_pAnimator->Play(L"IdleLeft", false);
+	AddComponent(m_pAnimator);
+
+	AddCollider(ColliderType::Rect, Vector(45, 45), Vector(0, 10));
 }
 
 void CMonster::Update()
@@ -29,8 +62,19 @@ void CMonster::Update()
 
 	m_vecPos += m_vecDir * m_fVelocity * DT;
 
-
-	
+	if (Iscrash == true)
+	{
+		DieTime += DT;
+		//if (DieTime >= 0.1)
+		//{
+		//	str = L"IdleLeftDie";
+		//}
+		if (DieTime >= 1)
+		{
+			DELETEOBJECT(this);
+			DieTime = 0;
+		}
+	}
 }
 
 
@@ -48,16 +92,28 @@ void CMonster::Gravity()
 
 void CMonster::Render()
 {
-	RENDER->FrameRect(
-		m_vecPos.x - m_vecScale.x * 0.5f,
-		m_vecPos.y - m_vecScale.y * 0.5f,
-		m_vecPos.x + m_vecScale.x * 0.5f,
-		m_vecPos.y + m_vecScale.y * 0.5f);
-	
+
 }
 
 void CMonster::Release()
 {
+}
+
+void CMonster::AnimatorUpdate()
+{
+	if (m_vecMoveDir.Length() > 0)
+		m_vecLookDir = m_vecMoveDir;
+
+
+	if (m_bIsMove)	str += L"Move";
+	else			str += L"Idle";
+
+	if (m_vecLookDir.x > 0) str += L"Right";
+	else if (m_vecLookDir.x < 0) str += L"Left";
+
+	if (m_mHp == 0) str = L"IdleLeftDie";
+
+	m_pAnimator->Play(str, false);
 }
 
 void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
@@ -66,7 +122,22 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"플레이어")
 	{
 		Logger::Debug(L"몬스터가 플레이어와 부딪혀 데미지를 입습니다.");
-		DELETEOBJECT(this);
+		m_vecPos.x += 70;
+		m_mHp -= 1;
+		Iscrash = true;
+		HP = true;
+	}
+
+	if (pOtherCollider->GetObjName() == L"빛 공격")
+	{
+		Logger::Debug(L"몬스터가 빛공격을 맞았습니다.");
+		CGameObject* pl = pOtherCollider->GetOwner();
+		if (pl->GetPos().x <= m_vecPos.x)
+			m_vecPos.x += 100;
+		else if (pl->GetPos().x >= m_vecPos.x)
+			m_vecPos.x -= 100;
+		Iscrash = true;
+
 	}
 
 	if (pOtherCollider->GetObjName() == L"먹기")
@@ -79,11 +150,6 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 			SetDir(Vector(1, 0));	
 	}
 
-	if (pOtherCollider->GetObjName() == L"빛 공격")
-	{
-		Logger::Debug(L"몬스터가 빛공격을 당했습니다.");
-		DELETEOBJECT(this);
-	}
 
 	if (pOtherCollider->GetObjName() == L"Shot")
 	{
@@ -120,6 +186,7 @@ void CMonster::OnCollisionExit(CCollider* pOtherCollider)
 		DELETEOBJECT(this);
 
 	}
+
 
 }
 

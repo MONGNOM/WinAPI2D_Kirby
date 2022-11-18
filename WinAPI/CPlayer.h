@@ -24,15 +24,28 @@ private:
 	bool m_LightChange;
 	bool m_Gravity;
 	CAnimator* m_pAnimator;
+	int m_pHp;
+
+	bool Light;
+	bool Ice;
+	bool m_IceChange;
 	
+	
+
 	CImage* m_pIdleImageR;
-	CImage* m_pIdleImageD;
+	CImage* m_pIdleImageRD;
+	CImage* m_pIdleImageLD;
 	CImage* m_pIdleImageU;
 	CImage* m_pIdleImageL;
 	CImage* m_pMoveImageR;
 	CImage* m_pMoveImageL;
+	CImage* m_pRunImageR;
+	CImage* m_pRunImageL;
 	CImage* m_pAttackImage;
+	CImage* m_pAttackImageRD;
+	CImage* m_pAttackImageLD;
 	CImage* m_pChangeImage;
+	CImage* m_pJumpImage;
 
 	CLightKirby* LightKirby;
 

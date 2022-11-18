@@ -18,6 +18,12 @@ void CCameraController::Init()
 
 void CCameraController::Update()
 {
+	Vector dir;
+	if (m_vecPos.x >= 5058 && m_vecPos.x <= 0 )
+		dir.x = 0;
+	else if (m_vecPos.y >= -300 && m_vecPos.y <= 800)
+		dir.y = 0;
+
 	/*if (LMOUSEDOWN(false))
 	{
 		CAMERA->SetTargetPos(MOUSEWORLDPOS, 1);
@@ -38,8 +44,9 @@ void CCameraController::Update()
 		dir.y = 3;
 	else
 		dir.y = 0;
-
-	CAMERA->Scroll(dir, m_fScrollSpeed);*/
+		
+	CAMERA->Scroll(dir, m_fScrollSpeed);
+	*/
 }
 
 void CCameraController::Render()

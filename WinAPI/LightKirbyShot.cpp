@@ -23,7 +23,7 @@ LightKirbyShot::~LightKirbyShot()
 
 void LightKirbyShot::Init()
 {
-	/*m_pIdleImage = RESOURCE->LoadImg(L"PlayerATttack", L"Image\\AT.png");*/
+	/*m_pIdleImage = RESOURCE->LoadImg(L"PlayerATttack", L"Image\\AT.png");
 
 	m_pIdleImage = RESOURCE->LoadImg(L"PlayerChange", L"Image\\SparkKirby2.png");
 
@@ -33,7 +33,7 @@ void LightKirbyShot::Init()
 
 
 	m_pAnimator->Play(L"IdleRight", false);
-	AddComponent(m_pAnimator);
+	AddComponent(m_pAnimator);*/
 
 	AddCollider(ColliderType::Rect, Vector(50, 50), Vector(0, 0));
 }

@@ -19,12 +19,14 @@
 #include "CBackGround.h"
 #include "CLightMonster.h"
 #include "CLightKirby.h"
+#include "CIceMonster.h"
+#include "CKIngMonster.h"
+#include "CDoor.h"
 
 CSceneStage01::CSceneStage01()
 {
 	pPlayer = nullptr;
 	LPlayer = nullptr;
-	m_LightChange = false;
 	m_Basic = true;
 
 }
@@ -44,12 +46,23 @@ void CSceneStage01::Enter()
 {
 
 	CMonster* pMonster = new CMonster();
-	pMonster->SetPos(700, 300);
+	pMonster->SetPos(2000, 400);
 	AddGameObject(pMonster);
 
 	CLightMonster* pMonster1 = new CLightMonster();
-	pMonster1->SetPos(450, 300);
+	pMonster1->SetPos(100, 400);
 	AddGameObject(pMonster1);
+
+	CIceMonster* pMonster12 = new CIceMonster();
+	pMonster12->SetPos(900, 400);
+	AddGameObject(pMonster12);
+
+	CDoor* Door = new CDoor();
+	Door->SetPos(4930, 440);
+	AddGameObject(Door);
+
+
+
 
 	CCameraController* pCamController = new CCameraController;
 	AddGameObject(pCamController);
@@ -63,11 +76,12 @@ void CSceneStage01::Enter()
 	AddGameObject(BackGround);
 
 	pPlayer = new CPlayer();
-	pPlayer->SetPos(250, 500);
+	pPlayer->SetPos(300, 500);
 	ADDOBJECT(pPlayer);
+
+	CAMERA->SetTargetPos(Vector(400, 500));
 	
-	CAMERA->SetTargetObj(pPlayer);
-	
+
 	CAMERA->FadeIn(0.25f);
 	LoadTile(GETPATH + L"Tile\\Stage01.tile");
 
@@ -76,7 +90,23 @@ void CSceneStage01::Enter()
 
 void CSceneStage01::Update()
 {
+
+	if (GAME->PlayerPos.x >= 4658)
+	{
+		CAMERA->SetTargetPos(Vector(4658, GAME->PlayerPos.y),0.1f);
+	}
+	else if (GAME->PlayerPos.x <= 400)
+	{
+		CAMERA->SetTargetPos(Vector(400, GAME->PlayerPos.y),0.1f);
+
+	}
+	else
+		CAMERA->SetTargetPos(GAME->PlayerPos,0.1f);
+
+
 	
+
+
 	if (BUTTONDOWN(VK_ESCAPE))
 	{
 		CAMERA->FadeOut(0.25f);
