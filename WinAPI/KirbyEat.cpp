@@ -22,7 +22,7 @@ KirbyEat::~KirbyEat()
 void KirbyEat::Init()
 {
 	
-	m_pIdleImage = RESOURCE->LoadImg(L"PlayerATttack", L"Image\\Kirby\\Basic\\KirbyEat.png");
+	m_pIdleImage = RESOURCE->LoadImg(L"PlayerATttack", L"Image\\AT.png");
 
 	m_pAnimator = new CAnimator;
 	m_pAnimator->CreateAnimation(L"IdleRight", m_pIdleImage, Vector(0.f, 0.f), Vector(38.f, 37.f), Vector(37.f, 0.f), 0.08f, 7);

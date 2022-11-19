@@ -16,8 +16,7 @@
 #include "KirbyEat.h"
 #include "KirbyShot.h"
 #include "CLightKirby.h"
-#include "CIceKirby.h"
-#include "CGameManager.h"
+
 
 
 
@@ -33,6 +32,7 @@ CPlayer::CPlayer()
 
 	m_Eat = true;
 	m_pIdleImageR = nullptr;
+	m_pIdleImageD = nullptr;
 	m_pIdleImageU = nullptr;
 	m_pIdleImageL = nullptr;
 	m_pMoveImageR = nullptr;
@@ -48,25 +48,12 @@ CPlayer::CPlayer()
 
 	m_LightChange = false;
 	LastJumpTime = 0.f;
-	LastRunTime = 0;
+	LastRunTime;
 	m_Gravity = true;
 	m_pChangeImage = nullptr;
 	LightKirby = nullptr;
-	m_pRunImageR = nullptr;
-	m_pRunImageL = nullptr;
-	m_pIdleImageRD = nullptr;
-	m_pIdleImageLD = nullptr;
-	m_pAttackImageRD = nullptr;
-	m_pAttackImageLD = nullptr;
-	m_pJumpImage = nullptr;
-
-	m_pHp = 10;
-	Light = false;
-	Ice = false;
-	m_IceChange = false;
-
+	
 }
-
 
 CPlayer::~CPlayer()
 {
@@ -74,118 +61,37 @@ CPlayer::~CPlayer()
 
 void CPlayer::Init()
 {
+	m_pIdleImageR = RESOURCE->LoadImg(L"PlayerIdleR", L"Image\\KirbyIdleR.png");
+	m_pIdleImageD = RESOURCE->LoadImg(L"PlayerIdleD", L"Image\\KirbyIdleR.png");
+	m_pIdleImageU = RESOURCE->LoadImg(L"PlayerIdleU", L"Image\\KirbyIdleR.png");
+	m_pIdleImageL = RESOURCE->LoadImg(L"PlayerIdleL", L"Image\\KirbyIdleL.png");
+	m_pMoveImageR = RESOURCE->LoadImg(L"PlayerMoveR", L"Image\\KirbyRW.png");
+	m_pMoveImageL = RESOURCE->LoadImg(L"PlayerMoveL", L"Image\\KirbyLW.png");
+	m_pAttackImage = RESOURCE->LoadImg(L"PlayerAttack", L"Image\\iceRA.png");
 	
-	m_pAttackImage = RESOURCE->LoadImg(L"PlayerAttack", L"Image\\Kirby\\Basic\\KirbyEat.png");
-
-
-	m_pChangeImage = RESOURCE->LoadImg(L"LightPlayerChange", L"Image\\Kirby\\Light\\LightKirbyChange.png");
-
-	m_pAttackImageRD = RESOURCE->LoadImg(L"PlayerDownAttackR", L"Image\\Kirby\\Basic\\KirbyDownAttack.png");
-	m_pIdleImageR = RESOURCE->LoadImg(L"PlayerIdleR", L"Image\\Kirby\\Basic\\KirbyIdleR.png");
-	m_pIdleImageRD = RESOURCE->LoadImg(L"PlayerIdleRD", L"Image\\Kirby\\Basic\\KirbyDown.png");
-	
-	m_pIdleImageU = RESOURCE->LoadImg(L"PlayerIdleU", L"Image\\Kirby\\Basic\\KirbyFly.png");
-	m_pIdleImageL = RESOURCE->LoadImg(L"PlayerIdleL", L"Image\\Kirby\\Basic\\KirbyIdleL.png");
-	
-	m_pMoveImageR = RESOURCE->LoadImg(L"PlayerMoveR", L"Image\\Kirby\\Basic\\KirbyRW.png");
-	m_pMoveImageL = RESOURCE->LoadImg(L"PlayerMoveL", L"Image\\Kirby\\Basic\\KirbyLW.png");
-	
-	m_pJumpImage = RESOURCE->LoadImg(L"PlayerJump", L"Image\\Kirby\\Basic\\KirbyJump.png");
-
-	m_pRunImageR  = RESOURCE->LoadImg(L"PlayerRunR", L"Image\\Kirby\\Basic\\KirbyRun.png");
-	m_pRunImageL  = RESOURCE->LoadImg(L"PlayerRunL", L"Image\\Kirby\\Basic\\KirbyRun.png");
-
 	// Ä³¸¯ÅÍ 45x43ÇÈ¼¿
 	
 	m_pAnimator = new CAnimator;
-	m_pAnimator->CreateAnimation(L"IdleUPDown", m_pChangeImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 10.0f, 1);
-
-		m_pAnimator->CreateAnimation(L"IdleDownUP", m_pChangeImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 10.0f, 1);
-		m_pAnimator->CreateAnimation(L"IdleUp", m_pIdleImageU, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 20);
-		m_pAnimator->CreateAnimation(L"IdleRightUp", m_pIdleImageU, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 20);
-		m_pAnimator->CreateAnimation(L"IdleRight", m_pIdleImageR, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
-		m_pAnimator->CreateAnimation(L"Idle", m_pIdleImageR, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
-		m_pAnimator->CreateAnimation(L"IdleRightDown", m_pIdleImageRD, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(43.f, 0.f), 10.0f, 1);
-		m_pAnimator->CreateAnimation(L"IdleDown", m_pIdleImageRD, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(50.f, 0.f), 10.0f, 1);
+		m_pAnimator->CreateAnimation(L"IdleUp", m_pIdleImageD, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
+		m_pAnimator->CreateAnimation(L"IdleRight", m_pIdleImageD, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
+		m_pAnimator->CreateAnimation(L"IdleDown", m_pIdleImageD, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
 		m_pAnimator->CreateAnimation(L"IdleLeft", m_pIdleImageL, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
-		m_pAnimator->CreateAnimation(L"IdleLeftDown", m_pIdleImageRD, Vector(0.f, 100.f), Vector(50.f, 50.f), Vector(50.f, 0.f), 10.0f, 1);
-		m_pAnimator->CreateAnimation(L"IdleLeftUp", m_pIdleImageU, Vector(0.f, 100.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 20);
 
-
-		m_pAnimator->CreateAnimation(L"IdleRightDownRun", m_pIdleImageRD, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(43.f, 0.f), 10.0f, 1);
-		m_pAnimator->CreateAnimation(L"MoveRightDownRun", m_pIdleImageRD, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
-		m_pAnimator->CreateAnimation(L"MoveLeftDownRun", m_pIdleImageRD, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
-		m_pAnimator->CreateAnimation(L"IdleLeftDownRun", m_pIdleImageRD, Vector(0.f, 100.f), Vector(50.f, 50.f), Vector(50.f, 0.f), 10.0f, 1);
-
-
-		m_pAnimator->CreateAnimation(L"MoveUp", m_pIdleImageU, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 20);
+		m_pAnimator->CreateAnimation(L"MoveUp", m_pMoveImageR, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
 		m_pAnimator->CreateAnimation(L"MoveRight", m_pMoveImageR, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
-		m_pAnimator->CreateAnimation(L"MoveRightUp", m_pIdleImageU, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 20);
-		m_pAnimator->CreateAnimation(L"MoveRightDown", m_pIdleImageRD, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
-		m_pAnimator->CreateAnimation(L"MoveLeftDown", m_pIdleImageRD, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
+		m_pAnimator->CreateAnimation(L"MoveDown", m_pMoveImageR, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
 		m_pAnimator->CreateAnimation(L"MoveLeft", m_pMoveImageL, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
-		m_pAnimator->CreateAnimation(L"MoveLeftUp", m_pIdleImageU, Vector(0.f, 100.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 20);
 
-		m_pAnimator->CreateAnimation(L"IdleAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 9);
-		m_pAnimator->CreateAnimation(L"IdleUpAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 9);
-		m_pAnimator->CreateAnimation(L"IdleRightUpAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 9);
-		m_pAnimator->CreateAnimation(L"IdleRightAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 9);
-		m_pAnimator->CreateAnimation(L"IdleLeftUpAttack", m_pAttackImage, Vector(0.f, 100.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 9);
-		m_pAnimator->CreateAnimation(L"IdleLeftAttack", m_pAttackImage, Vector(0.f, 100.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 9);
-		m_pAnimator->CreateAnimation(L"IdleRightDownAttack", m_pAttackImageRD, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.5f, 2);
-		m_pAnimator->CreateAnimation(L"IdleDownAttack", m_pAttackImageRD, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.5f, 2);
-		m_pAnimator->CreateAnimation(L"IdleLeftDownAttack", m_pAttackImageRD, Vector(0.f, 100.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.5f, 2);
+		m_pAnimator->CreateAnimation(L"IdleRightAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 0.03f, 1);
+		m_pAnimator->CreateAnimation(L"IdleLeftAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
+		m_pAnimator->CreateAnimation(L"IdleDownAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
+		m_pAnimator->CreateAnimation(L"IdleUpAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
 
-		m_pAnimator->CreateAnimation(L"MoveRightAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 9);
-		m_pAnimator->CreateAnimation(L"MoveLeftAttack", m_pAttackImage, Vector(0.f, 100.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 9);
-		m_pAnimator->CreateAnimation(L"MoveUpAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 9);
-		m_pAnimator->CreateAnimation(L"MoveDownRightAttack", m_pAttackImageRD, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.5f, 2);
-		m_pAnimator->CreateAnimation(L"MoveDownLeftAttack", m_pAttackImageRD, Vector(0.f, 100.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.5f, 2);
-		m_pAnimator->CreateAnimation(L"MoveAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 9);
+		m_pAnimator->CreateAnimation(L"MoveRightAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(10.f, 10.f), Vector(45.f, 0.f), 10.0f, 3);
+		m_pAnimator->CreateAnimation(L"MoveLeftAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
+		m_pAnimator->CreateAnimation(L"MoveUpAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
+		m_pAnimator->CreateAnimation(L"MoveDownAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
 
-		
-		m_pAnimator->CreateAnimation(L"IdleRun", m_pRunImageR, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
-		m_pAnimator->CreateAnimation(L"IdleRightRun", m_pRunImageR, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
-		m_pAnimator->CreateAnimation(L"IdleLeftRun", m_pRunImageR, Vector(490.f, 104.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.05f, 8);
-
-		m_pAnimator->CreateAnimation(L"MoveUpRun", m_pRunImageR, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
-		m_pAnimator->CreateAnimation(L"MoveRightRun", m_pRunImageR, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
-		m_pAnimator->CreateAnimation(L"MoveLeftRun", m_pRunImageR, Vector(490.f, 104.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.05f, 8);
-
-
-		m_pAnimator->CreateAnimation(L"MoveRightAttackRun", m_pAttackImage, Vector(0.f, 0.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 9);
-		m_pAnimator->CreateAnimation(L"MoveLeftAttackRun", m_pAttackImage, Vector(0.f, 100.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 9);
-		m_pAnimator->CreateAnimation(L"MoveUpAttackRun", m_pAttackImage, Vector(0.f, 0.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 9);
-
-
-		m_pAnimator->CreateAnimation(L"IdleJump", m_pJumpImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9);
-		m_pAnimator->CreateAnimation(L"IdleRightJump", m_pJumpImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9);
-		m_pAnimator->CreateAnimation(L"IdleLeftJump", m_pJumpImage, Vector(0.f, 90.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9);
-
-		m_pAnimator->CreateAnimation(L"MoveRightJump", m_pJumpImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9);
-		m_pAnimator->CreateAnimation(L"MoveRightUpJump", m_pJumpImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9);
-		m_pAnimator->CreateAnimation(L"MoveLeftJump", m_pJumpImage, Vector(0.f, 90.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9);
-		m_pAnimator->CreateAnimation(L"MoveLeftUpJump", m_pJumpImage, Vector(0.f, 90.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9);
-	
-		m_pAnimator->CreateAnimation(L"MoveRightRunJump", m_pJumpImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9);
-		m_pAnimator->CreateAnimation(L"MoveRightUpRunJump", m_pJumpImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9);
-		m_pAnimator->CreateAnimation(L"MoveLeftRunJump", m_pJumpImage, Vector(0.f, 90.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9);
-		m_pAnimator->CreateAnimation(L"MoveLeftUpRunJump", m_pJumpImage, Vector(0.f, 90.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9);
-
-		m_pAnimator->CreateAnimation(L"IdleRunJump", m_pJumpImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9);
-		m_pAnimator->CreateAnimation(L"IdleRightRunJump", m_pJumpImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9);
-		m_pAnimator->CreateAnimation(L"IdleRightUpRunJump", m_pJumpImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9);
-		m_pAnimator->CreateAnimation(L"IdleLeftRunJump", m_pJumpImage, Vector(0.f, 90.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9);
-		m_pAnimator->CreateAnimation(L"IdleLeftUpRunJump", m_pJumpImage, Vector(0.f, 90.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9);
-
-
-		m_pAnimator->CreateAnimation(L"IdleAttackJump", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 0.03f, 1);
-		m_pAnimator->CreateAnimation(L"IdleRightAttackJump", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 0.03f, 1);
-		m_pAnimator->CreateAnimation(L"IdleLeftAttackJump", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
-
-		m_pAnimator->CreateAnimation(L"MoveRightAttackJump", m_pAttackImage, Vector(0.f, 0.f), Vector(10.f, 10.f), Vector(45.f, 0.f), 10.0f, 3);
-		m_pAnimator->CreateAnimation(L"MoveLeftAttackJump", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
-		m_pAnimator->CreateAnimation(L"MoveAttackJump", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
 
 	m_pAnimator->Play(L"IdleUp", false);
 	AddComponent(m_pAnimator);
@@ -197,45 +103,35 @@ void CPlayer::Update()
 {
 	Gravity();
 	m_bIsMove = false;
-	/*
-	======¸®¼Ò½º ¸í´Ü=====
-	1. ÀÏ¹Ý Ä¿ºñ	== [¿Ï·á] ==> ¸®¼Ò½º Çàµ¿Á¶°Ç¸¸ °É¸é ‰Î ¸Ô±â ¹ñ±â Èí¼ö Àû¿ëÇÏ¸é ‰Î
-	3. ¸ó½ºÅÍ	[ÀÏ¹Ý] == [¿Ï·á] 
-	4. Æ¯º° ¸ó½ºÅÍ [ºû, ¾óÀ½] == [¿Ï·á]
-	5. º¸½º   ==[µÎµÎ] [¿Ï¼º]
-	5.5 ºû Ä¿ºñ & ¾óÀ½Ä¿ºñ [¿Ï¼º] 
-	=====¸ó½ºÅÍ ÄÚµå Ãß°¡ ÇÊ¿ä=====
-	===ÇÃ·¹ÀÌ¾î ÄÚµå Ãß°¡ ÇÊ¿ä======
-	6. ¸Ê ¼öÁ¤ & º¸½º¸Ê ¸¸µé±â 
-	7. »óÈ£ÀÛ¿ë [¹®] == ¿ÀºêÁ§Æ® »ý¼º
-	8. UI [Ã¼·Â¹Ù º¯½Å»óÅÂ]  == Ã¼·Â¹Ù°¡ ¾ø´Âµ¥ ½Ç¹úÅÊ
-	=====================
+
+	//======º¸·ù ¸í´Ü=======
+	// 1. ´Þ¸®±â ±¸Çö
+	// ¤¤ ¿ÞÂÊ	 [-> + ->]
+	// ¤¤ ¿À¸¥ÂÊ  [<- + <-]
+
+	// 2. ¸Ô±â ¿À·ù 
+	// ¤¤ ÇÃ·¹ÀÌ¾î°¡ ´ê´Â ÆÇÁ¤À» ¾î¶²°É·Î ¹Ù²ã¾ßÇÔ
 	
-
-
-	======º¸·ù ¸í´Ü=======
-	 1. ´Þ¸®±â ±¸Çö
-	 ¤¤ ¿ÞÂÊ	 [-> + ->]
-	 ¤¤ ¿À¸¥ÂÊ  [<- + <-]
-
-	 2. ¸Ô±â ¿À·ù [ÃÖ´ëÇÑ »¡¸® ÇØ¾ßÇÒµí] 
-	 ¤¤ ÇÃ·¹ÀÌ¾î°¡ ´ê´Â ÆÇÁ¤À» ¾î¶²°É·Î ¹Ù²ã¾ßÇÔ == eat¿¡ ¿£ÅÍÇßÀ»¶§ 0.5ÈÄ¿¡ »ç¶óÁö°Ô ÇÏ¸é µÉµí?
+	// 3. º®°ú ¶¥ Å¸ÀÏ ±¸ºÐ == ¹Ø, À§ ¿ÞÂÊ¿¡¼­ Ãæµ¹½Ã Ã¨ÇÇ¾ð À§Ä¡ x+ µÇ´Â°Å ÇØ°á ¹Ù¶÷
+	//======================
 	
-	 3. º®°ú ¶¥ Å¸ÀÏ ±¸ºÐ == ¹Ø, À§ ¿ÞÂÊ¿¡¼­ Ãæµ¹½Ã Ã¨ÇÇ¾ð À§Ä¡ x+ µÇ´Â°Å ÇØ°á ¹Ù¶÷
-
-	 4. ¸ó½ºÅÍ Æò»ó½Ã¿´´Ù°¡ Á×´Â ¸ð¼Ç Ãß°¡ÇØ¾ßÇÔ
-
-	 5. ÇÃ·¹ÀÌ¾î °ø°Ý ¿ÀºêÁ§Æ®°¡ µµ¸Á°¨ ¤»¤»
-
-	 6. Å· µ¥¹ÌÁö µé¾î°¡¸é ÀÌ¹ÌÁö ¹Ù²Ù±â && ¸ó½ºÅÍÆ÷ÇÔ ¿òÁ÷ÀÓ ±¸Çö ¿Ô´Ù°¬µû Å·Àº Á¡ÇÁ ±¸Çö ½Ã°£À¸·Î ÇÏ¸é µÉ µí
-		¤¤ ¿ÂÄÝ¸®Àü ¿£ÅÍÇÏ¸é ==> º¯¼ö ¸¸µé¾î¼­ Å¸ÀÓ ¹Þ°í ±×½Ã°£µ¿¾È µ¥¹ÌÁö¹ÞÀº ÀÌ¹ÌÁö Ãâ·Â ÇÏ¸é µÉ¼öµµ
+	//========[Á¦ÀÏ Áß¿äÇÑ ±¸Çö]º¯½Å===========
+	// ¤¤ º¯½Å ½Ã½ºÅÛÀ» º¯½Å ÇÒ ¶§ [ÀÏ¹Ý ÇÃ·¹ÀÌ¾î ÀÛµ¿ ºÒ·Î ´Ù ¸ØÃã] ==> º¯½Å Ç®¸®¸é º¯½Å ÇÃ·¹ÀÌ¾î ¸ØÃã
+	// ¤¤ ½ºÅ×ÀÌÁö 1¿¡¼­ ÀÏ¹ÝÇÃ·¹ÀÌ¾î[ÀÏ¹ÝÄ¿ºñ]¸¦ »èÁ¦ ÇÒ ¶§ ´Ù¸¥ Å¬·¡½ºÀÇ ÇÃ·¹ÀÌ¾î¸¦ Ãß°¡[ºûÄ¿ºñ]
+	// ºûÀ¸·Î º¯½ÅÇßÀ»¶§ °ø°ÝÀ» ¾ÈÇÑ´Ù. ???
 	
-	 7. º¸½º¹æ ÀÔÀå½Ã Àü¿¡ °¡Áö°í ÀÖ´ø ´É·Â ±×´ë·Î º¹»çÇØ¼­ °¡Á®°¡¾ßÇÔ ÀÌ°Ç ÁøÂ¥ »ý°¢ÀÌ ¾È³²
-
-	===ÇÃ·¹ÀÌ¾î ÄÚµå Ãß°¡ ÇÊ¿ä====== > Æ¯Á¤Çàµ¿½Ã¿¡ ¸øÇÏ°Ô²û?
- 	======================
+	//========================================
 	
+	//======ÇØ¾ß ÇÒ ¸í´Ü=======
+	// 5. ±âº» ==> º¯½Å ÀÌ¹ÌÁö ¹Ù²Ü¼ö ÀÖ°Ô ÇØÁà¾ßÇÏ´Âµ¥ ==> ¸ð¸£°Úµû
+	// 6. º¸½º ¸¸µé±â
+	// 6.5 ¸Ê »çÀÌÁî Á¤ÇÏ°í ±× À§Ä¡ ÀÌÈÄ´Â Ä«¸Þ¶ó Å¸ÄÏÆÃ ³¯¸®°í ±× ¹üÀ§ ¾ÈÀ¸·Î ¿À¸é ´Ù½Ã Ã¨ÇÇ¾ð °íÁ¤
+	// 7. »óÈ£ÀÛ¿ë[¾ÆÀÌÅÛ] 
+	// 7.5. º¸·ù 
+	// 8. Ä¿ºñ ¸®¼Ò½º Å©±â ¼öÁ¤ == ÄíÆÄº¸´Ù Á¶±Ý ´õ Å©°Ô ¤¡ ÀÌ¹ÌÁö ÀÔÈ÷±â Å©±â : x: 96ÇÈ¼¿ y: 64ÇÈ¼¿
+	//=========================
 	
+<<<<<<< HEAD
 	======ÇØ¾ß ÇÒ ¸í´Ü=======
 	 11. º¸½º½ºÅ×ÀÌÁö ³Ñ¾î°¥¶§ °ÔÀÓ¸Å´ÏÀú¿¡¼­ °¡Á®°¥±î?
 	 12. º¸½º Á×ÀÌ¸é ¿µ»ó
@@ -248,9 +144,25 @@ void CPlayer::Update()
 	 9. UI ¸¸µé±â == Ã¼·Â¹Ù ±ðÀÌ´Â °Å ¤¡
  	 11. Å¸ÀÌÆ²È­¸é
 	=====================
+=======
+	//=======ÁøÇàÁß========
+	// 3. Æ¯¼ö ¸ó½ºÅÍ ±¸Çö [¿Ï] == ºû¸¸¿Ï ¾óÀ½Ãß°¡¿¹Á¤
+	// 4. º¯½Å ±â´É == ¾óÀ½ ÀÌ¶û ºû ½Ã°£µÇ¸é ºÒ ÇÏ°í ½ºÆÄÅ©
+	// 5. º¯½Å ¹þ±â ¿ÀºêÁ§Æ® ¸¸µé°í ´Ù½Ã ¸ÔÀ¸¸é ´Ù½Ã º¯½Å ¤¡
+	//=====================
+>>>>>>> parent of 812e713 (feat : ë³´ìŠ¤ ëª¬ìŠ¤í„° ë° í”Œë ˆì´ì–´ ë³€ì‹  ë° ìƒí˜¸ìž‘ìš© ë¬¸ êµ¬í˜„)
 
 
+	//======¿Ï¼º ¸í´Ü=======
+	// 1. µÞ ¹è°æ , ¸Ê Å¸ÀÏ »çÀÌÁî ¸Â°Ô ¼öÁ¤ ¿ä¸Á ÁÙÀÌ¸é µÉµí Á¶±Ý¸¸ 32¹è¼ö·Î
+	// 2. ÀÏ¹Ý ¸ó½ºÅÍ ±¸Çö
+	// 3. Æ¯¼ö¸ó½ºÅÍ ±¸Çö 
+	// 4. Èí¼ö ±â´É ¿Ï¼º
+	// 5. º¯½Å ±â´É ¿Ï¼º
+	// 6. º¯½Å ¹þ±â ±â´É ¿Ï¼º
+	//=====================
 
+<<<<<<< HEAD
 	======¿Ï¼º ¸í´Ü=======
 	 1. µÞ ¹è°æ , ¸Ê Å¸ÀÏ »çÀÌÁî ¸Â°Ô ¼öÁ¤ ¿ä¸Á ÁÙÀÌ¸é µÉµí Á¶±Ý¸¸ 32¹è¼ö·Î
 	 2. ÀÏ¹Ý ¸ó½ºÅÍ ±¸Çö
@@ -270,6 +182,8 @@ void CPlayer::Update()
 	{
 		DELETEOBJECT(this);
 	}
+=======
+>>>>>>> parent of 812e713 (feat : ë³´ìŠ¤ ëª¬ìŠ¤í„° ë° í”Œë ˆì´ì–´ ë³€ì‹  ë° ìƒí˜¸ìž‘ìš© ë¬¸ êµ¬í˜„)
 
 
 	if (BUTTONSTAY(VK_LEFT))
@@ -281,17 +195,6 @@ void CPlayer::Update()
 			m_bIsMove = true;
 			m_vecMoveDir.x = -1;
 			LastRunTime = 0;
-
-		}
-		else if (BUTTONSTAY(VK_DOWN)/*LastRunTime <= 0.15f && BUTTONSTAY(VK_LEFT)*/)
-		{
-			m_vecMoveDir.x = -1;
-			m_bIsMove = false;
-		}
-		else if (BUTTONSTAY('R') && BUTTONSTAY(VK_DOWN)/*LastRunTime <= 0.15f && BUTTONSTAY(VK_LEFT)*/)
-		{
-			m_vecMoveDir.x = -1;
-			m_bIsMove = false;
 		}
 		else if (BUTTONSTAY('S'))
 		{
@@ -308,8 +211,8 @@ void CPlayer::Update()
 
 	else if (BUTTONSTAY(VK_RIGHT))
 	{
-		LastRunTime += DT;
-		if(BUTTONSTAY('R') /*&& LastRunTime <= 0.15f && BUTTONSTAY(VK_RIGHT)*/)
+		
+		if(BUTTONSTAY('R')/*LastRunTime <= 0.15f && BUTTONSTAY(VK_RIGHT)*/)
 		{ 
 			m_vecPos.x += m_fSpeed * DT *2.f;
 			m_bIsMove = true;
@@ -319,18 +222,6 @@ void CPlayer::Update()
 		else if (BUTTONSTAY('S'))
 		{
 			m_vecMoveDir.x = 0;
-			m_bIsMove = false;
-		}
-
-		else if (BUTTONSTAY(VK_DOWN)/*LastRunTime <= 0.15f && BUTTONSTAY(VK_LEFT)*/)
-		{
-			m_vecMoveDir.x = +1;
-			m_bIsMove = false;
-		}
-
-		else if (BUTTONSTAY(VK_DOWN) && BUTTONSTAY('R'))/*LastRunTime <= 0.15f && BUTTONSTAY(VK_LEFT)*/
-		{
-			m_vecMoveDir.x = +1;
 			m_bIsMove = false;
 		}
 		else
@@ -354,23 +245,13 @@ void CPlayer::Update()
 		if (m_LightChange == true)
 		{
 			Logger::Debug(L"Ä¿ºñ°¡ ºûÀ¸·Î º¯½ÅÇß´Ù");
+			DeleteObject(this);
 			m_Basic = false;
 			ChangePlayer();
 		}
-		else if (m_IceChange == true)
-		{
-			Logger::Debug(L"Ä¿ºñ°¡ ¾óÀ½À¸·Î º¯½ÅÇß´Ù");
-			m_Basic = false;
-			ChangePlayer();
-		}
+		
 	}
 
-	if (BUTTONSTAY(VK_DOWN) && BUTTONDOWN('S'))
-	{
-
-		m_vecPos.x += m_fSpeed * DT +100; 
-		// ½Ã°£ ³Ö¾î¼­ ±× ½Ã°£¸¸Å­ ÀÌ °Å¸®¸¦ ÀÌµ¿ÇÏ°Ô ²û ¼³Á¤
-	}
 
 	if (BUTTONDOWN('S'))
 	{
@@ -392,6 +273,7 @@ void CPlayer::Update()
 	{
 		Jumpgo = true;
 	}
+<<<<<<< HEAD
 	if (BUTTONSTAY(VK_UP))
 	{
 			JumpTime += DT;
@@ -407,6 +289,8 @@ void CPlayer::Update()
 				Jumpgo = false;
 			}
 	}
+=======
+>>>>>>> parent of 812e713 (feat : ë³´ìŠ¤ ëª¬ìŠ¤í„° ë° í”Œë ˆì´ì–´ ë³€ì‹  ë° ìƒí˜¸ìž‘ìš© ë¬¸ êµ¬í˜„)
 
 
 	if (Jumpgo == true)
@@ -449,29 +333,22 @@ void CPlayer::Release()
 
 void CPlayer::AnimatorUpdate()
 {
-
-	wstring str = L"";
-
 	if (m_vecMoveDir.Length() > 0)
 		m_vecLookDir = m_vecMoveDir;
 
+	wstring str = L"";
+	
 	if (m_bIsMove)	str += L"Move";
 	else			str += L"Idle";
 
 	if (m_vecLookDir.x > 0) str += L"Right";
 	else if (m_vecLookDir.x < 0) str += L"Left";
 
-	if (BUTTONSTAY(VK_UP)) str += L"Up";
-	if (BUTTONSTAY(VK_DOWN)) str += L"Down";
+	if (m_vecLookDir.y > 0) str += L"Up";
+	else if (m_vecLookDir.y < 0) str += L"Down";
 
 
 	if (BUTTONSTAY('S')) str += L"Attack";
-
-	if (BUTTONSTAY('R')) str += L"Run";
-
-	if (BUTTONSTAY('A')) str += L"Jump";
-
-
 
 	m_pAnimator->Play(str, false);
 }
@@ -489,22 +366,13 @@ void CPlayer::Shot()
 
 void CPlayer::ChangePlayer()
 {
-	if (Light == true)
-	{
-		CGameObject* lightKirby = new CLightKirby();
-		lightKirby->SetPos(m_vecPos);
-		ADDOBJECT(lightKirby);
-		
-		DELETEOBJECT(this);
-	}
-	else if (Ice == true)
-	{
-		CGameObject* IceKirby = new CIceKirby();
-		IceKirby->SetPos(m_vecPos);
-		ADDOBJECT(IceKirby);
-		
-		DELETEOBJECT(this);
-	}
+	CGameObject* lightKirby = new CLightKirby();
+	lightKirby->SetPos(m_vecPos);
+	ADDOBJECT(lightKirby);
+
+	CAMERA->SetTargetObj(lightKirby);
+
+	DELETEOBJECT(this);
 }
 
 void CPlayer::Eat()
@@ -518,9 +386,6 @@ void CPlayer::Eat()
 		m_KE->SetPos(m_vecPos.x - 30, GetPos().y);
 
 	m_KE->SetDir(Vector(m_vecPos.x, m_vecMoveDir.y));
-	if (BUTTONSTAY(VK_DOWN))
-		DELETEOBJECT(m_KE);
-	else
 	ADDOBJECT(m_KE);
 	// ´Ù¸¥ Å¬·¡½ºÀÇ ¿ÂÄÝ¸®ÀüÀÍ½ËÀ» °¡Á®¿Ã¼öÀÖ³ª
 }
@@ -534,50 +399,14 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 	{
 		Logger::Debug(L"¸ó½ºÅÍ¿Í ºÎµúÇô µ¥¹ÌÁö¸¦ ÀÔ½À´Ï´Ù.");
 		m_LightChange = false;
-		m_IceChange = false;
 		m_Eat = false;
-		m_pHp -= 1;
-		Light = false;
-		Ice = false;
-		CGameObject* pl = pOtherCollider->GetOwner();
-		if (pl->GetPos().x <= m_vecPos.x)
-			m_vecPos.x += 20;
-		else if (pl->GetPos().x >= m_vecPos.x)
-			m_vecPos.x -= 20;
 	}
-	if (pOtherCollider->GetObjName() == L"¾óÀ½ ¸ó½ºÅÍ")
-	{
-		Logger::Debug(L"¸ó½ºÅÍ¿Í ºÎµúÇô µ¥¹ÌÁö¸¦ ÀÔ½À´Ï´Ù.");
-		Light = false;
-		m_IceChange = true;
-		Ice = true;
-		m_LightChange = false;
-		m_Eat = false;
-		m_pHp -= 1;
-		CGameObject* pl = pOtherCollider->GetOwner();
-		if (pl->GetPos().x <= m_vecPos.x)
-			m_vecPos.x += 20;
-		else if (pl->GetPos().x >= m_vecPos.x)
-			m_vecPos.x -= 20;
-	}
-
 
 	if (pOtherCollider->GetObjName() == L"ºû¸ó½ºÅÍ")
 	{
 		Logger::Debug(L"¸ó½ºÅÍ¿Í ºÎµúÇô µ¥¹ÌÁö¸¦ ÀÔ½À´Ï´Ù.");
-		Ice = false;
-		Light = true;
 		m_LightChange = true;
 		m_Eat = false;
-		m_pHp -= 1;
-		m_IceChange = false;
-
-		CGameObject* pl = pOtherCollider->GetOwner();
-		if (pl->GetPos().x <= m_vecPos.x)
-			m_vecPos.x += 20;
-		else if (pl->GetPos().x >= m_vecPos.x)
-			m_vecPos.x -= 20;
-
 
 	}
 	
@@ -593,22 +422,6 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 		if(ontile >= 1)
 		m_Gravity = false;
 		++ontile;
-	}
-
-	if (pOtherCollider->GetObjName() == L"º¸½º ¸ó½ºÅÍ")
-	{
-		Logger::Debug(L"¸ó½ºÅÍ¿Í ºÎµúÇô µ¥¹ÌÁö¸¦ ÀÔ½À´Ï´Ù.");
-		m_LightChange = false;
-		m_pHp -= 1;
-		Light = false;
-		m_IceChange = false;
-		Ice = false;
-		CGameObject* pl = pOtherCollider->GetOwner();
-		if (pl->GetPos().x <= m_vecPos.x)
-			m_vecPos.x += 20;
-		else if (pl->GetPos().x >= m_vecPos.x)
-			m_vecPos.x -= 20;
-
 	}
 }
 

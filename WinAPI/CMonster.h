@@ -2,8 +2,6 @@
 #include "CGameObject.h"
 
 class CPlayer;
-class CAnimator;
-
 
 class CMonster : public CGameObject
 {
@@ -16,30 +14,27 @@ public:
 	void SetVelocity(float velocity);
 
 private:
-	wstring str = L"";
+
 	bool m_Gravity = true;
 	Vector m_vecDir;
 	float m_fVelocity;
 	float m_fSpeed = 200.0f;
+<<<<<<< HEAD
 	CImage* m_mMoveImage;
 	CImage* m_mDieImage;
 	CAnimator* m_pAnimator;
 	bool slide;
 	float slideTime;
 	int m_mHp;
+=======
+
+>>>>>>> parent of 812e713 (feat : 보스 몬스터 및 플레이어 변신 및 상호작용 문 구현)
 	void Init() override;
 	void Update() override;
 	void Render() override;
 	void Release() override;
 	void Gravity();
-	Vector m_vecMoveDir;
-	Vector m_vecLookDir;
-	bool m_bIsMove;
-	bool Iscrash;
-	bool HP;
-	float DieTime;
-	
-	void AnimatorUpdate();
+
 protected:
 	void OnCollisionEnter(CCollider* pOtherCollider) override;
 	void OnCollisionStay(CCollider* pOtherCollider) override;
