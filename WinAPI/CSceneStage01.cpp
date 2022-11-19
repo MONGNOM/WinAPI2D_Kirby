@@ -50,7 +50,7 @@ void CSceneStage01::Enter()
 	AddGameObject(pMonster);
 
 	CLightMonster* pMonster1 = new CLightMonster();
-	pMonster1->SetPos(100, 400);
+	pMonster1->SetPos(500, 400);
 	AddGameObject(pMonster1);
 
 	CIceMonster* pMonster12 = new CIceMonster();

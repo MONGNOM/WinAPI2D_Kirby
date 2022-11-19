@@ -84,8 +84,8 @@ void CIceMonster::Update()
 
 	if (slide == true)
 	{
-		slideTime += DT;
-		if (slideTime <= 0.002f)
+		slideTime += DT; 
+		if (slideTime <= 0.1f) // 0.002f ¿´À½
 		{
 			if (GAME->PlayerPos.x <= m_vecPos.x)
 				m_vecPos.x += m_fSpeed * DT * 3;
