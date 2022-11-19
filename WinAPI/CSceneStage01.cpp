@@ -49,10 +49,14 @@ void CSceneStage01::Enter()
 
 	CLightMonster* pMonster1 = new CLightMonster();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pMonster1->SetPos(500, 400);
 =======
 	pMonster1->SetPos(450, 300);
 >>>>>>> parent of 812e713 (feat : 보스 몬스터 및 플레이어 변신 및 상호작용 문 구현)
+=======
+	pMonster1->SetPos(100, 400);
+>>>>>>> parent of aa1c191 (fix : 벽 충돌 수정)
 	AddGameObject(pMonster1);
 
 	CCameraController* pCamController = new CCameraController;

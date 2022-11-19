@@ -62,7 +62,7 @@ void CMonster::Update()
 	if (slide == true)
 	{
 		slideTime += DT;
-		if (slideTime <= 0.1f)
+		if (slideTime <= 0.002f)
 		{
 			if (GAME->PlayerPos.x <= m_vecPos.x)
 				m_vecPos.x += m_fSpeed * DT * 3;
