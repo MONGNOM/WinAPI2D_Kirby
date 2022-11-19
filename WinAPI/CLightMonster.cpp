@@ -13,6 +13,7 @@ CLightMonster::CLightMonster()
 	m_vecDir = Vector(0, 0);
 	m_fVelocity = 300;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	m_mMoveImage = nullptr;
 	m_mDieImage = nullptr;
 	m_vecMoveDir = Vector(0, 0);
@@ -24,6 +25,8 @@ CLightMonster::CLightMonster()
 	m_mAttackImage = nullptr;
 	 slide = false;
 	 slideTime = 0;
+=======
+>>>>>>> parent of 812e713 (feat : 보스 몬스터 및 플레이어 변신 및 상호작용 문 구현)
 =======
 >>>>>>> parent of 812e713 (feat : 보스 몬스터 및 플레이어 변신 및 상호작용 문 구현)
 }
@@ -101,6 +104,7 @@ void CLightMonster::OnCollisionEnter(CCollider* pOtherCollider)
 	{
 		Logger::Debug(L"���Ͱ� �÷��̾�� �ε��� �������� �Խ��ϴ�.");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
 		m_mHp -= 1;
 		Iscrash = true;
@@ -115,6 +119,9 @@ void CLightMonster::OnCollisionEnter(CCollider* pOtherCollider)
 		slide = true;
 		Iscrash = true;
 
+=======
+		DELETEOBJECT(this);
+>>>>>>> parent of 812e713 (feat : 보스 몬스터 및 플레이어 변신 및 상호작용 문 구현)
 =======
 		DELETEOBJECT(this);
 >>>>>>> parent of 812e713 (feat : 보스 몬스터 및 플레이어 변신 및 상호작용 문 구현)

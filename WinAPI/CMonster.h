@@ -20,12 +20,16 @@ private:
 	float m_fVelocity;
 	float m_fSpeed = 200.0f;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	CImage* m_mMoveImage;
 	CImage* m_mDieImage;
 	CAnimator* m_pAnimator;
 	bool slide;
 	float slideTime;
 	int m_mHp;
+=======
+
+>>>>>>> parent of 812e713 (feat : 보스 몬스터 및 플레이어 변신 및 상호작용 문 구현)
 =======
 
 >>>>>>> parent of 812e713 (feat : 보스 몬스터 및 플레이어 변신 및 상호작용 문 구현)

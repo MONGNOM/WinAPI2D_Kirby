@@ -27,6 +27,7 @@ private:
 	void Release() override;
 	void Gravity();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	Vector m_vecMoveDir;
 	Vector m_vecLookDir;
@@ -36,6 +37,8 @@ private:
 	bool slide;
 	float slideTime;
 	void AnimatorUpdate();
+=======
+>>>>>>> parent of 812e713 (feat : 보스 몬스터 및 플레이어 변신 및 상호작용 문 구현)
 =======
 >>>>>>> parent of 812e713 (feat : 보스 몬스터 및 플레이어 변신 및 상호작용 문 구현)
 
