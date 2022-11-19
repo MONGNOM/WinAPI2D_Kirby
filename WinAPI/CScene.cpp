@@ -27,6 +27,7 @@ void CScene::SceneInit()
 			pGameObject->GameObjectInit();
 		}
 	}
+	
 
 	// 상속한 자식 초기화
 	Init();

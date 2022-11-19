@@ -55,6 +55,7 @@ enum class Layer
 	SpecialMonster,
 	LightShot,
 	Eat,
+	HP,
 	Ui,
 	Size,
 };

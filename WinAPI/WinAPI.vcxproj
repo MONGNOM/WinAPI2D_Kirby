@@ -163,6 +163,7 @@
     <ClInclude Include="CImageObject.h" />
     <ClInclude Include="CInputManager.h" />
     <ClInclude Include="CKIngMonster.h" />
+    <ClInclude Include="CKirbyHp.h" />
     <ClInclude Include="CLightKirby.h" />
     <ClInclude Include="CLightMonster.h" />
     <ClInclude Include="CMissile.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="CImageObject.cpp" />
     <ClCompile Include="CInputManager.cpp" />
     <ClCompile Include="CKIngMonster.cpp" />
+    <ClCompile Include="CKirbyHp.cpp" />
     <ClCompile Include="CLightKirby.cpp" />
     <ClCompile Include="CLightMonster.cpp" />
     <ClCompile Include="CMissile.cpp" />

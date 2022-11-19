@@ -240,6 +240,9 @@
     <ClInclude Include="CIceKirbyShot.h">
       <Filter>GameObject\Stage01\kirby</Filter>
     </ClInclude>
+    <ClInclude Include="CKirbyHp.h">
+      <Filter>Engine\Asset\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -403,6 +406,9 @@
     </ClCompile>
     <ClCompile Include="CIceKirbyShot.cpp">
       <Filter>GameObject\Stage01\kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="CKirbyHp.cpp">
+      <Filter>Engine\Asset\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

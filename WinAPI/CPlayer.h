@@ -57,7 +57,7 @@ private:
 	int ontile;
 protected:
 	bool m_Eat;
-
+	bool m_Hp;
 
 	float JumpTime;
 	bool Jumpgo;
@@ -72,8 +72,9 @@ private:
 	void Render() override;
 	void Release() override;
 
+	
 
-
+	void Hp();
 	void Gravity();
 	void Eat();
 	void AnimatorUpdate();

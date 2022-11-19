@@ -22,6 +22,7 @@
 #include "CIceMonster.h"
 #include "CKIngMonster.h"
 #include "CDoor.h"
+#include "CKirbyHp.h"
 
 CSceneStage01::CSceneStage01()
 {
@@ -62,7 +63,10 @@ void CSceneStage01::Enter()
 	AddGameObject(Door);
 
 
-
+	CKirbyHp* HP = new CKirbyHp();
+	HP->SetPos(100,550);
+	HP->SetScale(270,50);
+	AddGameObject(HP);
 
 	CCameraController* pCamController = new CCameraController;
 	AddGameObject(pCamController);

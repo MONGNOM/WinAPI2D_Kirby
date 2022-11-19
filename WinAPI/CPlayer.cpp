@@ -18,6 +18,7 @@
 #include "CLightKirby.h"
 #include "CIceKirby.h"
 #include "CGameManager.h"
+#include "CKirbyHp.h"
 
 
 
@@ -31,6 +32,7 @@ CPlayer::CPlayer()
 	m_layer = Layer::Player;
 	m_strName = L"플레이어";
 
+	m_Hp = false;
 	m_Eat = true;
 	m_pIdleImageR = nullptr;
 	m_pIdleImageU = nullptr;
@@ -237,16 +239,16 @@ void CPlayer::Update()
 	
 	
 	======해야 할 명단=======
-	 11. 보스스테이지 넘어갈때 게임매니저에서 가져갈까?
 	 12. 보스 죽이면 영상
 	 13. 내가 죽으면 어캄?
 	 14. 보류 
 	========================
 	ㄴ
 	=======진행중========
-	 8. 보스맵 & 맵 수정크기
-	 9. UI 만들기 == 체력바 깎이는 거 ㄱ
+	 9. UI 만들기 == 체력바 깎이는 거 ㄱㄱ 렉트 ㄱ
+	 13. 몬스터 죽을때 이미지 클래스 만들어서 데미지를 입는 뭔가를 닿으면 죽는이미지 클래스 동적할당 위치는 몬스터 위치 하고 몬스터 딜리트
  	 11. 타이틀화면
+	 12. 게임매니저 보스방 갈떄정보주기 
 	=====================
 
 
@@ -427,7 +429,6 @@ void CPlayer::Update()
 
 		AnimatorUpdate();
 }
-
 
 void CPlayer::Gravity()
 {
