@@ -24,7 +24,8 @@ private:
 	CImage* m_mMoveImage;
 	CImage* m_mDieImage;
 	CAnimator* m_pAnimator;
-
+	bool slide;
+	float slideTime;
 	int m_mHp;
 	void Init() override;
 	void Update() override;

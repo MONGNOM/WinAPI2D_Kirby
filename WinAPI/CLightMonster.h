@@ -37,7 +37,8 @@ private:
 	bool m_bIsMove;
 	bool Iscrash;
 	float DieTime;
-
+	bool slide;
+	float slideTime;
 	void AnimatorUpdate();
 
 protected:

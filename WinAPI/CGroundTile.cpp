@@ -9,6 +9,7 @@ CGroundTile::CGroundTile()
 {
 	m_strName  = L"¶¥";
 	m_type = TypeTile::Ground;
+	m_layer = Layer::Tile;
 }
 
 CGroundTile::~CGroundTile()
