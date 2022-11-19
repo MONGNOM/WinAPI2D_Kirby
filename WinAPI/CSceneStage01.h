@@ -3,15 +3,12 @@
 
 class CPlayer;
 class CLightKirby;
-class CDoor;
 
 class CSceneStage01 : public CScene
 {
 
 	friend CPlayer;
 	friend CLightKirby;
-	friend CDoor;
-
 
 public:
 	CSceneStage01();

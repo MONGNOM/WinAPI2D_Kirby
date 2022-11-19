@@ -20,17 +20,14 @@ private:
 	Vector m_vecDir;
 	float m_fVelocity;
 	float m_fSpeed = 200.0f;
-	CImage* m_mMoveImage;
-	CImage* m_mDieImage;
-	CImage* m_mAttackImage;
-	CAnimator* m_pAnimator;
 
-	int m_mHp;
 	void Init() override;
 	void Update() override;
 	void Render() override;
 	void Release() override;
 	void Gravity();
+<<<<<<< HEAD
+<<<<<<< HEAD
 	
 	Vector m_vecMoveDir;
 	Vector m_vecLookDir;
@@ -40,6 +37,10 @@ private:
 	bool slide;
 	float slideTime;
 	void AnimatorUpdate();
+=======
+>>>>>>> parent of 812e713 (feat : 보스 몬스터 및 플레이어 변신 및 상호작용 문 구현)
+=======
+>>>>>>> parent of 812e713 (feat : 보스 몬스터 및 플레이어 변신 및 상호작용 문 구현)
 
 protected:
 	void OnCollisionEnter(CCollider* pOtherCollider) override;

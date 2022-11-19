@@ -222,24 +222,6 @@
     <ClInclude Include="LightKirbyShot.h">
       <Filter>GameObject\Stage01\kirby</Filter>
     </ClInclude>
-    <ClInclude Include="CIceMonster.h">
-      <Filter>GameObject\Stage01\Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="CKIngMonster.h">
-      <Filter>GameObject\Stage01\Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="CDoor.h">
-      <Filter>GameObject\Stage01</Filter>
-    </ClInclude>
-    <ClInclude Include="CSceneBoss.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="CIceKirby.h">
-      <Filter>GameObject\Stage01\kirby</Filter>
-    </ClInclude>
-    <ClInclude Include="CIceKirbyShot.h">
-      <Filter>GameObject\Stage01\kirby</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -384,24 +366,6 @@
       <Filter>Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="LightKirbyShot.cpp">
-      <Filter>GameObject\Stage01\kirby</Filter>
-    </ClCompile>
-    <ClCompile Include="CIceMonster.cpp">
-      <Filter>GameObject\Stage01\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="CKIngMonster.cpp">
-      <Filter>GameObject\Stage01\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="CDoor.cpp">
-      <Filter>GameObject\Stage01</Filter>
-    </ClCompile>
-    <ClCompile Include="CSceneBoss.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="CIceKirby.cpp">
-      <Filter>GameObject\Stage01\kirby</Filter>
-    </ClCompile>
-    <ClCompile Include="CIceKirbyShot.cpp">
       <Filter>GameObject\Stage01\kirby</Filter>
     </ClCompile>
   </ItemGroup>

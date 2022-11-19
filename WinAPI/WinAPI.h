@@ -31,8 +31,6 @@ enum class GroupScene
 
 	Stage01,
 
-	Boss,
-
 	Size,
 };
 
@@ -46,7 +44,6 @@ enum class Layer
 	BackGround,
 	Ground,
 	Tile,
-	Door,
 	Player,
 	LPlayer,
 	Missile,
