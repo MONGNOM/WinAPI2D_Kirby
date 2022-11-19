@@ -40,6 +40,9 @@ private:
 	bool Iscrash;
 	float DieTime;
 
+	bool slide;
+	float slideTime;
+
 	void AnimatorUpdate();
 
 protected:

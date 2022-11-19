@@ -11,6 +11,7 @@ CBlock::CBlock()
 {
 	m_strName = L"º®";
 	m_type = TypeTile::Wall;
+	m_layer = Layer::Tile;
 	
 }
 

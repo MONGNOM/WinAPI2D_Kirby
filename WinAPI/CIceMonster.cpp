@@ -20,6 +20,8 @@ CIceMonster::CIceMonster()
 	DieTime = 0;
 	Iscrash = false;
 	m_mAttackImage = nullptr;
+	slide = false;
+	slideTime = 0;
 }
 
 CIceMonster::~CIceMonster()
@@ -79,6 +81,21 @@ void CIceMonster::Update()
 			DieTime = 0;
 		}
 	}
+
+	if (slide == true)
+	{
+		slideTime += DT;
+		if (slideTime <= 0.002f)
+		{
+			if (GAME->PlayerPos.x <= m_vecPos.x)
+				m_vecPos.x += m_fSpeed * DT * 3;
+
+			else if (GAME->PlayerPos.x >= m_vecPos.x)
+				m_vecPos.x -= m_fSpeed * DT * 3;
+			
+			slideTime = 0;
+		}
+	}
 }
 
 void CIceMonster::Render()
@@ -119,12 +136,9 @@ void CIceMonster::OnCollisionEnter(CCollider* pOtherCollider)
 {
 	if (pOtherCollider->GetObjName() == L"플레이어")
 	{
+		slide = true;
 		Logger::Debug(L"몬스터가 플레이어와 부딪혀 데미지를 입습니다.");
-		CGameObject* pl = pOtherCollider->GetOwner();
-		if (pl->GetPos().x <= m_vecPos.x)
-			m_vecPos.x += 100;
-		else if (pl->GetPos().x >= m_vecPos.x)
-			m_vecPos.x -= 100;
+
 		m_mHp -= 1;
 		Iscrash = true;
 	}
@@ -134,12 +148,8 @@ void CIceMonster::OnCollisionEnter(CCollider* pOtherCollider)
 	{
 
 		Logger::Debug(L"몬스터가 빛공격을 맞았습니다.");
-		CGameObject* pl = pOtherCollider->GetOwner();
-		if (pl->GetPos().x <= m_vecPos.x)
-			m_vecPos.x += 100;
-		else if (pl->GetPos().x >= m_vecPos.x)
-			m_vecPos.x -= 100;
-
+		
+		slide = true;
 		
 		Iscrash = true;
 
@@ -190,4 +200,5 @@ void CIceMonster::OnCollisionExit(CCollider* pOtherCollider)
 		DELETEOBJECT(this);
 
 	}
+
 }
