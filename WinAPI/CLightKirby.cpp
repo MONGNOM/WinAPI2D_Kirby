@@ -92,6 +92,8 @@ void CLightKirby::Init()
 	m_pAnimator->CreateAnimation(L"IdleLeftDown", m_pIdleImageLD, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(50.f, 0.f), 10.0f, 1);
 	m_pAnimator->CreateAnimation(L"IdleLeftUp", m_pIdleImageU, Vector(700.f, 100.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.08f, 11);
 
+	m_pAnimator->CreateAnimation(L"IdleLeftUpJump", m_pIdleImageU, Vector(700.f, 100.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.08f, 11);
+	m_pAnimator->CreateAnimation(L"IdleRightUpJump", m_pIdleImageU, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 11);
 
 	m_pAnimator->CreateAnimation(L"IdleRightDownRun", m_pIdleImageRD, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(43.f, 0.f), 10.0f, 1);
 	m_pAnimator->CreateAnimation(L"MoveRightDownRun", m_pIdleImageRD, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
@@ -107,6 +109,14 @@ void CLightKirby::Init()
 	m_pAnimator->CreateAnimation(L"MoveLeft", m_pMoveImageL, Vector(700.f, 100.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.05f, 10);
 	m_pAnimator->CreateAnimation(L"MoveLeftUp", m_pIdleImageU, Vector(700.f, 100.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.08f, 11);
 
+	m_pAnimator->CreateAnimation(L"IdleRightUpRun", m_pIdleImageU, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 11);
+	m_pAnimator->CreateAnimation(L"IdleLeftUpRun", m_pIdleImageU, Vector(700.f, 100.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.08f, 11);
+
+	m_pAnimator->CreateAnimation(L"MoveRightUpRun", m_pIdleImageU, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 11);
+	m_pAnimator->CreateAnimation(L"MoveLeftUpRun", m_pIdleImageU, Vector(700.f, 100.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.08f, 11);
+
+
+
 	m_pAnimator->CreateAnimation(L"IdleAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(132.f, 132.f), Vector(150.f, 0.f), 0.02f, 35);
 	m_pAnimator->CreateAnimation(L"IdleUpAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(132.f, 132.f), Vector(150.f, 0.f), 0.02f, 35);
 	m_pAnimator->CreateAnimation(L"IdleRightUpAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(132.f, 132.f), Vector(150.f, 0.f), 0.02f, 35);
@@ -116,6 +126,14 @@ void CLightKirby::Init()
 	m_pAnimator->CreateAnimation(L"IdleRightDownAttack", m_pAttackImageRD, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.5f, 3);
 	m_pAnimator->CreateAnimation(L"IdleDownAttack", m_pAttackImageRD, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.5f, 3);
 	m_pAnimator->CreateAnimation(L"IdleLeftDownAttack", m_pAttackImageRD, Vector(150.f, 100.f), Vector(50.f, 50.f), Vector(-70.f, 0.f), 0.5f, 3);
+	m_pAnimator->CreateAnimation(L"IdleRightAttackRun", m_pAttackImage, Vector(0.f, 0.f), Vector(132.f, 132.f), Vector(150.f, 0.f), 0.02f, 35);
+	m_pAnimator->CreateAnimation(L"IdleLeftAttackRun", m_pAttackImage, Vector(5070.f, 142.f), Vector(132.f, 132.f), Vector(-150.f, 0.f), 0.02f, 35);
+	m_pAnimator->CreateAnimation(L"IdleRightUpAttackRun", m_pAttackImage, Vector(0.f, 0.f), Vector(132.f, 132.f), Vector(150.f, 0.f), 0.02f, 35);
+	m_pAnimator->CreateAnimation(L"IdleLeftUpAttackRun", m_pAttackImage, Vector(5070.f, 142.f), Vector(132.f, 132.f), Vector(-150.f, 0.f), 0.02f, 35);
+
+
+	m_pAnimator->CreateAnimation(L"IdleRightUpAttackJump", m_pAttackImage, Vector(0.f, 0.f), Vector(132.f, 132.f), Vector(150.f, 0.f), 0.02f, 35);
+	m_pAnimator->CreateAnimation(L"IdleLeftUpAttackJump", m_pAttackImage, Vector(5070.f, 142.f), Vector(132.f, 132.f), Vector(-150.f, 0.f), 0.02f, 35);
 
 	m_pAnimator->CreateAnimation(L"MoveRightAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(132.f, 132.f), Vector(150.f, 0.f), 0.02f, 35);
 	m_pAnimator->CreateAnimation(L"MoveLeftAttack", m_pAttackImage, Vector(5070.f, 142.f), Vector(132.f, 132.f), Vector(-150.f, 0.f), 0.02f, 35);
@@ -135,7 +153,13 @@ void CLightKirby::Init()
 
 	m_pAnimator->CreateAnimation(L"MoveRightAttackRun", m_pAttackImage, Vector(0.f, 0.f), Vector(132.f, 132.f), Vector(150.f, 0.f), 0.02f, 35);
 	m_pAnimator->CreateAnimation(L"MoveLeftAttackRun", m_pAttackImage, Vector(5070.f, 142.f), Vector(132.f, 132.f), Vector(-150.f, 0.f), 0.02f, 35);
+	m_pAnimator->CreateAnimation(L"MoveLeftUpAttackRun", m_pAttackImage, Vector(5070.f, 142.f), Vector(132.f, 132.f), Vector(-150.f, 0.f), 0.02f, 35);
+	m_pAnimator->CreateAnimation(L"MoveLeftUpAttackRunJump", m_pAttackImage, Vector(5070.f, 142.f), Vector(132.f, 132.f), Vector(-150.f, 0.f), 0.02f, 35);
 	m_pAnimator->CreateAnimation(L"MoveUpAttackRun", m_pAttackImage, Vector(0.f, 0.f), Vector(132.f, 132.f), Vector(150.f, 0.f), 0.02f, 35);
+	m_pAnimator->CreateAnimation(L"MoveRightUpAttackRun", m_pAttackImage, Vector(0.f, 0.f), Vector(132.f, 132.f), Vector(150.f, 0.f), 0.02f, 35);
+	m_pAnimator->CreateAnimation(L"MoveRightUpAttackRunJump", m_pAttackImage, Vector(0.f, 0.f), Vector(132.f, 132.f), Vector(150.f, 0.f), 0.02f, 35);
+	m_pAnimator->CreateAnimation(L"MoveLeftAttackRunJump", m_pAttackImage, Vector(5070.f, 142.f), Vector(132.f, 132.f), Vector(-150.f, 0.f), 0.02f, 35);
+	m_pAnimator->CreateAnimation(L"MoveRightAttackRunJump", m_pAttackImage, Vector(0.f, 0.f), Vector(132.f, 132.f), Vector(150.f, 0.f), 0.02f, 35);
 
 
 	m_pAnimator->CreateAnimation(L"IdleJump", m_pJumpImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.08f, 11);
