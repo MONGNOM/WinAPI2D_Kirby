@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "CGameManager.h"
+#include "CKirbyHp.h"
 
 CGameManager::CGameManager()
 {
@@ -21,4 +22,9 @@ void CGameManager::Update()
 
 void CGameManager::Release()
 {
+}
+
+void CGameManager::GetPlayerHp()
+{
+	GAME->PlayerHp;
 }

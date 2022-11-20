@@ -21,7 +21,6 @@ private:
 	bool m_Basic;
 
 
-
 private:
 	void Init()		override;
 	void Enter()	override;

@@ -22,6 +22,10 @@ void CSceneTitle::Init()
 void CSceneTitle::Enter()
 {
 	CAMERA->FadeIn(0.25f);
+
+	CImageObject* Title = new CImageObject;
+	Title->SetImage(RESOURCE->LoadImg(L"Title", L"Image\\Title.png"));
+	AddGameObject(Title);
 }
 
 void CSceneTitle::Update()
@@ -43,7 +47,7 @@ void CSceneTitle::Render()
 		WINSIZEX * 0.5f - 100,
 		WINSIZEY * 0.5f - 10,
 		WINSIZEX * 0.5f + 100,
-		WINSIZEY * 0.5f + 10,
+		WINSIZEY * 0.5f + 295,
 		Color(0, 0, 0, 1.f),
 		20.f);
 }

@@ -10,6 +10,7 @@
 #include "CLightKirby.h"
 #include "CIceMonster.h"
 #include "CKIngMonster.h"
+#include "CKirbyHp.h"
 
 
 CSceneBoss::CSceneBoss()
@@ -28,6 +29,10 @@ void CSceneBoss::Init()
 
 void CSceneBoss::Enter()
 {
+	CKirbyHp* HP = new CKirbyHp;
+	HP->SetPos(100, 550);
+	HP->SetScale(270, 50);
+	ADDOBJECT(HP);
 
 
 	CKIngMonster* pMonster123 = new CKIngMonster();
@@ -39,14 +44,14 @@ void CSceneBoss::Enter()
 	//AddGameObject(Ground);
 
 	CImageObject* BossBackGround = new CImageObject;
-	BossBackGround->SetImage(RESOURCE->LoadImg(L"BbackGround1", L"Image\\BossStage123.png"));
+	BossBackGround->SetImage(RESOURCE->LoadImg(L"BbackGround1", L"Image\\BossStage12345.png"));
 	AddGameObject(BossBackGround);
 
 	pPlayer = new CPlayer();
 	pPlayer->SetPos(100, 500);
 	ADDOBJECT(pPlayer);
 
-	CAMERA->SetTargetPos(Vector(432,332));
+	CAMERA->SetTargetPos(Vector(430,400));
 
 	CAMERA->FadeIn(0.25f);
 	LoadTile(GETPATH + L"Tile\\Boss.tile");

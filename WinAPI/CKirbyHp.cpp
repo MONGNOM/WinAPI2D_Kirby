@@ -11,6 +11,11 @@ CKirbyHp::~CKirbyHp()
 {
 }
 
+void CKirbyHp::SetHp()
+{
+	GAME->PlayerHp;
+}
+
 void CKirbyHp::OnMouseEnter()
 {
 }

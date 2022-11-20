@@ -16,9 +16,11 @@ private:
 	CAnimator* m_pAnimator;
 	CImage* HpImage;
 
+public:
+	
 
 
-	void AnimatorUpdate();
+	void SetHp();
 
 	void OnMouseEnter();
 	void OnMouseOver();

@@ -46,20 +46,14 @@ void CSceneStage01::Init()
 void CSceneStage01::Enter()
 {
 
+
 	CMonster* pMonster = new CMonster();
 	pMonster->SetPos(2000, 400);
 	AddGameObject(pMonster);
 
 	CLightMonster* pMonster1 = new CLightMonster();
-	pMonster1->SetPos(100, 400);
+	pMonster1->SetPos(400, 400);
 	AddGameObject(pMonster1);
-	CLightMonster* pMonster2 = new CLightMonster();
-	pMonster2->SetPos(300, 400);
-	AddGameObject(pMonster2);
-
-	CLightMonster* pMonster3 = new CLightMonster();
-	pMonster3->SetPos(400, 400);
-	AddGameObject(pMonster3);
 
 	CIceMonster* pMonster12 = new CIceMonster();
 	pMonster12->SetPos(900, 400);
@@ -69,12 +63,14 @@ void CSceneStage01::Enter()
 	Door->SetPos(4930, 440);
 	AddGameObject(Door);
 
-
-	CKirbyHp* HP = new CKirbyHp();
+	CKirbyHp* HP = new CKirbyHp;
 	HP->SetPos(100,550);
 	HP->SetScale(270,50);
 	AddGameObject(HP);
 
+
+
+	
 	CCameraController* pCamController = new CCameraController;
 	AddGameObject(pCamController);
 
@@ -87,7 +83,7 @@ void CSceneStage01::Enter()
 	AddGameObject(BackGround);
 
 	pPlayer = new CPlayer();
-	pPlayer->SetPos(300, 500);
+	pPlayer->SetPos(220, 500);
 	ADDOBJECT(pPlayer);
 
 	CAMERA->SetTargetPos(Vector(400, 500));

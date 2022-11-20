@@ -22,6 +22,7 @@ private:
 	CLightKirby* LPlayer;
 	bool m_LightChange;
 	bool m_Basic;
+	
 
 
 
