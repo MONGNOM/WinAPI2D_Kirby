@@ -62,7 +62,7 @@ CPlayer::CPlayer()
 	m_pAttackImageLD = nullptr;
 	m_pJumpImage = nullptr;
 
-	m_pHp = 10;
+	m_pHp = 5;
 	Light = false;
 	Ice = false;
 	m_IceChange = false;
@@ -267,6 +267,7 @@ void CPlayer::Update()
 	*/
 
 	GAME->PlayerPos = m_vecPos;
+	GAME->PlayerHp = m_pHp;
 
 	if (m_pHp <= 0)
 	{

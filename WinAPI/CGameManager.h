@@ -15,6 +15,7 @@ private:
 	void Release();
 public:
 	Vector PlayerPos;
+	int PlayerHp;
 };
 
 #define GAME CGameManager::GetInstance()

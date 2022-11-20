@@ -4,6 +4,7 @@
 CGameManager::CGameManager()
 {
 	PlayerPos = Vector(0, 0);
+	PlayerHp = 0;
 }
 
 CGameManager::~CGameManager()

@@ -29,35 +29,24 @@ void CSceneBoss::Init()
 void CSceneBoss::Enter()
 {
 
-	CMonster* pMonster = new CMonster();
-	pMonster->SetPos(700, 300);
-	AddGameObject(pMonster);
-
-	CLightMonster* pMonster1 = new CLightMonster();
-	pMonster1->SetPos(450, 300);
-	AddGameObject(pMonster1);
-
-	CIceMonster* pMonster12 = new CIceMonster();
-	pMonster12->SetPos(900, 300);
-	AddGameObject(pMonster12);
 
 	CKIngMonster* pMonster123 = new CKIngMonster();
-	pMonster123->SetPos(1200, 300);
+	pMonster123->SetPos(700, 300);
 	AddGameObject(pMonster123);
 
-	CGround* Ground = new CGround;
-	Ground->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\Ground.png"));
-	AddGameObject(Ground);
+	//CGround* Ground = new CGround;
+	//Ground->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\BossStage1.png"));
+	//AddGameObject(Ground);
 
-	CBackGround* BackGround = new CBackGround;
-	BackGround->SetImage(RESOURCE->LoadImg(L"BbackGround", L"Image\\BackGround_1.png"));
-	AddGameObject(BackGround);
+	CImageObject* BossBackGround = new CImageObject;
+	BossBackGround->SetImage(RESOURCE->LoadImg(L"BbackGround1", L"Image\\BossStage123.png"));
+	AddGameObject(BossBackGround);
 
 	pPlayer = new CPlayer();
-	pPlayer->SetPos(250, 500);
+	pPlayer->SetPos(100, 500);
 	ADDOBJECT(pPlayer);
 
-	CAMERA->SetTargetObj(pPlayer);
+	CAMERA->SetTargetPos(Vector(432,332));
 
 	CAMERA->FadeIn(0.25f);
 	LoadTile(GETPATH + L"Tile\\Boss.tile");
