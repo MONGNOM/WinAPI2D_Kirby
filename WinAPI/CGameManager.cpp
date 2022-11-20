@@ -5,7 +5,7 @@
 CGameManager::CGameManager()
 {
 	PlayerPos = Vector(0, 0);
-	PlayerHp = 0;
+	PlayerHp = 5;
 
 	changePlayerLight = false;
 	changePlayerIce = false;
@@ -22,6 +22,11 @@ void CGameManager::Init()
 void CGameManager::Update()
 {
 }
+
+void CGameManager::Enter()
+{
+}
+
 
 void CGameManager::Release()
 {

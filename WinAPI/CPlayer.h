@@ -17,14 +17,14 @@ class CPlayer : public CGameObject
 public:
 	CPlayer();
 	virtual ~CPlayer();
-
+	int m_pHp;
 private:
 
 	bool m_Basic;
 	bool m_LightChange;
 	bool m_Gravity;
 	CAnimator* m_pAnimator;
-	int m_pHp;
+	
 
 	bool Light;
 	bool Ice;

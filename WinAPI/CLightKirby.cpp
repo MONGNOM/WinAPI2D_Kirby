@@ -28,7 +28,7 @@ CLightKirby::CLightKirby()
 	m_Gravity = true;
 	m_pChangeImage = nullptr;
 
-	m_pHp = 3;
+	m_pHp = GAME->PlayerHp;
 	m_pIdleImageR = nullptr;
 	m_pIdleImageU = nullptr;
 	m_pIdleImageL = nullptr;
@@ -200,6 +200,7 @@ void CLightKirby::Init()
 
 void CLightKirby::Update()
 {
+	GAME->PlayerHp = m_pHp;
 	GAME->PlayerPos = m_vecPos;
 	Gravity();
 	m_bIsMove = false;
@@ -414,7 +415,7 @@ void CLightKirby::OnCollisionEnter(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"몬스터")
 	{
 		Logger::Debug(L"몬스터와 부딪혀 데미지를 입습니다.");
-		m_pHp = -1;
+		m_pHp  -= 1;
 		CGameObject* pl = pOtherCollider->GetOwner();
 		if (pl->GetPos().x <= m_vecPos.x)
 			m_vecPos.x += 20;
@@ -425,7 +426,7 @@ void CLightKirby::OnCollisionEnter(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"빛몬스터")
 	{
 		Logger::Debug(L"몬스터와 부딪혀 데미지를 입습니다.");
-		m_pHp = -1;
+		m_pHp -= 1;
 		CGameObject* pl = pOtherCollider->GetOwner();
 		if (pl->GetPos().x <= m_vecPos.x)
 			m_vecPos.x += 20;
@@ -450,7 +451,7 @@ void CLightKirby::OnCollisionEnter(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"보스 몬스터")
 	{
 		Logger::Debug(L"몬스터와 부딪혀 데미지를 입습니다.");
-		m_pHp = -1;
+		m_pHp -= 1;
 		CGameObject* pl = pOtherCollider->GetOwner();
 		if (pl->GetPos().x <= m_vecPos.x)
 			m_vecPos.x += 20;

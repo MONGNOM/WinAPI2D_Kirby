@@ -11,6 +11,7 @@
 #include "CIceMonster.h"
 #include "CKIngMonster.h"
 #include "CKirbyHp.h"
+#include "CKirbyStatus.h"
 
 
 CSceneBoss::CSceneBoss()
@@ -30,18 +31,13 @@ void CSceneBoss::Init()
 void CSceneBoss::Enter()
 {
 	CKirbyHp* HP = new CKirbyHp;
-	HP->SetPos(100, 550);
+	HP->SetPos(110, 550);
 	HP->SetScale(270, 50);
 	ADDOBJECT(HP);
-
 
 	CKIngMonster* pMonster123 = new CKIngMonster();
 	pMonster123->SetPos(700, 300);
 	AddGameObject(pMonster123);
-
-	//CGround* Ground = new CGround;
-	//Ground->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\BossStage1.png"));
-	//AddGameObject(Ground);
 
 	CImageObject* BossBackGround = new CImageObject;
 	BossBackGround->SetImage(RESOURCE->LoadImg(L"BbackGround1", L"Image\\BossStage12345.png"));
@@ -50,6 +46,11 @@ void CSceneBoss::Enter()
 	pPlayer = new CPlayer();
 	pPlayer->SetPos(100, 500);
 	ADDOBJECT(pPlayer);
+
+	CKirbyStatus* status = new CKirbyStatus;
+	status->SetPos(8, 558);
+	status->SetScale(125, 50);
+	AddGameObject(status);
 
 	CAMERA->SetTargetPos(Vector(430,400));
 

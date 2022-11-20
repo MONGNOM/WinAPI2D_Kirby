@@ -12,6 +12,7 @@ public:
 private:
 	void Init();
 	void Update();
+	void Enter();
 	void Release();
 public:
 	Vector PlayerPos;

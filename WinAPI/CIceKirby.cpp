@@ -30,7 +30,7 @@ CIceKirby::CIceKirby()
 	m_Gravity = true;
 	m_pChangeImage = nullptr;
 
-	m_pHp = 3;
+	m_pHp = GAME->PlayerHp;
 	m_pIdleImageR = nullptr;
 	m_pIdleImageU = nullptr;
 	m_pIdleImageL = nullptr;
@@ -146,6 +146,8 @@ void CIceKirby::Init()
 	m_pAnimator->CreateAnimation(L"MoveLeftUpAttackRun", m_pAttackImage, Vector(630.f, 100.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 10);
 	m_pAnimator->CreateAnimation(L"MoveLeftAttackRun", m_pAttackImage, Vector(630.f, 100.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 10);
 	m_pAnimator->CreateAnimation(L"MoveUpAttackRun", m_pAttackImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 10);
+	m_pAnimator->CreateAnimation(L"MoveRightAttackRunJump", m_pAttackImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 10);
+	m_pAnimator->CreateAnimation(L"MoveLeftAttackRunJump", m_pAttackImage, Vector(630.f, 100.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 10);
 
 
 	m_pAnimator->CreateAnimation(L"IdleJump", m_pJumpImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.08f, 10);
@@ -184,7 +186,7 @@ void CIceKirby::Init()
 
 void CIceKirby::Update()
 {
-
+	GAME->PlayerHp = m_pHp;
 	GAME->PlayerPos = m_vecPos;
 	Gravity();
 	m_bIsMove = false;
@@ -394,7 +396,7 @@ void CIceKirby::OnCollisionEnter(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"몬스터")
 	{
 		Logger::Debug(L"몬스터와 부딪혀 데미지를 입습니다.");
-		m_pHp = -1;
+		m_pHp -= 1;
 		CGameObject* pl = pOtherCollider->GetOwner();
 		if (pl->GetPos().x <= m_vecPos.x)
 			m_vecPos.x += 20;
@@ -405,7 +407,7 @@ void CIceKirby::OnCollisionEnter(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"빛몬스터")
 	{
 		Logger::Debug(L"몬스터와 부딪혀 데미지를 입습니다.");
-		m_pHp = -1;
+		m_pHp  -= 1;
 		CGameObject* pl = pOtherCollider->GetOwner();
 		if (pl->GetPos().x <= m_vecPos.x)
 			m_vecPos.x += 20;
@@ -430,7 +432,7 @@ void CIceKirby::OnCollisionEnter(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"보스 몬스터")
 	{
 		Logger::Debug(L"몬스터와 부딪혀 데미지를 입습니다.");
-		m_pHp = -1;
+		m_pHp -= 1;
 		CGameObject* pl = pOtherCollider->GetOwner();
 		if (pl->GetPos().x <= m_vecPos.x)
 			m_vecPos.x += 20;
