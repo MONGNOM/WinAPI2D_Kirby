@@ -6,6 +6,9 @@ CGameManager::CGameManager()
 {
 	PlayerPos = Vector(0, 0);
 	PlayerHp = 0;
+
+	changePlayerLight = false;
+	changePlayerIce = false;
 }
 
 CGameManager::~CGameManager()

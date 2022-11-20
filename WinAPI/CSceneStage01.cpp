@@ -23,6 +23,7 @@
 #include "CKIngMonster.h"
 #include "CDoor.h"
 #include "CKirbyHp.h"
+#include "CKirbyStatus.h"
 
 CSceneStage01::CSceneStage01()
 {
@@ -64,9 +65,14 @@ void CSceneStage01::Enter()
 	AddGameObject(Door);
 
 	CKirbyHp* HP = new CKirbyHp;
-	HP->SetPos(100,550);
+	HP->SetPos(110,550);
 	HP->SetScale(270,50);
 	AddGameObject(HP);
+
+	CKirbyStatus* status = new CKirbyStatus;
+	status->SetPos(8, 558);
+	status->SetScale(125, 50);
+	AddGameObject(status);
 
 
 

@@ -379,7 +379,6 @@ void CLightKirby::BasicKirby()
 	BasicKirby->SetPos(m_vecPos);
 	ADDOBJECT(BasicKirby);
 
-	CAMERA->SetTargetObj(BasicKirby);
 
 	DELETEOBJECT(this);
 

@@ -17,6 +17,9 @@ public:
 	Vector PlayerPos;
 	int PlayerHp;
 
+	bool changePlayerLight;
+	bool changePlayerIce;
+
 	void GetPlayerHp();
 };
 

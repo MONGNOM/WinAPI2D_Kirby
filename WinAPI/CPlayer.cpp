@@ -277,6 +277,12 @@ void CPlayer::Update()
 		DELETEOBJECT(this);
 	}
 
+	if (GAME->changePlayerIce == true || GAME->changePlayerLight == true)
+	{
+		ChangePlayer();
+		GAME->changePlayerIce = false;
+		GAME->changePlayerLight = false;
+	}
 
 	if (BUTTONSTAY(VK_LEFT))
 	{
@@ -499,7 +505,7 @@ void CPlayer::ChangePlayer()
 		CGameObject* lightKirby = new CLightKirby();
 		lightKirby->SetPos(m_vecPos);
 		ADDOBJECT(lightKirby);
-		
+		GAME->changePlayerLight = true;
 		DELETEOBJECT(this);
 	}
 	else if (Ice == true)
@@ -507,7 +513,8 @@ void CPlayer::ChangePlayer()
 		CGameObject* IceKirby = new CIceKirby();
 		IceKirby->SetPos(m_vecPos);
 		ADDOBJECT(IceKirby);
-		
+		GAME->changePlayerIce = true;
+
 		DELETEOBJECT(this);
 	}
 }
