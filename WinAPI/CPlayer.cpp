@@ -67,6 +67,9 @@ CPlayer::CPlayer()
 	Ice = false;
 	m_IceChange = false;
 
+	KirbyNoHit = false;
+	NoHitTime = 0;
+
 }
 
 
@@ -203,9 +206,9 @@ void CPlayer::Init()
 		m_pAnimator->CreateAnimation(L"IdleRightAttackJump", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 0.03f, 1);
 		m_pAnimator->CreateAnimation(L"IdleLeftAttackJump", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
 
-		m_pAnimator->CreateAnimation(L"MoveRightAttackJump", m_pAttackImage, Vector(0.f, 0.f), Vector(10.f, 10.f), Vector(45.f, 0.f), 10.0f, 3);
-		m_pAnimator->CreateAnimation(L"MoveLeftAttackJump", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
-		m_pAnimator->CreateAnimation(L"MoveAttackJump", m_pAttackImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
+		m_pAnimator->CreateAnimation(L"MoveRightAttackJump", m_pAttackImage, Vector(0.f, 0.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 9);
+		m_pAnimator->CreateAnimation(L"MoveLeftAttackJump", m_pAttackImage, Vector(0.f, 100.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 9);
+		m_pAnimator->CreateAnimation(L"MoveAttackJump", m_pAttackImage, Vector(0.f, 0.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 9);
 
 	m_pAnimator->Play(L"IdleUp", false);
 	AddComponent(m_pAnimator);
@@ -215,6 +218,7 @@ void CPlayer::Init()
 
 void CPlayer::Update()
 {
+
 	Gravity();
 	m_bIsMove = false;
 	/*
@@ -253,8 +257,7 @@ void CPlayer::Update()
 	========================
 	ㄴ
 	=======진행중========
-	 13. 몬스터 자동으로 움직이기 == 공격은 오브젝트 하나 만들어서 그 오브젝트에 충돌시 공격 하게끔 만들기 ==  시간 줘서 좌우 이동 ㄱ
-	 ㄴ 보스는 패턴 구현해주기 == 패턴도 오브젝트 만들어서 들어오면 공격 모션 ㄱ
+	 1. 보스는 패턴 구현해주기 == 패턴도 오브젝트 만들어서 들어오면 공격 모션 ㄱ
 
 	 2. 데미지 받았을때 2초 무적 ㄱ 보스도 마찬가지
 
@@ -279,6 +282,8 @@ void CPlayer::Update()
 	 13. 커비 체력, 능력공유
 	 14. 보스 체력 구현
 	 15. 리소스 완성
+	 16. 몬스터 이동
+	 17. 방향 따라 이미지 변경
 	=====================
 	*/
 
@@ -573,6 +578,18 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 			m_vecPos.x += 20;
 		else if (pl->GetPos().x >= m_vecPos.x)
 			m_vecPos.x -= 20;
+
+		if (GAME->HpNotDown == true)
+		{
+			m_pHp -= 0;
+
+		}
+		else
+		{
+			m_pHp -= 1;
+		}
+		GAME->PlayerHit = true;
+
 	}
 	if (pOtherCollider->GetObjName() == L"얼음 몬스터")
 	{
@@ -582,12 +599,26 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 		Ice = true;
 		m_LightChange = false;
 		m_Eat = false;
-		m_pHp -= 1;
+
+		if (GAME->HpNotDown == true)
+		{
+			m_pHp -= 0;
+
+		}
+		else
+		{
+			m_pHp -= 1;
+		}
+		GAME->PlayerHit = true;
+
 		CGameObject* pl = pOtherCollider->GetOwner();
 		if (pl->GetPos().x <= m_vecPos.x)
 			m_vecPos.x += 20;
 		else if (pl->GetPos().x >= m_vecPos.x)
 			m_vecPos.x -= 20;
+
+
+
 	}
 
 
@@ -598,8 +629,19 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 		Light = true;
 		m_LightChange = true;
 		m_Eat = false;
-		m_pHp -= 1;
+		if (GAME->HpNotDown == true)
+		{
+			m_pHp -= 0;
+
+		}
+		else
+		{
+			m_pHp -= 1;
+		}
+		GAME->PlayerHit = true;
 		m_IceChange = false;
+
+
 
 		CGameObject* pl = pOtherCollider->GetOwner();
 		if (pl->GetPos().x <= m_vecPos.x)
@@ -628,7 +670,21 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 	{
 		Logger::Debug(L"몬스터와 부딪혀 데미지를 입습니다.");
 		m_LightChange = false;
-		m_pHp -= 1;
+
+		if (GAME->HpNotDown == true)
+		{
+			m_pHp -= 0;
+
+		}
+		else
+		{
+			m_pHp -= 1;
+		}
+		GAME->PlayerHit = true;
+
+
+
+
 		Light = false;
 		m_IceChange = false;
 		Ice = false;
@@ -637,6 +693,8 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 			m_vecPos.x += 0;
 		else if (pl->GetPos().x >= m_vecPos.x)
 			m_vecPos.x -= 0;
+
+
 
 	}
 }

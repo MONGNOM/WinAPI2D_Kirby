@@ -19,8 +19,10 @@ private:
 	bool m_Gravity = true;
 	Vector m_vecDir;
 	float m_fVelocity;
+	float JumpTime;
 	float m_fSpeed = 200.0f;
 	CImage* m_mMoveImage;
+	CImage* m_mMoveImageR;
 	CImage* m_mDieImage;
 	CImage* m_mAttackImage;
 	CAnimator* m_pAnimator;
@@ -32,12 +34,16 @@ private:
 	void Release() override;
 	void Gravity();
 
+	bool Jump2;
 	Vector m_vecMoveDir;
 	Vector m_vecLookDir;
 	bool m_bIsMove;
 	bool Iscrash;
 	float DieTime;
 
+	int ontile;
+
+	void Jump();
 	void Move();
 
 	void AnimatorUpdate();

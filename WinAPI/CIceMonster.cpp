@@ -22,6 +22,7 @@ CIceMonster::CIceMonster()
 	m_mAttackImage = nullptr;
 	slide = false;
 	slideTime = 0;
+	ontile = 0;
 	MoveTime = 0;
 
 }
@@ -51,6 +52,7 @@ void CIceMonster::Init()
 	m_pAnimator = new CAnimator;
 	m_pAnimator->CreateAnimation(L"IdleLeft", m_mMoveImage, Vector(145.f, 100.f), Vector(50.f, 58.f), Vector(-70.f, 0.f), 0.15f, 3);
 	m_pAnimator->CreateAnimation(L"IdleRight", m_mMoveImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 3);
+	m_pAnimator->CreateAnimation(L"Idle", m_mMoveImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 3);
 	m_pAnimator->CreateAnimation(L"MoveRight", m_mMoveImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 3);
 	m_pAnimator->CreateAnimation(L"MoveLeft", m_mMoveImage, Vector(145.f, 100.f), Vector(50.f, 58.f), Vector(-70.f, 0.f), 0.15f, 3);
 
@@ -94,12 +96,15 @@ void CIceMonster::Update()
 			if (GAME->PlayerPos.x <= m_vecPos.x)
 				m_vecPos.x += m_fSpeed * DT * 3;
 
+
 			else if (GAME->PlayerPos.x >= m_vecPos.x)
 				m_vecPos.x -= m_fSpeed * DT * 3;
 			
 			slideTime = 0;
 		}
 	}
+	AnimatorUpdate();
+
 }
 
 void CIceMonster::Render()
@@ -143,10 +148,14 @@ void CIceMonster::Move()
 	if (MoveTime <= 13)
 	{
 		m_vecPos.x -= 50 * DT;
+		m_vecLookDir = Vector(-1, 0);
+
 	}
 	else if (MoveTime >= 13 && MoveTime <= 26) // º®¿¡´Ù°¡ ¸ó½ºÅÍµé Ãß°¡
 	{
 		m_vecPos.x += 50 * DT;
+		m_vecLookDir = Vector(1, 0);
+
 	}
 	else
 	{
@@ -196,8 +205,9 @@ void CIceMonster::OnCollisionEnter(CCollider* pOtherCollider)
 	}
 	if (pOtherCollider->GetObjName() == L"¶¥")
 	{
-
-		m_Gravity = false;
+		if (ontile >= 1)
+			m_Gravity = false;
+		++ontile;
 	}
 }
 
@@ -209,8 +219,8 @@ void CIceMonster::OnCollisionStay(CCollider* pOtherCollider)
 	}
 	if (pOtherCollider->GetObjName() == L"¶¥")
 	{
-
-		m_Gravity = false;
+		if (ontile >= 1)
+			m_Gravity = false;
 	}
 }
 
@@ -221,6 +231,15 @@ void CIceMonster::OnCollisionExit(CCollider* pOtherCollider)
 		Logger::Debug(L"¸ó½ºÅÍ¸¦ ¸Ô¾ú½À´Ï´Ù.");
 		DELETEOBJECT(this);
 
+	}
+
+	if (pOtherCollider->GetObjName() == L"¶¥")
+	{
+		--ontile;
+		if (ontile == 0)
+		{
+			m_Gravity = true;
+		}
 	}
 
 }

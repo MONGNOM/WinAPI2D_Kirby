@@ -19,6 +19,10 @@ public:
 	int PlayerHp;
 	int BossHp;
 
+	bool PlayerHit;
+	bool HpNotDown;
+	float HitTime;
+
 	bool Changeice;
 	bool ChangeBasci;
 	bool ChangeLight;

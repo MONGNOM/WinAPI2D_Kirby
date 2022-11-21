@@ -25,6 +25,8 @@ CMonster::CMonster()
 	Iscrash = false;
 	slide = false;
 	slideTime = 0;
+	ontile = 0;
+
 	MoveTime = 0;
 	
 }
@@ -43,9 +45,11 @@ void CMonster::Init()
 	m_pAnimator = new CAnimator;
 
 
-	m_pAnimator->CreateAnimation(L"IdleLeft", m_mMoveImage, Vector(0.f, 100.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 6);
+	
+	m_pAnimator->CreateAnimation(L"Idle", m_mMoveImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 6);
 	m_pAnimator->CreateAnimation(L"IdleRight", m_mMoveImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 6);
 	m_pAnimator->CreateAnimation(L"MoveRight", m_mMoveImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 6);
+	m_pAnimator->CreateAnimation(L"IdleLeft", m_mMoveImage, Vector(0.f, 100.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 6);
 	m_pAnimator->CreateAnimation(L"MoveLeft", m_mMoveImage, Vector(0.f, 100.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 6);
 
 	m_pAnimator->CreateAnimation(L"IdleLeftDie", m_mDieImage, Vector(0.f, 100.f), Vector(60.f, 60.f), Vector(60.f, 0.f), 1.f, 2);
@@ -54,7 +58,7 @@ void CMonster::Init()
 	m_pAnimator->CreateAnimation(L"MoveLeftDie", m_mDieImage, Vector(0.f, 100.f), Vector(60.f, 60.f), Vector(60.f, 0.f), 0.5f, 2);
 
 
-	m_pAnimator->Play(L"IdleLeft", false);
+	m_pAnimator->Play(L"MoveLeft", false);
 	AddComponent(m_pAnimator);
 
 	AddCollider(ColliderType::Rect, Vector(45, 45), Vector(0, 10));
@@ -95,6 +99,8 @@ void CMonster::Update()
 			slideTime = 0;
 		}
 	}
+	AnimatorUpdate();
+
 }
 
 
@@ -125,10 +131,15 @@ void CMonster::Move()
 	if (MoveTime <= 10)
 	{
 		m_vecPos.x -= 50 * DT ;
+		m_vecLookDir = Vector(-1, 0);
+
 	}
 	else if (MoveTime >= 10 && MoveTime <= 20 )
 	{
 		m_vecPos.x += 50 * DT ;
+		m_vecLookDir.x = 1;
+		m_vecLookDir = Vector(1, 0);
+
 	}
 	else
 	{
@@ -139,6 +150,9 @@ void CMonster::Move()
 
 void CMonster::AnimatorUpdate()
 {
+
+	wstring str = L"";
+
 	if (m_vecMoveDir.Length() > 0)
 		m_vecLookDir = m_vecMoveDir;
 
@@ -185,22 +199,21 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 			SetDir(Vector(1, 0));	
 	}
 
-
-	if (pOtherCollider->GetObjName() == L"벽")
+	if (pOtherCollider->GetObjName() == L"땅")
 	{
-		
+		if (ontile >= 1)
+			m_Gravity = false;
+		++ontile;
 	}
+
+	
 
 	if (pOtherCollider->GetObjName() == L"Shot")
 	{
 		Logger::Debug(L"몬스터가 미사일에 맞았습니다");
 		DELETEOBJECT(this);
 	}
-	if (pOtherCollider->GetObjName() == L"땅")
-	{
 
-		m_Gravity = false;
-	}
 }
 
 void CMonster::OnCollisionStay(CCollider* pOtherCollider)
@@ -210,10 +223,11 @@ void CMonster::OnCollisionStay(CCollider* pOtherCollider)
 	{
 		Logger::Debug(L"몬스터가 빨려들어가고있습니다.");
 	}
+
 	if (pOtherCollider->GetObjName() == L"땅")
 	{
-
-		m_Gravity = false;
+		if (ontile >= 1)
+			m_Gravity = false;
 	}
 
 
@@ -227,6 +241,15 @@ void CMonster::OnCollisionExit(CCollider* pOtherCollider)
 		Logger::Debug(L"!@!@!@!2몬스터를 먹는다아아아!@!@!@!@");
 		DELETEOBJECT(this);
 
+	}
+
+	if (pOtherCollider->GetObjName() == L"땅")
+	{
+		--ontile;
+		if (ontile == 0)
+		{
+			m_Gravity = true;
+		}
 	}
 
 

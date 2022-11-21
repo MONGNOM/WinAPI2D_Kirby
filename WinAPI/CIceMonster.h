@@ -18,6 +18,8 @@ public:
 
 private:
 
+	int ontile;
+
 	float MoveTime;
 	bool m_Gravity = true;
 	Vector m_vecDir;

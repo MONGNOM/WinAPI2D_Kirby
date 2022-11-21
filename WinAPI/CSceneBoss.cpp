@@ -44,7 +44,7 @@ void CSceneBoss::Enter()
 
 
 	CKIngMonster* pMonster123 = new CKIngMonster();
-	pMonster123->SetPos(700, 300);
+	pMonster123->SetPos(700, 400);
 	AddGameObject(pMonster123);
 
 	CImageObject* BossBackGround = new CImageObject;

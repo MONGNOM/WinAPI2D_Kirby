@@ -30,6 +30,9 @@ private:
 	bool Ice;
 	bool m_IceChange;
 	
+	bool KirbyNoHit;
+	float NoHitTime;
+
 	
 
 	CImage* m_pIdleImageR;

@@ -39,6 +39,8 @@ private:
 	bool HP;
 	float DieTime;
 	float MoveTime;
+	int ontile;
+
 	
 	void Move();
 	

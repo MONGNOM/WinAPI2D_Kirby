@@ -22,6 +22,7 @@ CLightMonster::CLightMonster()
 	Iscrash = false;
 	m_mAttackImage = nullptr;
 	 slide = false;
+	 ontile = 0;
 	 slideTime = 0;
 	 MoveTime = 0;
 }
@@ -53,6 +54,7 @@ void CLightMonster::Init()
 	m_pAnimator = new CAnimator;
 	m_pAnimator->CreateAnimation(L"IdleLeft", m_mMoveImage, Vector(0.f, 100.f), Vector(50.f, 58.f), Vector(70.f, 0.f), 0.15f, 5);
 	m_pAnimator->CreateAnimation(L"IdleRight", m_mMoveImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 5);
+	m_pAnimator->CreateAnimation(L"Idle", m_mMoveImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 5);
 	m_pAnimator->CreateAnimation(L"MoveRight", m_mMoveImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 6);
 	m_pAnimator->CreateAnimation(L"MoveLeft", m_mMoveImage, Vector(0.f, 100.f), Vector(50.f, 58.f), Vector(70.f, 0.f), 0.15f, 6);
 
@@ -103,6 +105,7 @@ void CLightMonster::Update()
 			DieTime = 0;
 		}
 	}
+	AnimatorUpdate();
 
 }
 
@@ -149,10 +152,14 @@ void CLightMonster::Move()
 	if (MoveTime <= 16)
 	{
 		m_vecPos.x -= 50 * DT;
+		m_vecLookDir = Vector(-1, 0);
+
 	}
 	else if (MoveTime >= 16 && MoveTime <= 32) // º®¿¡´Ù°¡ ¸ó½ºÅÍµé Ãß°¡
 	{
 		m_vecPos.x += 50 * DT;
+		m_vecLookDir = Vector(1, 0);
+
 	}
 	else
 	{
@@ -199,8 +206,9 @@ void CLightMonster::OnCollisionEnter(CCollider* pOtherCollider)
 	}
 	if (pOtherCollider->GetObjName() == L"¶¥")
 	{
-
-		m_Gravity = false;
+		if (ontile >= 1)
+			m_Gravity = false;
+		++ontile;
 	}
 }
 
@@ -212,8 +220,8 @@ void CLightMonster::OnCollisionStay(CCollider* pOtherCollider)
 	}
 	if (pOtherCollider->GetObjName() == L"¶¥")
 	{
-
-		m_Gravity = false;
+		if (ontile >= 1)
+			m_Gravity = false;
 	}
 }
 
@@ -224,5 +232,14 @@ void CLightMonster::OnCollisionExit(CCollider* pOtherCollider)
 		Logger::Debug(L"¸ó½ºÅÍ¸¦ ¸Ô¾ú½À´Ï´Ù.");
 		DELETEOBJECT(this);
 
+	}
+
+	if (pOtherCollider->GetObjName() == L"¶¥")
+	{
+		--ontile;
+		if (ontile == 0)
+		{
+			m_Gravity = true;
+		}
 	}
 }
