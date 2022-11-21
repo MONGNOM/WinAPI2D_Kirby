@@ -42,13 +42,6 @@ void CSceneBoss::Enter()
 	BossHP->SetScale(432, 94);
 	ADDOBJECT(BossHP);
 
-	CIceMonster* pMonster1222 = new CIceMonster();
-	pMonster1222->SetPos(100, 400);
-	AddGameObject(pMonster1222);
-
-	CLightMonster* pMonster1234 = new CLightMonster();
-	pMonster1234->SetPos(350, 400);
-	AddGameObject(pMonster1234);
 
 	CKIngMonster* pMonster123 = new CKIngMonster();
 	pMonster123->SetPos(700, 300);

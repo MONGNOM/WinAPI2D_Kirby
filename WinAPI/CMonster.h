@@ -38,6 +38,9 @@ private:
 	bool Iscrash;
 	bool HP;
 	float DieTime;
+	float MoveTime;
+	
+	void Move();
 	
 	void AnimatorUpdate();
 protected:

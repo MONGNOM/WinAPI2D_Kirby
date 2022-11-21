@@ -9,6 +9,7 @@ public:
 private:
 	Vector m_vecDir;
 	float m_fVelocity;
+	CImage* m_ShotImage;
 
 private:
 	void Init() override;

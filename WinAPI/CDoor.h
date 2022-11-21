@@ -13,6 +13,7 @@ class CDoor : public CGameObject
 
 private:
 	bool DoorOpen;
+	CImage* m_DoorImage;
 
 private:
 	void Init() override;

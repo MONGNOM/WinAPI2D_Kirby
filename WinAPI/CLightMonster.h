@@ -16,6 +16,9 @@ public:
 
 private:
 
+
+	float MoveTime;
+
 	bool m_Gravity = true;
 	Vector m_vecDir;
 	float m_fVelocity;
@@ -40,6 +43,9 @@ private:
 	bool slide;
 	float slideTime;
 	void AnimatorUpdate();
+
+	void Move();
+
 
 protected:
 	void OnCollisionEnter(CCollider* pOtherCollider) override;

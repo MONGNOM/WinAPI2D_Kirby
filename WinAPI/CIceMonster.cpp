@@ -22,6 +22,8 @@ CIceMonster::CIceMonster()
 	m_mAttackImage = nullptr;
 	slide = false;
 	slideTime = 0;
+	MoveTime = 0;
+
 }
 
 CIceMonster::~CIceMonster()
@@ -67,6 +69,8 @@ void CIceMonster::Init()
 
 void CIceMonster::Update()
 {
+	Move();
+
 
 	Gravity();
 
@@ -130,6 +134,24 @@ void CIceMonster::AnimatorUpdate()
 	if (m_mHp == 0) str += L"Die";
 
 	m_pAnimator->Play(str, false);
+}
+
+void CIceMonster::Move()
+{
+
+	MoveTime += DT;
+	if (MoveTime <= 8)
+	{
+		m_vecPos.x -= 50 * DT;
+	}
+	else if (MoveTime >= 8 && MoveTime <= 21.5) // 벽에다가 몬스터들 추가
+	{
+		m_vecPos.x += 50 * DT;
+	}
+	else
+	{
+		MoveTime = 0;
+	}
 }
 
 void CIceMonster::OnCollisionEnter(CCollider* pOtherCollider)

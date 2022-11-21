@@ -25,6 +25,7 @@ CMonster::CMonster()
 	Iscrash = false;
 	slide = false;
 	slideTime = 0;
+	MoveTime = 0;
 	
 }
 
@@ -62,6 +63,7 @@ void CMonster::Init()
 void CMonster::Update()
 {
 	Gravity();
+	Move();
 
 	m_vecPos += m_vecDir * m_fVelocity * DT;
 
@@ -117,6 +119,24 @@ void CMonster::Release()
 {
 }
 
+void CMonster::Move()
+{
+	MoveTime += DT;
+	if (MoveTime <= 6.5)
+	{
+		m_vecPos.x += 50 * DT ;
+	}
+	else if (MoveTime >= 6.5 && MoveTime <=17 )
+	{
+		m_vecPos.x -= 50 * DT ;
+	}
+	else
+	{
+		MoveTime = 0;
+	}
+
+}
+
 void CMonster::AnimatorUpdate()
 {
 	if (m_vecMoveDir.Length() > 0)
@@ -166,6 +186,11 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 	}
 
 
+	if (pOtherCollider->GetObjName() == L"벽")
+	{
+		
+	}
+
 	if (pOtherCollider->GetObjName() == L"Shot")
 	{
 		Logger::Debug(L"몬스터가 미사일에 맞았습니다");
@@ -190,6 +215,8 @@ void CMonster::OnCollisionStay(CCollider* pOtherCollider)
 
 		m_Gravity = false;
 	}
+
+
 }
 
 void CMonster::OnCollisionExit(CCollider* pOtherCollider)

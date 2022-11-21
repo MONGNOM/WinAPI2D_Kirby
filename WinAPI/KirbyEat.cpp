@@ -22,11 +22,11 @@ KirbyEat::~KirbyEat()
 void KirbyEat::Init()
 {
 	
-	m_pIdleImage = RESOURCE->LoadImg(L"PlayerATttack", L"Image\\Kirby\\Basic\\KirbyEat.png");
+	m_pIdleImage = RESOURCE->LoadImg(L"PlayerATttack", L"Image\\Kirby\\Basic\\KirbyEatEffect.png");
 
 	m_pAnimator = new CAnimator;
-	m_pAnimator->CreateAnimation(L"IdleRight", m_pIdleImage, Vector(0.f, 0.f), Vector(38.f, 37.f), Vector(37.f, 0.f), 0.08f, 7);
-	m_pAnimator->CreateAnimation(L"IdleLeft", m_pIdleImage, Vector(0.f, 0.f), Vector(38.f, 37.f), Vector(37.f, 0.f), 0.08f, 7);
+	m_pAnimator->CreateAnimation(L"IdleRight", m_pIdleImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(0.f, 0.f), 10.0f, 1);
+	m_pAnimator->CreateAnimation(L"IdleLeft", m_pIdleImage, Vector(50.f, 100.f), Vector(50.f, 50.f), Vector(-50.f, 0.f), 10.0f, 1);
 
 
 	m_pAnimator->Play(L"IdleRight", false);

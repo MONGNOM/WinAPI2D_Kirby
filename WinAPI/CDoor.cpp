@@ -12,6 +12,7 @@ CDoor::CDoor()
 	m_layer = Layer::Door;
 	m_strName = L"¹®";
 	DoorOpen = false;
+
 }
 
 CDoor::~CDoor()
@@ -20,6 +21,9 @@ CDoor::~CDoor()
 
 void CDoor::Init()
 {
+
+	m_DoorImage = RESOURCE->LoadImg(L"Door", L"Image\\Door.png");
+
 	AddCollider(ColliderType::Rect, Vector(70, 70), Vector(0, 0));
 }
 
@@ -36,7 +40,8 @@ void CDoor::Update()
 
 void CDoor::Render()
 {
-
+	RENDER->Image(m_DoorImage, m_vecPos.x - 50, m_vecPos.y -100 , m_vecPos.x + 50, m_vecPos.y - 50);
+	RENDER->FillRect(m_vecPos.x-35, m_vecPos.y-50 , m_vecPos.x+35, m_vecPos.y+35);
 }
 
 void CDoor::Release()

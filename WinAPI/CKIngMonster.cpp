@@ -22,6 +22,7 @@ CKIngMonster::CKIngMonster()
 	DieTime = 0;
 	Iscrash = false;
 	m_mAttackImage = nullptr;
+	MoveTime = 0;
 }
 
 CKIngMonster::~CKIngMonster()
@@ -70,6 +71,7 @@ void CKIngMonster::Init()
 
 void CKIngMonster::Update()
 {
+	Move();
 
 	GAME->BossHp = m_mHp;
 
@@ -105,6 +107,24 @@ void CKIngMonster::Gravity()
 	if (m_Gravity == true)
 	{
 		m_vecPos.y += m_fSpeed * DT * 2;
+	}
+}
+
+void CKIngMonster::Move()
+{
+
+	MoveTime += DT;
+	if (MoveTime <= 11.5)
+	{
+		m_vecPos.x -= 50 * DT;
+	}
+	else if (MoveTime >= 11.5 && MoveTime <= 24)
+	{
+		m_vecPos.x += 50 * DT;
+	}
+	else
+	{
+		MoveTime = 0;
 	}
 }
 

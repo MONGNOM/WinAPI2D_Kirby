@@ -23,6 +23,7 @@ CLightMonster::CLightMonster()
 	m_mAttackImage = nullptr;
 	 slide = false;
 	 slideTime = 0;
+	 MoveTime = 0;
 }
 
 CLightMonster::~CLightMonster()
@@ -72,6 +73,7 @@ void CLightMonster::Init()
 void CLightMonster::Update()
 {
 
+	Move();
 	if (slide == true)
 	{
 		slideTime += DT;
@@ -138,6 +140,24 @@ void CLightMonster::AnimatorUpdate()
 	if (m_mHp == 0) str += L"Die";
 
 	m_pAnimator->Play(str, false);
+}
+
+void CLightMonster::Move()
+{
+
+	MoveTime += DT;
+	if (MoveTime <= 5)
+	{
+		m_vecPos.x -= 50 * DT;
+	}
+	else if (MoveTime >= 5 && MoveTime <= 21.5) // 벽에다가 몬스터들 추가
+	{
+		m_vecPos.x += 50 * DT;
+	}
+	else
+	{
+		MoveTime = 0;
+	}
 }
 
 void CLightMonster::OnCollisionEnter(CCollider* pOtherCollider)

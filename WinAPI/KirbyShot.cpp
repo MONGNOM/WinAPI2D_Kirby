@@ -22,6 +22,7 @@ KirbyShot::~KirbyShot()
 
 void KirbyShot::Init()
 {
+	m_ShotImage = RESOURCE->LoadImg(L"Shot", L"Image\\Shot.png");
 	AddCollider(ColliderType::Rect, Vector(20, 20), Vector(0, 0));
 }
 
@@ -43,10 +44,8 @@ void KirbyShot::Update()
 
 void KirbyShot::Render()
 {
-	RENDER->FrameCircle(
-		m_vecPos.x,
-		m_vecPos.y,
-		m_vecScale.x);
+	RENDER->Image(m_ShotImage, m_vecPos.x -50, m_vecPos.y-50, m_vecPos.x + 50, m_vecPos.y + 50);
+
 }
 
 void KirbyShot::Release()

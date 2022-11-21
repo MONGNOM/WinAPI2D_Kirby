@@ -59,7 +59,58 @@ void CBlock::OnCollisionEnter(CCollider* pOther)
 			pl->SetPos(GAME->PlayerPos.x + 5, GAME->PlayerPos.y);
 		else
 			pl->SetPos(GAME->PlayerPos.x - 5, GAME->PlayerPos.y);
+	}
 
+	if (pOther->GetObjName() == L"몬스터")
+	{
+
+		Logger::Debug(L"플레이어가 벽에 부딪혀 밀려납니다");
+
+		//조건 왼쪽이면 충돌시 왼쪽으로 밀기 && 반대방향도 마찬가지
+		CGameObject* pl1 = pOther->GetOwner();
+		if (GetTilePosX() >= pl1->GetPos().x)
+			pl1->SetPos(pl1->GetPos().x + 5, pl1->GetPos().y);
+		else
+			pl1->SetPos(pl1->GetPos().x - 5, pl1->GetPos().y);
+	}
+
+	if (pOther->GetObjName() == L"얼음 몬스터")
+	{
+
+		Logger::Debug(L"플레이어가 벽에 부딪혀 밀려납니다");
+
+		//조건 왼쪽이면 충돌시 왼쪽으로 밀기 && 반대방향도 마찬가지
+		CGameObject* pl1 = pOther->GetOwner();
+		if (GetTilePosX() >= pl1->GetPos().x)
+			pl1->SetPos(pl1->GetPos().x + 5, pl1->GetPos().y);
+		else
+			pl1->SetPos(pl1->GetPos().x - 5, pl1->GetPos().y);
+	}
+	
+	if (pOther->GetObjName() == L"빛몬스터")
+	{
+
+		Logger::Debug(L"플레이어가 벽에 부딪혀 밀려납니다");
+
+		//조건 왼쪽이면 충돌시 왼쪽으로 밀기 && 반대방향도 마찬가지
+		CGameObject* pl1 = pOther->GetOwner();
+		if (GetTilePosX() >= pl1->GetPos().x)
+			pl1->SetPos(pl1->GetPos().x + 5, pl1->GetPos().y);
+		else
+			pl1->SetPos(pl1->GetPos().x - 5, pl1->GetPos().y);
+	}
+
+	if (pOther->GetObjName() == L"보스 몬스터")
+	{
+
+		Logger::Debug(L"플레이어가 벽에 부딪혀 밀려납니다");
+
+		//조건 왼쪽이면 충돌시 왼쪽으로 밀기 && 반대방향도 마찬가지
+		CGameObject* pl1 = pOther->GetOwner();
+		if (GetTilePosX() >= pl1->GetPos().x)
+			pl1->SetPos(pl1->GetPos().x + 5, pl1->GetPos().y);
+		else
+			pl1->SetPos(pl1->GetPos().x - 5, pl1->GetPos().y);
 	}
 }
 
@@ -76,8 +127,58 @@ void CBlock::OnCollisionStay(CCollider* pOther)
 			pl->SetPos(GAME->PlayerPos.x - 5, GAME->PlayerPos.y);
 		else
 			pl->SetPos(GAME->PlayerPos.x + 5, GAME->PlayerPos.y);
+	}
 
+	if (pOther->GetObjName() == L"몬스터")
+	{
 
+		Logger::Debug(L"플레이어가 벽에 부딪혀 밀려납니다");
+
+		//조건 왼쪽이면 충돌시 왼쪽으로 밀기 && 반대방향도 마찬가지
+		CGameObject* pl12 = pOther->GetOwner();
+		if (GetTilePosX() >= pl12->GetPos().x)
+			pl12->SetPos(pl12->GetPos().x - 5, pl12->GetPos().y);
+		else
+			pl12->SetPos(pl12->GetPos().x + 5, pl12->GetPos().y);
+	}
+
+	if (pOther->GetObjName() == L"얼음 몬스터")
+	{
+
+		Logger::Debug(L"플레이어가 벽에 부딪혀 밀려납니다");
+
+		//조건 왼쪽이면 충돌시 왼쪽으로 밀기 && 반대방향도 마찬가지
+		CGameObject* pl12 = pOther->GetOwner();
+		if (GetTilePosX() >= pl12->GetPos().x)
+			pl12->SetPos(pl12->GetPos().x - 5, pl12->GetPos().y);
+		else
+			pl12->SetPos(pl12->GetPos().x + 5, pl12->GetPos().y);
+	}
+
+	if (pOther->GetObjName() == L"빛몬스터")
+	{
+
+		Logger::Debug(L"플레이어가 벽에 부딪혀 밀려납니다");
+
+		//조건 왼쪽이면 충돌시 왼쪽으로 밀기 && 반대방향도 마찬가지
+		CGameObject* pl12 = pOther->GetOwner();
+		if (GetTilePosX() >= pl12->GetPos().x)
+			pl12->SetPos(pl12->GetPos().x - 5, pl12->GetPos().y);
+		else
+			pl12->SetPos(pl12->GetPos().x + 5, pl12->GetPos().y);
+	}
+	
+	if (pOther->GetObjName() == L"보스 몬스터")
+	{
+
+		Logger::Debug(L"플레이어가 벽에 부딪혀 밀려납니다");
+
+		//조건 왼쪽이면 충돌시 왼쪽으로 밀기 && 반대방향도 마찬가지
+		CGameObject* pl12 = pOther->GetOwner();
+		if (GetTilePosX() >= pl12->GetPos().x)
+			pl12->SetPos(pl12->GetPos().x - 5, pl12->GetPos().y);
+		else
+			pl12->SetPos(pl12->GetPos().x + 5, pl12->GetPos().y);
 	}
 }
 

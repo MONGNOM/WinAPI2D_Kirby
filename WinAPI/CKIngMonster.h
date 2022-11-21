@@ -14,6 +14,7 @@ public:
 	void SetVelocity(float velocity);
 
 private:
+	float MoveTime;
 
 	bool m_Gravity = true;
 	Vector m_vecDir;
@@ -36,6 +37,8 @@ private:
 	bool m_bIsMove;
 	bool Iscrash;
 	float DieTime;
+
+	void Move();
 
 	void AnimatorUpdate();
 
