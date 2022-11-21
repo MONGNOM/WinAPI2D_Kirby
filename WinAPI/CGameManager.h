@@ -17,6 +17,11 @@ private:
 public:
 	Vector PlayerPos;
 	int PlayerHp;
+	int BossHp;
+
+	bool Changeice;
+	bool ChangeBasci;
+	bool ChangeLight;
 
 	bool changePlayerLight;
 	bool changePlayerIce;

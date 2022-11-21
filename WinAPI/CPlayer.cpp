@@ -259,7 +259,6 @@ void CPlayer::Update()
 	 1. 게임매니저 보스방 갈떄정보주기 ==> 지니고있는 아이템만 가져가면 될듯 게임매니저로 체력처럼 구현하면 될 것 같다.  
 	 2. 데미지 받았을때 2초 무적 ㄱ 보스도 마찬가지
 
-	 3. 보스 체력 구현
 	 4. 몬스터 죽을때 이미지 클래스 만들어서 데미지를 입는 뭔가를 닿으면 죽는이미지 클래스 동적할당 위치는 몬스터 위치 하고 몬스터 딜리트
 	 5. 이미지효과들 EX: 커비 빨아들일때 효과 몬스터 죽을때 효과 문 리소스에 별 달기
 	=====================
@@ -280,6 +279,7 @@ void CPlayer::Update()
 	 11. 타이틀화면
 	 12. UI 완성
 	 13. 커비 체력공유
+	 14. 보스 체력 구현
 	=====================
 	*/
 
@@ -296,6 +296,8 @@ void CPlayer::Update()
 		ChangePlayer();
 		GAME->changePlayerIce = false;
 		GAME->changePlayerLight = false;
+		GAME->Changeice = false;
+		GAME->ChangeLight = false;
 	}
 
 	if (BUTTONSTAY(VK_LEFT))
@@ -516,6 +518,7 @@ void CPlayer::ChangePlayer()
 {
 	if (Light == true)
 	{
+		GAME->ChangeLight = true;
 		CGameObject* lightKirby = new CLightKirby();
 		lightKirby->SetPos(m_vecPos);
 		ADDOBJECT(lightKirby);
@@ -524,6 +527,7 @@ void CPlayer::ChangePlayer()
 	}
 	else if (Ice == true)
 	{
+		GAME->Changeice = true;
 		CGameObject* IceKirby = new CIceKirby();
 		IceKirby->SetPos(m_vecPos);
 		ADDOBJECT(IceKirby);
@@ -631,9 +635,9 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 		Ice = false;
 		CGameObject* pl = pOtherCollider->GetOwner();
 		if (pl->GetPos().x <= m_vecPos.x)
-			m_vecPos.x += 20;
+			m_vecPos.x += 0;
 		else if (pl->GetPos().x >= m_vecPos.x)
-			m_vecPos.x -= 20;
+			m_vecPos.x -= 0;
 
 	}
 }

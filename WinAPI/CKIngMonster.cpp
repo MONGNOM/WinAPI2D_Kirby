@@ -8,6 +8,7 @@ CKIngMonster::CKIngMonster()
 {
 
 	m_strName = L"보스 몬스터";
+	m_layer = Layer::Monster;
 	m_vecScale = Vector(100, 100);
 	m_layer = Layer::SpecialMonster;
 	m_vecDir = Vector(0, 0);
@@ -17,7 +18,7 @@ CKIngMonster::CKIngMonster()
 	m_vecMoveDir = Vector(0, 0);
 	m_vecLookDir = Vector(0, -1);
 	m_bIsMove = false;
-	m_mHp = 3;
+	m_mHp = GAME->BossHp;
 	DieTime = 0;
 	Iscrash = false;
 	m_mAttackImage = nullptr;
@@ -70,7 +71,9 @@ void CKIngMonster::Init()
 void CKIngMonster::Update()
 {
 
-	if (m_mHp == 0)
+	GAME->BossHp = m_mHp;
+
+	if (m_mHp <= 0)
 	{
 		Iscrash = true;
 	}
@@ -132,24 +135,16 @@ void CKIngMonster::OnCollisionEnter(CCollider* pOtherCollider)
 		Logger::Debug(L"몬스터가 빛공격을 맞았습니다.");
 		CGameObject* pl = pOtherCollider->GetOwner();
 		if (pl->GetPos().x <= m_vecPos.x)
-			m_vecPos.x += 50;
+			m_vecPos.x += 0;
 		else if (pl->GetPos().x >= m_vecPos.x)
-			m_vecPos.x -= 50;
+			m_vecPos.x -= 0;
 		
 		m_mHp -= 1;
 
 	}
 
-	if (pOtherCollider->GetObjName() == L"먹기")
-	{
-		Logger::Debug(L"몬스터가 빨려가기 시작합니다.");
-		CGameObject* pl = pOtherCollider->GetOwner();
-		if (pl->GetPos().x <= m_vecPos.x)
-			SetDir(Vector(-1, 0));
-		else if (pl->GetPos().x >= m_vecPos.x)
-			SetDir(Vector(1, 0));
 
-	}
+
 
 	if (pOtherCollider->GetObjName() == L"Shot")
 	{
@@ -177,10 +172,5 @@ void CKIngMonster::OnCollisionStay(CCollider* pOtherCollider)
 
 void CKIngMonster::OnCollisionExit(CCollider* pOtherCollider)
 {
-	if (pOtherCollider->GetObjName() == L"먹기")
-	{
-		Logger::Debug(L"몬스터를 먹었습니다.");
-		DELETEOBJECT(this);
 
-	}
 }

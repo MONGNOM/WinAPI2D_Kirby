@@ -12,6 +12,8 @@
 #include "CKIngMonster.h"
 #include "CKirbyHp.h"
 #include "CKirbyStatus.h"
+#include "CBossHp.h"
+#include "CIceKirby.h"
 
 
 CSceneBoss::CSceneBoss()
@@ -35,6 +37,19 @@ void CSceneBoss::Enter()
 	HP->SetScale(270, 50);
 	ADDOBJECT(HP);
 
+	CBossHp* BossHP = new CBossHp;
+	BossHP->SetPos(550, 537);
+	BossHP->SetScale(432, 94);
+	ADDOBJECT(BossHP);
+
+	CIceMonster* pMonster1222 = new CIceMonster();
+	pMonster1222->SetPos(100, 400);
+	AddGameObject(pMonster1222);
+
+	CLightMonster* pMonster1234 = new CLightMonster();
+	pMonster1234->SetPos(350, 400);
+	AddGameObject(pMonster1234);
+
 	CKIngMonster* pMonster123 = new CKIngMonster();
 	pMonster123->SetPos(700, 300);
 	AddGameObject(pMonster123);
@@ -43,10 +58,24 @@ void CSceneBoss::Enter()
 	BossBackGround->SetImage(RESOURCE->LoadImg(L"BbackGround1", L"Image\\BossStage12345.png"));
 	AddGameObject(BossBackGround);
 
-	pPlayer = new CPlayer();
-	pPlayer->SetPos(100, 500);
-	ADDOBJECT(pPlayer);
-
+	if (GAME->Changeice == true)
+	{
+		CIceKirby* Ice = new CIceKirby;
+		Ice->SetPos(100, 500);
+		ADDOBJECT(Ice);
+	}
+	else if (GAME->ChangeLight == true)
+	{
+		CLightKirby* Light = new CLightKirby();
+		Light->SetPos(100, 500);
+		ADDOBJECT(Light);
+	}
+	else
+	{
+		pPlayer = new CPlayer();
+		pPlayer->SetPos(100, 500);
+		ADDOBJECT(pPlayer);
+	}
 	CKirbyStatus* status = new CKirbyStatus;
 	status->SetPos(8, 558);
 	status->SetScale(125, 50);

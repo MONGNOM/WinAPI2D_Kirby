@@ -1,14 +1,11 @@
 #pragma once
 #include "CUI.h"
-
-class CPlayer;
- 
-class CKirbyHp : public CUI
+class CBossHp : public CUI
 {
-	friend CPlayer;
+
 public:
-	CKirbyHp();
-	virtual~CKirbyHp();
+	CBossHp();
+	virtual~CBossHp();
 
 private:
 
@@ -16,7 +13,7 @@ private:
 	CImage* HpImage;
 
 public:
-	
+
 
 
 	void SetHp();

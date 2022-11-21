@@ -246,6 +246,9 @@
     <ClInclude Include="CKirbyStatus.h">
       <Filter>Engine\Asset\UI</Filter>
     </ClInclude>
+    <ClInclude Include="CBossHp.h">
+      <Filter>Engine\Asset\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -414,6 +417,9 @@
       <Filter>Engine\Asset\UI</Filter>
     </ClCompile>
     <ClCompile Include="CKirbyStatus.cpp">
+      <Filter>Engine\Asset\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossHp.cpp">
       <Filter>Engine\Asset\UI</Filter>
     </ClCompile>
   </ItemGroup>
