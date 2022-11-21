@@ -47,8 +47,8 @@ void CSceneStage01::Init()
 void CSceneStage01::Enter()
 {
 
-	
-
+	BackGroundSound1 = RESOURCE->LoadSound(L"KirbyMainBgm", L"Sound\\KirbyMainBgm.mp3");
+	SOUND->Play(BackGroundSound1, 0.1f, true);
 
 	CMonster* pMonster1 = new CMonster();
 	pMonster1->SetPos(1800, 200);
@@ -89,7 +89,7 @@ void CSceneStage01::Enter()
 	AddGameObject(BackGround);
 
 	pPlayer = new CPlayer();
-	pPlayer->SetPos(1500, 200);  // 230 500
+	pPlayer->SetPos(230, 500);  // 230 500
 	ADDOBJECT(pPlayer);
 
 	CAMERA->SetTargetPos(Vector(400, 500));
@@ -131,10 +131,12 @@ void CSceneStage01::Update()
 void CSceneStage01::Render()
 {
 	
+
 }
 
 void CSceneStage01::Exit()
 {
+	SOUND->Pause(BackGroundSound1);
 	DeleteAll();
 }
 

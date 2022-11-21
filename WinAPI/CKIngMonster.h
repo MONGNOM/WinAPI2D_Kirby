@@ -15,6 +15,7 @@ public:
 
 private:
 	float MoveTime;
+	bool Moveing;
 
 	bool m_Gravity = true;
 	Vector m_vecDir;
@@ -24,8 +25,10 @@ private:
 	CImage* m_mMoveImage;
 	CImage* m_mMoveImageR;
 	CImage* m_mDieImage;
+	CImage* m_mJumpImage;
 	CImage* m_mAttackImage;
 	CAnimator* m_pAnimator;
+	wstring str = L"";
 
 	int m_mHp;
 	void Init() override;

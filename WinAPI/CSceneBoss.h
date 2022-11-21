@@ -15,6 +15,7 @@ public:
 	virtual ~CSceneBoss();
 
 private:
+	CSound* BackGroundSound;
 	CPlayer* pPlayer;
 	CLightKirby* LPlayer;
 	bool m_LightChange;

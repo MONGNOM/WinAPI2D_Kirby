@@ -32,6 +32,13 @@ void CSceneBoss::Init()
 
 void CSceneBoss::Enter()
 {
+
+	BackGroundSound = RESOURCE->LoadSound(L"BossBGM", L"Sound\\BossBgm.mp3");
+	SOUND->Play(BackGroundSound, 0.1f, true);
+
+	CIceMonster* pMonster1234 = new CIceMonster();
+	pMonster1234->SetPos(200, 200);
+	AddGameObject(pMonster1234);
 	CKirbyHp* HP = new CKirbyHp;
 	HP->SetPos(110, 550);
 	HP->SetScale(270, 50);
@@ -99,8 +106,8 @@ void CSceneBoss::Exit()
 {
 	DeleteAll();
 
+	SOUND->Pause(BackGroundSound);
 }
-
 void CSceneBoss::Release()
 {
 }

@@ -19,6 +19,7 @@ public:
 
 private:
 	CPlayer* pPlayer;
+	CSound* BackGroundSound1;
 	CLightKirby* LPlayer;
 	bool m_LightChange;
 	bool m_Basic;

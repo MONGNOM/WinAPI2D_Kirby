@@ -23,6 +23,8 @@ CKIngMonster::CKIngMonster()
 	DieTime = 0;
 	Iscrash = false;
 	m_mAttackImage = nullptr;
+	m_mJumpImage = nullptr;
+	Moveing = true;
 	MoveTime = 0;
 	Jump2 = false;
 	ontile = 0;
@@ -52,6 +54,7 @@ void CKIngMonster::Init()
 	m_mMoveImageR = RESOURCE->LoadImg(L"KingMonsterMoveR", L"Image\\Monster\\King\\KingR.png");
 	m_mAttackImage = RESOURCE->LoadImg(L"KingMonsterAttack", L"Image\\Monster\\King\\KingJump.png");
 	m_mDieImage = RESOURCE->LoadImg(L"KingMonsterDie", L"Image\\Monster\\King\\KingDie.png");
+	m_mJumpImage = RESOURCE->LoadImg(L"KingMonsterJump", L"Image\\Monster\\King\\KingJump.png");
 
 
 	m_pAnimator = new CAnimator;
@@ -61,10 +64,16 @@ void CKIngMonster::Init()
 	m_pAnimator->CreateAnimation(L"MoveRight", m_mMoveImageR, Vector(0.f, 0.f), Vector(157.f, 177.f), Vector(192.f, 0.f), 0.15f, 8);
 	m_pAnimator->CreateAnimation(L"MoveLeft", m_mMoveImage, Vector(1358.f, 425.f), Vector(162.f, 200.f), Vector(-194.f, 0.f), 0.15f, 8);
 
-	m_pAnimator->CreateAnimation(L"IdleLeftDie", m_mDieImage, Vector(0.f, 100.f), Vector(60.f, 60.f), Vector(60.f, 0.f), 1.f, 2);
-	m_pAnimator->CreateAnimation(L"IdleRightDie", m_mDieImage, Vector(0.f, 0.f), Vector(60.f, 60.f), Vector(60.f, 0.f), 1.f, 2);
-	m_pAnimator->CreateAnimation(L"MoveRightDie", m_mDieImage, Vector(0.f, 0.f), Vector(60.f, 60.f), Vector(60.f, 0.f), 1.f, 2);
-	m_pAnimator->CreateAnimation(L"MoveLeftDie", m_mDieImage, Vector(0.f, 100.f), Vector(60.f, 60.f), Vector(60.f, 0.f), 1.f, 2);
+	m_pAnimator->CreateAnimation(L"IdleLeftDie", m_mDieImage, Vector(680.f, 310.f), Vector(200.f, 200.f), Vector(-240.f, 0.f), 0.5f, 4);
+	m_pAnimator->CreateAnimation(L"IdleRightDie", m_mDieImage, Vector(0.f, 0.f), Vector(200.f, 200.f), Vector(240.f, 0.f), 0.5f, 4);
+	m_pAnimator->CreateAnimation(L"MoveRightDie", m_mDieImage, Vector(0.f, 0.f), Vector(200.f, 200.f), Vector(240.f, 0.f), 0.5f, 4);
+	m_pAnimator->CreateAnimation(L"MoveLeftDie", m_mDieImage, Vector(680.f, 310.f), Vector(200.f, 200.f), Vector(-240.f, 0.f), 0.5f, 4);
+
+
+	m_pAnimator->CreateAnimation(L"IdleLeftJump", m_mJumpImage, Vector(1260.f, 280.f), Vector(180.f, 210.f), Vector(-215.f, 0.f), 0.1f, 7);
+	m_pAnimator->CreateAnimation(L"IdleRightJump", m_mJumpImage, Vector(0.f, 0.f), Vector(180.f, 210.f), Vector(210.f, 0.f), 0.1f, 7);
+	m_pAnimator->CreateAnimation(L"MoveRightJump", m_mJumpImage, Vector(0.f, 0.f), Vector(180.f, 210.f), Vector(210.f, 0.f), 0.1f, 7);
+	m_pAnimator->CreateAnimation(L"MoveLeftJump", m_mJumpImage, Vector(1260.f, 280.f), Vector(180.f, 210.f), Vector(-215.f, 0.f), 0.1f, 7);
 
 
 	m_pAnimator->Play(L"Idle", false);
@@ -77,13 +86,14 @@ void CKIngMonster::Init()
 void CKIngMonster::Update()
 {
 	Move();
-	Jump();
 
 	GAME->BossHp = m_mHp;
 
 	if (m_mHp <= 0)
 	{
 		Iscrash = true;
+		Jump2 = false;
+		Moveing = false;
 	}
 	Gravity();
 
@@ -92,10 +102,52 @@ void CKIngMonster::Update()
 	if (Iscrash == true)
 	{
 		DieTime += DT;
-		if (DieTime >= 1)
+		if (DieTime >= 2)
 		{
 			DELETEOBJECT(this);
 			DieTime = 0;
+		}
+	}
+
+
+
+	if (Jump2 == true)
+	{
+		JumpTime += DT;
+		if (JumpTime <= 0.3f)
+		{
+			Logger::Debug(L"왼쪽 점프");
+			m_vecPos.y -= m_fSpeed * DT * 5;
+			m_vecPos.x -= 7;
+			str = L"IdleLeft";
+
+		}
+		else if (JumpTime >= 0.3f && JumpTime <= 2.3f)
+		{
+			Logger::Debug(L"왼쪽 Look");
+			m_vecLookDir = Vector(-1, 0);
+			str = L"IdleLeft";
+		}
+		else if (JumpTime >= 2.3f && JumpTime <= 2.6f)
+		{
+			Logger::Debug(L"오른쪽 점프");
+			m_vecPos.y -= m_fSpeed * DT * 5;
+			m_vecPos.x += 7;
+			str = L"IdleRight";
+
+	
+		}
+		else if (JumpTime >= 2.6f && JumpTime <= 4.6f)
+		{
+			Logger::Debug(L"오른쪽 Look");
+			m_vecLookDir = Vector(1, 0);
+			str = L"IdleRight";
+		}
+		else if (JumpTime >= 4.6f)
+		{
+			
+			JumpTime = 0;
+			Jump2 = false;
 		}
 	}
 
@@ -118,46 +170,40 @@ void CKIngMonster::Gravity()
 	}
 }
 
-void CKIngMonster::Jump()
-{
-	/*	JumpTime += DT;
-	if(MoveTime>24)
-	if (Jump2 == true)
-	{
-
-		if (JumpTime <= 0.3f)
-		{
-			Logger::Debug(L"점프");
-			m_vecPos.y -= m_fSpeed * DT * 3;
-		}
-		else
-		{
-			JumpTime = 0;
-			Jump2 = false;
-		}
-	}*/
-}
 
 void CKIngMonster::Move()
 {
-	MoveTime += DT;
-	if (MoveTime <= 11.5)
+	if (Moveing == true)
 	{
-		m_vecPos.x -= 50 * DT;
-		m_vecLookDir = Vector(-1, 0);
+		MoveTime += DT;
+		if (MoveTime <= 3)
+		{
+			m_vecLookDir = Vector(-1, 0);
+		}
+		else if (MoveTime >= 3 && MoveTime <= 14.5)
+		{
+			m_vecPos.x -= 50 * DT;
+			m_vecLookDir = Vector(-1, 0);
+		}
+		else if (MoveTime >= 14.5 && MoveTime <= 17.5)
+		{
+			m_vecLookDir = Vector(1, 0);
+		}
+		else if (MoveTime >= 17.5 && MoveTime <= 29)
+		{
+			m_vecPos.x += 50 * DT;
+			m_vecLookDir = Vector(1, 0);
+		}
+		else if (MoveTime >= 29 && MoveTime <= 32)
+		{
+			m_vecLookDir = Vector(-1, 0);
+		}
+		else
+		{
+			Jump2 = true;
+			MoveTime = 0;
+		}
 	}
-	else if (MoveTime >= 11.5 && MoveTime <= 24)
-	{
-		m_vecPos.x += 50 * DT;
-		m_vecLookDir = Vector(1, 0);
-	}
-	else if (MoveTime >= 24 && MoveTime <=25)
-	{
-		m_vecPos.y -= m_fSpeed * DT * 2 ;
-	}
-	else
-		MoveTime = 0;
-
 }
 
 void CKIngMonster::AnimatorUpdate()
@@ -173,7 +219,9 @@ void CKIngMonster::AnimatorUpdate()
 	if (m_vecLookDir.x > 0) str += L"Right";
 	else if (m_vecLookDir.x < 0) str += L"Left";
 
-	if (m_mHp == 0) str += L"Die";
+	if (m_mHp <= 0) str += L"Die";
+	
+	if (Jump2 == true) str += L"Jump";
 
 	m_pAnimator->Play(str, false);
 }
