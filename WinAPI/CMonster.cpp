@@ -122,13 +122,13 @@ void CMonster::Release()
 void CMonster::Move()
 {
 	MoveTime += DT;
-	if (MoveTime <= 6.5)
-	{
-		m_vecPos.x += 50 * DT ;
-	}
-	else if (MoveTime >= 6.5 && MoveTime <=17 )
+	if (MoveTime <= 10)
 	{
 		m_vecPos.x -= 50 * DT ;
+	}
+	else if (MoveTime >= 10 && MoveTime <= 20 )
+	{
+		m_vecPos.x += 50 * DT ;
 	}
 	else
 	{

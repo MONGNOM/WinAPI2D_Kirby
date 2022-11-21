@@ -140,11 +140,11 @@ void CIceMonster::Move()
 {
 
 	MoveTime += DT;
-	if (MoveTime <= 8)
+	if (MoveTime <= 13)
 	{
 		m_vecPos.x -= 50 * DT;
 	}
-	else if (MoveTime >= 8 && MoveTime <= 21.5) // 벽에다가 몬스터들 추가
+	else if (MoveTime >= 13 && MoveTime <= 26) // 벽에다가 몬스터들 추가
 	{
 		m_vecPos.x += 50 * DT;
 	}

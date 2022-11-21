@@ -146,11 +146,11 @@ void CLightMonster::Move()
 {
 
 	MoveTime += DT;
-	if (MoveTime <= 5)
+	if (MoveTime <= 16)
 	{
 		m_vecPos.x -= 50 * DT;
 	}
-	else if (MoveTime >= 5 && MoveTime <= 21.5) // 벽에다가 몬스터들 추가
+	else if (MoveTime >= 16 && MoveTime <= 32) // 벽에다가 몬스터들 추가
 	{
 		m_vecPos.x += 50 * DT;
 	}
