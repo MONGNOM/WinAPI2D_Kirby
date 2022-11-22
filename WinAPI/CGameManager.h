@@ -19,6 +19,7 @@ public:
 	int PlayerHp;
 	int BossHp;
 
+	bool m_DebugMode;
 	bool PlayerHit;
 	bool HpNotDown;
 	float HitTime;

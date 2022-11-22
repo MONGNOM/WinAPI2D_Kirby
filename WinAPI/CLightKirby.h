@@ -17,6 +17,7 @@ class CLightKirby : public CPlayer
 public:
 	CLightKirby();
 	virtual ~CLightKirby();
+	CSound* Jumpsound = RESOURCE->LoadSound(L"BeamAttack", L"Sound\\BeamAttack.Wav");
 
 private:
 

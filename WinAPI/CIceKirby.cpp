@@ -266,6 +266,8 @@ void CIceKirby::Update()
 	if (BUTTONDOWN('D'))
 	{
 		Logger::Debug(L"특수능력을 뱉었다");
+		CSound* Jumpsound = RESOURCE->LoadSound(L"ChangeBasic", L"Sound\\ChangeBasic.Wav");
+		SOUND->Play(Jumpsound, 0.3f, false);
 		BasicKirby();
 	}
 
@@ -276,9 +278,20 @@ void CIceKirby::Update()
 
 	}
 
+	if (BUTTONDOWN('S'))
+	{
+		SOUND->Play(Jumpsound123, 0.1f, true);
+	}
+	if (BUTTONUP('S'))
+	{
+		SOUND->Pause(Jumpsound123);
+	}
+
 	if (BUTTONDOWN('A'))
 	{
 		Jumpgo = true;
+		CSound* Jumpsound = RESOURCE->LoadSound(L"Jump", L"Sound\\Jump.Wav");
+		SOUND->Play(Jumpsound, 0.1f, false);
 	}
 
 	if (BUTTONSTAY(VK_UP))
@@ -288,7 +301,7 @@ void CIceKirby::Update()
 		if (JumpTime <= 0.3f)
 		{
 			Logger::Debug(L"점프");
-			m_vecPos.y -= m_fSpeed * DT * 3.;
+			m_vecPos.y -= m_fSpeed * DT * 3.f;
 		}
 		else
 		{

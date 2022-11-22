@@ -34,7 +34,7 @@ void CSceneBoss::Enter()
 {
 
 	BackGroundSound = RESOURCE->LoadSound(L"BossBGM", L"Sound\\BossBgm.mp3");
-	SOUND->Play(BackGroundSound, 0.4f, true);
+	SOUND->Play(BackGroundSound, 0.2f, true);
 
 
 	CKirbyHp* HP = new CKirbyHp;

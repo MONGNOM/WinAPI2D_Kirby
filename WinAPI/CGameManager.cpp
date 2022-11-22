@@ -28,6 +28,15 @@ void CGameManager::Init()
 
 void CGameManager::Update()
 {
+
+	if (BUTTONDOWN(VK_F2))
+	{
+		if (m_DebugMode == true)
+			m_DebugMode = false;
+		else
+			m_DebugMode = true;
+	}
+
 	if (PlayerHit == true)
 	{
 		HpNotDown = true;

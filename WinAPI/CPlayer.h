@@ -31,7 +31,9 @@ private:
 	bool Light;
 	bool Ice;
 	bool m_IceChange;
-	
+	bool flySound;
+	CSound* flysound = RESOURCE->LoadSound(L"fly", L"Sound\\fly.mp3");
+
 	bool KirbyNoHit;
 	float NoHitTime;
 

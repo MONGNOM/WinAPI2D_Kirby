@@ -28,6 +28,7 @@ protected:
 	bool m_LightChange;
 	bool m_Gravity;
 	CAnimator* m_pAnimator;
+	CSound* Jumpsound123 = RESOURCE->LoadSound(L"IceAttack", L"Sound\\IceAttack.Wav");
 
 	CImage* m_pIdleImageR;
 	CImage* m_pIdleImageRD;

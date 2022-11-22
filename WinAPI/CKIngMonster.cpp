@@ -58,9 +58,11 @@ void CKIngMonster::Init()
 
 
 	m_pAnimator = new CAnimator;
+	m_pAnimator->CreateAnimation(L"Left", m_mMoveImage, Vector(1358.f, 425.f), Vector(162.f, 200.f), Vector(-194.f, 0.f), 0.15f, 8);
 	m_pAnimator->CreateAnimation(L"IdleLeft", m_mMoveImage, Vector(1358.f, 425.f), Vector(162.f, 200.f), Vector(-194.f, 0.f), 0.15f, 8);
 	m_pAnimator->CreateAnimation(L"Idle", m_mMoveImage, Vector(1358.f, 425.f), Vector(162.f, 200.f), Vector(-194.f, 0.f), 0.15f, 8);
 	m_pAnimator->CreateAnimation(L"IdleRight", m_mMoveImageR, Vector(0.f, 0.f), Vector(157.f, 177.f), Vector(192.f, 0.f), 0.15f, 8);
+	m_pAnimator->CreateAnimation(L"Right", m_mMoveImageR, Vector(0.f, 0.f), Vector(157.f, 177.f), Vector(192.f, 0.f), 0.15f, 8);
 	m_pAnimator->CreateAnimation(L"MoveRight", m_mMoveImageR, Vector(0.f, 0.f), Vector(157.f, 177.f), Vector(192.f, 0.f), 0.15f, 8);
 	m_pAnimator->CreateAnimation(L"MoveLeft", m_mMoveImage, Vector(1358.f, 425.f), Vector(162.f, 200.f), Vector(-194.f, 0.f), 0.15f, 8);
 
@@ -70,7 +72,9 @@ void CKIngMonster::Init()
 	m_pAnimator->CreateAnimation(L"MoveLeftDie", m_mDieImage, Vector(680.f, 310.f), Vector(200.f, 200.f), Vector(-240.f, 0.f), 0.5f, 4);
 
 
+	m_pAnimator->CreateAnimation(L"LeftJump", m_mJumpImage, Vector(1260.f, 280.f), Vector(180.f, 210.f), Vector(-215.f, 0.f), 0.1f, 7);
 	m_pAnimator->CreateAnimation(L"IdleLeftJump", m_mJumpImage, Vector(1260.f, 280.f), Vector(180.f, 210.f), Vector(-215.f, 0.f), 0.1f, 7);
+	m_pAnimator->CreateAnimation(L"RightJump", m_mJumpImage, Vector(0.f, 0.f), Vector(180.f, 210.f), Vector(210.f, 0.f), 0.1f, 7);
 	m_pAnimator->CreateAnimation(L"IdleRightJump", m_mJumpImage, Vector(0.f, 0.f), Vector(180.f, 210.f), Vector(210.f, 0.f), 0.1f, 7);
 	m_pAnimator->CreateAnimation(L"MoveRightJump", m_mJumpImage, Vector(0.f, 0.f), Vector(180.f, 210.f), Vector(210.f, 0.f), 0.1f, 7);
 	m_pAnimator->CreateAnimation(L"MoveLeftJump", m_mJumpImage, Vector(1260.f, 280.f), Vector(180.f, 210.f), Vector(-215.f, 0.f), 0.1f, 7);
@@ -94,6 +98,7 @@ void CKIngMonster::Update()
 		Iscrash = true;
 		Jump2 = false;
 		Moveing = false;
+
 	}
 	Gravity();
 
@@ -106,6 +111,8 @@ void CKIngMonster::Update()
 		{
 			DELETEOBJECT(this);
 			DieTime = 0;
+			CSound* Jumpsound = RESOURCE->LoadSound(L"Clap", L"Sound\\Clap.Wav");
+			SOUND->Play(Jumpsound, 0.1f, false);
 		}
 	}
 
@@ -120,6 +127,8 @@ void CKIngMonster::Update()
 			m_vecPos.y -= m_fSpeed * DT * 5;
 			m_vecPos.x -= 7;
 			str = L"IdleLeft";
+			CSound* Jumpsound = RESOURCE->LoadSound(L"BossJump", L"Sound\\BossJump.Wav");
+			SOUND->Play(Jumpsound, 0.1f, false);
 
 		}
 		else if (JumpTime >= 0.3f && JumpTime <= 2.3f)
@@ -134,7 +143,8 @@ void CKIngMonster::Update()
 			m_vecPos.y -= m_fSpeed * DT * 5;
 			m_vecPos.x += 7;
 			str = L"IdleRight";
-
+			CSound* Jumpsound = RESOURCE->LoadSound(L"BossJump", L"Sound\\BossJump.Wav");
+			SOUND->Play(Jumpsound, 0.1f, false);
 	
 		}
 		else if (JumpTime >= 2.6f && JumpTime <= 4.6f)
@@ -214,7 +224,7 @@ void CKIngMonster::AnimatorUpdate()
 	wstring str = L"";
 
 	if (m_bIsMove)	str += L"Move";
-	else			str += L"Idle";
+	else if (m_bIsMove == false && m_Gravity == false)			str += L"Idle";
 
 	if (m_vecLookDir.x > 0) str += L"Right";
 	else if (m_vecLookDir.x < 0) str += L"Left";

@@ -62,6 +62,7 @@ CPlayer::CPlayer()
 	m_pAttackImageLD = nullptr;
 	m_pJumpImage = nullptr;
 	m_KirbyEatImage = nullptr;
+	flySound = false;
 
 	m_pHp = GAME->PlayerHp;
 	Light = false;
@@ -163,12 +164,15 @@ void CPlayer::Init()
 		m_pAnimator->CreateAnimation(L"MoveAttackEat", m_pAttackImage, Vector(0.f, 0.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 5, false);
 
 		m_pAnimator->CreateAnimation(L"IdleJumpEat", m_pJumpImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9, false);
+		m_pAnimator->CreateAnimation(L"IdleRightUpJumpEat", m_pJumpImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9, false);
 		m_pAnimator->CreateAnimation(L"IdleRightJumpEat", m_pJumpImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9, false);
+		m_pAnimator->CreateAnimation(L"IdleLeftUpJumpEat", m_pJumpImage, Vector(0.f, 90.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9, false);
 		m_pAnimator->CreateAnimation(L"IdleLeftJumpEat", m_pJumpImage, Vector(0.f, 90.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9, false);
 
+		m_pAnimator->CreateAnimation(L"MoveRightUpJumpEat", m_pJumpImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9, false);
 		m_pAnimator->CreateAnimation(L"MoveRightJumpEat", m_pJumpImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9, false);
+		m_pAnimator->CreateAnimation(L"MoveLeftUpJumpEat", m_pJumpImage, Vector(0.f, 90.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9, false);
 		m_pAnimator->CreateAnimation(L"MoveLeftJumpEat", m_pJumpImage, Vector(0.f, 90.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9, false);
-
 		m_pAnimator->CreateAnimation(L"MoveRightRunJumpEat", m_pJumpImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9, false);
 		m_pAnimator->CreateAnimation(L"MoveLeftRunJumpEat", m_pJumpImage, Vector(0.f, 90.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 9, false);
 
@@ -318,13 +322,13 @@ void CPlayer::Update()
 
 	=======중요============
 	 2. 이미지해결해야함 ==> 특정행동하면 특정 동작만나오게끔 보스도 마찬가지
+	 3. 플레이어 공격 오브젝트가 도망감 ㅋㅋ
 	=================
 
 
 	=======진행중==========
-	 3. 플레이어 공격 오브젝트가 도망감 ㅋㅋ
 
-	 4. 사운드
+	 4. 사운드 = 얼음공격사운드 빛 공격사운드  보스 점프사운드 
 	=====================
 
 
@@ -444,17 +448,23 @@ void CPlayer::Update()
 
 	if (m_Eat == false && BUTTONDOWN(VK_DOWN))
 	{
+		CSound* Change = RESOURCE->LoadSound(L"Change", L"Sound\\Change.Wav");
+
 		Logger::Debug(L"커비가 소화시켰다");
 		m_Eat = true;
 
 		if (m_LightChange == true)
 		{
+			SOUND->Play(Change, 0.1f, false);
+
 			Logger::Debug(L"커비가 빛으로 변신했다");
 			m_Basic = false;
 			ChangePlayer();
 		}
 		else if (m_IceChange == true)
 		{
+			SOUND->Play(Change, 0.1f,false);
+
 			Logger::Debug(L"커비가 얼음으로 변신했다");
 			m_Basic = false;
 			ChangePlayer();
@@ -470,26 +480,33 @@ void CPlayer::Update()
 
 	if (BUTTONDOWN('S'))
 	{
+		CSound* Eattingsound = RESOURCE->LoadSound(L"Eatting", L"Sound\\Eatting.Wav");
+		CSound* Shotsound = RESOURCE->LoadSound(L"Shot", L"Sound\\Shot.Wav");
 		if (m_Basic == true)
 		{
 			if (m_Eat)  //true
 			{
 				Eat();
+				SOUND->Play(Eattingsound, 0.1f,false);
+		
 			}
 			else // false
 			{
 				Shot();
+				SOUND->Play(Shotsound, 0.1f, false);
+			
 			}
 		}
-
 	}
+	
+
 
 	if (BUTTONDOWN('A'))
 	{
 		flyTime += DT;
 		Jumpgo = true;
-		CSound* sound = RESOURCE->LoadSound(L"Jump", L"Sound\\Jump.Wav");
-		SOUND->Play(sound, 0.1f,false);
+		CSound* Jumpsound = RESOURCE->LoadSound(L"Jump", L"Sound\\Jump.Wav");
+		SOUND->Play(Jumpsound, 0.1f,false);
 
 		/*if (flyTime <= 0.15f)
 		{
@@ -503,8 +520,10 @@ void CPlayer::Update()
 
 	if (BUTTONSTAY(VK_UP))
 	{
-			JumpTime += DT;
-
+			
+		JumpTime += DT; 
+			
+			
 			if (JumpTime <= 0.4f)
 			{
 				Logger::Debug(L"점프");
@@ -516,7 +535,14 @@ void CPlayer::Update()
 				Jumpgo = false;
 			}
 	}
-
+	if (BUTTONDOWN(VK_UP))
+	{
+		SOUND->Play(flysound, 0.1f, true);
+	}
+	if (BUTTONUP(VK_UP))
+	{
+		SOUND->Pause(flysound);
+	}
 
 	if (Jumpgo == true)
 	{
@@ -569,7 +595,7 @@ void CPlayer::AnimatorUpdate()
 	if (m_vecLookDir.x > 0) str += L"Right";
 	else if (m_vecLookDir.x < 0) str += L"Left";
 
-	if (BUTTONSTAY(VK_UP) && m_vecPos.y <= 300 && m_Gravity == true) str += L"Up";
+	if (BUTTONSTAY(VK_UP)  &&  m_Gravity == true && m_vecPos.y) str += L"Up";
 
 	
 
@@ -584,7 +610,7 @@ void CPlayer::AnimatorUpdate()
 
 	if (BUTTONSTAY('R')) str += L"Run";
 
-	if (BUTTONSTAY('A') || m_Gravity == true) str += L"Jump";
+	if (BUTTONSTAY('A')|| m_vecPos.y >= 300 && m_Gravity == true) str += L"Jump";
 
 	if (m_Eat == false) str += L"Eat";
 
@@ -650,6 +676,7 @@ void CPlayer::Eat()
 
 void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 {
+	CSound* Eatsound = RESOURCE->LoadSound(L"Eat", L"Sound\\Eat.Wav");
 	
 	if (pOtherCollider->GetObjName() == L"몬스터")
 	{
@@ -659,7 +686,8 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 			m_IceChange = false;
 			Light = false;
 			Ice = false;
-	
+			SOUND->Play(Eatsound, 0.1f, false);
+
 		if (BUTTONSTAY('S'))
 		{
 			m_Eat = false;
@@ -678,6 +706,8 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 	}
 	if (pOtherCollider->GetObjName() == L"얼음 몬스터")
 	{
+		SOUND->Play(Eatsound, 0.1f, false);
+
 		Logger::Debug(L"몬스터와 부딪혀 데미지를 입습니다.");
 		Light = false;
 		m_IceChange = true;
@@ -709,6 +739,7 @@ void CPlayer::OnCollisionEnter(CCollider* pOtherCollider)
 		Logger::Debug(L"몬스터와 부딪혀 데미지를 입습니다.");
 		Ice = false;
 		Light = true;
+		SOUND->Play(Eatsound, 0.1f, false);
 		m_LightChange = true;
 		if (BUTTONSTAY('S'))
 		{
