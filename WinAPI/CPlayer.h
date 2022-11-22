@@ -7,7 +7,7 @@ class CMonster;
 class KirbyEat;
 class CLightKirby;
 
-enum class Playerstate { Idle, Run, Jump, Eat, Shot, Change, Takehit };
+enum class Playerstate { Idle, Walk, Run, Jump, Fly, Eat, Shot, Change, Takehit };
 
 
 class CPlayer : public CGameObject
@@ -19,7 +19,7 @@ public:
 	virtual ~CPlayer();
 	int m_pHp;
 private:
-
+	Playerstate state;
 	bool m_Basic;
 	bool m_LightChange;
 	bool m_Gravity;
@@ -44,7 +44,7 @@ private:
 	CImage* m_pIdleImageL;
 	CImage* m_pMoveImageR;
 	CImage* m_pMoveImageL;
-	CImage* m_pRunImageR;
+	CImage* m_pRunImage;
 	CImage* m_pRunImageL;
 	CImage* m_pAttackImage;
 	CImage* m_pAttackImageRD;
@@ -56,10 +56,12 @@ private:
 
 	CLightKirby* LightKirby;
 
+	Vector m_vecInputDir;
 	Vector m_vecMoveDir;
 	Vector m_vecLookDir;
 	bool m_bIsMove;
 	float m_fSpeed = 200.0f;
+	bool m_bAttackInput;
 
 	int ontile;
 protected:
@@ -80,7 +82,13 @@ private:
 	void Render() override;
 	void Release() override;
 
-	
+	void Walk();
+	void Run();
+	void Attack();
+	void Jump();
+	void Fly();
+	void Sliding();
+	void FormChange();
 
 	void Hp();
 	void Gravity();

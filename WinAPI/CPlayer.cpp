@@ -26,6 +26,8 @@
 
 CPlayer::CPlayer()
 {
+	state = Playerstate::Idle;
+
 	ontile = 0;
 	m_vecPos = Vector(0, 0);
 	m_vecScale = Vector(100, 100);
@@ -41,8 +43,9 @@ CPlayer::CPlayer()
 	m_pMoveImageL = nullptr;
 	m_pAttackImage = nullptr;
 
+	m_vecInputDir = Vector(0, 0);
 	m_vecMoveDir = Vector(0, 0);
-	m_vecLookDir = Vector(0, -1);
+	m_vecLookDir = Vector(1, 0);
 	m_bIsMove = false;
 	Jumpgo = false;
 	JumpTime = 0.f;
@@ -54,7 +57,7 @@ CPlayer::CPlayer()
 	m_Gravity = true;
 	m_pChangeImage = nullptr;
 	LightKirby = nullptr;
-	m_pRunImageR = nullptr;
+	m_pRunImage = nullptr;
 	m_pRunImageL = nullptr;
 	m_pIdleImageRD = nullptr;
 	m_pIdleImageLD = nullptr;
@@ -71,7 +74,6 @@ CPlayer::CPlayer()
 
 	KirbyNoHit = false;
 	NoHitTime = 0;
-
 }
 
 
@@ -99,17 +101,27 @@ void CPlayer::Init()
 	
 	m_pJumpImage = RESOURCE->LoadImg(L"PlayerJump", L"Image\\Kirby\\Basic\\KirbyJump.png");
 
-	m_pRunImageR  = RESOURCE->LoadImg(L"PlayerRunR", L"Image\\Kirby\\Basic\\KirbyRun.png");
-	m_pRunImageL  = RESOURCE->LoadImg(L"PlayerRunL", L"Image\\Kirby\\Basic\\KirbyRun.png");
+	m_pRunImage  = RESOURCE->LoadImg(L"PlayerRunR", L"Image\\Kirby\\Basic\\KirbyRun.png");
 
 	m_KirbyEatImage = RESOURCE->LoadImg(L"PlayerEat", L"Image\\Kirby\\Basic\\KirbyEatRun.png");
 	m_KirbyEatDownImage = RESOURCE->LoadImg(L"PlayerEatDown", L"Image\\Kirby\\Basic\\KirbyDiner.png");
 
 
+	m_pAnimator = new CAnimator;
+	// IDLE
+	m_pAnimator->CreateAnimation(L"LeftIdle", m_pIdleImageL, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
+	m_pAnimator->CreateAnimation(L"RightIdle", m_pIdleImageR, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 10.0f, 1);
+
+	// WALK
+	m_pAnimator->CreateAnimation(L"LeftWalk", m_pMoveImageL, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
+	m_pAnimator->CreateAnimation(L"RightWalk", m_pMoveImageR, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
+
+	// RUN
+	m_pAnimator->CreateAnimation(L"LeftRun", m_pRunImage, Vector(0.f, 104.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
+	m_pAnimator->CreateAnimation(L"RightRun", m_pRunImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
 
 	// 캐릭터 45x43픽셀
 	
-	m_pAnimator = new CAnimator;
 	m_pAnimator->CreateAnimation(L"IdleUPDown", m_pChangeImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 10.0f, 1);
 
 		m_pAnimator->CreateAnimation(L"IdleDownUP", m_pChangeImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 10.0f, 1);
@@ -220,17 +232,17 @@ void CPlayer::Init()
 		m_pAnimator->CreateAnimation(L"MoveAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 5, false);
 
 		
-		m_pAnimator->CreateAnimation(L"IdleRun", m_pRunImageR, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
-		m_pAnimator->CreateAnimation(L"IdleRightRun", m_pRunImageR, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
-		m_pAnimator->CreateAnimation(L"IdleLeftRun", m_pRunImageR, Vector(490.f, 104.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.05f, 8);
+		m_pAnimator->CreateAnimation(L"IdleRun", m_pRunImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
+		m_pAnimator->CreateAnimation(L"IdleRightRun", m_pRunImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
+		m_pAnimator->CreateAnimation(L"IdleLeftRun", m_pRunImage, Vector(490.f, 104.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.05f, 8);
 
-		m_pAnimator->CreateAnimation(L"IdleRightUpRun", m_pRunImageR, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
-		m_pAnimator->CreateAnimation(L"IdleLeftUpRun", m_pRunImageR, Vector(490.f, 104.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.05f, 8);
+		m_pAnimator->CreateAnimation(L"IdleRightUpRun", m_pRunImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
+		m_pAnimator->CreateAnimation(L"IdleLeftUpRun", m_pRunImage, Vector(490.f, 104.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.05f, 8);
 
 
-		m_pAnimator->CreateAnimation(L"MoveUpRun", m_pRunImageR, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
-		m_pAnimator->CreateAnimation(L"MoveRightRun", m_pRunImageR, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
-		m_pAnimator->CreateAnimation(L"MoveLeftRun", m_pRunImageR, Vector(490.f, 104.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.05f, 8);
+		m_pAnimator->CreateAnimation(L"MoveUpRun", m_pRunImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
+		m_pAnimator->CreateAnimation(L"MoveRightRun", m_pRunImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
+		m_pAnimator->CreateAnimation(L"MoveLeftRun", m_pRunImage, Vector(490.f, 104.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.05f, 8);
 
 		m_pAnimator->CreateAnimation(L"MoveRightUpAttackRun", m_pAttackImage, Vector(0.f, 0.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 9);
 		m_pAnimator->CreateAnimation(L"MoveLeftUpAttackRun", m_pAttackImage, Vector(0.f, 100.f), Vector(59.f, 59.f), Vector(69.f, 0.f), 0.09f, 9);
@@ -368,154 +380,193 @@ void CPlayer::Update()
 		GAME->ChangeLight = false;
 	}
 
+	// 입력
 	if (BUTTONSTAY(VK_LEFT))
-	{
-		LastRunTime += DT;
-		if (BUTTONSTAY('R')/*LastRunTime <= 0.15f && BUTTONSTAY(VK_LEFT)*/)
-		{
-			m_vecPos.x -= m_fSpeed * DT * 2.f;
-			m_bIsMove = true;
-			m_vecMoveDir.x = -1;
-			LastRunTime = 0;
-
-		}
-		else if (BUTTONSTAY(VK_DOWN)/*LastRunTime <= 0.15f && BUTTONSTAY(VK_LEFT)*/)
-		{
-			m_vecMoveDir.x = -1;
-			m_bIsMove = false;
-		}
-		else if (BUTTONSTAY('R') && BUTTONSTAY(VK_DOWN)/*LastRunTime <= 0.15f && BUTTONSTAY(VK_LEFT)*/)
-		{
-			m_vecMoveDir.x = -1;
-			m_bIsMove = false;
-		}
-		else if (BUTTONSTAY('S'))
-		{
-			m_vecMoveDir.x = 0;
-			m_bIsMove = false;
-		}
-		else
-		{
-			m_vecPos.x -= m_fSpeed * DT;
-			m_bIsMove = true;
-			m_vecMoveDir.x = -1;
-		}
-	}
-
+		m_vecInputDir.x = -1;
 	else if (BUTTONSTAY(VK_RIGHT))
-	{
-		LastRunTime += DT;
-		if(BUTTONSTAY('R') /*&& LastRunTime <= 0.15f && BUTTONSTAY(VK_RIGHT)*/)
-		{ 
-			m_vecPos.x += m_fSpeed * DT *2.f;
-			m_bIsMove = true;
-			m_vecMoveDir.x = +1;
-			LastRunTime = 0;
-		}
-		else if (BUTTONSTAY('S'))
-		{
-			m_vecMoveDir.x = 0;
-			m_bIsMove = false;
-		}
-
-		else if (BUTTONSTAY(VK_DOWN)/*LastRunTime <= 0.15f && BUTTONSTAY(VK_LEFT)*/)
-		{
-			m_vecMoveDir.x = +1;
-			m_bIsMove = false;
-		}
-
-		else if (BUTTONSTAY(VK_DOWN) && BUTTONSTAY('R'))/*LastRunTime <= 0.15f && BUTTONSTAY(VK_LEFT)*/
-		{
-			m_vecMoveDir.x = +1;
-			m_bIsMove = false;
-		}
-		else
-		{
-			m_vecPos.x += m_fSpeed * DT;
-			m_bIsMove = true;
-			m_vecMoveDir.x = +1;
-		}
-	}
-
+		m_vecInputDir.x = 1;
 	else
+		m_vecInputDir.x = 0;
+
+	if (state == Playerstate::Idle)
+	{		
+
+
+		// Handle Animator
+		if (m_vecInputDir.Length() > 0)
+			m_vecLookDir = m_vecInputDir;
+		if (m_vecLookDir.x > 0) m_pAnimator->Play(L"RightIdle");
+		else if (m_vecLookDir.x < 0) m_pAnimator->Play(L"LeftIdle");
+
+
+		// Input Handle
+		if (BUTTONDOWN('S') && m_Eat)		state = Playerstate::Eat;
+		else if (BUTTONDOWN('S') && !m_Eat) state = Playerstate::Shot;
+		else if (BUTTONDOWN(VK_DOWN))		state = Playerstate::Change;
+		else if (BUTTONDOWN('A'))			state = Playerstate::Jump;
+		else if (BUTTONSTAY(VK_UP))			state = Playerstate::Fly;
+		else if (m_vecInputDir.x != 0)
+		{
+			if (BUTTONSTAY('R'))	state = Playerstate::Run;
+			else					state = Playerstate::Walk;
+		}
+	}
+	else if (state == Playerstate::Walk)
 	{
-		m_vecMoveDir.x = 0;
+		// 움직임
+		m_vecPos.x += m_fSpeed * DT * m_vecInputDir.x;
+
+		// Handle Animator
+		if (m_vecInputDir.Length() > 0)
+			m_vecLookDir = m_vecInputDir;
+		if (m_vecLookDir.x > 0) m_pAnimator->Play(L"RightWalk");
+		else if (m_vecLookDir.x < 0) m_pAnimator->Play(L"LeftWalk");
+
+
+		// Input Handle
+		if (BUTTONDOWN('S') && m_Eat)		state = Playerstate::Eat;
+		else if (BUTTONDOWN('S') && !m_Eat) state = Playerstate::Shot;
+		else if (BUTTONDOWN(VK_DOWN))		state = Playerstate::Change;
+		else if (BUTTONDOWN('A'))			state = Playerstate::Jump;
+		else if (BUTTONSTAY(VK_UP))			state = Playerstate::Fly;
+		else if (m_vecInputDir.x == 0)		state = Playerstate::Idle;
+		else if (BUTTONSTAY('R'))			state = Playerstate::Run;
+
+	}
+	else if (state == Playerstate::Run)
+	{
+		// 움직임
+		m_vecPos.x += m_fSpeed * DT * m_vecInputDir.x * 2;
+
+		// Handle Animator
+		if (m_vecInputDir.Length() > 0)
+			m_vecLookDir = m_vecInputDir;
+		if (m_vecLookDir.x > 0) m_pAnimator->Play(L"RightRun");
+		else if (m_vecLookDir.x < 0) m_pAnimator->Play(L"LeftRun");
+
+		// Input Handle
+		if (BUTTONDOWN('S') && m_Eat)		state = Playerstate::Eat;
+		else if (BUTTONDOWN('S') && !m_Eat) state = Playerstate::Shot;
+		else if (BUTTONDOWN(VK_DOWN))		state = Playerstate::Change;
+		else if (BUTTONDOWN('A'))			state = Playerstate::Jump;
+		else if (BUTTONSTAY(VK_UP))			state = Playerstate::Fly;
+		else if (m_vecInputDir.x == 0)		state = Playerstate::Idle;
+		else if (!BUTTONSTAY('R'))			state = Playerstate::Walk;
+	}
+	else if (state == Playerstate::Jump)
+	{
+
+	}
+	else if (state == Playerstate::Fly)
+	{
+
+	}
+	else if (state == Playerstate::Shot)
+	{
+
+	}
+	else if (state == Playerstate::Eat)
+	{
+
+	}
+	else if (state == Playerstate::Change)
+	{
+
 	}
 
-	if (m_Eat == false && BUTTONDOWN(VK_DOWN))
-	{
-		Logger::Debug(L"커비가 소화시켰다");
-		m_Eat = true;
-
-		if (m_LightChange == true)
-		{
-			Logger::Debug(L"커비가 빛으로 변신했다");
-			m_Basic = false;
-			ChangePlayer();
-		}
-		else if (m_IceChange == true)
-		{
-			Logger::Debug(L"커비가 얼음으로 변신했다");
-			m_Basic = false;
-			ChangePlayer();
-		}
-	}
-
+	/*
 	if (BUTTONSTAY(VK_DOWN) && BUTTONDOWN('S'))
 	{
-
-		m_vecPos.x += m_fSpeed * DT +100; 
-		// 시간 넣어서 그 시간만큼 이 거리를 이동하게 끔 설정
+		Sliding();
 	}
-
-	if (BUTTONDOWN('S'))
+	else if (BUTTONSTAY('S'))
 	{
-		if (m_Basic == true)
-		{
-			if (m_Eat)  //true
-			{
-				Eat();
-			}
-			else // false
-			{
-				Shot();
-			}
-		}
-
+		Attack();
 	}
-
-	if (BUTTONDOWN('A'))
+	else if (m_Eat == false && BUTTONDOWN(VK_DOWN))
 	{
-		flyTime += DT;
-		Jumpgo = true;
-		CSound* sound = RESOURCE->LoadSound(L"Jump", L"Sound\\Jump.Wav");
-		SOUND->Play(sound, 0.1f,false);
-
-		/*if (flyTime <= 0.15f)
-		{
-			Logger::Debug(L"점프");
-			m_vecPos.y -= m_fSpeed * DT * 4;
-			flyTime = 0;
-
-		}*/
+		FormChange();
 	}
-
-
-	if (BUTTONSTAY(VK_UP))
+	else if (BUTTONDOWN('A'))
 	{
-			JumpTime += DT;
-
-			if (JumpTime <= 0.4f)
-			{
-				Logger::Debug(L"점프");
-				m_vecPos.y -= m_fSpeed * DT * 3;
-			}
-			else
-			{
-				JumpTime = 0;
-				Jumpgo = false;
-			}
+		Jump();
 	}
+	else if (BUTTONSTAY(VK_UP))
+	{
+		Fly();
+	}
+	else if (BUTTONSTAY(VK_LEFT) || BUTTONSTAY(VK_RIGHT))
+	{
+		if (BUTTONSTAY('R')) Run();
+		else Walk();
+	}
+	*/
+
+	//	if (BUTTONSTAY('R')/*LastRunTime <= 0.15f && BUTTONSTAY(VK_LEFT)*/)
+	//	{
+	//		m_vecPos.x -= m_fSpeed * DT * 2.f;
+	//		m_bIsMove = true;
+	//		m_vecMoveDir.x = -1;
+	//		LastRunTime = 0;
+
+	//	}
+	//	else if (BUTTONSTAY(VK_DOWN)/*LastRunTime <= 0.15f && BUTTONSTAY(VK_LEFT)*/)
+	//	{
+	//		m_vecMoveDir.x = -1;
+	//		m_bIsMove = false;
+	//	}
+	//	else if (BUTTONSTAY('R') && BUTTONSTAY(VK_DOWN)/*LastRunTime <= 0.15f && BUTTONSTAY(VK_LEFT)*/)
+	//	{
+	//		m_vecMoveDir.x = -1;
+	//		m_bIsMove = false;
+	//	}
+	//	else if (BUTTONSTAY('S'))
+	//	{
+	//		m_vecMoveDir.x = 0;
+	//		m_bIsMove = false;
+	//	}
+	//	else
+	//	{
+	//		m_vecPos.x -= m_fSpeed * DT;
+	//		m_bIsMove = true;
+	//		m_vecMoveDir.x = -1;
+	//	}
+	//}
+
+	//else if (BUTTONSTAY(VK_RIGHT))
+	//{
+	//	LastRunTime += DT;
+	//	if (BUTTONSTAY('R') /*&& LastRunTime <= 0.15f && BUTTONSTAY(VK_RIGHT)*/)
+	//	{
+	//		m_vecPos.x += m_fSpeed * DT * 2.f;
+	//		m_bIsMove = true;
+	//		m_vecMoveDir.x = +1;
+	//		LastRunTime = 0;
+	//	}
+	//	else if (BUTTONSTAY('S'))
+	//	{
+	//		m_vecMoveDir.x = 0;
+	//		m_bIsMove = false;
+	//	}
+
+	//	else if (BUTTONSTAY(VK_DOWN)/*LastRunTime <= 0.15f && BUTTONSTAY(VK_LEFT)*/)
+	//	{
+	//		m_vecMoveDir.x = +1;
+	//		m_bIsMove = false;
+	//	}
+
+	//	else if (BUTTONSTAY(VK_DOWN) && BUTTONSTAY('R'))/*LastRunTime <= 0.15f && BUTTONSTAY(VK_LEFT)*/
+	//	{
+	//		m_vecMoveDir.x = +1;
+	//		m_bIsMove = false;
+	//	}
+	//	else
+	//	{
+	//		m_vecPos.x += m_fSpeed * DT;
+	//		m_bIsMove = true;
+	//		m_vecMoveDir.x = +1;
+	//	}
+	//}
 
 
 	if (Jumpgo == true)
@@ -533,8 +584,6 @@ void CPlayer::Update()
 			Jumpgo = false;
 		}
 	}
-
-		AnimatorUpdate();
 }
 
 void CPlayer::Gravity()
@@ -554,6 +603,88 @@ void CPlayer::Release()
 	
 }
 
+void CPlayer::Walk()
+{
+	m_vecMoveDir = m_vecInputDir;
+	m_vecPos.x -= m_fSpeed * DT * m_vecMoveDir.x;
+}
+
+void CPlayer::Run()
+{
+	m_vecMoveDir = m_vecInputDir * 2.f;
+	m_vecPos.x -= m_fSpeed * DT * m_vecMoveDir.x;
+}
+
+void CPlayer::Attack()
+{
+	if (m_Basic == true)
+	{
+		if (m_Eat)  //true
+		{
+			Eat();
+		}
+		else // false
+		{
+			Shot();
+		}
+	}
+}
+
+void CPlayer::Jump()
+{
+	flyTime += DT;
+	Jumpgo = true;
+	CSound* sound = RESOURCE->LoadSound(L"Jump", L"Sound\\Jump.Wav");
+	SOUND->Play(sound, 0.1f, false);
+
+	/*if (flyTime <= 0.15f)
+	{
+		Logger::Debug(L"점프");
+		m_vecPos.y -= m_fSpeed * DT * 4;
+		flyTime = 0;
+
+	}*/
+}
+
+void CPlayer::Fly()
+{
+	JumpTime += DT;
+
+	if (JumpTime <= 0.4f)
+	{
+		Logger::Debug(L"점프");
+		m_vecPos.y -= m_fSpeed * DT * 3;
+	}
+	else
+	{
+		JumpTime = 0;
+		Jumpgo = false;
+	}
+}
+
+void CPlayer::Sliding()
+{
+}
+
+void CPlayer::FormChange()
+{
+	Logger::Debug(L"커비가 소화시켰다");
+	m_Eat = true;
+
+	if (m_LightChange == true)
+	{
+		Logger::Debug(L"커비가 빛으로 변신했다");
+		m_Basic = false;
+		ChangePlayer();
+	}
+	else if (m_IceChange == true)
+	{
+		Logger::Debug(L"커비가 얼음으로 변신했다");
+		m_Basic = false;
+		ChangePlayer();
+	}
+}
+
 
 void CPlayer::AnimatorUpdate()
 {
@@ -563,11 +694,17 @@ void CPlayer::AnimatorUpdate()
 	if (m_vecMoveDir.Length() > 0)
 		m_vecLookDir = m_vecMoveDir;
 
-	if (m_bIsMove)	str += L"Move";
-	else			str += L"Idle";
-
 	if (m_vecLookDir.x > 0) str += L"Right";
 	else if (m_vecLookDir.x < 0) str += L"Left";
+
+	// IDLE
+	if (m_vecMoveDir.Length() <= 0)
+	{
+		str += L"Idle";
+		m_pAnimator->Play(str, false);
+		return;
+	}
+
 
 	if (BUTTONSTAY(VK_UP) && m_vecPos.y <= 300 && m_Gravity == true) str += L"Up";
 
