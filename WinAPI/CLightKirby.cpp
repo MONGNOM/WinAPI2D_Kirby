@@ -77,6 +77,7 @@ void CLightKirby::Init()
 
 
 
+
 	m_pAnimator = new CAnimator;
 
 	m_pAnimator->CreateAnimation(L"IdleUPDown", m_pChangeImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 10.0f, 1);
@@ -425,11 +426,7 @@ void CLightKirby::OnCollisionEnter(CCollider* pOtherCollider)
 			m_pHp -= 1;
 		}
 		GAME->PlayerHit = true;
-		CGameObject* pl = pOtherCollider->GetOwner();
-		if (pl->GetPos().x <= m_vecPos.x)
-			m_vecPos.x += 20;
-		else if (pl->GetPos().x >= m_vecPos.x)
-			m_vecPos.x -= 20;
+	
 	}
 
 	if (pOtherCollider->GetObjName() == L"빛몬스터")
@@ -445,11 +442,7 @@ void CLightKirby::OnCollisionEnter(CCollider* pOtherCollider)
 			m_pHp -= 1;
 		}
 		GAME->PlayerHit = true;
-		CGameObject* pl = pOtherCollider->GetOwner();
-		if (pl->GetPos().x <= m_vecPos.x)
-			m_vecPos.x += 20;
-		else if (pl->GetPos().x >= m_vecPos.x)
-			m_vecPos.x -= 20;
+
 
 	}
 
@@ -468,11 +461,7 @@ void CLightKirby::OnCollisionEnter(CCollider* pOtherCollider)
 			m_pHp -= 1;
 		}
 		GAME->PlayerHit = true;
-		CGameObject* pl = pOtherCollider->GetOwner();
-		if (pl->GetPos().x <= m_vecPos.x)
-			m_vecPos.x += 20;
-		else if (pl->GetPos().x >= m_vecPos.x)
-			m_vecPos.x -= 20;
+	
 	}
 
 	if (pOtherCollider->GetObjName() == L"보스 몬스터")
@@ -488,11 +477,7 @@ void CLightKirby::OnCollisionEnter(CCollider* pOtherCollider)
 			m_pHp -= 1;
 		}
 		GAME->PlayerHit = true;
-		CGameObject* pl = pOtherCollider->GetOwner();
-		if (pl->GetPos().x <= m_vecPos.x)
-			m_vecPos.x += 20;
-		else if (pl->GetPos().x >= m_vecPos.x)
-			m_vecPos.x -= 20;
+
 
 	}
 

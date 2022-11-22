@@ -6,6 +6,8 @@ class CSceneTitle : public CScene
 public:
 	CSceneTitle();
 	virtual ~CSceneTitle();
+	CSound* BackGroundSound1;
+	CSound* BackGroundSound12;
 
 private:
 	void Init()		override;

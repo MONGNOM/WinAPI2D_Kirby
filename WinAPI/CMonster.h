@@ -14,6 +14,7 @@ public:
 
 	void SetDir(Vector dir);
 	void SetVelocity(float velocity);
+	bool Moveing;
 
 private:
 	wstring str = L"";

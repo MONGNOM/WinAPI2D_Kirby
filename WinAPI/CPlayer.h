@@ -24,6 +24,8 @@ private:
 	bool m_LightChange;
 	bool m_Gravity;
 	CAnimator* m_pAnimator;
+
+	float flyTime;
 	
 
 	bool Light;
@@ -49,6 +51,8 @@ private:
 	CImage* m_pAttackImageLD;
 	CImage* m_pChangeImage;
 	CImage* m_pJumpImage;
+	CImage* m_KirbyEatImage;
+	CImage* m_KirbyEatDownImage;
 
 	CLightKirby* LightKirby;
 
@@ -63,6 +67,7 @@ protected:
 	bool m_Hp;
 
 	float JumpTime;
+
 	bool Jumpgo;
 	float LastJumpTime;
 	float LastRunTime;

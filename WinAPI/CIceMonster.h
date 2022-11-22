@@ -19,6 +19,7 @@ public:
 private:
 
 	int ontile;
+	bool Moveing;
 
 	float MoveTime;
 	bool m_Gravity = true;

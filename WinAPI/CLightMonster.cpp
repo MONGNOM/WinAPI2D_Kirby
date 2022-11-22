@@ -25,6 +25,9 @@ CLightMonster::CLightMonster()
 	 ontile = 0;
 	 slideTime = 0;
 	 MoveTime = 0;
+
+	 Moveing = true;
+
 }
 
 CLightMonster::~CLightMonster()
@@ -76,6 +79,13 @@ void CLightMonster::Update()
 {
 
 	Move();
+
+	if (m_mHp <= 0)
+	{
+		Iscrash = true;
+		Moveing = false;
+	}
+
 	if (slide == true)
 	{
 		slideTime += DT;
@@ -140,30 +150,32 @@ void CLightMonster::AnimatorUpdate()
 	if (m_vecLookDir.x > 0) str += L"Right";
 	else if (m_vecLookDir.x < 0) str += L"Left";
 
-	if (m_mHp == 0) str += L"Die";
+	if (m_mHp <= 0) str += L"Die";
 
 	m_pAnimator->Play(str, false);
 }
 
 void CLightMonster::Move()
 {
-
-	MoveTime += DT;
-	if (MoveTime <= 16)
+	if (Moveing == true)
 	{
-		m_vecPos.x -= 50 * DT;
-		m_vecLookDir = Vector(-1, 0);
+		MoveTime += DT;
+		if (MoveTime <= 16)
+		{
+			m_vecPos.x -= 50 * DT;
+			m_vecLookDir = Vector(-1, 0);
 
-	}
-	else if (MoveTime >= 16 && MoveTime <= 32) // 벽에다가 몬스터들 추가
-	{
-		m_vecPos.x += 50 * DT;
-		m_vecLookDir = Vector(1, 0);
+		}
+		else if (MoveTime >= 16 && MoveTime <= 32) // 벽에다가 몬스터들 추가
+		{
+			m_vecPos.x += 50 * DT;
+			m_vecLookDir = Vector(1, 0);
 
-	}
-	else
-	{
-		MoveTime = 0;
+		}
+		else
+		{
+			MoveTime = 0;
+		}
 	}
 }
 

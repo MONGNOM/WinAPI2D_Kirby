@@ -17,6 +17,7 @@ public:
 private:
 
 	int ontile;
+	bool Moveing;
 
 	float MoveTime;
 

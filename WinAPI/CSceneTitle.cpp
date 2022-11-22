@@ -23,6 +23,10 @@ void CSceneTitle::Enter()
 {
 	CAMERA->FadeIn(0.25f);
 
+	BackGroundSound1 = RESOURCE->LoadSound(L"KirbyMainBgm", L"Sound\\KirbyMainBgm.mp3");
+	SOUND->Play(BackGroundSound1, 0.1f, true);
+
+
 	CImageObject* Title = new CImageObject;
 	Title->SetImage(RESOURCE->LoadImg(L"Title", L"Image\\Title.png"));
 	AddGameObject(Title);
@@ -38,6 +42,9 @@ void CSceneTitle::Update()
 	{
 		CAMERA->FadeOut(0.25f);
 		DELAYCHANGESCENE(GroupScene::Stage01, 0.25f);
+
+		BackGroundSound12 = RESOURCE->LoadSound(L"Click", L"Sound\\Click.wav");
+		SOUND->Play(BackGroundSound12, 0.1f, true);
 	}
 }
 
@@ -54,6 +61,9 @@ void CSceneTitle::Render()
 
 void CSceneTitle::Exit()
 {
+	SOUND->Pause(BackGroundSound1); 
+	SOUND->Pause(BackGroundSound12);
+
 }
 
 void CSceneTitle::Release()

@@ -26,6 +26,7 @@ CMonster::CMonster()
 	slide = false;
 	slideTime = 0;
 	ontile = 0;
+	Moveing = true;
 
 	MoveTime = 0;
 	
@@ -68,16 +69,18 @@ void CMonster::Update()
 {
 	Gravity();
 	Move();
+	if (m_mHp <= 0)
+	{
+		Moveing = false;
+		Iscrash = true;
+	}
 
 	m_vecPos += m_vecDir * m_fVelocity * DT;
 
 	if (Iscrash == true)
 	{
 		DieTime += DT;
-		//if (DieTime >= 0.1)
-		//{
-		//	str = L"IdleLeftDie";
-		//}
+	
 		if (DieTime >= 1)
 		{
 			DELETEOBJECT(this);
@@ -88,7 +91,7 @@ void CMonster::Update()
 	if (slide == true)
 	{
 		slideTime += DT;
-		if (slideTime <= 0.1f)
+		if (slideTime <= 0.02f)
 		{
 			if (GAME->PlayerPos.x <= m_vecPos.x)
 				m_vecPos.x += m_fSpeed * DT * 3;
@@ -127,23 +130,26 @@ void CMonster::Release()
 
 void CMonster::Move()
 {
-	MoveTime += DT;
-	if (MoveTime <= 10)
+	if (Moveing == true)
 	{
-		m_vecPos.x -= 50 * DT ;
-		m_vecLookDir = Vector(-1, 0);
+		MoveTime += DT;
+		if (MoveTime <= 10)
+		{
+			m_vecPos.x -= 50 * DT;
+			m_vecLookDir = Vector(-1, 0);
 
-	}
-	else if (MoveTime >= 10 && MoveTime <= 20 )
-	{
-		m_vecPos.x += 50 * DT ;
-		m_vecLookDir.x = 1;
-		m_vecLookDir = Vector(1, 0);
+		}
+		else if (MoveTime >= 10 && MoveTime <= 20)
+		{
+			m_vecPos.x += 50 * DT;
+			m_vecLookDir.x = 1;
+			m_vecLookDir = Vector(1, 0);
 
-	}
-	else
-	{
-		MoveTime = 0;
+		}
+		else
+		{
+			MoveTime = 0;
+		}
 	}
 
 }
@@ -163,7 +169,7 @@ void CMonster::AnimatorUpdate()
 	if (m_vecLookDir.x > 0) str += L"Right";
 	else if (m_vecLookDir.x < 0) str += L"Left";
 
-	if (m_mHp == 0) str = L"IdleLeftDie";
+	if (m_mHp <= 0) str = L"IdleLeftDie";
 
 	m_pAnimator->Play(str, false);
 }

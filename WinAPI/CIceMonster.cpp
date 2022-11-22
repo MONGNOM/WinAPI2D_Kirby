@@ -24,6 +24,8 @@ CIceMonster::CIceMonster()
 	slideTime = 0;
 	ontile = 0;
 	MoveTime = 0;
+	Moveing = true;
+
 
 }
 
@@ -73,7 +75,11 @@ void CIceMonster::Update()
 {
 	Move();
 
-
+	if (m_mHp <= 0)
+	{
+		Iscrash = true;
+		Moveing = false;
+	}
 	Gravity();
 
 	m_vecPos += m_vecDir * m_fVelocity * DT;
@@ -136,30 +142,32 @@ void CIceMonster::AnimatorUpdate()
 	if (m_vecLookDir.x > 0) str += L"Right";
 	else if (m_vecLookDir.x < 0) str += L"Left";
 
-	if (m_mHp == 0) str += L"Die";
+	if (m_mHp <= 0) str += L"Die";
 
 	m_pAnimator->Play(str, false);
 }
 
 void CIceMonster::Move()
 {
-
-	MoveTime += DT;
-	if (MoveTime <= 13)
+	if (Moveing == true)
 	{
-		m_vecPos.x -= 50 * DT;
-		m_vecLookDir = Vector(-1, 0);
+		MoveTime += DT;
+		if (MoveTime <= 13)
+		{
+			m_vecPos.x -= 50 * DT;
+			m_vecLookDir = Vector(-1, 0);
 
-	}
-	else if (MoveTime >= 13 && MoveTime <= 26) // 벽에다가 몬스터들 추가
-	{
-		m_vecPos.x += 50 * DT;
-		m_vecLookDir = Vector(1, 0);
+		}
+		else if (MoveTime >= 13 && MoveTime <= 26) // 벽에다가 몬스터들 추가
+		{
+			m_vecPos.x += 50 * DT;
+			m_vecLookDir = Vector(1, 0);
 
-	}
-	else
-	{
-		MoveTime = 0;
+		}
+		else
+		{
+			MoveTime = 0;
+		}
 	}
 }
 

@@ -34,11 +34,9 @@ void CSceneBoss::Enter()
 {
 
 	BackGroundSound = RESOURCE->LoadSound(L"BossBGM", L"Sound\\BossBgm.mp3");
-	SOUND->Play(BackGroundSound, 0.1f, true);
+	SOUND->Play(BackGroundSound, 0.4f, true);
 
-	CIceMonster* pMonster1234 = new CIceMonster();
-	pMonster1234->SetPos(200, 200);
-	AddGameObject(pMonster1234);
+
 	CKirbyHp* HP = new CKirbyHp;
 	HP->SetPos(110, 550);
 	HP->SetScale(270, 50);

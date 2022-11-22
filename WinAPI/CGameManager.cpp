@@ -39,6 +39,7 @@ void CGameManager::Update()
 			PlayerHit = false;
 		}
 	}
+
 }
 
 void CGameManager::Enter()
