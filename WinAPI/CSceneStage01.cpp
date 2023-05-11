@@ -8,8 +8,8 @@
 #include "CEventManager.h"
 #include "CCameraManager.h"
 #include "CPathManager.h"
+#include "CKirby.h"
 
-#include "CPlayer.h"
 #include "CMonster.h"
 #include "CCameraController.h"
 #include "CButton.h"
@@ -17,7 +17,6 @@
 
 CSceneStage01::CSceneStage01()
 {
-	pPlayer = nullptr;
 }
 
 CSceneStage01::~CSceneStage01()
@@ -26,9 +25,11 @@ CSceneStage01::~CSceneStage01()
 
 void CSceneStage01::Init()
 {
-	pPlayer = new CPlayer();
-	pPlayer->SetPos(200, WINSIZEY * 0.5f);
-	AddGameObject(pPlayer);
+	
+
+	CKirby* pkirby = new CKirby();
+	pkirby->SetPos(200, WINSIZEY * 0.5f);
+	AddGameObject(pkirby);
 
 	CMonster* pMonster = new CMonster();
 	pMonster->SetPos(1000, WINSIZEY * 0.5f);

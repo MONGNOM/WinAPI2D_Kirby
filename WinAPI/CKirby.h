@@ -4,23 +4,31 @@
 class CImage;
 class CAnimator;
 
-class CPlayer : public CGameObject
+enum class state {Idle, Walk, Run, Jump, Sit, Fly, Attack};
+class CKirby : public CGameObject
 {
+
 public:
-	CPlayer();
-	virtual ~CPlayer();
+	CKirby();
+	virtual ~CKirby();
 
 private:
 	CAnimator* m_pAnimator;
-	CImage* m_pIdleImage;
-	CImage* m_pMoveImage;
 
+	float runTimer;
 	Vector m_vecMoveDir;
 	Vector m_vecLookDir;
-	wstring kirbyMove;
+	wstring kirbystate;
+	state m_state;
+	float m_fSpeed;
 
+	void IdleState();
 
-	float m_fSpeed = 200.0f;
+	CImage* m_pIdleLImage;
+	CImage* m_pIdleRImage;
+	CImage* m_pMoveLImage;
+	CImage* m_pMoveRImage;
+	CImage* m_pRunImage;
 
 private:
 	void Init() override;
@@ -35,3 +43,4 @@ private:
 	void OnCollisionStay(CCollider* pOtherCollider) override;
 	void OnCollisionExit(CCollider* pOtherCollider) override;
 };
+

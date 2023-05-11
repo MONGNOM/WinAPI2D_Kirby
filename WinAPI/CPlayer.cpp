@@ -25,7 +25,6 @@ CPlayer::CPlayer()
 
 	m_vecMoveDir = Vector(0, 0);
 	m_vecLookDir = Vector(0, -1);
-	m_bIsMove = false;
 }
 
 CPlayer::~CPlayer()
@@ -63,18 +62,15 @@ void CPlayer::Init()
 
 void CPlayer::Update()
 {
-	m_bIsMove = false;
 
 	if (BUTTONSTAY(VK_LEFT))
 	{
 		m_vecPos.x -= m_fSpeed * DT;
-		m_bIsMove = true;
 		m_vecMoveDir.x = -1;
 	}
 	else if (BUTTONSTAY(VK_RIGHT))
 	{
 		m_vecPos.x += m_fSpeed * DT;
-		m_bIsMove = true;
 		m_vecMoveDir.x = +1;
 	}
 	else
@@ -85,13 +81,11 @@ void CPlayer::Update()
 	if (BUTTONSTAY(VK_UP))
 	{
 		m_vecPos.y -= m_fSpeed * DT;
-		m_bIsMove = true;
 		m_vecMoveDir.y = +1;
 	}
 	else if (BUTTONSTAY(VK_DOWN))
 	{
 		m_vecPos.y += m_fSpeed * DT;
-		m_bIsMove = true;
 		m_vecMoveDir.y = -1;
 	}
 	else
@@ -117,21 +111,8 @@ void CPlayer::Release()
 
 void CPlayer::AnimatorUpdate()
 {
-	if (m_vecMoveDir.Length() > 0)
-		m_vecLookDir = m_vecMoveDir;
 
-	wstring str = L"";
-
-	if (m_bIsMove)	str += L"Move";
-	else			str += L"Idle";
-
-	if (m_vecLookDir.x > 0) str += L"Right";
-	else if (m_vecLookDir.x < 0) str += L"Left";
-
-	if (m_vecLookDir.y > 0) str += L"Up";
-	else if (m_vecLookDir.y < 0) str += L"Down";
-
-	m_pAnimator->Play(str, false);
+	//m_pAnimator->Play(, false);
 }
 
 void CPlayer::CreateMissile()
