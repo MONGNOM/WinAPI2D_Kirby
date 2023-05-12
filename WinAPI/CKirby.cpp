@@ -28,7 +28,7 @@ CKirby::CKirby()
 	m_pMoveRImage  = nullptr;
 	m_pRunImage    = nullptr;
 
-	m_vecMoveDir = Vector(0, 0);
+	m_vecMoveDir = Vector(1, 0);
 	m_vecLookDir = Vector(0, -1);
 }
 
@@ -49,8 +49,8 @@ void CKirby::Init()
 	m_pAnimator->CreateAnimation(L"IdleL", m_pIdleLImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 0.1f, 1);
 	m_pAnimator->CreateAnimation(L"LW", m_pMoveLImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
 	m_pAnimator->CreateAnimation(L"RW", m_pMoveRImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
-	m_pAnimator->CreateAnimation(L"LRun", m_pRunImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
-	m_pAnimator->CreateAnimation(L"RRun", m_pRunImage, Vector(490.f, 104.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.05f, 8);
+	m_pAnimator->CreateAnimation(L"RRun", m_pRunImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
+	m_pAnimator->CreateAnimation(L"LRun", m_pRunImage, Vector(490.f, 104.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.05f, 8);
 
 	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
@@ -60,25 +60,22 @@ void CKirby::Init()
 
 void CKirby::Update()
 {
-
+	m_vecLookDir = m_vecMoveDir;
 	switch (m_state)
 	{
-		m_vecLookDir = m_vecMoveDir;
 	case state::Idle:
-		if (m_vecLookDir.x = -1)
+		if (m_vecLookDir.x == -1)
 		{
 			kirbystate = L"IdleL";
 		}
-		else if (m_vecLookDir.x = 1)
+		else if (m_vecLookDir.x == 1)
 		{
 			kirbystate = L"IdleR";
 		}
-
 		if (BUTTONDOWN(VK_LEFT) || BUTTONDOWN(VK_RIGHT))
 		{
 			m_state = state::Walk;
 		}
-
 		break;
 	case state::Walk:
 		m_fSpeed = 100.f;
@@ -89,11 +86,12 @@ void CKirby::Update()
 			m_vecPos.x -= m_fSpeed * DT;
 			kirbystate = L"LW";
 			runTimer += DT;
-			if (runTimer <= 1)
+			if (runTimer >= 1)
 			{
 				if (BUTTONSTAY(VK_LEFT))
 				{
 					m_state = state::Run;
+					runTimer = 0;
 				}
 			}
 		}
@@ -103,11 +101,12 @@ void CKirby::Update()
 			m_vecPos.x += m_fSpeed * DT;
 			kirbystate = L"RW";
 			runTimer += DT;
-			if (runTimer <= 1)
+			if (runTimer >= 1)
 			{
 				if (BUTTONSTAY(VK_RIGHT))
 				{
 					m_state = state::Run;
+					runTimer = 0;
 				}
 			}
 		}
@@ -125,14 +124,15 @@ void CKirby::Update()
 		m_fSpeed = 200.0f;
 		if (BUTTONSTAY(VK_LEFT))
 		{
-			kirbystate = L"LRun";
 			m_vecMoveDir.x = -1;
-
+			kirbystate = L"LRun";
+			m_vecPos.x -= m_fSpeed * DT;
 		}
 		else if (BUTTONSTAY(VK_RIGHT))
 		{
 			m_vecMoveDir.x = 1;
 			kirbystate = L"RRun";
+			m_vecPos.x += m_fSpeed * DT;
 		}
 		if (!(BUTTONSTAY(VK_RIGHT) || BUTTONSTAY(VK_LEFT)))
 		{
@@ -150,7 +150,6 @@ void CKirby::Update()
 		break;
 
 	case state::Attack:
-
 		break;
 	default:
 		break;
