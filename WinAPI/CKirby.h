@@ -23,6 +23,7 @@ private:
 	wstring kirbystate;
 	State m_state;
 	float m_fSpeed;
+	float m_jumpSpeed;
 
 	void IdleState();
 	void WalkState();
