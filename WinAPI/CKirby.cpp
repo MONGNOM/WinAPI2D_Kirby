@@ -27,9 +27,15 @@ CKirby::CKirby()
 	m_pMoveLImage  = nullptr;
 	m_pMoveRImage  = nullptr;
 	m_pRunImage    = nullptr;
+	m_pDownImage   = nullptr;
+	m_pFlyImage	   = nullptr;
+	m_pFlyingImage = nullptr;
 
 	m_vecMoveDir = Vector(1, 0);
 	m_vecLookDir = Vector(0, -1);
+
+	lastLeftInputTime = 10;
+	lastRightInputTime = 10;
 }
 
 CKirby::~CKirby()
@@ -38,11 +44,14 @@ CKirby::~CKirby()
 
 void CKirby::Init()
 {
-	m_pIdleLImage = RESOURCE->LoadImg(L"KirbyIdleL", L"Image\\Kirby\\Basic\\KirbyIdleL.png");
-	m_pIdleRImage = RESOURCE->LoadImg(L"KirbyIdleR", L"Image\\Kirby\\Basic\\KirbyIdleR.png");
-	m_pMoveLImage = RESOURCE->LoadImg(L"KirbyLW", L"Image\\Kirby\\Basic\\KirbyLW.png");
-	m_pMoveRImage = RESOURCE->LoadImg(L"KirbyRW", L"Image\\Kirby\\Basic\\KirbyRW.png");
-	m_pRunImage = RESOURCE->LoadImg(L"KirbyRun", L"Image\\Kirby\\Basic\\KirbyRun.png");
+	m_pIdleLImage	= RESOURCE->LoadImg(L"KirbyIdleL", L"Image\\Kirby\\Basic\\KirbyIdleL.png");
+	m_pIdleRImage	= RESOURCE->LoadImg(L"KirbyIdleR", L"Image\\Kirby\\Basic\\KirbyIdleR.png");
+	m_pMoveLImage	= RESOURCE->LoadImg(L"KirbyLW", L"Image\\Kirby\\Basic\\KirbyLW.png");
+	m_pMoveRImage	= RESOURCE->LoadImg(L"KirbyRW", L"Image\\Kirby\\Basic\\KirbyRW.png");
+	m_pRunImage		= RESOURCE->LoadImg(L"KirbyRun", L"Image\\Kirby\\Basic\\KirbyRun.png");
+	m_pDownImage	= RESOURCE->LoadImg(L"KirbyDown", L"Image\\Kirby\\Basic\\KirbyDown.png");
+	m_pFlyImage		= RESOURCE->LoadImg(L"KirbyFly", L"Image\\Kirby\\Basic\\KirbyFly.png");
+	m_pFlyingImage	= RESOURCE->LoadImg(L"KirbyFly", L"Image\\Kirby\\Basic\\KirbyFly.png");
 
 	m_pAnimator = new CAnimator;
 	m_pAnimator->CreateAnimation(L"IdleR", m_pIdleRImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 0.1f, 1);
@@ -51,131 +60,211 @@ void CKirby::Init()
 	m_pAnimator->CreateAnimation(L"RW", m_pMoveRImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
 	m_pAnimator->CreateAnimation(L"RRun", m_pRunImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
 	m_pAnimator->CreateAnimation(L"LRun", m_pRunImage, Vector(490.f, 104.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.05f, 8);
+	m_pAnimator->CreateAnimation(L"LDown", m_pDownImage, Vector(0.f, 100.f), Vector(50.f, 50.f), Vector(50.f, 0.f), 10.0f, 1);
+	m_pAnimator->CreateAnimation(L"RDown", m_pDownImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(50.f, 0.f), 10.0f, 1);
 
+
+	m_pAnimator->CreateAnimation(L"RFlying", m_pFlyImage, Vector(400.f, 0.f), Vector(85.f, 50.f), Vector(70.f, 0.f), 0.08f, 6);
+	m_pAnimator->CreateAnimation(L"LFlying", m_pFlyImage, Vector(400.f, 100.f), Vector(85.f, 50.f), Vector(70.f, 0.f), 0.08f, 6);
+	m_pAnimator->CreateAnimation(L"RFly", m_pFlyImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 6, false);
+	m_pAnimator->CreateAnimation(L"LFly", m_pFlyImage, Vector(0.f, 100.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 6, false);
 	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
 
 	AddCollider(ColliderType::Rect, Vector(90, 90), Vector(0, 0));
 }
 
+
 void CKirby::Update()
 {
+	lastLeftInputTime += DT;
+	lastRightInputTime += DT;
 	m_vecLookDir = m_vecMoveDir;
 	switch (m_state)
 	{
-	case state::Idle:
-		if (m_vecLookDir.x == -1)
-		{
-			kirbystate = L"IdleL";
-		}
-		else if (m_vecLookDir.x == 1)
-		{
-			kirbystate = L"IdleR";
-		}
-		if (BUTTONDOWN(VK_LEFT) || BUTTONDOWN(VK_RIGHT))
-		{
-			m_state = state::Walk;
-		}
+	case State::Idle:
+		IdleState();
 		break;
-	case state::Walk:
-		m_fSpeed = 100.f;
-
-		if (BUTTONSTAY(VK_LEFT))
-		{
-			m_vecMoveDir.x = -1;
-			m_vecPos.x -= m_fSpeed * DT;
-			kirbystate = L"LW";
-			runTimer += DT;
-			if (runTimer >= 1)
-			{
-				if (BUTTONSTAY(VK_LEFT))
-				{
-					m_state = state::Run;
-					runTimer = 0;
-				}
-			}
-		}
-		else if (BUTTONSTAY(VK_RIGHT))
-		{
-			m_vecMoveDir.x = 1;
-			m_vecPos.x += m_fSpeed * DT;
-			kirbystate = L"RW";
-			runTimer += DT;
-			if (runTimer >= 1)
-			{
-				if (BUTTONSTAY(VK_RIGHT))
-				{
-					m_state = state::Run;
-					runTimer = 0;
-				}
-			}
-		}
-		else
-		{
-			m_vecMoveDir.x = 0;
-		}
-
-		if (!(BUTTONSTAY(VK_RIGHT) || BUTTONSTAY(VK_LEFT)))
-		{
-			m_state = state::Idle;
-		}
+	case State::Walk:
+		WalkState();
 		break;
-	case state::Run:
-		m_fSpeed = 200.0f;
-		if (BUTTONSTAY(VK_LEFT))
-		{
-			m_vecMoveDir.x = -1;
-			kirbystate = L"LRun";
-			m_vecPos.x -= m_fSpeed * DT;
-		}
-		else if (BUTTONSTAY(VK_RIGHT))
-		{
-			m_vecMoveDir.x = 1;
-			kirbystate = L"RRun";
-			m_vecPos.x += m_fSpeed * DT;
-		}
-		if (!(BUTTONSTAY(VK_RIGHT) || BUTTONSTAY(VK_LEFT)))
-		{
-			m_state = state::Idle;
-		}
+	case State::Run:
+		RunState();
 		break;
-	case state::Jump:
-
+	case State::Jump:
+		JumpState();
 		break;
-	case state::Sit:
-
+	case State::Sit:
+		SitState();
 		break;
-	case state::Fly:
-
+	case State::Fly:
+		FlyState();
 		break;
-
-	case state::Attack:
+	case State::Attack:
+		AttackState();
 		break;
 	default:
 		break;
 	}
-
-
-	if (BUTTONDOWN(VK_SPACE))
-	{
-		CreateMissile();
-	}
-
 	AnimatorUpdate();
 }
 
 void CKirby::Render()
 {
-}
 
-void CKirby::Release()
-{
 }
 
 void CKirby::AnimatorUpdate()
 {
 	m_pAnimator->Play(kirbystate, false);
 }
+
+
+void CKirby::IdleState()
+{
+	if (m_vecLookDir.x == -1)
+	{
+		kirbystate = L"IdleL";
+	}
+	else if (m_vecLookDir.x == 1)
+	{
+		kirbystate = L"IdleR";
+	}
+	if (BUTTONDOWN(VK_LEFT))
+	{
+		if (lastLeftInputTime < TIME_DASHABLE)
+			m_state = State::Run;
+		else
+			m_state = State::Walk;
+
+		lastLeftInputTime = 0;
+	}
+	if (BUTTONDOWN(VK_RIGHT))
+	{
+		if (lastRightInputTime < TIME_DASHABLE)
+			m_state = State::Run;
+		else
+			m_state = State::Walk;
+
+		lastRightInputTime = 0;
+	}
+	if (BUTTONDOWN('A'))
+	{
+		m_state = State::Attack;
+	}
+	if (BUTTONSTAY(VK_DOWN))
+	{
+		m_state = State::Sit;
+	}
+	if (BUTTONSTAY(VK_UP))
+	{
+		m_state = State::Fly;
+	}
+}
+
+void CKirby::WalkState()
+{
+	m_fSpeed = 100.f;
+
+	if (BUTTONSTAY(VK_LEFT))
+	{
+		m_vecMoveDir.x = -1;
+		m_vecPos.x -= m_fSpeed * DT;
+		kirbystate = L"LW";
+	}
+	else if (BUTTONSTAY(VK_RIGHT))
+	{
+		m_vecMoveDir.x = 1;
+		m_vecPos.x += m_fSpeed * DT;
+		kirbystate = L"RW";
+	}
+
+	if (!(BUTTONSTAY(VK_RIGHT) || BUTTONSTAY(VK_LEFT)))
+	{
+		m_state = State::Idle;
+	}
+	if (BUTTONDOWN('A'))
+	{
+		m_state = State::Attack;
+	}
+	if (BUTTONSTAY(VK_DOWN))
+	{
+		m_state = State::Sit;
+	}
+	if (BUTTONSTAY(VK_UP))
+	{
+		m_state = State::Fly;
+	}
+}
+
+void CKirby::RunState()
+{
+	m_fSpeed = 200.0f;
+	if (BUTTONSTAY(VK_LEFT))
+	{
+		m_vecMoveDir.x = -1;
+		kirbystate = L"LRun";
+		m_vecPos.x -= m_fSpeed * DT;
+	}
+	else if (BUTTONSTAY(VK_RIGHT))
+	{
+		m_vecMoveDir.x = 1;
+		kirbystate = L"RRun";
+		m_vecPos.x += m_fSpeed * DT;
+	}
+	if (!(BUTTONSTAY(VK_RIGHT) || BUTTONSTAY(VK_LEFT)))
+	{
+		m_state = State::Idle;
+	}
+
+	if (BUTTONDOWN('A'))
+	{
+		m_state = State::Attack;
+	}
+	if (BUTTONSTAY(VK_DOWN))
+	{
+		m_state = State::Sit;
+	}
+	if (BUTTONSTAY(VK_UP))
+	{
+		m_state = State::Fly;
+	}
+}
+
+void CKirby::JumpState()
+{
+}
+
+void CKirby::SitState()
+{
+	if (m_vecLookDir.x == 1) kirbystate = L"RDown";
+	else kirbystate = L"LDown";
+
+	if (!BUTTONSTAY(VK_DOWN))
+	m_state = State::Idle;
+}
+
+void CKirby::FlyState()
+{
+	if (m_vecLookDir.x == 1) kirbystate = L"RFly";
+	else kirbystate = L"LFly";
+
+	if (BUTTONSTAY(VK_UP) && m_vecLookDir.x == 1)kirbystate = L"RFlying";
+	else if (BUTTONSTAY(VK_UP) && m_vecLookDir.x == -1)kirbystate = L"LFlying";
+	else m_state = State::Idle;
+	
+}
+
+void CKirby::AttackState()
+{
+	CreateMissile();
+	m_state = State::Idle;
+}
+
+void CKirby::Release()
+{
+}
+
 
 void CKirby::CreateMissile()
 {
