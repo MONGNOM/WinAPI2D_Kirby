@@ -32,7 +32,7 @@ CKirby::CKirby()
 	m_pFlyingImage = nullptr;
 
 	m_vecMoveDir = Vector(1, 0);
-	m_vecLookDir = Vector(0, -1);
+	m_vecLookDir = Vector(0, 0);
 
 	lastLeftInputTime = 10;
 	lastRightInputTime = 10;
@@ -66,8 +66,8 @@ void CKirby::Init()
 
 	m_pAnimator->CreateAnimation(L"RFlying", m_pFlyImage, Vector(400.f, 0.f), Vector(85.f, 50.f), Vector(70.f, 0.f), 0.08f, 6);
 	m_pAnimator->CreateAnimation(L"LFlying", m_pFlyImage, Vector(400.f, 100.f), Vector(85.f, 50.f), Vector(70.f, 0.f), 0.08f, 6);
-	m_pAnimator->CreateAnimation(L"RFly", m_pFlyImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 6, false);
-	m_pAnimator->CreateAnimation(L"LFly", m_pFlyImage, Vector(0.f, 100.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 6, false);
+	m_pAnimator->CreateAnimation(L"RFly", m_pFlyImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 19, false);
+	m_pAnimator->CreateAnimation(L"LFly", m_pFlyImage, Vector(0.f, 100.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 19, false);
 	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
 
@@ -148,7 +148,7 @@ void CKirby::IdleState()
 
 		lastRightInputTime = 0;
 	}
-	if (BUTTONDOWN('A'))
+	if (BUTTONDOWN('S'))
 	{
 		m_state = State::Attack;
 	}
@@ -159,6 +159,10 @@ void CKirby::IdleState()
 	if (BUTTONSTAY(VK_UP))
 	{
 		m_state = State::Fly;
+	}
+	if (BUTTONSTAY('A'))
+	{
+		m_state = State::Jump;
 	}
 }
 
@@ -183,7 +187,7 @@ void CKirby::WalkState()
 	{
 		m_state = State::Idle;
 	}
-	if (BUTTONDOWN('A'))
+	if (BUTTONDOWN('S'))
 	{
 		m_state = State::Attack;
 	}
@@ -194,6 +198,10 @@ void CKirby::WalkState()
 	if (BUTTONSTAY(VK_UP))
 	{
 		m_state = State::Fly;
+	}
+	if (BUTTONSTAY('A'))
+	{
+		m_state = State::Jump;
 	}
 }
 
@@ -217,7 +225,7 @@ void CKirby::RunState()
 		m_state = State::Idle;
 	}
 
-	if (BUTTONDOWN('A'))
+	if (BUTTONDOWN('S'))
 	{
 		m_state = State::Attack;
 	}
@@ -229,10 +237,15 @@ void CKirby::RunState()
 	{
 		m_state = State::Fly;
 	}
+	if (BUTTONSTAY('A'))
+	{
+		m_state = State::Jump;
+	}
 }
 
 void CKirby::JumpState()
 {
+
 }
 
 void CKirby::SitState()
@@ -246,13 +259,67 @@ void CKirby::SitState()
 
 void CKirby::FlyState()
 {
-	if (m_vecLookDir.x == 1) kirbystate = L"RFly";
-	else kirbystate = L"LFly";
+	// fly도중 방향전환 코드 수정 + 땅에있고  && 0.5초동안 플라이 && UP만 눌렀을때 하늘로만 가고 방향키 누르면 방향키로 이동하게 수정
+	if (BUTTONSTAY(VK_UP) && m_vecLookDir.x == 1)
+	{
+		m_vecPos.y -= m_fSpeed * DT;
+		kirbystate = L"RFly";
+		if (BUTTONSTAY(VK_RIGHT))
+		{
+			m_vecPos.y -= m_fSpeed * DT;
+			m_vecPos.x += m_fSpeed * DT;
+			kirbystate = L"RFly";
 
-	if (BUTTONSTAY(VK_UP) && m_vecLookDir.x == 1)kirbystate = L"RFlying";
-	else if (BUTTONSTAY(VK_UP) && m_vecLookDir.x == -1)kirbystate = L"LFlying";
+		}
+		else if (BUTTONSTAY(VK_LEFT))
+		{
+			m_vecPos.y -= m_fSpeed * DT;
+			m_vecPos.x -= m_fSpeed * DT;
+			kirbystate = L"LFly";
+		}
+	}
+	else if (BUTTONSTAY(VK_UP) && m_vecLookDir.x == -1)
+	{
+		m_vecPos.y -= m_fSpeed * DT;
+		kirbystate = L"LFly";
+		if (BUTTONSTAY(VK_RIGHT))
+		{
+			m_vecPos.y -= m_fSpeed * DT;
+			m_vecPos.x += m_fSpeed * DT;
+			kirbystate = L"RFly";
+
+		}
+		else if (BUTTONSTAY(VK_LEFT))
+		{
+			m_vecPos.y -= m_fSpeed * DT;
+			m_vecPos.x -= m_fSpeed * DT;
+			kirbystate = L"LFly";
+		}
+	}
+	else
+	{
+		m_vecPos = Vector(600, 500);
+		m_state = State::Idle;
+	}
+
+	/* 날고있는 상태 애니메이션 구현중
+	if (BUTTONSTAY(VK_UP) && m_vecLookDir.x == 1)
+	{
+		m_vecLookDir.x = 1;
+		kirbystate = L"RFlying";
+	}
+	else if (BUTTONSTAY(VK_UP) && m_vecLookDir.x == -1)
+	{
+		m_vecLookDir.x = -1;
+		kirbystate = L"LFlying";
+	}
 	else m_state = State::Idle;
-	
+	*/
+	if (BUTTONDOWN('A'))
+	{
+		m_state = State::Attack;
+	}
+
 }
 
 void CKirby::AttackState()
