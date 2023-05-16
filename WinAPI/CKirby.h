@@ -10,14 +10,15 @@ public:
 	CKirby();
 	virtual ~CKirby();
 
-	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack };
+	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown };
 
-	const float TIME_DASHABLE = 0.5;
+	const float TIME_DASHABLE = 0.5f;
+	const float TIME_FALLING = 0.8f;
 
 private:
 	CAnimator* m_pAnimator;
 
-	float runTimer;
+	float fallTimer;
 	Vector m_vecMoveDir;
 	Vector m_vecLookDir;
 	wstring kirbystate;
@@ -31,6 +32,8 @@ private:
 	void JumpState();
 	void SitState();
 	void FlyState();
+	void JumpingDownState();
+	void FlyingState();
 	virtual void AttackState();
 
 	CImage* m_pIdleLImage;
@@ -41,6 +44,8 @@ private:
 	CImage* m_pDownImage;
 	CImage* m_pFlyImage;
 	CImage* m_pFlyingImage;
+	CImage* m_pJumpImage;
+	CImage* m_pJumpingImage;
 
 private:
 	void Init() override;
