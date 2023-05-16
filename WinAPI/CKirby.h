@@ -13,7 +13,7 @@ public:
 	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown };
 
 	const float TIME_DASHABLE = 0.5f;
-	const float TIME_FALLING = 0.8f;
+	const float TIME_FALLING = 1.2f;
 
 private:
 	CAnimator* m_pAnimator;
@@ -25,6 +25,8 @@ private:
 	State m_state;
 	float m_fSpeed;
 	float m_jumpSpeed;
+	bool m_falling;
+	bool m_groundchecker;
 
 	void IdleState();
 	void WalkState();

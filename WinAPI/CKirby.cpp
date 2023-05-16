@@ -20,7 +20,7 @@ CKirby::CKirby()
 	m_vecPos = Vector(0, 0);
 	m_vecScale = Vector(100, 100);
 	m_layer = Layer::Player;
-	m_strName = L"플레이어";
+	m_strName = L"커비";
 
 	m_pIdleLImage  = nullptr;
 	m_pIdleRImage  = nullptr;
@@ -32,7 +32,8 @@ CKirby::CKirby()
 	m_pFlyingImage = nullptr;
 	m_pJumpImage = nullptr;
 	m_pJumpingImage = nullptr;
-
+	m_falling = false;
+	m_groundchecker = false;
 	m_vecMoveDir = Vector(1, 0);
 	m_vecLookDir = Vector(0, 0);
 
@@ -257,12 +258,18 @@ void CKirby::RunState()
 }
 
 void CKirby::JumpState() 
-{// 시간 정해서 떨어지는 시간 줘야함
-	m_jumpSpeed = 100;
+{
+	m_jumpSpeed = 500;
 	m_vecPos.y -= m_jumpSpeed * DT;
 	if (BUTTONDOWN('A'))
 	{
-		fallTimer = 0;
+		m_falling = true;
+
+		if (m_falling == true)
+		{
+			fallTimer = 0;
+			m_falling = false;
+		}
 	}
 	if (m_vecLookDir.x == -1)
 	{
@@ -282,7 +289,7 @@ void CKirby::JumpState()
 			m_state = State::JumpingDown;
 		}
 	}
-	if (m_vecLookDir.x == 1)
+	else if (m_vecLookDir.x == 1)
 	{
 		kirbystate = L"RJump";
 		if (BUTTONSTAY(VK_RIGHT))
@@ -329,8 +336,8 @@ void CKirby::SitState()
 
 void CKirby::FlyState()
 {
-	m_fSpeed = 100;
 	//땅에있고  && 0.5초동안 플라이
+	m_fSpeed = 100;
 	if (BUTTONSTAY(VK_UP) && m_vecLookDir.x == 1)
 	{
 		m_vecPos.y -= m_fSpeed * DT;
@@ -369,8 +376,7 @@ void CKirby::FlyState()
 	}
 	else
 	{
-		m_vecPos = Vector(600, 500);
-		m_state = State::Idle;
+		m_state = State::JumpingDown;
 	}
 
 	
@@ -403,6 +409,10 @@ void CKirby::JumpingDownState()
 			m_vecPos.x -= m_fSpeed * DT;
 			m_vecMoveDir.x = -1;
 		}
+		if (m_groundchecker == true)
+		{
+			m_state = State::Idle;
+		}
 		
 	}
 	if (m_vecLookDir.x == 1)
@@ -418,9 +428,14 @@ void CKirby::JumpingDownState()
 			m_vecPos.x -= m_fSpeed * DT;
 			m_vecMoveDir.x = -1;
 		}
-		
+		if (m_groundchecker == true)
+		{
+			m_state = State::Idle;
+		}
 	}
 	//점프 다운 구현중
+	m_groundchecker = false;
+
 }
 
 void CKirby::FlyingState()
@@ -478,6 +493,12 @@ void CKirby::CreateMissile()
 
 void CKirby::OnCollisionEnter(CCollider* pOtherCollider)
 {
+	if (pOtherCollider->GetObjName() == L"바닥")
+	{
+		m_groundchecker = true;
+		m_vecPos.y -= 0.5f;
+	}
+
 }
 
 void CKirby::OnCollisionStay(CCollider* pOtherCollider)

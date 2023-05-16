@@ -4,9 +4,11 @@
 #include "CResourceManager.h"
 #include "CRenderManager.h"
 #include "CCollider.h"
+#include "CKirby.h"
 
 CGroundTile::CGroundTile()
 {
+	m_strName = L"바닥";
 }
 
 CGroundTile::~CGroundTile()
@@ -42,6 +44,10 @@ void CGroundTile::Release()
 void CGroundTile::OnCollisionEnter(CCollider* pOther)
 {
 	// 땅타일과 충돌했을 경우 처리
+	if (pOther->GetOwner()->GetName() == L"커비")
+	{
+		CKirby* kirby = new CKirby;
+	}
 }
 
 void CGroundTile::OnCollisionStay(CCollider* pOther)
