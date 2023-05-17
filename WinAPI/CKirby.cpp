@@ -22,24 +22,26 @@ CKirby::CKirby()
 	m_layer = Layer::Player;
 	m_strName = L"커비";
 
-	m_pIdleLImage  = nullptr;
-	m_pIdleRImage  = nullptr;
-	m_pMoveLImage  = nullptr;
-	m_pMoveRImage  = nullptr;
-	m_pRunImage    = nullptr;
-	m_pDownImage   = nullptr;
-	m_pFlyImage	   = nullptr;
-	m_pFlyingImage = nullptr;
-	m_pJumpImage = nullptr;
+	m_pIdleLImage   = nullptr;
+	m_pIdleRImage   = nullptr;
+	m_pMoveLImage   = nullptr;
+	m_pMoveRImage   = nullptr;
+	m_pRunImage     = nullptr;
+	m_pDownImage    = nullptr;
+	m_pFlyImage	    = nullptr;
+	m_pFlyingImage  = nullptr;
+	m_pJumpImage	= nullptr;
 	m_pJumpingImage = nullptr;
-	m_falling = false;
-	m_groundchecker = false;
-	m_vecMoveDir = Vector(1, 0);
-	m_vecLookDir = Vector(0, 0);
-
+	
+	m_vecMoveDir	= Vector(1, 0);
+	m_vecLookDir	= Vector(0, 0);
 	lastLeftInputTime = 10;
-	lastRightInputTime = 10;
+	lastRightInputTime = 10;	
 	fallTimer = 0;
+	flyTimer = 0;
+	m_gravity = 300;
+
+	m_groundchecker = false;
 }
 
 CKirby::~CKirby()
@@ -80,16 +82,18 @@ void CKirby::Init()
 	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
 
-	AddCollider(ColliderType::Rect, Vector(90, 90), Vector(0, 0));
+	AddCollider(ColliderType::Circle, Vector(20, 20), Vector(0, 0));
 }
 
 
 void CKirby::Update()
 {
+	m_jumpSpeed -= m_gravity * DT;
 	fallTimer += DT;
 	lastLeftInputTime += DT;
 	lastRightInputTime += DT;
 	m_vecLookDir = m_vecMoveDir;
+
 	switch (m_state)
 	{
 	case State::Idle:
@@ -134,8 +138,16 @@ void CKirby::AnimatorUpdate()
 }
 
 
+
+void CKirby::Jump()
+{
+	m_jumpSpeed = 300;
+	fallTimer = 0;
+}
+
 void CKirby::IdleState()
 {
+	
 	if (m_vecLookDir.x == -1)
 	{
 		kirbystate = L"IdleL";
@@ -144,7 +156,7 @@ void CKirby::IdleState()
 	{
 		kirbystate = L"IdleR";
 	}
-	if (BUTTONDOWN(VK_LEFT))
+	if (BUTTONSTAY(VK_LEFT))
 	{
 		if (lastLeftInputTime < TIME_DASHABLE)
 			m_state = State::Run;
@@ -153,7 +165,7 @@ void CKirby::IdleState()
 
 		lastLeftInputTime = 0;
 	}
-	if (BUTTONDOWN(VK_RIGHT))
+	if (BUTTONSTAY(VK_RIGHT))
 	{
 		if (lastRightInputTime < TIME_DASHABLE)
 			m_state = State::Run;
@@ -176,6 +188,7 @@ void CKirby::IdleState()
 	}
 	if (BUTTONDOWN('A'))
 	{
+		Jump();
 		m_state = State::Jump;
 	}
 }
@@ -215,6 +228,7 @@ void CKirby::WalkState()
 	}
 	if (BUTTONDOWN('A'))
 	{
+		Jump();
 		m_state = State::Jump;
 	}
 }
@@ -259,18 +273,8 @@ void CKirby::RunState()
 
 void CKirby::JumpState() 
 {
-	m_jumpSpeed = 500;
 	m_vecPos.y -= m_jumpSpeed * DT;
-	if (BUTTONDOWN('A'))
-	{
-		m_falling = true;
-
-		if (m_falling == true)
-		{
-			fallTimer = 0;
-			m_falling = false;
-		}
-	}
+	
 	if (m_vecLookDir.x == -1)
 	{
 		kirbystate = L"LJump";
@@ -284,7 +288,7 @@ void CKirby::JumpState()
 			m_vecPos.x -= m_fSpeed * DT;
 			m_vecMoveDir.x = -1;
 		}
-		if (fallTimer > TIME_FALLING)
+		if (m_jumpSpeed < 0)
 		{
 			m_state = State::JumpingDown;
 		}
@@ -302,7 +306,7 @@ void CKirby::JumpState()
 			m_vecPos.x -= m_fSpeed * DT;
 			m_vecMoveDir.x = -1;
 		}
-		if (fallTimer > TIME_FALLING)
+		if (m_jumpSpeed < 0)
 		{
 			m_state = State::JumpingDown;
 		}
@@ -336,47 +340,53 @@ void CKirby::SitState()
 
 void CKirby::FlyState()
 {
+	flyTimer += DT;
 	//땅에있고  && 0.5초동안 플라이
 	m_fSpeed = 100;
 	if (BUTTONSTAY(VK_UP) && m_vecLookDir.x == 1)
 	{
-		m_vecPos.y -= m_fSpeed * DT;
 		kirbystate = L"RFly";
-		if (BUTTONSTAY(VK_RIGHT))
+		if (flyTimer > 0.4f)
 		{
 			m_vecPos.y -= m_fSpeed * DT;
-			m_vecPos.x += m_fSpeed * DT;
-			kirbystate = L"RFly";
+			if (BUTTONSTAY(VK_RIGHT))
+			{
+				m_vecPos.x += m_fSpeed * DT;
+				kirbystate = L"RFly";
 
-		}
-		else if (BUTTONSTAY(VK_LEFT))
-		{
-			m_vecPos.y -= m_fSpeed * DT;
-			m_vecPos.x -= m_fSpeed * DT;
-			kirbystate = L"LFly";
+			}
+			else if (BUTTONSTAY(VK_LEFT))
+			{
+				m_vecPos.x -= m_fSpeed * DT;
+				kirbystate = L"LFly";
+			}
 		}
 	}
 	else if (BUTTONSTAY(VK_UP) && m_vecLookDir.x == -1)
 	{
-		m_vecPos.y -= m_fSpeed * DT;
-		kirbystate = L"LFly";
-		if (BUTTONSTAY(VK_RIGHT))
-		{
-			m_vecPos.y -= m_fSpeed * DT;
-			m_vecPos.x += m_fSpeed * DT;
-			kirbystate = L"RFly";
 
-		}
-		else if (BUTTONSTAY(VK_LEFT))
+		kirbystate = L"LFly";
+		if (flyTimer > 0.4f) 
 		{
 			m_vecPos.y -= m_fSpeed * DT;
-			m_vecPos.x -= m_fSpeed * DT;
-			kirbystate = L"LFly";
+			if (BUTTONSTAY(VK_RIGHT))
+			{
+				m_vecPos.x += m_fSpeed * DT;
+				kirbystate = L"RFly";
+
+			}
+			else if (BUTTONSTAY(VK_LEFT))
+			{
+				m_vecPos.x -= m_fSpeed * DT;
+				kirbystate = L"LFly";
+			}
 		}
 	}
 	else
 	{
 		m_state = State::JumpingDown;
+		m_jumpSpeed = 0;
+		flyTimer = 0;
 	}
 
 	
@@ -395,7 +405,7 @@ void CKirby::AttackState()
 
 void CKirby::JumpingDownState()
 {
-	m_vecPos.y += m_fSpeed * DT;
+	m_vecPos.y -= m_jumpSpeed * DT;
 	if (m_vecLookDir.x == -1)
 	{
 		kirbystate = L"LJumping";

@@ -13,21 +13,24 @@ public:
 	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown };
 
 	const float TIME_DASHABLE = 0.5f;
-	const float TIME_FALLING = 1.2f;
+	const float TIME_FALLING = 0.5f;
 
 private:
 	CAnimator* m_pAnimator;
 
 	float fallTimer;
+	float flyTimer;
 	Vector m_vecMoveDir;
 	Vector m_vecLookDir;
 	wstring kirbystate;
 	State m_state;
 	float m_fSpeed;
 	float m_jumpSpeed;
-	bool m_falling;
+	float m_gravity;
 	bool m_groundchecker;
 
+
+	void Jump();
 	void IdleState();
 	void WalkState();
 	void RunState();
