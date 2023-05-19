@@ -186,7 +186,7 @@ void CKirby::IdleState()
 	}
 	if (BUTTONSTAY(VK_UP))
 	{
-		m_state = State::Fly; 
+		m_state = State::Fly;
 	}
 	if (BUTTONDOWN('A'))
 	{
@@ -343,31 +343,30 @@ void CKirby::FlyState()
 	flyTimer += DT;
 	//땅에있고  && 0.5초동안 플라이
 	m_fSpeed = 100;
-	if (BUTTONSTAY(VK_UP) && m_vecLookDir.x == 1)
+	if (m_vecLookDir.x == 1)
 	{
 		kirbystate = L"RFly";
-		m_vecLookDir.x = 1;
 		if (flyTimer > 0.4f)
-		{
+		{ 
+			flyTimer = 0;
 			m_state = State::Flying;
 		}
 	}
-	else if (BUTTONSTAY(VK_UP) && m_vecLookDir.x == -1)
+	else if (m_vecLookDir.x == -1)
 	{
-		m_vecLookDir.x = -1;
 		kirbystate = L"LFly";
 		if (flyTimer > 0.4f)
 		{
+			flyTimer = 0;
 			m_state = State::Flying;
-			m_jumpSpeed = 0;
+
 		}
 	}
 	else if(BUTTONUP(VK_UP))
 	{
-		m_state = State::JumpingDown;
 		m_jumpSpeed = 0;
+		m_state = State::JumpingDown;
 	}
-
 	
 	if (BUTTONDOWN('S'))
 	{
@@ -424,6 +423,7 @@ void CKirby::JumpingDownState()
 	}
 	if (BUTTONDOWN('A'))
 	{
+		flyTimer = 0;
 		m_state = State::Fly;
 	}
 	//점프 다운 구현중
@@ -433,24 +433,30 @@ void CKirby::JumpingDownState()
 
 void CKirby::FlyingState()
 {
-	// 날고있는 상태 애니메이션 구현중 땅에 없고 up키누르고 있는중 ing 
-	
 	m_vecPos.y -= m_fSpeed * DT;
 	if (BUTTONSTAY(VK_RIGHT))
 	{
-		m_vecLookDir.x = 1;
 		m_vecPos.x += m_fSpeed * DT;
-		kirbystate = L"RFlying";
-
+		m_vecLookDir.x = 1;
 	}
 	else if (BUTTONSTAY(VK_LEFT))
 	{
-		m_vecLookDir.x = -1;
 		m_vecPos.x -= m_fSpeed * DT;
+		m_vecLookDir.x = -1;
+	}
+
+	if (m_vecLookDir.x == 1)
+	{
+		kirbystate = L"RFlying";
+	}
+	else if (m_vecLookDir.x == -1)
+	{
 		kirbystate = L"LFlying";
 	}
-	else
+	
+	if(BUTTONUP(VK_UP))
 	{
+		m_jumpSpeed = 0;
 		m_state = State::JumpingDown;
 	}
 	
