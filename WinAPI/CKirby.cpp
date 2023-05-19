@@ -14,13 +14,12 @@
 
 CKirby::CKirby()
 {
-	m_fSpeed = 0.f;
+	m_fSpeed	= 0.f;
 	m_jumpSpeed = 0.f;
-
-	m_vecPos = Vector(0, 0);
-	m_vecScale = Vector(100, 100);
-	m_layer = Layer::Player;
-	m_strName = L"커비";
+	m_vecPos	= Vector(0, 0);
+	m_vecScale	= Vector(100, 100);
+	m_layer		= Layer::Player;
+	m_strName	= L"커비";
 
 	m_pIdleLImage   = nullptr;
 	m_pIdleRImage   = nullptr;
@@ -32,21 +31,21 @@ CKirby::CKirby()
 	m_pFlyingImage  = nullptr;
 	m_pJumpImage	= nullptr;
 	m_pJumpingImage = nullptr;
-	
+	m_groundchecker = false;
 	m_vecMoveDir	= Vector(1, 0);
 	m_vecLookDir	= Vector(0, 0);
-	lastLeftInputTime = 10;
-	lastRightInputTime = 10;	
-	fallTimer = 0;
-	flyTimer = 0;
-	m_groundCounter = 0;
-	m_gravity = 300;
 
-	m_groundchecker = false;
+	lastLeftInputTime  = 10;
+	lastRightInputTime = 10;	
+	fallTimer		   = 0;
+	flyTimer		   = 0;
+	m_groundCounter	   = 0;
+	m_gravity		   = 300;
 }
 
 CKirby::~CKirby()
 {
+
 }
 
 void CKirby::Init()
@@ -79,7 +78,6 @@ void CKirby::Init()
 	m_pAnimator->CreateAnimation(L"RJumping",	m_pJumpImage,	Vector(400.f,   0.f), Vector( 50.f,  50.f), Vector(  58.f,   0.f), 0.08f, 2);
 	m_pAnimator->CreateAnimation(L"LJumping",	m_pJumpImage,	Vector(400.f,  90.f), Vector( 50.f,  50.f), Vector(  58.f,   0.f), 0.08f, 2);
 
-
 	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
 
@@ -95,7 +93,6 @@ void CKirby::Update()
 	lastRightInputTime += DT;
 	m_vecLookDir = m_vecMoveDir;
 	Logger::Debug(to_wstring(m_groundCounter));
-	
 
 	switch (m_state)
 	{
@@ -134,7 +131,6 @@ void CKirby::Update()
 
 void CKirby::Render()
 {
-
 }
 
 void CKirby::AnimatorUpdate()
@@ -203,7 +199,6 @@ void CKirby::IdleState()
 
 void CKirby::WalkState()
 {
-
 	m_fSpeed = 100.f;
 	if (m_groundchecker == false)
 	{
@@ -248,6 +243,10 @@ void CKirby::WalkState()
 void CKirby::RunState()
 {
 	m_fSpeed = 200.0f;
+	if (m_groundchecker == false)
+	{
+		m_vecPos.y += m_gravity * DT;
+	}
 	if (BUTTONSTAY(VK_LEFT))
 	{
 		m_vecMoveDir.x = -1;
