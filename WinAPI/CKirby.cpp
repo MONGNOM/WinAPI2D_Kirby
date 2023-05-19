@@ -515,17 +515,9 @@ void CKirby::OnCollisionEnter(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"¹Ù´Ú")
 	{
 		m_groundCounter++;
-		if (m_groundCounter > 0)
-		{
-			m_groundchecker = true;
-			m_vecPos.y -= 0.5f;
-		}
-		else
-		{
-			m_groundchecker = false;
-		}
-		--m_groundCounter;
+		m_groundchecker = true;
 	}
+
 }
 
 
@@ -536,4 +528,12 @@ void CKirby::OnCollisionStay(CCollider* pOtherCollider)
 
 void CKirby::OnCollisionExit(CCollider* pOtherCollider)
 {
+	if (pOtherCollider->GetObjName() == L"¹Ù´Ú")
+	{
+		--m_groundCounter;
+		if (m_groundCounter <= 0)
+		{
+			m_groundchecker = false;
+		}
+	}
 }
