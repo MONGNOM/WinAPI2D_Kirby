@@ -92,7 +92,6 @@ void CKirby::Update()
 	lastLeftInputTime += DT;
 	lastRightInputTime += DT;
 	m_vecLookDir = m_vecMoveDir;
-	Logger::Debug(to_wstring(m_groundCounter));
 
 	switch (m_state)
 	{
@@ -442,6 +441,8 @@ void CKirby::JumpingDownState()
 
 void CKirby::FlyingState()
 {
+	m_vecPos.y += m_gravity * 0.1f * DT;
+
 	if (BUTTONSTAY(VK_UP))
 	m_vecPos.y -= m_fSpeed * DT;
 
@@ -465,15 +466,10 @@ void CKirby::FlyingState()
 		kirbystate = L"LFlying";
 	}
 	
-	if(BUTTONUP(VK_UP))
+	if(BUTTONDOWN('S'))
 	{
 		m_jumpSpeed = 0;
 		m_state = State::JumpingDown;
-	}
-
-	if (m_groundchecker == false)
-	{
-		m_vecPos.y += m_gravity * 0.1f * DT;
 	}
 
 	m_groundchecker = false;
