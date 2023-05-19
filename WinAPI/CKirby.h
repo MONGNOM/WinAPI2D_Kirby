@@ -28,6 +28,7 @@ private:
 	float m_jumpSpeed;
 	float m_gravity;
 	bool m_groundchecker;
+	int m_groundCounter;
 
 
 	void Jump();

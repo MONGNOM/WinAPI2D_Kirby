@@ -39,6 +39,7 @@ CKirby::CKirby()
 	lastRightInputTime = 10;	
 	fallTimer = 0;
 	flyTimer = 0;
+	m_groundCounter = 0;
 	m_gravity = 300;
 
 	m_groundchecker = false;
@@ -50,33 +51,33 @@ CKirby::~CKirby()
 
 void CKirby::Init()
 {
-	m_pIdleLImage	= RESOURCE->LoadImg(L"KirbyIdleL", L"Image\\Kirby\\Basic\\KirbyIdleL.png");
-	m_pIdleRImage	= RESOURCE->LoadImg(L"KirbyIdleR", L"Image\\Kirby\\Basic\\KirbyIdleR.png");
-	m_pMoveLImage	= RESOURCE->LoadImg(L"KirbyLW", L"Image\\Kirby\\Basic\\KirbyLW.png");
-	m_pMoveRImage	= RESOURCE->LoadImg(L"KirbyRW", L"Image\\Kirby\\Basic\\KirbyRW.png");
-	m_pRunImage		= RESOURCE->LoadImg(L"KirbyRun", L"Image\\Kirby\\Basic\\KirbyRun.png");
-	m_pDownImage	= RESOURCE->LoadImg(L"KirbyDown", L"Image\\Kirby\\Basic\\KirbyDown.png");
-	m_pFlyImage		= RESOURCE->LoadImg(L"KirbyFly", L"Image\\Kirby\\Basic\\KirbyFly.png");
-	m_pFlyingImage  = RESOURCE->LoadImg(L"KirbyFly", L"Image\\Kirby\\Basic\\KirbyFly.png");
-	m_pJumpImage    = RESOURCE->LoadImg(L"KirbyJump", L"Image\\Kirby\\Basic\\KirbyJump.png");
+	m_pIdleLImage	= RESOURCE->LoadImg(L"KirbyIdleL",	L"Image\\Kirby\\Basic\\KirbyIdleL.png"	);
+	m_pIdleRImage	= RESOURCE->LoadImg(L"KirbyIdleR",	L"Image\\Kirby\\Basic\\KirbyIdleR.png"	);
+	m_pMoveLImage	= RESOURCE->LoadImg(L"KirbyLW",		L"Image\\Kirby\\Basic\\KirbyLW.png"		);
+	m_pMoveRImage	= RESOURCE->LoadImg(L"KirbyRW",		L"Image\\Kirby\\Basic\\KirbyRW.png"		);
+	m_pRunImage		= RESOURCE->LoadImg(L"KirbyRun",	L"Image\\Kirby\\Basic\\KirbyRun.png"	);
+	m_pDownImage	= RESOURCE->LoadImg(L"KirbyDown",	L"Image\\Kirby\\Basic\\KirbyDown.png"	);
+	m_pFlyImage		= RESOURCE->LoadImg(L"KirbyFly",	L"Image\\Kirby\\Basic\\KirbyFly.png"	);
+	m_pFlyingImage  = RESOURCE->LoadImg(L"KirbyFly",	L"Image\\Kirby\\Basic\\KirbyFly.png"	);
+	m_pJumpImage    = RESOURCE->LoadImg(L"KirbyJump",	L"Image\\Kirby\\Basic\\KirbyJump.png"	);
 
 	m_pAnimator = new CAnimator;
-	m_pAnimator->CreateAnimation(L"IdleR", m_pIdleRImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 0.1f, 1);
-	m_pAnimator->CreateAnimation(L"IdleL", m_pIdleLImage, Vector(0.f, 0.f), Vector(45.f, 43.f), Vector(45.f, 0.f), 0.1f, 1);
-	m_pAnimator->CreateAnimation(L"LW", m_pMoveLImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
-	m_pAnimator->CreateAnimation(L"RW", m_pMoveRImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 10);
-	m_pAnimator->CreateAnimation(L"RRun", m_pRunImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
-	m_pAnimator->CreateAnimation(L"LRun", m_pRunImage, Vector(490.f, 104.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.05f, 8);
-	m_pAnimator->CreateAnimation(L"LDown", m_pDownImage, Vector(0.f, 100.f), Vector(50.f, 50.f), Vector(50.f, 0.f), 10.0f, 1);
-	m_pAnimator->CreateAnimation(L"RDown", m_pDownImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(50.f, 0.f), 10.0f, 1);
-	m_pAnimator->CreateAnimation(L"RFly", m_pFlyImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 19, false);
-	m_pAnimator->CreateAnimation(L"RFlying", m_pFlyImage, Vector(400.f, 0.f), Vector(85.f, 50.f), Vector(70.f, 0.f), 0.08f, 6);
-	m_pAnimator->CreateAnimation(L"LFly", m_pFlyImage, Vector(0.f, 100.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.08f, 19, false);
-	m_pAnimator->CreateAnimation(L"LFlying", m_pFlyImage, Vector(400.f, 100.f), Vector(85.f, 50.f), Vector(70.f, 0.f), 0.08f, 6);
-	m_pAnimator->CreateAnimation(L"RJump", m_pJumpImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.06f, 9, false);
-	m_pAnimator->CreateAnimation(L"LJump", m_pJumpImage, Vector(0.f, 90.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.06f, 9, false);
-	m_pAnimator->CreateAnimation(L"RJumping", m_pJumpImage, Vector(400.f, 0.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 2);
-	m_pAnimator->CreateAnimation(L"LJumping", m_pJumpImage, Vector(400.f, 90.f), Vector(50.f, 50.f), Vector(58.f, 0.f), 0.08f, 2);
+	m_pAnimator->CreateAnimation(L"IdleR",		m_pIdleRImage,	Vector(  0.f,   0.f), Vector( 45.f,  43.f), Vector(  45.f,   0.f), 0.1f, 1);
+	m_pAnimator->CreateAnimation(L"IdleL",		m_pIdleLImage,	Vector(  0.f,   0.f), Vector( 45.f,  43.f), Vector(  45.f,   0.f), 0.1f, 1);
+	m_pAnimator->CreateAnimation(L"LW",			m_pMoveLImage,	Vector(  0.f,   0.f), Vector( 60.f,  50.f), Vector(  70.f,   0.f), 0.05f, 10);
+	m_pAnimator->CreateAnimation(L"RW",			m_pMoveRImage,	Vector(  0.f,   0.f), Vector( 60.f,  50.f), Vector(  70.f,   0.f), 0.05f, 10);
+	m_pAnimator->CreateAnimation(L"RRun",		m_pRunImage,	Vector(  0.f,   0.f), Vector( 60.f,  50.f), Vector(  70.f,   0.f), 0.05f, 8);
+	m_pAnimator->CreateAnimation(L"LRun",		m_pRunImage,	Vector(490.f, 104.f), Vector( 60.f,  50.f), Vector( -70.f,   0.f), 0.05f, 8);
+	m_pAnimator->CreateAnimation(L"LDown",		m_pDownImage,	Vector(  0.f, 100.f), Vector( 50.f,  50.f), Vector(  50.f,   0.f), 10.0f, 1);
+	m_pAnimator->CreateAnimation(L"RDown",		m_pDownImage,	Vector(  0.f,   0.f), Vector( 50.f,  50.f), Vector(  50.f,   0.f), 10.0f, 1);
+	m_pAnimator->CreateAnimation(L"RFly",		m_pFlyImage,	Vector(  0.f,   0.f), Vector( 60.f,  50.f), Vector(  70.f,   0.f), 0.08f, 19, false);
+	m_pAnimator->CreateAnimation(L"RFlying",	m_pFlyImage,	Vector(400.f,   0.f), Vector( 85.f,  50.f), Vector(  70.f,   0.f), 0.08f, 6);
+	m_pAnimator->CreateAnimation(L"LFly",		m_pFlyImage,	Vector(  0.f, 100.f), Vector( 60.f,  50.f), Vector(  70.f,   0.f), 0.08f, 19, false);
+	m_pAnimator->CreateAnimation(L"LFlying",	m_pFlyImage,	Vector(400.f, 100.f), Vector( 85.f,  50.f), Vector(  70.f,   0.f), 0.08f, 6);
+	m_pAnimator->CreateAnimation(L"RJump",		m_pJumpImage,	Vector(  0.f,   0.f), Vector( 50.f,  50.f), Vector(  58.f,   0.f), 0.06f, 9,  false);
+	m_pAnimator->CreateAnimation(L"LJump",		m_pJumpImage,	Vector(  0.f,  90.f), Vector( 50.f,  50.f), Vector(  58.f,   0.f), 0.06f, 9,  false);
+	m_pAnimator->CreateAnimation(L"RJumping",	m_pJumpImage,	Vector(400.f,   0.f), Vector( 50.f,  50.f), Vector(  58.f,   0.f), 0.08f, 2);
+	m_pAnimator->CreateAnimation(L"LJumping",	m_pJumpImage,	Vector(400.f,  90.f), Vector( 50.f,  50.f), Vector(  58.f,   0.f), 0.08f, 2);
 
 
 	m_pAnimator->Play(L"IdleR", false);
@@ -93,7 +94,8 @@ void CKirby::Update()
 	lastLeftInputTime += DT;
 	lastRightInputTime += DT;
 	m_vecLookDir = m_vecMoveDir;
-	Logger::Debug;
+	Logger::Debug(to_wstring(m_groundCounter));
+	
 
 	switch (m_state)
 	{
@@ -150,6 +152,10 @@ void CKirby::Jump()
 
 void CKirby::IdleState()
 {
+	if (m_groundchecker == false)
+	{
+		m_vecPos.y += m_gravity * DT;
+	}
 	if (m_vecLookDir.x == -1)
 	{
 		kirbystate = L"IdleL";
@@ -197,8 +203,12 @@ void CKirby::IdleState()
 
 void CKirby::WalkState()
 {
-	m_fSpeed = 100.f;
 
+	m_fSpeed = 100.f;
+	if (m_groundchecker == false)
+	{
+		m_vecPos.y += m_gravity * DT;
+	}
 	if (BUTTONSTAY(VK_LEFT))
 	{
 		m_vecMoveDir.x = -1;
@@ -295,7 +305,7 @@ void CKirby::JumpState()
 			m_state = State::JumpingDown;
 		}
 	}
-	else if (m_vecLookDir.x == 1)
+	if (m_vecLookDir.x == 1)
 	{
 		kirbystate = L"RJump";
 		if (BUTTONSTAY(VK_RIGHT))
@@ -402,7 +412,6 @@ void CKirby::JumpingDownState()
 		{
 			m_state = State::Idle;
 		}
-		
 	}
 	if (m_vecLookDir.x == 1)
 	{
@@ -461,7 +470,8 @@ void CKirby::FlyingState()
 		m_jumpSpeed = 0;
 		m_state = State::JumpingDown;
 	}
-	
+	m_groundchecker = false;
+
 }
 
 
@@ -504,15 +514,20 @@ void CKirby::OnCollisionEnter(CCollider* pOtherCollider)
 {
 	if (pOtherCollider->GetObjName() == L"¹Ù´Ú")
 	{
-		m_groundchecker = true;
-		m_vecPos.y -= 0.5f;
+		m_groundCounter++;
+		if (m_groundCounter > 0)
+		{
+			m_groundchecker = true;
+			m_vecPos.y -= 0.5f;
+		}
+		else
+		{
+			m_groundchecker = false;
+		}
+		--m_groundCounter;
 	}
-	else
-	{
-		m_groundchecker = true;
-	}
-
 }
+
 
 void CKirby::OnCollisionStay(CCollider* pOtherCollider)
 {
