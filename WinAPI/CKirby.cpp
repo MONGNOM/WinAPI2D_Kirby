@@ -268,6 +268,7 @@ void CKirby::RunState()
 	}
 	if (BUTTONDOWN('A'))
 	{
+		Jump();
 		m_state = State::Jump;
 	}
 }
@@ -433,6 +434,7 @@ void CKirby::JumpingDownState()
 
 void CKirby::FlyingState()
 {
+	if (BUTTONSTAY(VK_UP))
 	m_vecPos.y -= m_fSpeed * DT;
 	if (BUTTONSTAY(VK_RIGHT))
 	{
@@ -504,6 +506,10 @@ void CKirby::OnCollisionEnter(CCollider* pOtherCollider)
 	{
 		m_groundchecker = true;
 		m_vecPos.y -= 0.5f;
+	}
+	else
+	{
+		m_groundchecker = true;
 	}
 
 }
