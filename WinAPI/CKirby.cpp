@@ -444,6 +444,7 @@ void CKirby::FlyingState()
 {
 	if (BUTTONSTAY(VK_UP))
 	m_vecPos.y -= m_fSpeed * DT;
+
 	if (BUTTONSTAY(VK_RIGHT))
 	{
 		m_vecPos.x += m_fSpeed * DT;
@@ -469,6 +470,12 @@ void CKirby::FlyingState()
 		m_jumpSpeed = 0;
 		m_state = State::JumpingDown;
 	}
+
+	if (m_groundchecker == false)
+	{
+		m_vecPos.y += m_gravity * 0.1f * DT;
+	}
+
 	m_groundchecker = false;
 
 }
