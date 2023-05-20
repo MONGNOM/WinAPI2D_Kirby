@@ -49,20 +49,20 @@ void CGroundTile::OnCollisionEnter(CCollider* pOther)
 		CGameObject* pPlayer = pOther->GetOwner();
 		if (pPlayer->GetPos().y < m_vecPos.y)
 		{
-			pPlayer->SetPos(Vector(pPlayer->GetPos().x, pPlayer->GetPos().y - 1));
+			pPlayer->SetPos(Vector(pPlayer->GetPos().x, pPlayer->GetPos().y - 2));
 		}
 		else if (pPlayer->GetPos().y > m_vecPos.y)
 		{
-			pPlayer->SetPos(Vector(pPlayer->GetPos().x, pPlayer->GetPos().y + 1));
+			pPlayer->SetPos(Vector(pPlayer->GetPos().x, pPlayer->GetPos().y + 2));
 		}
 
 		if (pPlayer->GetPos().x >= m_vecPos.x && pPlayer->GetPos().y >= m_vecPos.y)
 		{
-			pPlayer->SetPos(Vector(pPlayer->GetPos().x + 1, pPlayer->GetPos().y));
+			pPlayer->SetPos(Vector(pPlayer->GetPos().x + 2, pPlayer->GetPos().y));
 		}
 		else if (pPlayer->GetPos().x <= m_vecPos.x && pPlayer->GetPos().y >= m_vecPos.y)
 		{
-			pPlayer->SetPos(Vector(pPlayer->GetPos().x - 1, pPlayer->GetPos().y));
+			pPlayer->SetPos(Vector(pPlayer->GetPos().x - 2, pPlayer->GetPos().y));
 		}
 		
 		Logger::Debug(L"커비가 닿았음");
