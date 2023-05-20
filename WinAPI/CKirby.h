@@ -14,6 +14,7 @@ public:
 
 	const float TIME_DASHABLE = 0.5f;
 	const float TIME_FALLING = 0.5f;
+	bool m_groundchecker;
 
 private:
 	CAnimator* m_pAnimator;
@@ -27,7 +28,6 @@ private:
 	float m_fSpeed;
 	float m_jumpSpeed;
 	float m_gravity;
-	bool m_groundchecker;
 	int m_groundCounter;
 
 
