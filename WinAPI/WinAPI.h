@@ -15,8 +15,8 @@ extern HWND hWnd;
 
 #define WINSTARTX   100
 #define WINSTARTY   100
-#define WINSIZEX	1280
-#define	WINSIZEY	720
+#define WINSIZEX	800
+#define	WINSIZEY	600
 #define WINSTYLE	WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
 
 //========================================

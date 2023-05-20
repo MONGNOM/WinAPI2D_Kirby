@@ -14,6 +14,8 @@
 #include "CCameraController.h"
 #include "CButton.h"
 #include "CPanel.h"
+#include "CImageObject.h"
+#include "CResourceManager.h"
 
 CSceneStage01::CSceneStage01()
 {
@@ -25,18 +27,23 @@ CSceneStage01::~CSceneStage01()
 
 void CSceneStage01::Init()
 {
-	
-
 	CKirby* pkirby = new CKirby();
-	pkirby->SetPos(200, WINSIZEY * 0.5f);
+	pkirby->SetPos(200, 300);
 	AddGameObject(pkirby);
-
-	CMonster* pMonster = new CMonster();
-	pMonster->SetPos(1000, WINSIZEY * 0.5f);
-	AddGameObject(pMonster);
 
 	CCameraController* pCamController = new CCameraController;
 	AddGameObject(pCamController);
+	
+	CImageObject* pBackGround = new CImageObject();
+	pBackGround->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\BackGround.png"));
+	pBackGround->SetPos(0, 0);
+	AddGameObject(pBackGround);
+
+	CImageObject* pGround = new CImageObject();
+	pGround->SetImage(RESOURCE->LoadImg(L"Ground", L"Image\\Ground.png"));
+	pGround->SetPos(0, 0);
+	AddGameObject(pGround);
+	
 }
 
 void CSceneStage01::Enter()

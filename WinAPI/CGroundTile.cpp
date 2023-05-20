@@ -49,11 +49,11 @@ void CGroundTile::OnCollisionEnter(CCollider* pOther)
 		CGameObject* pPlayer = pOther->GetOwner();
 		if (pPlayer->GetPos().y < m_vecPos.y)
 		{
-			pPlayer->SetPos(Vector(pPlayer->GetPos().x, pPlayer->GetPos().y - 2));
+			pPlayer->SetPos(Vector(pPlayer->GetPos().x, pPlayer->GetPos().y - 0.5f));
 		}
 		else if (pPlayer->GetPos().y > m_vecPos.y)
 		{
-			pPlayer->SetPos(Vector(pPlayer->GetPos().x, pPlayer->GetPos().y + 2));
+			pPlayer->SetPos(Vector(pPlayer->GetPos().x, pPlayer->GetPos().y + 0.5f));
 		}
 
 		if (pPlayer->GetPos().x >= m_vecPos.x && pPlayer->GetPos().y >= m_vecPos.y)
