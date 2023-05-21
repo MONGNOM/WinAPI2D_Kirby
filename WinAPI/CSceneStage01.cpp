@@ -27,7 +27,7 @@ CSceneStage01::~CSceneStage01()
 
 void CSceneStage01::Init()
 {
-	CKirby* pkirby = new CKirby();
+	pkirby = new CKirby();
 	pkirby->SetPos(200, 300);
 	AddGameObject(pkirby);
 
@@ -35,7 +35,7 @@ void CSceneStage01::Init()
 	AddGameObject(pCamController);
 	
 	CImageObject* pBackGround = new CImageObject();
-	pBackGround->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\BackGround.png"));
+	pBackGround->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\BackGround2.png"));
 	pBackGround->SetPos(0, 0);
 	AddGameObject(pBackGround);
 
@@ -59,6 +59,7 @@ void CSceneStage01::Update()
 		CAMERA->FadeOut(0.25f);
 		DELAYCHANGESCENE(GroupScene::Title, 0.25f);
 	}
+	CAMERA->SetTargetObj(pkirby);
 }
 
 void CSceneStage01::Render()

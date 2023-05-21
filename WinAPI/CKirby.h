@@ -52,6 +52,8 @@ private:
 	CImage* m_pFlyingImage;
 	CImage* m_pJumpImage;
 	CImage* m_pJumpingImage;
+	CImage* m_pAttackImage;
+
 
 private:
 	void Init() override;
@@ -59,7 +61,8 @@ private:
 	void Render() override;
 	void Release() override;
 
-	void AnimatorUpdate();
+	virtual void Attack();
+	virtual void AnimatorUpdate();
 	void CreateMissile();
 
 	void OnCollisionEnter(CCollider* pOtherCollider) override;

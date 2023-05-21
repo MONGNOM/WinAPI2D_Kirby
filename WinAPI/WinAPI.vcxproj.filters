@@ -186,6 +186,9 @@
     <ClInclude Include="CKirby.h">
       <Filter>GameObject\Stage01</Filter>
     </ClInclude>
+    <ClInclude Include="CNomalKirby.h">
+      <Filter>GameObject\Stage01</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -300,6 +303,9 @@
       <Filter>Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="CKirby.cpp">
+      <Filter>GameObject\Stage01</Filter>
+    </ClCompile>
+    <ClCompile Include="CNomalKirby.cpp">
       <Filter>GameObject\Stage01</Filter>
     </ClCompile>
   </ItemGroup>

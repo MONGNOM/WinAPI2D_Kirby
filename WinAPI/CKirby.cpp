@@ -31,7 +31,10 @@ CKirby::CKirby()
 	m_pFlyingImage  = nullptr;
 	m_pJumpImage	= nullptr;
 	m_pJumpingImage = nullptr;
+	m_pAttackImage	= nullptr;
+
 	m_groundchecker = false;
+
 	m_vecMoveDir	= Vector(1, 0);
 	m_vecLookDir	= Vector(0, 0);
 
@@ -58,7 +61,8 @@ void CKirby::Init()
 	m_pDownImage	= RESOURCE->LoadImg(L"KirbyDown",	L"Image\\Kirby\\Basic\\KirbyDown.png"	);
 	m_pFlyImage		= RESOURCE->LoadImg(L"KirbyFly",	L"Image\\Kirby\\Basic\\KirbyFly.png"	);
 	m_pFlyingImage  = RESOURCE->LoadImg(L"KirbyFly",	L"Image\\Kirby\\Basic\\KirbyFly.png"	);
-	m_pJumpImage    = RESOURCE->LoadImg(L"KirbyJump",	L"Image\\Kirby\\Basic\\KirbyJump.png"	);
+	m_pJumpImage	= RESOURCE->LoadImg(L"KirbyJump", L"Image\\Kirby\\Basic\\KirbyJump.png"		);
+	m_pAttackImage	= RESOURCE->LoadImg(L"KirbyAttack",	L"Image\\Kirby\\Basic\\KirbyEat.png"	);
 
 	m_pAnimator = new CAnimator;
 	m_pAnimator->CreateAnimation(L"IdleR",		m_pIdleRImage,	Vector(  0.f,   0.f), Vector( 45.f,  43.f), Vector(  45.f,   0.f), 0.1f, 1);
@@ -77,6 +81,8 @@ void CKirby::Init()
 	m_pAnimator->CreateAnimation(L"LJump",		m_pJumpImage,	Vector(  0.f,  90.f), Vector( 50.f,  50.f), Vector(  58.f,   0.f), 0.06f, 9,  false);
 	m_pAnimator->CreateAnimation(L"RJumping",	m_pJumpImage,	Vector(400.f,   0.f), Vector( 50.f,  50.f), Vector(  58.f,   0.f), 0.08f, 2);
 	m_pAnimator->CreateAnimation(L"LJumping",	m_pJumpImage,	Vector(400.f,  90.f), Vector( 50.f,  50.f), Vector(  58.f,   0.f), 0.08f, 2);
+	m_pAnimator->CreateAnimation(L"RAttack",	m_pAttackImage,	Vector(0.f,  0.f), Vector( 57.f,  57.f), Vector(  70.f,   0.f), 0.08f, 5);
+	m_pAnimator->CreateAnimation(L"LAttack",	m_pAttackImage,	Vector(0.f,  95.f), Vector( 57.f,  57.f), Vector(  70.f,   0.f), 0.08f, 5);
 
 	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
@@ -132,12 +138,11 @@ void CKirby::Render()
 {
 }
 
+
 void CKirby::AnimatorUpdate()
 {
 	m_pAnimator->Play(kirbystate, false);
 }
-
-
 
 void CKirby::Jump()
 {
@@ -384,10 +389,27 @@ void CKirby::FlyState()
 
 }
 
+
 void CKirby::AttackState()
 {
-	CreateMissile();
-	m_state = State::Idle;
+	Attack();
+	//CreateMissile();
+}
+
+void CKirby::Attack()
+{
+	if (m_vecLookDir.x == -1)
+	{
+		kirbystate = L"LAttack";
+	}
+	if (m_vecLookDir.x == 1)
+	{
+		kirbystate = L"RAttack";
+	}
+	if (BUTTONUP('S'))
+	{
+		m_state = State::Idle;
+	}
 }
 
 void CKirby::JumpingDownState()
@@ -516,8 +538,8 @@ void CKirby::OnCollisionEnter(CCollider* pOtherCollider)
 {
 	if (pOtherCollider->GetObjName() == L"¹Ù´Ú")
 	{
-		m_groundCounter++;
-		m_groundchecker = true;
+			m_groundCounter++;
+			m_groundchecker = true;
 	}
 
 }

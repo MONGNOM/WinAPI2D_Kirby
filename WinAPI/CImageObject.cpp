@@ -38,7 +38,7 @@ void CImageObject::Render()
 	{
 		RENDER->Image(
 			m_pImage,
-			0,
+			32,
 			0,
 			(float)m_pImage->GetWidth(),
 			(float)m_pImage->GetHeight()
