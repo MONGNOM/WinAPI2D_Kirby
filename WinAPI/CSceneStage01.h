@@ -1,6 +1,7 @@
 #pragma once
 #include "CScene.h"
 #include "CNomalKirby.h"
+#include "CIceKirby.h"
 
 class CSceneStage01 : public CScene
 {
@@ -10,6 +11,7 @@ public:
 
 private:
 	CNomalKirby* pkirby;
+	CIceKirby* icekirby;
 private:
 	void Init()		override;
 	void Enter()	override;

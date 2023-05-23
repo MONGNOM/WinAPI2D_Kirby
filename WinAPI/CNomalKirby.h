@@ -15,7 +15,7 @@ public:
 
 private:
 	
-	wstring kirbystate;
+	wstring Icekirbystate;
 	State m_state;
 	CAnimator* m_pAnimator;
 
@@ -37,7 +37,6 @@ private:
 	CImage* m_pRunImage;
 	CImage* m_pDownImage;
 	CImage* m_pFlyImage;
-	CImage* m_pFlyingImage;
 	CImage* m_pJumpImage;
 	CImage* m_pJumpingImage;
 	CImage* m_pAttackImage;

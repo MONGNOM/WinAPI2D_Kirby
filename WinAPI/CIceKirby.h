@@ -1,36 +1,24 @@
 #pragma once
-#include "CGameObject.h"
+#include "Ckirby.h"
 
 
 class CImage;
 class CAnimator;
 
-class CIceKirby : public CGameObject
+class CIceKirby : public CKirby
 {
 public:
 
-	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown };
+	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown, Attacking };
 
 	CIceKirby();
 	virtual ~CIceKirby();
 
 
-	const float TIME_DASHABLE = 0.5f;
-	const float TIME_FALLING = 0.5f;
-	bool m_groundchecker;
-
 private:
-	float fallTimer;
-	float flyTimer;
-	Vector m_vecMoveDir;
-	Vector m_vecLookDir;
-	wstring kirbystate;
-	State m_state;
-	float m_fSpeed;
-	float m_jumpSpeed;
-	float m_gravity;
-	int m_groundCounter;
 
+	wstring icekirbystate;
+	State m_state;
 	CAnimator* m_pAnimator;
 
 	void Jump();
@@ -43,17 +31,14 @@ private:
 	void JumpingDownState();
 	void FlyingState();
 	void AttackState();
+	void AttackingState();
 
-	CImage* m_pIdleLImage;
-	CImage* m_pIdleRImage;
-	CImage* m_pMoveLImage;
-	CImage* m_pMoveRImage;
+	CImage* m_pIdleImage;
+	CImage* m_pMoveImage;
 	CImage* m_pRunImage;
 	CImage* m_pDownImage;
 	CImage* m_pFlyImage;
-	CImage* m_pFlyingImage;
 	CImage* m_pJumpImage;
-	CImage* m_pJumpingImage;
 	CImage* m_pAttackImage;
 
 
@@ -63,15 +48,6 @@ private:
 	void Render() override;
 	void Release() override;
 
-	void Attack();
 	void AnimatorUpdate();
-	void CreateMissile();
-
-	void OnCollisionEnter(CCollider* pOtherCollider) override;
-	void OnCollisionStay(CCollider* pOtherCollider) override;
-	void OnCollisionExit(CCollider* pOtherCollider) override;
-
-	float lastLeftInputTime;
-	float lastRightInputTime;
 };
 

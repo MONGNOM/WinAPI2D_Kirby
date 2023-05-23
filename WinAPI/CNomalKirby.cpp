@@ -14,13 +14,8 @@
 
 CNomalKirby::CNomalKirby()
 {
-	m_fSpeed	= 0.f;
-	m_jumpSpeed = 0.f;
-	m_vecPos	= Vector(0, 0);
-	m_vecScale	= Vector(100, 100);
-	m_layer		= Layer::Player;
-	m_strName	= L"Ä¿ºñ";
-
+	m_state			= State::Idle;
+	m_pAnimator		= nullptr;
 	m_pIdleLImage   = nullptr;
 	m_pIdleRImage   = nullptr;
 	m_pMoveLImage   = nullptr;
@@ -28,22 +23,9 @@ CNomalKirby::CNomalKirby()
 	m_pRunImage     = nullptr;
 	m_pDownImage    = nullptr;
 	m_pFlyImage	    = nullptr;
-	m_pFlyingImage  = nullptr;
 	m_pJumpImage	= nullptr;
 	m_pJumpingImage = nullptr;
 	m_pAttackImage	= nullptr;
-
-	m_groundchecker = false;
-
-	m_vecMoveDir	= Vector(1, 0);
-	m_vecLookDir	= Vector(0, 0);
-
-	lastLeftInputTime  = 10;
-	lastRightInputTime = 10;	
-	fallTimer		   = 0;
-	flyTimer		   = 0;
-	m_groundCounter	   = 0;
-	m_gravity		   = 300;
 }
 
 CNomalKirby::~CNomalKirby()
@@ -60,7 +42,6 @@ void CNomalKirby::Init()
 	m_pRunImage		= RESOURCE->LoadImg(L"KirbyRun",	L"Image\\Kirby\\Basic\\KirbyRun.png"	);
 	m_pDownImage	= RESOURCE->LoadImg(L"KirbyDown",	L"Image\\Kirby\\Basic\\KirbyDown.png"	);
 	m_pFlyImage		= RESOURCE->LoadImg(L"KirbyFly",	L"Image\\Kirby\\Basic\\KirbyFly.png"	);
-	m_pFlyingImage  = RESOURCE->LoadImg(L"KirbyFly",	L"Image\\Kirby\\Basic\\KirbyFly.png"	);
 	m_pJumpImage	= RESOURCE->LoadImg(L"KirbyJump", L"Image\\Kirby\\Basic\\KirbyJump.png"		);
 	m_pAttackImage	= RESOURCE->LoadImg(L"KirbyAttack",	L"Image\\Kirby\\Basic\\KirbyEat.png"	);
 
@@ -136,7 +117,7 @@ void CNomalKirby::Render()
 
 void CNomalKirby::AnimatorUpdate()
 {
-	m_pAnimator->Play(kirbystate, false);
+	m_pAnimator->Play(Icekirbystate, false);
 }
 
 void CNomalKirby::Jump()
@@ -153,11 +134,11 @@ void CNomalKirby::IdleState()
 	}
 	if (m_vecLookDir.x == -1)
 	{
-		kirbystate = L"IdleL";
+		Icekirbystate = L"IdleL";
 	}
 	else if (m_vecLookDir.x == 1)
 	{
-		kirbystate = L"IdleR";
+		Icekirbystate = L"IdleR";
 	}
 	if (BUTTONSTAY(VK_LEFT))
 	{
@@ -207,13 +188,13 @@ void CNomalKirby::WalkState()
 	{
 		m_vecMoveDir.x = -1;
 		m_vecPos.x -= m_fSpeed * DT;
-		kirbystate = L"LW";
+		Icekirbystate = L"LW";
 	}
 	else if (BUTTONSTAY(VK_RIGHT))
 	{
 		m_vecMoveDir.x = 1;
 		m_vecPos.x += m_fSpeed * DT;
-		kirbystate = L"RW";
+		Icekirbystate = L"RW";
 
 	}
 
@@ -250,13 +231,13 @@ void CNomalKirby::RunState()
 	if (BUTTONSTAY(VK_LEFT))
 	{
 		m_vecMoveDir.x = -1;
-		kirbystate = L"LRun";
+		Icekirbystate = L"LRun";
 		m_vecPos.x -= m_fSpeed * DT;
 	}
 	else if (BUTTONSTAY(VK_RIGHT))
 	{
 		m_vecMoveDir.x = 1;
-		kirbystate = L"RRun";
+		Icekirbystate = L"RRun";
 		m_vecPos.x += m_fSpeed * DT;
 	}
 	if (!(BUTTONSTAY(VK_RIGHT) || BUTTONSTAY(VK_LEFT)))
@@ -288,7 +269,7 @@ void CNomalKirby::JumpState()
 
 	if (m_vecLookDir.x == -1)
 	{
-		kirbystate = L"LJump";
+		Icekirbystate = L"LJump";
 		if (BUTTONSTAY(VK_RIGHT))
 		{
 			m_vecPos.x += m_fSpeed * DT;
@@ -306,7 +287,7 @@ void CNomalKirby::JumpState()
 	}
 	if (m_vecLookDir.x == 1)
 	{
-		kirbystate = L"RJump";
+		Icekirbystate = L"RJump";
 		if (BUTTONSTAY(VK_RIGHT))
 		{
 			m_vecPos.x += m_fSpeed * DT;
@@ -328,20 +309,20 @@ void CNomalKirby::SitState()
 {
 	if (m_vecLookDir.x == 1)
 	{
-		kirbystate = L"RDown";
+		Icekirbystate = L"RDown";
 		if (BUTTONSTAY(VK_DOWN) && BUTTONSTAY(VK_LEFT))
 		{
 			m_vecLookDir.x = -1;
-			kirbystate = L"LDown";
+			Icekirbystate = L"LDown";
 		}
 	}
 	else if (m_vecLookDir.x == -1)
 	{
-		kirbystate = L"LDown";
+		Icekirbystate = L"LDown";
 		if (BUTTONSTAY(VK_DOWN) && BUTTONDOWN(VK_LEFT))
 		{
 			m_vecLookDir.x = 1;
-			kirbystate = L"RDown";
+			Icekirbystate = L"RDown";
 		}
 	}
 	if (!BUTTONSTAY(VK_DOWN))
@@ -355,7 +336,7 @@ void CNomalKirby::FlyState()
 	m_fSpeed = 100;
 	if (m_vecLookDir.x == 1)
 	{
-		kirbystate = L"RFly";
+		Icekirbystate = L"RFly";
 		if (flyTimer > 0.4f)
 		{ 
 			flyTimer = 0;
@@ -364,7 +345,7 @@ void CNomalKirby::FlyState()
 	}
 	else if (m_vecLookDir.x == -1)
 	{
-		kirbystate = L"LFly";
+		Icekirbystate = L"LFly";
 		if (flyTimer > 0.4f)
 		{
 			flyTimer = 0;
@@ -389,11 +370,11 @@ void CNomalKirby::Attack()
 {
 	if (m_vecLookDir.x == -1)
 	{
-		kirbystate = L"LAttack";
+		Icekirbystate = L"LAttack";
 	}
 	if (m_vecLookDir.x == 1)
 	{
-		kirbystate = L"RAttack";
+		Icekirbystate = L"RAttack";
 	}
 	if (BUTTONUP('S'))
 	{
@@ -413,7 +394,7 @@ void CNomalKirby::JumpingDownState()
 	m_vecPos.y -= m_jumpSpeed * DT;
 	if (m_vecLookDir.x == -1)
 	{
-		kirbystate = L"LJumping";
+		Icekirbystate = L"LJumping";
 		if (BUTTONSTAY(VK_RIGHT))
 		{
 			m_vecPos.x += m_fSpeed * DT;
@@ -431,7 +412,7 @@ void CNomalKirby::JumpingDownState()
 	}
 	if (m_vecLookDir.x == 1)
 	{
-		kirbystate = L"RJumping";
+		Icekirbystate = L"RJumping";
 		if (BUTTONSTAY(VK_RIGHT))
 		{
 			m_vecPos.x += m_fSpeed * DT;
@@ -477,11 +458,11 @@ void CNomalKirby::FlyingState()
 
 	if (m_vecLookDir.x == 1)
 	{
-		kirbystate = L"RFlying";
+		Icekirbystate = L"RFlying";
 	}
 	else if (m_vecLookDir.x == -1)
 	{
-		kirbystate = L"LFlying";
+		Icekirbystate = L"LFlying";
 	}
 	
 	if(BUTTONDOWN('S'))
