@@ -65,4 +65,3 @@ enum class TypeTile
 };
 
 
-enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown };

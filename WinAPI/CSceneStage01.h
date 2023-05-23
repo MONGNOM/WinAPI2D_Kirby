@@ -2,6 +2,7 @@
 #include "CScene.h"
 #include "CNomalKirby.h"
 #include "CIceKirby.h"
+#include "CSwordKirby.h"
 
 class CSceneStage01 : public CScene
 {
