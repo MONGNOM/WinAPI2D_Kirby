@@ -61,8 +61,13 @@ void CNomalKirby::Init()
 	AddCollider(ColliderType::Circle, Vector(20, 20), Vector(0, 0));
 }
 
+
 void CNomalKirby::Update()
 {
+	kirbystate = L"IdleR";
+	CKirby::Update();
+
+	AnimatorUpdate();
 }
 
 void CNomalKirby::Render()
@@ -75,9 +80,21 @@ void CNomalKirby::Release()
 
 void CNomalKirby::Attack()
 {
-	
+	if (m_vecLookDir.x == -1)
+	{
+		kirbystate = L"LAttack";
+	}
+	if (m_vecLookDir.x == 1)
+	{
+		kirbystate = L"RAttack";
+	}
+	if (BUTTONUP('S'))
+	{
+		m_state = State::Idle;
+	}
 }
 
 void CNomalKirby::AnimatorUpdate()
 {
+	m_pAnimator->Play(kirbystate, false);
 }

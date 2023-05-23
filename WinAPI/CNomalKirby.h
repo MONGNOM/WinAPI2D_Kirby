@@ -1,5 +1,9 @@
 #pragma once
 #include "CKirby.h"
+
+class CImage;
+class CAnimator;
+
 class CNomalKirby : public CKirby
 {
 public:
@@ -21,14 +25,15 @@ private:
 	CImage* m_pJumpingImage;
 	CImage* m_pAttackImage;
 
+	wstring kirbystate;
 
 private:
 
-	void Attack() override;
 	void Init() override;
 	void Update() override;
 	void Render() override;
 	void Release() override;
+	void Attack() override;
 	void AnimatorUpdate() override;
 };
 

@@ -9,6 +9,7 @@
 #include "CCameraManager.h"
 #include "CPathManager.h"
 #include "CKirby.h"
+#include "CNomalKirby.h"
 
 #include "CMonster.h"
 #include "CCameraController.h"
@@ -16,6 +17,7 @@
 #include "CPanel.h"
 #include "CImageObject.h"
 #include "CResourceManager.h"
+
 
 CSceneStage01::CSceneStage01()
 {
@@ -27,7 +29,7 @@ CSceneStage01::~CSceneStage01()
 
 void CSceneStage01::Init()
 {
-	pkirby = new CKirby();
+	pkirby = new CNomalKirby();
 	pkirby->SetPos(200, 300);
 	AddGameObject(pkirby);
 

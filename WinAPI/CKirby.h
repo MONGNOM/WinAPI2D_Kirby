@@ -16,9 +16,7 @@ public:
 	const float TIME_FALLING = 0.5f;
 	bool m_groundchecker;
 
-private:
-	CAnimator* m_pAnimator;
-
+protected:
 	float fallTimer;
 	float flyTimer;
 	Vector m_vecMoveDir;
@@ -30,6 +28,7 @@ private:
 	float m_gravity;
 	int m_groundCounter;
 
+	CAnimator* m_pAnimator;
 
 	void Jump();
 	void IdleState();
@@ -40,7 +39,7 @@ private:
 	void FlyState();
 	void JumpingDownState();
 	void FlyingState();
-	virtual void AttackState();
+	void AttackState();
 
 	CImage* m_pIdleLImage;
 	CImage* m_pIdleRImage;
@@ -55,14 +54,14 @@ private:
 	CImage* m_pAttackImage;
 
 
-private:
+protected:
 	void Init() override;
 	void Update() override;
 	void Render() override;
 	void Release() override;
 
-	virtual void Attack();
-	virtual void AnimatorUpdate();
+	virtual void Attack() = 0;
+	virtual void AnimatorUpdate() = 0;
 	void CreateMissile();
 
 	void OnCollisionEnter(CCollider* pOtherCollider) override;

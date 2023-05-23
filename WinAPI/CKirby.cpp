@@ -21,7 +21,7 @@ CKirby::CKirby()
 	m_layer		= Layer::Player;
 	m_strName	= L"Ä¿ºñ";
 
-	m_pIdleLImage   = nullptr;
+	/*m_pIdleLImage   = nullptr;
 	m_pIdleRImage   = nullptr;
 	m_pMoveLImage   = nullptr;
 	m_pMoveRImage   = nullptr;
@@ -31,7 +31,7 @@ CKirby::CKirby()
 	m_pFlyingImage  = nullptr;
 	m_pJumpImage	= nullptr;
 	m_pJumpingImage = nullptr;
-	m_pAttackImage	= nullptr;
+	m_pAttackImage	= nullptr;*/
 
 	m_groundchecker = false;
 
@@ -53,7 +53,7 @@ CKirby::~CKirby()
 
 void CKirby::Init()
 {
-	m_pIdleLImage	= RESOURCE->LoadImg(L"KirbyIdleL",	L"Image\\Kirby\\Basic\\KirbyIdleL.png"	);
+	/*m_pIdleLImage	= RESOURCE->LoadImg(L"KirbyIdleL",	L"Image\\Kirby\\Basic\\KirbyIdleL.png"	);
 	m_pIdleRImage	= RESOURCE->LoadImg(L"KirbyIdleR",	L"Image\\Kirby\\Basic\\KirbyIdleR.png"	);
 	m_pMoveLImage	= RESOURCE->LoadImg(L"KirbyLW",		L"Image\\Kirby\\Basic\\KirbyLW.png"		);
 	m_pMoveRImage	= RESOURCE->LoadImg(L"KirbyRW",		L"Image\\Kirby\\Basic\\KirbyRW.png"		);
@@ -87,7 +87,7 @@ void CKirby::Init()
 	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
 
-	AddCollider(ColliderType::Circle, Vector(20, 20), Vector(0, 0));
+	AddCollider(ColliderType::Circle, Vector(20, 20), Vector(0, 0));*/
 }
 
 
@@ -141,7 +141,7 @@ void CKirby::Render()
 
 void CKirby::AnimatorUpdate()
 {
-	m_pAnimator->Play(kirbystate, false);
+	/*m_pAnimator->Play(kirbystate, false);*/
 }
 
 void CKirby::Jump()
@@ -158,11 +158,9 @@ void CKirby::IdleState()
 	}
 	if (m_vecLookDir.x == -1)
 	{
-		kirbystate = L"IdleL";
 	}
 	else if (m_vecLookDir.x == 1)
 	{
-		kirbystate = L"IdleR";
 	}
 	if (BUTTONSTAY(VK_LEFT))
 	{
@@ -212,13 +210,11 @@ void CKirby::WalkState()
 	{
 		m_vecMoveDir.x = -1;
 		m_vecPos.x -= m_fSpeed * DT;
-		kirbystate = L"LW";
 	}
 	else if (BUTTONSTAY(VK_RIGHT))
 	{
 		m_vecMoveDir.x = 1;
 		m_vecPos.x += m_fSpeed * DT;
-		kirbystate = L"RW";
 	}
 
 	if (!(BUTTONSTAY(VK_RIGHT) || BUTTONSTAY(VK_LEFT)))
@@ -393,24 +389,8 @@ void CKirby::FlyState()
 void CKirby::AttackState()
 {
 	Attack();
-	//CreateMissile();
 }
 
-void CKirby::Attack()
-{
-	if (m_vecLookDir.x == -1)
-	{
-		kirbystate = L"LAttack";
-	}
-	if (m_vecLookDir.x == 1)
-	{
-		kirbystate = L"RAttack";
-	}
-	if (BUTTONUP('S'))
-	{
-		m_state = State::Idle;
-	}
-}
 
 void CKirby::JumpingDownState()
 {
