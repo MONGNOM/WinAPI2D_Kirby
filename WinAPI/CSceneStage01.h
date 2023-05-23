@@ -1,6 +1,5 @@
 #pragma once
 #include "CScene.h"
-#include "CKirby.h"
 #include "CNomalKirby.h"
 
 class CSceneStage01 : public CScene

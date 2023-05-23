@@ -8,8 +8,8 @@
 #include "CEventManager.h"
 #include "CCameraManager.h"
 #include "CPathManager.h"
-#include "CKirby.h"
 #include "CNomalKirby.h"
+
 
 #include "CMonster.h"
 #include "CCameraController.h"
@@ -21,6 +21,7 @@
 
 CSceneStage01::CSceneStage01()
 {
+	pkirby = nullptr;
 }
 
 CSceneStage01::~CSceneStage01()

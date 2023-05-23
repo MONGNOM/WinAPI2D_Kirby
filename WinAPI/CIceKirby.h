@@ -1,22 +1,36 @@
 #pragma once
-#include "CKirby.h"
+#include "CGameObject.h"
+
 
 class CImage;
 class CAnimator;
 
-class CNomalKirby : public CKirby
+class CIceKirby : public CGameObject
 {
 public:
 
 	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown };
 
-	CNomalKirby();
-	virtual ~CNomalKirby();
+	CIceKirby();
+	virtual ~CIceKirby();
+
+
+	const float TIME_DASHABLE = 0.5f;
+	const float TIME_FALLING = 0.5f;
+	bool m_groundchecker;
 
 private:
-	
+	float fallTimer;
+	float flyTimer;
+	Vector m_vecMoveDir;
+	Vector m_vecLookDir;
 	wstring kirbystate;
 	State m_state;
+	float m_fSpeed;
+	float m_jumpSpeed;
+	float m_gravity;
+	int m_groundCounter;
+
 	CAnimator* m_pAnimator;
 
 	void Jump();
@@ -53,5 +67,11 @@ private:
 	void AnimatorUpdate();
 	void CreateMissile();
 
+	void OnCollisionEnter(CCollider* pOtherCollider) override;
+	void OnCollisionStay(CCollider* pOtherCollider) override;
+	void OnCollisionExit(CCollider* pOtherCollider) override;
+
+	float lastLeftInputTime;
+	float lastRightInputTime;
 };
 

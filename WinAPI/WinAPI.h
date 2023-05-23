@@ -63,3 +63,6 @@ enum class TypeTile
 
 	Size,
 };
+
+
+enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown };

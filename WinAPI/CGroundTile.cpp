@@ -4,7 +4,7 @@
 #include "CResourceManager.h"
 #include "CRenderManager.h"
 #include "CCollider.h"
-#include "CKirby.h"
+#include "CNomalKirby.h"
 
 CGroundTile::CGroundTile()
 {
