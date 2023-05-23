@@ -36,7 +36,7 @@ void CIceKirby::Init()
 	m_pAnimator->CreateAnimation(L"LW", m_pMoveImage, Vector(630.f, 100.f), Vector(50.f, 50.f), Vector(-70.f, 0.f), 0.05f, 10);
 	m_pAnimator->CreateAnimation(L"RRun", m_pRunImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 8);
 	m_pAnimator->CreateAnimation(L"LRun", m_pRunImage, Vector(490.f, 104.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.05f, 8);
-	m_pAnimator->CreateAnimation(L"RDown", m_pDownImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(43.f, 0.f), 0.8f, 2);
+	m_pAnimator->CreateAnimation(L"RDown", m_pDownImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.8f, 2);
 	m_pAnimator->CreateAnimation(L"LDown", m_pDownImage, Vector(70.f, 100.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.8f, 2);
 	m_pAnimator->CreateAnimation(L"RAttack", m_pAttackImage, Vector(0.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.04f, 8, false);
 	m_pAnimator->CreateAnimation(L"LAttack", m_pAttackImage, Vector(490.f, 100.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.04f, 6, false);
@@ -48,8 +48,8 @@ void CIceKirby::Init()
 	m_pAnimator->CreateAnimation(L"LJump", m_pJumpImage, Vector(630.f, 100.f), Vector(50.f, 50.f), Vector(-70.f, 0.f), 0.08f, 9,false);
 	m_pAnimator->CreateAnimation(L"RJumping", m_pJumpImage, Vector(480.f, 0.f), Vector(65.f, 50.f), Vector(70.f, 0.f), 0.08f, 2);
 	m_pAnimator->CreateAnimation(L"LJumping", m_pJumpImage, Vector(130.f, 100.f), Vector(65.f, 50.f), Vector(-70.f, 0.f), 0.08f, 2);
-	m_pAnimator->CreateAnimation(L"RAttacking", m_pAttackImage, Vector(410.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.06f, 2);
-	m_pAnimator->CreateAnimation(L"LAttacking", m_pAttackImage, Vector(200.f, 100.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.06f, 2);
+	m_pAnimator->CreateAnimation(L"RAttacking", m_pAttackImage, Vector(420.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.06f, 2);
+	m_pAnimator->CreateAnimation(L"LAttacking", m_pAttackImage, Vector(210.f, 100.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.06f, 2);
 	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
 
@@ -361,17 +361,25 @@ void CIceKirby::FlyState()
 
 void CIceKirby::AttackState()
 {
+	attackTimer += DT;
+
 	if (m_vecLookDir.x == -1)
 	{
 		icekirbystate = L"LAttack";
+		if (attackTimer > 0.4f)
+		{
+			attackTimer = 0;
+			m_state = State::Attacking;
+		}
 	}
 	if (m_vecLookDir.x == 1)
 	{
 		icekirbystate = L"RAttack";
-	}
-	if (!BUTTONUP('S'))
-	{
-		m_state = State::Attacking;
+		if (attackTimer > 0.4f)
+		{
+			attackTimer = 0;
+			m_state = State::Attacking;
+		}
 	}
 	if (BUTTONUP('S'))
 	{

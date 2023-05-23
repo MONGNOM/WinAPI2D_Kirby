@@ -14,6 +14,8 @@ public:
 	CIceKirby();
 	virtual ~CIceKirby();
 
+	float attackTimer;
+
 
 private:
 
