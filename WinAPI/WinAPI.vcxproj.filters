@@ -52,6 +52,9 @@
     <Filter Include="GameObject\Stage01">
       <UniqueIdentifier>{f2ad0501-d505-4b88-af0d-880a4673ef5b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Stage01\Kirby">
+      <UniqueIdentifier>{8115a4cd-a9a7-4470-bcdc-d72913ccf5c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -183,11 +186,17 @@
     <ClInclude Include="CSoundManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="CIceKirby.h">
+      <Filter>GameObject\Stage01\Kirby</Filter>
+    </ClInclude>
     <ClInclude Include="CKirby.h">
-      <Filter>GameObject\Stage01</Filter>
+      <Filter>GameObject\Stage01\Kirby</Filter>
     </ClInclude>
     <ClInclude Include="CNomalKirby.h">
-      <Filter>GameObject\Stage01</Filter>
+      <Filter>GameObject\Stage01\Kirby</Filter>
+    </ClInclude>
+    <ClInclude Include="CSwordKirby.h">
+      <Filter>GameObject\Stage01\Kirby</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -302,11 +311,17 @@
     <ClCompile Include="CSoundManager.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="CIceKirby.cpp">
+      <Filter>GameObject\Stage01\Kirby</Filter>
+    </ClCompile>
     <ClCompile Include="CKirby.cpp">
-      <Filter>GameObject\Stage01</Filter>
+      <Filter>GameObject\Stage01\Kirby</Filter>
     </ClCompile>
     <ClCompile Include="CNomalKirby.cpp">
-      <Filter>GameObject\Stage01</Filter>
+      <Filter>GameObject\Stage01\Kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="CSwordKirby.cpp">
+      <Filter>GameObject\Stage01\Kirby</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
