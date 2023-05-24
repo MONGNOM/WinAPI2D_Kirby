@@ -13,6 +13,7 @@ public:
 private:
 	CNomalKirby* pkirby;
 	CIceKirby* icekirby;
+	CSwordKirby* swordkirby;
 private:
 	void Init()		override;
 	void Enter()	override;

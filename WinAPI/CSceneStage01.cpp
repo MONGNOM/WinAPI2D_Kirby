@@ -10,6 +10,7 @@
 #include "CPathManager.h"
 #include "CNomalKirby.h"
 #include "CIceKirby.h"
+#include "CSwordKirby.h"
 
 
 #include "CMonster.h"
@@ -33,12 +34,15 @@ void CSceneStage01::Init()
 {
 	/*pkirby = new CNomalKirby();
 	pkirby->SetPos(200, 300);
-	AddGameObject(pkirby);*/
+	AddGameObject(pkirby);
 
 	icekirby = new CIceKirby();
 	icekirby->SetPos(200, 300);
-	AddGameObject(icekirby);
+	AddGameObject(icekirby);*/
 
+	swordkirby = new CSwordKirby();
+	swordkirby->SetPos(200, 300);
+	AddGameObject(swordkirby);
 	
 
 	CCameraController* pCamController = new CCameraController;
@@ -69,7 +73,7 @@ void CSceneStage01::Update()
 		CAMERA->FadeOut(0.25f);
 		DELAYCHANGESCENE(GroupScene::Title, 0.25f);
 	}
-	CAMERA->SetTargetObj(icekirby);
+	CAMERA->SetTargetObj(swordkirby);
 }
 
 void CSceneStage01::Render()
