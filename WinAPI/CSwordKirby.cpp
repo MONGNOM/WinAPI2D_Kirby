@@ -408,15 +408,15 @@ void CSwordKirby::FlyState()
 void CSwordKirby::AttackState()
 {
 	attackTimer += DT;
+	if (attackTimer > 0.2f && BUTTONDOWN('S'))
+	{
+		Logger::Debug(L"어택킹중");
+		m_state = State::Attacking;
+		attackTimer = 0;
+	}
 	if (m_vecLookDir.x == -1)
 	{
 		swordkirbystate = L"LAttack";
-		if (attackTimer > 0.4f && BUTTONDOWN('S'))
-		{
-			Logger::Debug(L"어택킹중");
-			m_state = State::Attacking;
-			attackTimer = 0;
-		}
 		if (attackTimer > 0.4f)
 		{
 			m_state = State::Idle;
@@ -426,19 +426,12 @@ void CSwordKirby::AttackState()
 	if (m_vecLookDir.x == 1)
 	{
 		swordkirbystate = L"RAttack";
-		if (attackTimer > 0.4f && BUTTONDOWN('S'))
-		{
-			Logger::Debug(L"어택킹중");
-			m_state = State::Attacking;
-			attackTimer = 0;
-		}
 		if (attackTimer > 0.4f)
 		{
 			m_state = State::Idle;
 			attackTimer = 0;
 		}
 	}
-	
 	
 }
 
@@ -468,12 +461,12 @@ void CSwordKirby::DownAttackState()
 	attackTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
-		m_vecPos.x += 250 * DT;
+		m_vecPos.x += 300 * DT;
 		swordkirbystate = L"RDownAttack";
 	}
 	if (m_vecLookDir.x == -1)
 	{
-		m_vecPos.x -= 250 * DT;
+		m_vecPos.x -= 300 * DT;
 		swordkirbystate = L"LDownAttack";
 	}
 	if (attackTimer > 0.4f && BUTTONDOWN('S'))
