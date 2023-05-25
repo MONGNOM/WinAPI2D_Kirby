@@ -2,7 +2,7 @@
 #include "CKirby.h"
 class CSwordKirby : public CKirby
 {
-	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown, JumpAttack, DownAttack};
+	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown, JumpAttack, DownAttack, Attacking, DownJumpAttack};
 
 public:
 	CSwordKirby();
@@ -29,6 +29,10 @@ private:
 	void AttackState();
 	void JumpAttackState();
 	void DownAttackState();
+	void DownJumpAttackState();
+	void AttackingState();
+
+
 
 	CImage* m_pIdleImage;
 	CImage* m_pMoveImage;
@@ -42,6 +46,8 @@ private:
 	CImage* m_pFlyingImage;
 	CImage* m_pJumpAttackImage;
 	CImage* m_pJumpDownImage;
+	CImage* m_pDownJumpAttackImage;
+	CImage* m_pAttackingImage;
 
 
 

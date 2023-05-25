@@ -64,8 +64,6 @@ void CGroundTile::OnCollisionEnter(CCollider* pOther)
 		{
 			pPlayer->SetPos(Vector(pPlayer->GetPos().x - 2, pPlayer->GetPos().y));
 		}
-		
-		Logger::Debug(L"커비가 닿았음");
 	}
 }
 
