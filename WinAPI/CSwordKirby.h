@@ -49,6 +49,21 @@ private:
 	CImage* m_pDownJumpAttackImage;
 	CImage* m_pAttackingImage;
 
+	CImage* m_LpIdleImage;
+	CImage* m_LpMoveImage;
+	CImage* m_LpRunImage;
+	CImage* m_LpDownImage;
+	CImage* m_LpFlyImage;
+	CImage* m_LpJumpImage;
+	CImage* m_LpAttackImage;
+	CImage* m_LpDownAttackImage;
+	CImage* m_LpJumpingImage;
+	CImage* m_LpFlyingImage;
+	CImage* m_LpJumpAttackImage;
+	CImage* m_LpJumpDownImage;
+	CImage* m_LpDownJumpAttackImage;
+	CImage* m_LpAttackingImage;
+
 
 
 private:
