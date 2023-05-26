@@ -65,6 +65,29 @@ void CGroundTile::OnCollisionEnter(CCollider* pOther)
 			pPlayer->SetPos(Vector(pPlayer->GetPos().x - 2, pPlayer->GetPos().y));
 		}
 	}
+
+	if (pOther->GetOwner()->GetName() == L"¸ó½ºÅÍ")
+	{
+		CGameObject* pPlayer = pOther->GetOwner();
+		if (pPlayer->GetPos().y < m_vecPos.y)
+		{
+			pPlayer->SetPos(Vector(pPlayer->GetPos().x, pPlayer->GetPos().y - 0.5f));
+		}
+		else if (pPlayer->GetPos().y > m_vecPos.y)
+		{
+			pPlayer->SetPos(Vector(pPlayer->GetPos().x, pPlayer->GetPos().y + 0.5f));
+		}
+
+		if (pPlayer->GetPos().x >= m_vecPos.x && pPlayer->GetPos().y >= m_vecPos.y)
+		{
+			pPlayer->SetPos(Vector(pPlayer->GetPos().x + 2, pPlayer->GetPos().y));
+		}
+		else if (pPlayer->GetPos().x <= m_vecPos.x && pPlayer->GetPos().y >= m_vecPos.y)
+		{
+			pPlayer->SetPos(Vector(pPlayer->GetPos().x - 2, pPlayer->GetPos().y));
+		}
+	}
+
 }
 
 void CGroundTile::OnCollisionStay(CCollider* pOther)

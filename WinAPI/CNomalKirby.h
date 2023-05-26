@@ -50,7 +50,6 @@ private:
 
 	void Attack();
 	void AnimatorUpdate();
-	void CreateMissile();
 
 };
 

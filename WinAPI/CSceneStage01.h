@@ -3,6 +3,7 @@
 #include "CNomalKirby.h"
 #include "CIceKirby.h"
 #include "CSwordKirby.h"
+#include "CBasicMonster.h"
 
 class CSceneStage01 : public CScene
 {
@@ -11,6 +12,7 @@ public:
 	virtual ~CSceneStage01();
 
 private:
+	CBasicMonster* pBasicMonster;
 	CNomalKirby* pkirby;
 	CIceKirby* icekirby;
 	CSwordKirby* swordkirby;

@@ -24,6 +24,9 @@
 CSceneStage01::CSceneStage01()
 {
 	pkirby = nullptr;
+	icekirby = nullptr;
+	pBasicMonster = nullptr;
+	swordkirby = nullptr;
 }
 
 CSceneStage01::~CSceneStage01()
@@ -33,7 +36,7 @@ CSceneStage01::~CSceneStage01()
 void CSceneStage01::Init()
 {
 	/*pkirby = new CNomalKirby();
-	pkirby->SetPos(200, 300);
+	pkirby->SetPos(100, 300);
 	AddGameObject(pkirby);
 
 	icekirby = new CIceKirby();
@@ -41,17 +44,21 @@ void CSceneStage01::Init()
 	AddGameObject(icekirby);*/
 
 	swordkirby = new CSwordKirby();
-	swordkirby->SetPos(200, 300);
+	swordkirby->SetPos(300, 300);
 	AddGameObject(swordkirby);
+
+	pBasicMonster = new CBasicMonster();
+	pBasicMonster->SetPos(400, 300);
+	AddGameObject(pBasicMonster);
 	
 
 	CCameraController* pCamController = new CCameraController;
 	AddGameObject(pCamController);
 	
-	CImageObject* pBackGround = new CImageObject();
+	/*CImageObject* pBackGround = new CImageObject();
 	pBackGround->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\BackGround2.png"));
 	pBackGround->SetPos(0, 0);
-	AddGameObject(pBackGround);
+	AddGameObject(pBackGround);*/
 
 	CImageObject* pGround = new CImageObject();
 	pGround->SetImage(RESOURCE->LoadImg(L"Ground", L"Image\\Ground.png"));

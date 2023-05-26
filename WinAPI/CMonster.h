@@ -6,6 +6,18 @@ public:
 	CMonster();
 	virtual ~CMonster();
 
+	float dieTime;
+	int hp;
+
+	bool m_groundchecker;
+	
+	Vector m_vecLookDir; 
+	Vector m_vecMoveDir;
+	
+	int m_groundCounter;
+	float m_fSpeed;
+	float m_gravity;
+
 private:
 	void Init() override;
 	void Update() override;

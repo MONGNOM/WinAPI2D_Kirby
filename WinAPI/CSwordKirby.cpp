@@ -64,16 +64,16 @@ void CSwordKirby::Init()
 	m_pAnimator->CreateAnimation(L"IdleR",				m_pIdleImage, Vector(0.f, 0.f),		Vector(60.f, 85.f), Vector(62.f, 0.f), 0.8f, 2);//완
 	m_pAnimator->CreateAnimation(L"RW",					m_pMoveImage, Vector(5.f, 0.f),		Vector(70.f, 80.f), Vector(97.f, 0.f), 0.05f, 12); //완
 	m_pAnimator->CreateAnimation(L"RRun",				m_pRunImage, Vector(0.f, 0.f),		Vector(60.f, 85.f), Vector(63.5f, 0.f), 0.05f, 8);//완
-	m_pAnimator->CreateAnimation(L"RDown",				m_pDownImage, Vector(4.f, 0.f),		Vector(67.f, 68.f), Vector(68.2f, 0.f), 0.8f, 2);//완
-	m_pAnimator->CreateAnimation(L"RAttack",			m_pAttackImage, Vector(0.f, 0.f),	Vector(200.f, 99.f), Vector(210.f, 0.f), 0.025f, 15, false);// 완
+	m_pAnimator->CreateAnimation(L"RDown",				m_pDownImage, Vector(4.f, 0.f),		Vector(67.f, 89.f), Vector(68.2f, 0.f), 0.8f, 2);//완
+	m_pAnimator->CreateAnimation(L"RAttack",			m_pAttackImage, Vector(0.f, 0.f),	Vector(200.f, 75.f), Vector(210.f, 0.f), 0.025f, 15, false);// 완
 	m_pAnimator->CreateAnimation(L"RFly",				m_pFlyImage, Vector(0.f, 0.f),		Vector(65.f, 77.f), Vector(70.f, 0.f), 0.08f, 5); //완
 	m_pAnimator->CreateAnimation(L"RFlying",			m_pFlyingImage, Vector(0.f, 0.f),	Vector(62.f, 100.f), Vector(63.f, 0.f), 0.08f, 8);//완
 	m_pAnimator->CreateAnimation(L"RJump",				m_pJumpImage, Vector(0.f, 0.f),		Vector(65.f, 80.f), Vector(67.f, 0.f), 0.08f, 3, false);//완
 	m_pAnimator->CreateAnimation(L"RJumpDown",			m_pJumpDownImage, Vector(0.f, 0.f),	Vector(60.f, 80.f), Vector(60.f, 0.f), 0.08f, 2);//완
 	m_pAnimator->CreateAnimation(L"RJumpAttack",		m_pJumpAttackImage, Vector(0.f, 0.f), Vector(115.f, 95.f), Vector(140.f, 0.f), 0.025f, 9);// 완
-	m_pAnimator->CreateAnimation(L"RDownAttack",		m_pDownAttackImage, Vector(0.f, 0.f), Vector(116.f, 44.f), Vector(116.f, 0.f), 0.06f, 2);//완
+	m_pAnimator->CreateAnimation(L"RDownAttack",		m_pDownAttackImage, Vector(0.f, 0.f), Vector(116.f, 99.f), Vector(116.f, 0.f), 0.06f, 2);//완
 	m_pAnimator->CreateAnimation(L"RDownJumpAttack", m_pDownJumpAttackImage, Vector(0.f, 0.f), Vector(200.f, 126.f), Vector(210.f, 0.f), 0.03f, 18, false);//완
-	m_pAnimator->CreateAnimation(L"RAttacking",			m_pAttackingImage, Vector(47.f, 0.f),	Vector(139.f, 111.f), Vector(140.f, 0.f), 0.03f, 26, false);//완
+	m_pAnimator->CreateAnimation(L"RAttacking",			m_pAttackingImage, Vector(47.f, 0.f),	Vector(139.f, 95.f), Vector(140.f, 0.f), 0.03f, 26, false);//완
 
 	//왼쪽
 	m_LpIdleImage			= RESOURCE->LoadImg(L"LSwordKirbyIdleL",			L"Image\\Kirby\\SwordKirby\\SwordL\\Lsword kirby Idle.png");
@@ -94,20 +94,20 @@ void CSwordKirby::Init()
 	m_pAnimator->CreateAnimation(L"IdleL",				m_LpIdleImage, Vector(62.f, 0.f),	Vector(60.f, 85.f), Vector(-62.f, 0.f), 0.8f, 2);
 	m_pAnimator->CreateAnimation(L"LW",					m_LpMoveImage, Vector(1090.f, 0.f), Vector(70.f, 80.f), Vector(-97.f, 0.f), 0.05f, 12);
 	m_pAnimator->CreateAnimation(L"LRun",				m_LpRunImage, Vector(447.f, 0.f), Vector(60.f, 85.f), Vector(-63.5f, 0.f), 0.05f, 8);
-	m_pAnimator->CreateAnimation(L"LDown",				m_LpDownImage, Vector(70.f, 0.f),	Vector(70.f, 68.f), Vector(-69.f, 0.f), 0.8f, 2);
-	m_pAnimator->CreateAnimation(L"LAttack",			m_LpAttackImage, Vector(2940.f, 0.f), Vector(200.f, 99.f), Vector(-210.f, 0.f), 0.025f, 15, false);// 완
+	m_pAnimator->CreateAnimation(L"LDown",				m_LpDownImage, Vector(70.f, 0.f),	Vector(70.f, 89.f), Vector(-69.f, 0.f), 0.8f, 2);
+	m_pAnimator->CreateAnimation(L"LAttack",			m_LpAttackImage, Vector(2940.f, 0.f), Vector(200.f, 75.f), Vector(-210.f, 0.f), 0.025f, 15, false);// 완
 	m_pAnimator->CreateAnimation(L"LFly",				m_LpFlyImage, Vector(289.f, 0.f), Vector(65.f, 77.f), Vector(-70.f, 0.f), 0.08f, 5);
 	m_pAnimator->CreateAnimation(L"LFlying",			m_LpFlyingImage, Vector(445.f, 0.f), Vector(62.f, 100.f), Vector(-63.f, 0.f), 0.08f, 8);
 	m_pAnimator->CreateAnimation(L"LJump",				m_LpJumpImage, Vector(135.f, 0.f), Vector(65.f, 80.f), Vector(-67.f, 0.f), 0.08f, 3, false);
 	m_pAnimator->CreateAnimation(L"LJumpDown",			m_LpJumpDownImage, Vector(60.f, 0.f), Vector(60.f, 80.f), Vector(-60.f, 0.f), 0.08f, 2);
 	m_pAnimator->CreateAnimation(L"LJumpAttack",		m_LpJumpAttackImage, Vector(1160.f, 0.f), Vector(140.f, 95.f), Vector(-140.f, 0.f), 0.025f, 9);
-	m_pAnimator->CreateAnimation(L"LDownAttack",		m_LpDownAttackImage, Vector(120.f, 0.f), Vector(116.f, 44.f), Vector(-116.f, 0.f), 0.06f, 2);
+	m_pAnimator->CreateAnimation(L"LDownAttack",		m_LpDownAttackImage, Vector(130.f, 0.f), Vector(116.f, 99.f), Vector(-116.f, 0.f), 0.06f, 2);
 	m_pAnimator->CreateAnimation(L"LDownJumpAttack",	m_LpDownJumpAttackImage, Vector(3640.f, 0.f), Vector(200.f, 126.f), Vector(-210.f, 0.f), 0.03f, 18, false);
-	m_pAnimator->CreateAnimation(L"LAttacking",			m_LpAttackingImage, Vector(3529.f, 0.f), Vector(139.f, 111.f), Vector(-140.f, 0.f), 0.03f, 26, false);
+	m_pAnimator->CreateAnimation(L"LAttacking",			m_LpAttackingImage, Vector(3529.f, 0.f), Vector(139.f, 95.f), Vector(-140.f, 0.f), 0.03f, 26, false);
 	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
 
-	AddCollider(ColliderType::Circle, Vector(20, 20), Vector(0, 0));
+	AddCollider(ColliderType::Circle, Vector(20, 20), Vector(0, 20));
 }
 
 void CSwordKirby::Update()
@@ -442,7 +442,6 @@ void CSwordKirby::AttackState()
 	attackTimer += DT;
 	if (attackTimer > 0.2f && BUTTONDOWN('S'))
 	{
-		Logger::Debug(L"어택킹중");
 		m_state = State::Attacking;
 		attackTimer = 0;
 	}

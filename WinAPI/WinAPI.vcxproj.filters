@@ -52,8 +52,17 @@
     <Filter Include="GameObject\Stage01">
       <UniqueIdentifier>{f2ad0501-d505-4b88-af0d-880a4673ef5b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Stage01\Weapon">
+      <UniqueIdentifier>{31ed1207-8d19-46b0-abe2-f770ac889338}</UniqueIdentifier>
+    </Filter>
     <Filter Include="GameObject\Stage01\Kirby">
-      <UniqueIdentifier>{8115a4cd-a9a7-4470-bcdc-d72913ccf5c1}</UniqueIdentifier>
+      <UniqueIdentifier>{6fcf08f1-0aa4-4125-92ed-88fe7a2c7db6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Stage01\Example">
+      <UniqueIdentifier>{9dcff6fe-69df-4d9c-b1b4-0203f60e88d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Stage01\Monster">
+      <UniqueIdentifier>{95ab7b3e-28e9-4480-9ab3-91508beeac51}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -165,15 +174,6 @@
     <ClInclude Include="CCameraController.h">
       <Filter>GameObject\Common</Filter>
     </ClInclude>
-    <ClInclude Include="CMissile.h">
-      <Filter>GameObject\Stage01</Filter>
-    </ClInclude>
-    <ClInclude Include="CMonster.h">
-      <Filter>GameObject\Stage01</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer.h">
-      <Filter>GameObject\Stage01</Filter>
-    </ClInclude>
     <ClInclude Include="CTilePanel.h">
       <Filter>Engine\Asset\UI</Filter>
     </ClInclude>
@@ -186,6 +186,9 @@
     <ClInclude Include="CSoundManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="CKirbyWeapon.h">
+      <Filter>GameObject\Stage01\Weapon</Filter>
+    </ClInclude>
     <ClInclude Include="CIceKirby.h">
       <Filter>GameObject\Stage01\Kirby</Filter>
     </ClInclude>
@@ -197,6 +200,18 @@
     </ClInclude>
     <ClInclude Include="CSwordKirby.h">
       <Filter>GameObject\Stage01\Kirby</Filter>
+    </ClInclude>
+    <ClInclude Include="CMissile.h">
+      <Filter>GameObject\Stage01\Example</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>GameObject\Stage01\Example</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>GameObject\Stage01\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CBasicMonster.h">
+      <Filter>GameObject\Stage01\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -290,15 +305,6 @@
     <ClCompile Include="CCameraController.cpp">
       <Filter>GameObject\Common</Filter>
     </ClCompile>
-    <ClCompile Include="CMissile.cpp">
-      <Filter>GameObject\Stage01</Filter>
-    </ClCompile>
-    <ClCompile Include="CMonster.cpp">
-      <Filter>GameObject\Stage01</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayer.cpp">
-      <Filter>GameObject\Stage01</Filter>
-    </ClCompile>
     <ClCompile Include="CTileButton.cpp">
       <Filter>Engine\Asset\UI</Filter>
     </ClCompile>
@@ -311,6 +317,9 @@
     <ClCompile Include="CSoundManager.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="CKirbyWeapon.cpp">
+      <Filter>GameObject\Stage01\Weapon</Filter>
+    </ClCompile>
     <ClCompile Include="CIceKirby.cpp">
       <Filter>GameObject\Stage01\Kirby</Filter>
     </ClCompile>
@@ -322,6 +331,18 @@
     </ClCompile>
     <ClCompile Include="CSwordKirby.cpp">
       <Filter>GameObject\Stage01\Kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="CMissile.cpp">
+      <Filter>GameObject\Stage01\Example</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>GameObject\Stage01\Example</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>GameObject\Stage01\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CBasicMonster.cpp">
+      <Filter>GameObject\Stage01\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
