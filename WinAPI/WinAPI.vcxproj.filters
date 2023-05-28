@@ -64,6 +64,12 @@
     <Filter Include="GameObject\Stage01\Monster">
       <UniqueIdentifier>{95ab7b3e-28e9-4480-9ab3-91508beeac51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Stage01\Monster\h">
+      <UniqueIdentifier>{a486f8d3-9dd9-438b-88d7-5fd2a6ecca60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Stage01\Monster\cpp">
+      <UniqueIdentifier>{9d4a86ad-737e-46b5-80a4-c6ab75fe6033}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -207,11 +213,20 @@
     <ClInclude Include="CPlayer.h">
       <Filter>GameObject\Stage01\Example</Filter>
     </ClInclude>
-    <ClInclude Include="CMonster.h">
-      <Filter>GameObject\Stage01\Monster</Filter>
-    </ClInclude>
     <ClInclude Include="CBasicMonster.h">
-      <Filter>GameObject\Stage01\Monster</Filter>
+      <Filter>GameObject\Stage01\Monster\h</Filter>
+    </ClInclude>
+    <ClInclude Include="CIceMonster.h">
+      <Filter>GameObject\Stage01\Monster\h</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>GameObject\Stage01\Monster\h</Filter>
+    </ClInclude>
+    <ClInclude Include="CSwordMonster.h">
+      <Filter>GameObject\Stage01\Monster\h</Filter>
+    </ClInclude>
+    <ClInclude Include="CSword.h">
+      <Filter>GameObject\Stage01\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -338,11 +353,20 @@
     <ClCompile Include="CPlayer.cpp">
       <Filter>GameObject\Stage01\Example</Filter>
     </ClCompile>
-    <ClCompile Include="CMonster.cpp">
-      <Filter>GameObject\Stage01\Monster</Filter>
-    </ClCompile>
     <ClCompile Include="CBasicMonster.cpp">
-      <Filter>GameObject\Stage01\Monster</Filter>
+      <Filter>GameObject\Stage01\Monster\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="CIceMonster.cpp">
+      <Filter>GameObject\Stage01\Monster\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>GameObject\Stage01\Monster\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="CSwordMonster.cpp">
+      <Filter>GameObject\Stage01\Monster\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="CSword.cpp">
+      <Filter>GameObject\Stage01\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

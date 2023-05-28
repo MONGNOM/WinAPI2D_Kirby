@@ -27,6 +27,8 @@ CSceneStage01::CSceneStage01()
 	icekirby = nullptr;
 	pBasicMonster = nullptr;
 	swordkirby = nullptr;
+	iceMonster = nullptr;
+	swordMonster = nullptr;
 }
 
 CSceneStage01::~CSceneStage01()
@@ -50,6 +52,14 @@ void CSceneStage01::Init()
 	pBasicMonster = new CBasicMonster();
 	pBasicMonster->SetPos(400, 300);
 	AddGameObject(pBasicMonster);
+
+	iceMonster = new CIceMonster();
+	iceMonster->SetPos(500, 300);
+	AddGameObject(iceMonster);
+
+	swordMonster = new CSwordMonster();
+	swordMonster->SetPos(100, 300);
+	AddGameObject(swordMonster);
 	
 
 	CCameraController* pCamController = new CCameraController;

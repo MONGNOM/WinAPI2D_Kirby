@@ -4,6 +4,8 @@
 #include "CIceKirby.h"
 #include "CSwordKirby.h"
 #include "CBasicMonster.h"
+#include "CIceMonster.h"
+#include "CSwordMonster.h"
 
 class CSceneStage01 : public CScene
 {
@@ -16,6 +18,9 @@ private:
 	CNomalKirby* pkirby;
 	CIceKirby* icekirby;
 	CSwordKirby* swordkirby;
+	CIceMonster* iceMonster;
+	CSwordMonster* swordMonster;
+
 private:
 	void Init()		override;
 	void Enter()	override;

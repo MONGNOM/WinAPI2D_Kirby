@@ -3,6 +3,7 @@
 
 #include "CRenderManager.h"
 #include "CCollider.h"
+#include "CKirbyWeapon.h"
 
 CMonster::CMonster()
 {
@@ -15,6 +16,9 @@ CMonster::CMonster()
 	m_gravity = 300;
 	dieTime = 0;
 	hp = 10;
+	dizzy = false;
+	m_pWeapon = nullptr;
+
 }
 
 CMonster::~CMonster()
@@ -28,7 +32,10 @@ void CMonster::Init()
 
 void CMonster::Update()
 {
-	
+	if (m_groundchecker == false)
+	{
+		m_vecPos.y += m_gravity * DT;
+	}
 }
 
 void CMonster::Render()
@@ -40,19 +47,24 @@ void CMonster::Release()
 {
 }
 
+void CMonster::TakeDamage(int damage)
+{
+	hp -= damage;
+	dizzy = true;
+}
+
 void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 {
 	if (pOtherCollider->GetObjName() == L"바닥")
 	{
 		m_groundCounter++;
 		m_groundchecker = true;
-		Logger::Debug(L"몬스터가 바닥과 부딪힘");
 	}
 
-	if (pOtherCollider->GetObjName() == L"커비")
+	if (pOtherCollider->GetObjName() == L"무기")
 	{
-		--hp;
 		Logger::Debug(L"커비와 충돌");
+		TakeDamage(/*m_pWeapon->damage*/1);
 	}
 }
 
@@ -71,4 +83,10 @@ void CMonster::OnCollisionExit(CCollider* pOtherCollider)
 			Logger::Debug(L"몬스터가 미사일과 충돌해제");
 		}
 	}
+	if (pOtherCollider->GetObjName() == L"무기")
+	{
+		dizzy = false;
+		Logger::Debug(L"커비와 충돌");
+	}
+
 }

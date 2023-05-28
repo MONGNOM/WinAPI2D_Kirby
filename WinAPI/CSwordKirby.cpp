@@ -1,5 +1,11 @@
 #include "framework.h"
 #include "CSwordKirby.h"
+#include "CSword.h"
+#include "CSceneManager.h"
+#include "CScene.h"
+#include "CPathManager.h"
+#include "CEventManager.h"
+
 
 CSwordKirby::CSwordKirby()
 {
@@ -35,6 +41,7 @@ CSwordKirby::CSwordKirby()
 	m_LpJumpDownImage		= nullptr;
 	m_LpDownJumpAttackImage = nullptr;
 	m_LpAttackingImage		= nullptr;
+	m_pSword = nullptr;
 }
 
 CSwordKirby::~CSwordKirby()
@@ -438,6 +445,9 @@ void CSwordKirby::FlyState()
 
 void CSwordKirby::AttackState()
 {
+	
+	m_pSword = new CSword();
+	ADDOBJECT(m_pSword);
 
 	attackTimer += DT;
 	if (attackTimer > 0.2f && BUTTONDOWN('S'))
@@ -447,6 +457,8 @@ void CSwordKirby::AttackState()
 	}
 	if (m_vecLookDir.x == -1)
 	{
+		m_pSword->SetPos(m_vecPos.x - 70, m_vecPos.y);
+		
 		swordkirbystate = L"LAttack";
 		if (attackTimer > 0.4f)
 		{
@@ -456,6 +468,7 @@ void CSwordKirby::AttackState()
 	}
 	if (m_vecLookDir.x == 1)
 	{
+		m_pSword->SetPos(m_vecPos.x + 70, m_vecPos.y);
 		swordkirbystate = L"RAttack";
 		if (attackTimer > 0.4f)
 		{

@@ -7,6 +7,7 @@ CKirbyWeapon::CKirbyWeapon()
 	m_vecScale = Vector(10, 10);
 	m_layer = Layer::Weapon;
 	m_strName = L"¹«±â";
+	damage = 10;
 }
 
 CKirbyWeapon::~CKirbyWeapon()
@@ -20,6 +21,7 @@ void CKirbyWeapon::Init()
 
 void CKirbyWeapon::Update()
 {
+	damage = 10;
 }
 
 void CKirbyWeapon::Render()
@@ -30,6 +32,9 @@ void CKirbyWeapon::Release()
 {
 }
 
+
+
 void CKirbyWeapon::OnCollisionEnter(CCollider* pOtherCollider)
 {
+
 }

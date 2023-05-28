@@ -155,6 +155,7 @@
     <ClInclude Include="CIceKirby.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="CIceMonster.h" />
     <ClInclude Include="CImageObject.h" />
     <ClInclude Include="CInputManager.h" />
     <ClInclude Include="CKirbyWeapon.h" />
@@ -177,7 +178,9 @@
     <ClInclude Include="CImage.h" />
     <ClInclude Include="CSound.h" />
     <ClInclude Include="CSoundManager.h" />
+    <ClInclude Include="CSword.h" />
     <ClInclude Include="CSwordKirby.h" />
+    <ClInclude Include="CSwordMonster.h" />
     <ClInclude Include="CTile.h" />
     <ClInclude Include="CTileButton.h" />
     <ClInclude Include="CTilePanel.h" />
@@ -210,6 +213,7 @@
     <ClCompile Include="CIceKirby.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="CIceMonster.cpp" />
     <ClCompile Include="CImageObject.cpp" />
     <ClCompile Include="CInputManager.cpp" />
     <ClCompile Include="CKirbyWeapon.cpp" />
@@ -232,7 +236,9 @@
     <ClCompile Include="CImage.cpp" />
     <ClCompile Include="CSound.cpp" />
     <ClCompile Include="CSoundManager.cpp" />
+    <ClCompile Include="CSword.cpp" />
     <ClCompile Include="CSwordKirby.cpp" />
+    <ClCompile Include="CSwordMonster.cpp" />
     <ClCompile Include="CTile.cpp" />
     <ClCompile Include="CTileButton.cpp" />
     <ClCompile Include="CTilePanel.cpp" />

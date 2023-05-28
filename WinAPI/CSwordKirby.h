@@ -1,5 +1,6 @@
 #pragma once
 #include "CKirby.h"
+class CSword;
 class CSwordKirby : public CKirby
 {
 	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown, JumpAttack, DownAttack, Attacking, DownJumpAttack};
@@ -16,7 +17,7 @@ private:
 	wstring swordkirbystate;
 	State m_state;
 	CAnimator* m_pAnimator;
-
+	CSword* m_pSword;
 	void Jump();
 	void IdleState();
 	void WalkState();

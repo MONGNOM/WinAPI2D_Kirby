@@ -4,30 +4,28 @@
 class CImage;
 class CAnimator;
 
-class CBasicMonster : public CMonster
+class CIceMonster : public CMonster
 {
-public:
+public: 
+	
+	enum class State {Walk, Dizzy ,Die, Attack};
 
-	enum class State { Walk, Die, Dizzy};
-
-	CBasicMonster();
-	virtual ~CBasicMonster();
+	CIceMonster();
+	virtual ~CIceMonster();
 
 private:
-
-	wstring Basicstate;
+	wstring iceState;
 	State m_state;
 	CAnimator* m_pAnimator;
-	
 
 	void WalkState();
 	void DieState();
+	void AttackState();
 	void DizzyState();
-
 
 	CImage* m_pMoveImage;
 	CImage* m_pDieImage;
-
+	CImage* m_pAttackImage;
 
 private:
 	void Init() override;
@@ -36,5 +34,6 @@ private:
 	void Release() override;
 
 	void AnimatorUpdate();
+
 };
 
