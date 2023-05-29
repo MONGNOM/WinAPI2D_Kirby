@@ -228,6 +228,12 @@
     <ClInclude Include="CSword.h">
       <Filter>GameObject\Stage01\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="CIceAttack.h">
+      <Filter>GameObject\Stage01\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="CKirbyEat.h">
+      <Filter>GameObject\Stage01\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -366,6 +372,12 @@
       <Filter>GameObject\Stage01\Monster\cpp</Filter>
     </ClCompile>
     <ClCompile Include="CSword.cpp">
+      <Filter>GameObject\Stage01\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="CKirbyEat.cpp">
+      <Filter>GameObject\Stage01\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="CIceAttack.cpp">
       <Filter>GameObject\Stage01\Weapon</Filter>
     </ClCompile>
   </ItemGroup>

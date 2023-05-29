@@ -64,8 +64,21 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"무기")
 	{
 		Logger::Debug(L"커비와 충돌");
-		TakeDamage(/*m_pWeapon->damage*/1);
+		TakeDamage(/*m_pWeapon->damage*/0);
 	}
+	if (pOtherCollider->GetObjName() == L"빨아들이기")
+	{
+		dizzy = true;
+		if (m_vecPos.x > pOtherCollider->GetOwner()->GetPos().x)
+			m_vecPos.x -= 300 * DT;
+		if (m_vecPos.x < pOtherCollider->GetOwner()->GetPos().x)
+			m_vecPos.x += 300 * DT;
+	}
+	if (pOtherCollider->GetObjName() == L"일반커비")
+	{
+		DELETEOBJECT(this);
+	}
+
 }
 
 void CMonster::OnCollisionStay(CCollider* pOtherCollider)

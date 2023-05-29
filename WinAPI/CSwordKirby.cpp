@@ -50,6 +50,8 @@ CSwordKirby::~CSwordKirby()
 
 void CSwordKirby::Init()
 {
+	
+	
 	//¿À¸¥ÂÊ
 	m_pIdleImage			= RESOURCE->LoadImg(L"SwordKirbyIdleL",				L"Image\\Kirby\\SwordKirby\\sword kirby Idle.png");
 	m_pAttackImage			= RESOURCE->LoadImg(L"SwordKirbyAttack",			L"Image\\Kirby\\SwordKirby\\sword kirby Attack.png");
@@ -119,6 +121,7 @@ void CSwordKirby::Init()
 
 void CSwordKirby::Update()
 {
+
 	CKirby::Update();
 	switch (m_state)
 	{
@@ -445,10 +448,7 @@ void CSwordKirby::FlyState()
 
 void CSwordKirby::AttackState()
 {
-	
-	m_pSword = new CSword();
-	ADDOBJECT(m_pSword);
-
+	AttackCollider();
 	attackTimer += DT;
 	if (attackTimer > 0.2f && BUTTONDOWN('S'))
 	{
@@ -457,8 +457,6 @@ void CSwordKirby::AttackState()
 	}
 	if (m_vecLookDir.x == -1)
 	{
-		m_pSword->SetPos(m_vecPos.x - 70, m_vecPos.y);
-		
 		swordkirbystate = L"LAttack";
 		if (attackTimer > 0.4f)
 		{
@@ -468,12 +466,12 @@ void CSwordKirby::AttackState()
 	}
 	if (m_vecLookDir.x == 1)
 	{
-		m_pSword->SetPos(m_vecPos.x + 70, m_vecPos.y);
 		swordkirbystate = L"RAttack";
 		if (attackTimer > 0.4f)
 		{
 			m_state = State::Idle;
 			attackTimer = 0;
+
 		}
 	}
 	if (m_groundchecker == false)
@@ -486,6 +484,7 @@ void CSwordKirby::AttackState()
 
 void CSwordKirby::JumpAttackState()
 {
+	AttackCollider();
 	attackTimer += DT;
 	m_vecPos.y -= m_jumpSpeed * DT;
 
@@ -506,6 +505,7 @@ void CSwordKirby::JumpAttackState()
 
 void CSwordKirby::DownAttackState()
 {
+	AttackCollider();
 	attackTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
@@ -539,6 +539,7 @@ void CSwordKirby::DownAttackState()
 
 void CSwordKirby::DownJumpAttackState()
 {
+	AttackCollider();
 	attackTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
@@ -564,6 +565,7 @@ void CSwordKirby::DownJumpAttackState()
 
 void CSwordKirby::AttackingState()
 {
+	AttackCollider();
 	attackTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
@@ -582,6 +584,21 @@ void CSwordKirby::AttackingState()
 	{
 		m_vecPos.y += m_gravity * DT;
 	}
+}
+
+void CSwordKirby::AttackCollider()
+{
+	m_pSword = new CSword();
+	if (m_vecLookDir.x == -1)
+	{
+		m_pSword->SetPos(m_vecPos.x - 50, m_vecPos.y);
+	}
+	if (m_vecLookDir.x == 1)
+	{
+		m_pSword->SetPos(m_vecPos.x + 50, m_vecPos.y);
+	}
+	ADDOBJECT(m_pSword);
+
 }
 
 void CSwordKirby::JumpingDownState()

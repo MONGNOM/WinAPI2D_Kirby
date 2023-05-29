@@ -16,20 +16,16 @@ CSword::~CSword()
 
 void CSword::Init()
 {
-	AddCollider(ColliderType::Rect, Vector(70, 60), Vector(0, 0));
+	AddCollider(ColliderType::Rect, Vector(90, 100), Vector(0, 0));
 }
 
 void CSword::Update()
 {
-	/*if (BUTTONUP('S'))
-	{
-		DELETEOBJECT(this);
-	}*/
+	CKirbyWeapon::Update();
 }
 
 void CSword::Render()
 {
-	//RENDER->FillRect(10, 10, 10, 10);
 }
 
 void CSword::Release()

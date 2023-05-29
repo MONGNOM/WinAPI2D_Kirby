@@ -13,7 +13,7 @@ CSwordMonster::CSwordMonster()
 	m_pDieImage = nullptr;
 	m_pIdleImage = nullptr;
 	m_pMoveImage = nullptr;
-	m_state = State::Attack2;
+	m_state = State::Idle;
 	hp = 2;
 }
 

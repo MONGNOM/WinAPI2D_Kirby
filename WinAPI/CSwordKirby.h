@@ -32,6 +32,7 @@ private:
 	void DownAttackState();
 	void DownJumpAttackState();
 	void AttackingState();
+	void AttackCollider();
 
 
 

@@ -21,7 +21,10 @@ void CKirbyWeapon::Init()
 
 void CKirbyWeapon::Update()
 {
-	damage = 10;
+	if (BUTTONUP('S'))
+	{
+		DELETEOBJECT(this);
+	}
 }
 
 void CKirbyWeapon::Render()
@@ -34,7 +37,3 @@ void CKirbyWeapon::Release()
 
 
 
-void CKirbyWeapon::OnCollisionEnter(CCollider* pOtherCollider)
-{
-
-}

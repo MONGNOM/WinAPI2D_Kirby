@@ -9,6 +9,7 @@
 #include "CCollider.h"
 #include "CImage.h"
 #include "CAnimator.h"
+#include "CKirbyEat.h"
 
 
 CNomalKirby::CNomalKirby()
@@ -25,6 +26,8 @@ CNomalKirby::CNomalKirby()
 	m_pJumpImage	= nullptr;
 	m_pJumpingImage = nullptr;
 	m_pAttackImage	= nullptr;
+	m_pKirbyEat = nullptr;
+	m_strName = L"일반커비";
 }
 
 CNomalKirby::~CNomalKirby()
@@ -365,8 +368,9 @@ void CNomalKirby::FlyState()
 
 }
 
-void CNomalKirby::Attack()
+void CNomalKirby::AttackState()
 {
+	AttackCollider();
 	if (m_vecLookDir.x == -1)
 	{
 		Icekirbystate = L"LAttack";
@@ -379,12 +383,21 @@ void CNomalKirby::Attack()
 	{
 		m_state = State::Idle;
 	}
-
 }
 
-void CNomalKirby::AttackState()
+void CNomalKirby::AttackCollider()
 {
-	Attack();
+	m_pKirbyEat = new CKirbyEat();
+	if (m_vecLookDir.x == -1)
+	{
+		m_pKirbyEat->SetPos(m_vecPos.x - 35, m_vecPos.y);
+	}
+	if (m_vecLookDir.x == 1)
+	{
+		m_pKirbyEat->SetPos(m_vecPos.x + 35, m_vecPos.y);
+
+	}
+	ADDOBJECT(m_pKirbyEat);
 }
 
 

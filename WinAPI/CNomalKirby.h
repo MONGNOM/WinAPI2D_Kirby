@@ -1,5 +1,6 @@
 #pragma once
 #include "CKirby.h"
+#include "CKirbyEat.h"
 
 class CImage;
 class CAnimator;
@@ -29,6 +30,7 @@ private:
 	void JumpingDownState();
 	void FlyingState();
 	void AttackState();
+	void AttackCollider();
 
 	CImage* m_pIdleLImage;
 	CImage* m_pIdleRImage;
@@ -40,6 +42,7 @@ private:
 	CImage* m_pJumpImage;
 	CImage* m_pJumpingImage;
 	CImage* m_pAttackImage;
+	CKirbyEat* m_pKirbyEat;
 
 
 private:

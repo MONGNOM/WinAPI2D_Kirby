@@ -37,11 +37,11 @@ CSceneStage01::~CSceneStage01()
 
 void CSceneStage01::Init()
 {
-	/*pkirby = new CNomalKirby();
+	pkirby = new CNomalKirby();
 	pkirby->SetPos(100, 300);
 	AddGameObject(pkirby);
 
-	icekirby = new CIceKirby();
+	/*icekirby = new CIceKirby();
 	icekirby->SetPos(200, 300);
 	AddGameObject(icekirby);*/
 
@@ -58,7 +58,7 @@ void CSceneStage01::Init()
 	AddGameObject(iceMonster);
 
 	swordMonster = new CSwordMonster();
-	swordMonster->SetPos(100, 300);
+	swordMonster->SetPos(600, 300);
 	AddGameObject(swordMonster);
 	
 
