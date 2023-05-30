@@ -24,6 +24,7 @@ private:
 	void DieState();
 	void DizzyState();
 
+	CImage* m_pIceDieImage;
 
 	CImage* m_pMoveImage;
 	CImage* m_pDieImage;

@@ -13,6 +13,8 @@ CSwordMonster::CSwordMonster()
 	m_pDieImage = nullptr;
 	m_pIdleImage = nullptr;
 	m_pMoveImage = nullptr;
+	m_pIceDieImage = nullptr;
+
 	m_state = State::Idle;
 	hp = 2;
 }
@@ -35,6 +37,7 @@ void CSwordMonster::Init()
 	m_pLAttackImage2	= RESOURCE->LoadImg(L"LSwordMonsterAttack2", L"Image\\Monster\\SwordMonster\\SwordMonsterAttack2L.png");
 	m_pLIdleImage		= RESOURCE->LoadImg(L"LSwordMonsterIdle", L"Image\\Monster\\SwordMonster\\SwordMonsterL.png");
 	
+	m_pIceDieImage = RESOURCE->LoadImg(L"BIceDie", L"Image\\MonstericeStatebig.png");
 
 
 	m_pAnimator = new CAnimator;
@@ -53,6 +56,8 @@ void CSwordMonster::Init()
 	m_pAnimator->CreateAnimation(L"AttackL",	m_pLAttackImage,	Vector(2400.f, 0.f), Vector(135.f, 110.f), Vector(-280.f, 0.f), 0.07f, 9);
 	m_pAnimator->CreateAnimation(L"Attack2L",	m_pLAttackImage2,	Vector(1565.f, 0.f), Vector(135.f, 112.f), Vector(-280.f, 0.f), 0.07f, 6);
 	m_pAnimator->CreateAnimation(L"DizzyL",		m_pLIdleImage,		Vector(1150.f, 490.f), Vector(145.f, 100.f), Vector(0.f, 0.f), 0.15f, 1); 
+
+	m_pAnimator->CreateAnimation(L"BIceDie", m_pIceDieImage, Vector(0.f, 0.f), Vector(99.f, 100.f), Vector(0.f, 0.f), 0.5f, 1);
 
 	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
@@ -158,7 +163,7 @@ void CSwordMonster::DieState()
 	}
 	if (m_vecLookDir.x == -1)
 	{
-		swordstate = L"DieL";
+		swordstate = L"BIceDie";
 		if (dieTime > 1.f)
 		{
 			dieTime = 0;

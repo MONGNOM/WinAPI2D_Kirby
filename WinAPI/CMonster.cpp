@@ -18,7 +18,7 @@ CMonster::CMonster()
 	dieTime = 0;
 	hp = 10;
 	dizzy = false;
-
+	
 }
 
 CMonster::~CMonster()
@@ -27,7 +27,7 @@ CMonster::~CMonster()
 
 void CMonster::Init()
 {
-	AddCollider(ColliderType::Rect, Vector(50, 50), Vector(0, 0));
+
 }
 
 void CMonster::Update()
@@ -53,6 +53,7 @@ void CMonster::TakeDamage(int damage)
 	dizzy = true;
 }
 
+
 void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 {
 	if (pOtherCollider->GetObjName() == L"官蹿")
@@ -64,9 +65,11 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"公扁")
 	{
 		CKirbyWeapon* pWeapon = (CKirbyWeapon*)pOtherCollider->GetOwner();
-		Logger::Debug(L"目厚客 面倒");
 		TakeDamage(pWeapon->damage);
+		Logger::Debug(L"目厚客 面倒");
 	}
+
+	
 	
 	if (pOtherCollider->GetObjName() == L"老馆目厚")
 	{
@@ -78,6 +81,7 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 	}
 
 }
+
 
 void CMonster::OnCollisionStay(CCollider* pOtherCollider)
 {

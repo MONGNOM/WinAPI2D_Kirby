@@ -25,6 +25,7 @@ private:
 
 	CImage* m_pMoveImage;
 	CImage* m_pDieImage;
+	CImage* m_pIceDieImage;
 	CImage* m_pAttackImage;
 
 private:
@@ -34,6 +35,5 @@ private:
 	void Release() override;
 
 	void AnimatorUpdate();
-
 };
 

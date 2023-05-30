@@ -31,6 +31,7 @@ private:
 	CImage* m_pDieImage;
 	CImage* m_pAttackImage;
 	CImage* m_pAttackImage2;
+	CImage* m_pIceDieImage;
 
 	CImage* m_pLIdleImage;
 	CImage* m_pLAttackImage;

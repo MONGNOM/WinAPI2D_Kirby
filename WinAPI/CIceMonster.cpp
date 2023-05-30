@@ -7,6 +7,7 @@
 #include "CAnimator.h"
 #include "CEventManager.h"
 #include "CRenderManager.h"
+#include "CKirbyWeapon.h"
 
 
 CIceMonster::CIceMonster()
@@ -17,6 +18,7 @@ CIceMonster::CIceMonster()
 	m_pMoveImage = nullptr;
 	m_pDieImage = nullptr;
 	m_pAttackImage = nullptr;
+	m_pIceDieImage = nullptr;
 	hp = 2;
 }
 
@@ -31,6 +33,8 @@ void CIceMonster::Init()
 	m_pDieImage		= RESOURCE->LoadImg(L"IceMonsterDie", L"Image\\Monster\\IceMonster\\IceMonsterDie.png");
 	m_pAttackImage	= RESOURCE->LoadImg(L"IceMonsterAttack", L"Image\\Monster\\IceMonster\\IceMonsterAttackPose.png");
 
+	m_pIceDieImage	= RESOURCE->LoadImg(L"IceDie", L"Image\\MonstericeStatesmall.png");
+
 
 	m_pAnimator = new CAnimator;
 	m_pAnimator->CreateAnimation(L"WalkR", m_pMoveImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 3);
@@ -41,6 +45,9 @@ void CIceMonster::Init()
 	m_pAnimator->CreateAnimation(L"DizzyL", m_pDieImage, Vector(0.f, 100.f), Vector(60.f, 60.f), Vector(60.f, 0.f), 0.5f, 1);
 	m_pAnimator->CreateAnimation(L"AttackR", m_pAttackImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 6);
 	m_pAnimator->CreateAnimation(L"AttackL", m_pAttackImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 6);
+
+	m_pAnimator->CreateAnimation(L"IceDie", m_pIceDieImage, Vector(0.f, 0.f), Vector(54.f, 57.f), Vector(0.f, 0.f), 0.5f, 1);
+
 
 	m_pAnimator->Play(L"WalkR", false);
 	AddComponent(m_pAnimator);
@@ -122,7 +129,7 @@ void CIceMonster::DieState()
 		}
 		if (m_vecLookDir.x == -1)
 		{
-			iceState = L"DieL";
+			iceState = L"IceDie";
 			if (dieTime > 1.f)
 			{
 				dieTime = 0;

@@ -18,6 +18,8 @@ CBasicMonster::CBasicMonster()
 	m_pMoveImage = nullptr;
 	m_pDieImage = nullptr;
 	m_pAnimator = nullptr;
+	m_pIceDieImage = nullptr;
+
 	hp = 2;
 }
 
@@ -30,6 +32,9 @@ void CBasicMonster::Init()
 {
 	m_pMoveImage	= RESOURCE->LoadImg(L"BasicMonsterWalk",	L"Image\\Monster\\BasicMonster\\BasicMonster.png");
 	m_pDieImage		= RESOURCE->LoadImg(L"BasicMonsterDie",		L"Image\\Monster\\BasicMonster\\BasicMonsterDie.png");
+	m_pIceDieImage = RESOURCE->LoadImg(L"IceDie", L"Image\\MonstericeStatesmall.png");
+
+
 
 	m_pAnimator	= new CAnimator;
 	m_pAnimator->CreateAnimation(L"WalkR",	m_pMoveImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 6);
@@ -38,6 +43,7 @@ void CBasicMonster::Init()
 	m_pAnimator->CreateAnimation(L"DieL", m_pDieImage, Vector(0.f, 100.f), Vector(60.f, 60.f), Vector(60.f, 0.f), 0.5f, 2);
 	m_pAnimator->CreateAnimation(L"DizzyR", m_pDieImage, Vector(0.f, 0.f), Vector(60.f, 60.f), Vector(60.f, 0.f), 0.5f, 1);
 	m_pAnimator->CreateAnimation(L"DizzyL",	m_pDieImage, Vector(0.f, 100.f), Vector(60.f, 60.f), Vector(60.f, 0.f), 0.5f, 1);
+	m_pAnimator->CreateAnimation(L"IceDie", m_pIceDieImage, Vector(0.f, 0.f), Vector(55.f, 57.f), Vector(0.f, 0.f), 0.5f, 1);
 
 
 	m_pAnimator->Play(L"WalkR", false);
@@ -99,7 +105,7 @@ void CBasicMonster::DieState()
 	dieTime += DT;
 	if (m_vecLookDir.x == 1)
 	{
-		Basicstate = L"DieR";
+		Basicstate = L"IceDie";
 		if (dieTime > 1.f)
 		{
 			dieTime = 0;
