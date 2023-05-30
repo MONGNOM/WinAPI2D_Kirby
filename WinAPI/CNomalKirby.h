@@ -14,6 +14,7 @@ public:
 	CNomalKirby();
 	virtual ~CNomalKirby();
 
+	bool eat;
 private:
 	
 	wstring Icekirbystate;
@@ -51,8 +52,8 @@ private:
 	void Render() override;
 	void Release() override;
 
-	void Attack();
 	void AnimatorUpdate();
+
 
 };
 

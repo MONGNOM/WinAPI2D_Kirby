@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "CIceKirby.h"
+#include "CIceAttack.h"
 
 CIceKirby::CIceKirby()
 {
@@ -13,6 +14,7 @@ CIceKirby::CIceKirby()
 	m_pFlyImage = nullptr;
 	m_pJumpImage = nullptr;
 	m_pAttackImage = nullptr;
+	m_piceAttack = nullptr;
 }
 
 CIceKirby::~CIceKirby()
@@ -54,7 +56,7 @@ void CIceKirby::Init()
 	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
 
-	AddCollider(ColliderType::Circle, Vector(20, 20), Vector(0, 0));
+	AddCollider(ColliderType::Rect, Vector(40, 40), Vector(0, 0));
 }
 
 void CIceKirby::Update()
@@ -362,6 +364,11 @@ void CIceKirby::FlyState()
 
 void CIceKirby::AttackState()
 {
+	if (m_piceAttack == nullptr)
+	{
+		CreatAttackArea();
+	}
+	
 	attackTimer += DT;
 
 	if (m_vecLookDir.x == -1)
@@ -369,6 +376,7 @@ void CIceKirby::AttackState()
 		icekirbystate = L"LAttack";
 		if (attackTimer > 0.4f)
 		{
+			DeleteAttackArea();
 			attackTimer = 0;
 			m_state = State::Attacking;
 		}
@@ -378,18 +386,24 @@ void CIceKirby::AttackState()
 		icekirbystate = L"RAttack";
 		if (attackTimer > 0.4f)
 		{
+			DeleteAttackArea();
 			attackTimer = 0;
 			m_state = State::Attacking;
 		}
 	}
 	if (BUTTONUP('S'))
 	{
+		DeleteAttackArea();
 		m_state = State::Idle;
 	}
 }
 
 void CIceKirby::AttackingState()
 {
+	if (m_piceAttack == nullptr)
+	{
+		CreatAttackArea();
+	}
 	if (m_vecLookDir.x == -1)
 	{
 		icekirbystate = L"LAttacking";
@@ -400,9 +414,11 @@ void CIceKirby::AttackingState()
 	}
 	if (BUTTONUP('S'))
 	{
+		DeleteAttackArea();
 		m_state = State::Idle;
 	}
 }
+
 
 void CIceKirby::JumpingDownState()
 {
@@ -491,4 +507,27 @@ void CIceKirby::FlyingState()
 }
 
 #pragma endregion
+
+void CIceKirby::CreatAttackArea()
+{
+	m_piceAttack = new CIceAttack();
+	if (m_vecLookDir.x == -1)
+	{
+		m_piceAttack->SetPos(m_vecPos.x - 50 ,m_vecPos.y);
+	}
+	if (m_vecLookDir.x == 1)
+	{
+		m_piceAttack->SetPos(m_vecPos.x + 50, m_vecPos.y);
+	}
+	ADDOBJECT(m_piceAttack);
+}
+
+void CIceKirby::DeleteAttackArea()
+{
+	if (m_piceAttack != nullptr)
+	{
+		DELETEOBJECT(m_piceAttack);
+		m_piceAttack = nullptr;
+	}
+}
 

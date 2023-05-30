@@ -43,11 +43,11 @@ void CSceneStage01::Init()
 
 	/*icekirby = new CIceKirby();
 	icekirby->SetPos(200, 300);
-	AddGameObject(icekirby);*/
+	AddGameObject(icekirby);
 
 	swordkirby = new CSwordKirby();
 	swordkirby->SetPos(300, 300);
-	AddGameObject(swordkirby);
+	AddGameObject(swordkirby);*/
 
 	pBasicMonster = new CBasicMonster();
 	pBasicMonster->SetPos(400, 300);
@@ -90,7 +90,7 @@ void CSceneStage01::Update()
 		CAMERA->FadeOut(0.25f);
 		DELAYCHANGESCENE(GroupScene::Title, 0.25f);
 	}
-	CAMERA->SetTargetObj(swordkirby);
+	CAMERA->SetTargetObj(pkirby);
 }
 
 void CSceneStage01::Render()

@@ -1,6 +1,5 @@
 #pragma once
 #include "CGameObject.h"
-class CKirbyWeapon;
 
 class CMonster : public CGameObject
 {
@@ -13,7 +12,6 @@ public:
 	bool dizzy;
 	bool m_groundchecker;
 	
-	CKirbyWeapon* m_pWeapon;
 	Vector m_vecLookDir; 
 	Vector m_vecMoveDir;
 	

@@ -21,10 +21,7 @@ void CKirbyWeapon::Init()
 
 void CKirbyWeapon::Update()
 {
-	if (BUTTONUP('S'))
-	{
-		DELETEOBJECT(this);
-	}
+
 }
 
 void CKirbyWeapon::Render()

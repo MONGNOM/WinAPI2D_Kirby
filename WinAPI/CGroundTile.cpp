@@ -44,7 +44,7 @@ void CGroundTile::Release()
 void CGroundTile::OnCollisionEnter(CCollider* pOther)
 {
 	// 땅타일과 충돌했을 경우 처리
-	if (pOther->GetOwner()->GetName() == L"커비")
+	if (pOther->GetOwner()->GetLayer() == Layer::Player)
 	{
 		CGameObject* pPlayer = pOther->GetOwner();
 		if (pPlayer->GetPos().y < m_vecPos.y)

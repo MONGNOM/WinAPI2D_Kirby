@@ -4,6 +4,7 @@
 #include "CEventManager.h"
 #include "CRenderManager.h"
 #include "CCollisionManager.h"
+#include "CCollider.h"
 
 CSword::CSword()
 {
@@ -16,7 +17,7 @@ CSword::~CSword()
 
 void CSword::Init()
 {
-	AddCollider(ColliderType::Rect, Vector(90, 100), Vector(0, 0));
+	AddCollider(ColliderType::Rect, m_vecScale, Vector(0, 0));
 }
 
 void CSword::Update()
@@ -30,4 +31,10 @@ void CSword::Render()
 
 void CSword::Release()
 {
+}
+
+void CSword::SetColliderSize(Vector scale, Vector offsetPos)
+{
+	this->m_vecScale = scale;
+	SetCollider(scale, offsetPos);
 }

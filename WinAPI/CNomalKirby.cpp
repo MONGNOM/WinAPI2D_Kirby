@@ -27,6 +27,7 @@ CNomalKirby::CNomalKirby()
 	m_pJumpingImage = nullptr;
 	m_pAttackImage	= nullptr;
 	m_pKirbyEat = nullptr;
+	eat = false;
 	m_strName = L"일반커비";
 }
 
@@ -44,7 +45,7 @@ void CNomalKirby::Init()
 	m_pRunImage		= RESOURCE->LoadImg(L"KirbyRun",	L"Image\\Kirby\\Basic\\KirbyRun.png"	);
 	m_pDownImage	= RESOURCE->LoadImg(L"KirbyDown",	L"Image\\Kirby\\Basic\\KirbyDown.png"	);
 	m_pFlyImage		= RESOURCE->LoadImg(L"KirbyFly",	L"Image\\Kirby\\Basic\\KirbyFly.png"	);
-	m_pJumpImage	= RESOURCE->LoadImg(L"KirbyJump", L"Image\\Kirby\\Basic\\KirbyJump.png"		);
+	m_pJumpImage	= RESOURCE->LoadImg(L"KirbyJump",	L"Image\\Kirby\\Basic\\KirbyJump.png"	);
 	m_pAttackImage	= RESOURCE->LoadImg(L"KirbyAttack",	L"Image\\Kirby\\Basic\\KirbyEat.png"	);
 
 	m_pAnimator = new CAnimator;
@@ -70,12 +71,13 @@ void CNomalKirby::Init()
 	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
 
-	AddCollider(ColliderType::Circle, Vector(20, 20), Vector(0, 0));
+	AddCollider(ColliderType::Rect, Vector(40, 40), Vector(0, 0));
 }
 
 
 void CNomalKirby::Update()
 {
+	
 	CKirby::Update();
 	switch (m_state)
 	{
@@ -122,14 +124,19 @@ void CNomalKirby::AnimatorUpdate()
 	m_pAnimator->Play(Icekirbystate, false);
 }
 
+
 void CNomalKirby::Jump()
 {
 	m_jumpSpeed = 300;
 	fallTimer = 0;
 }
 
+#pragma region 상태패턴함수
+
+
 void CNomalKirby::IdleState()
 {
+	eat = false;
 	if (m_groundchecker == false)
 	{
 		m_vecPos.y += m_gravity * DT;
@@ -370,7 +377,9 @@ void CNomalKirby::FlyState()
 
 void CNomalKirby::AttackState()
 {
-	AttackCollider();
+	if (m_pKirbyEat == nullptr)
+		AttackCollider();
+
 	if (m_vecLookDir.x == -1)
 	{
 		Icekirbystate = L"LAttack";
@@ -381,12 +390,18 @@ void CNomalKirby::AttackState()
 	}
 	if (BUTTONUP('S'))
 	{
+		if (m_pKirbyEat != nullptr)
+		{
+			DELETEOBJECT(m_pKirbyEat);
+			m_pKirbyEat = nullptr;
+		}
 		m_state = State::Idle;
 	}
 }
 
 void CNomalKirby::AttackCollider()
 {
+	eat = true;
 	m_pKirbyEat = new CKirbyEat();
 	if (m_vecLookDir.x == -1)
 	{
@@ -487,10 +502,12 @@ void CNomalKirby::FlyingState()
 
 }
 
+#pragma endregion
 
 void CNomalKirby::Release()
 {
 
 }
+
 
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "Ckirby.h"
 
-
+class CIceAttack;
 class CImage;
 class CAnimator;
 
@@ -22,6 +22,7 @@ private:
 	wstring icekirbystate;
 	State m_state;
 	CAnimator* m_pAnimator;
+	CIceAttack* m_piceAttack;
 
 	void Jump();
 	void IdleState();
@@ -34,6 +35,8 @@ private:
 	void FlyingState();
 	void AttackState();
 	void AttackingState();
+	void CreatAttackArea();
+	void DeleteAttackArea();
 
 	CImage* m_pIdleImage;
 	CImage* m_pMoveImage;

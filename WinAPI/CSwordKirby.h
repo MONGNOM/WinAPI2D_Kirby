@@ -33,6 +33,7 @@ private:
 	void DownJumpAttackState();
 	void AttackingState();
 	void AttackCollider();
+	void AttackCollider(Vector position, Vector scale);
 
 
 

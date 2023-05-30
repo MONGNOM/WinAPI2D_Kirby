@@ -4,6 +4,7 @@
 #include "CRenderManager.h"
 #include "CCollider.h"
 #include "CKirbyWeapon.h"
+#include "CNomalKirby.h"
 
 CMonster::CMonster()
 {
@@ -17,7 +18,6 @@ CMonster::CMonster()
 	dieTime = 0;
 	hp = 10;
 	dizzy = false;
-	m_pWeapon = nullptr;
 
 }
 
@@ -63,26 +63,32 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 
 	if (pOtherCollider->GetObjName() == L"무기")
 	{
+		CKirbyWeapon* pWeapon = (CKirbyWeapon*)pOtherCollider->GetOwner();
 		Logger::Debug(L"커비와 충돌");
-		TakeDamage(/*m_pWeapon->damage*/0);
+		TakeDamage(pWeapon->damage);
 	}
-	if (pOtherCollider->GetObjName() == L"빨아들이기")
-	{
-		dizzy = true;
-		if (m_vecPos.x > pOtherCollider->GetOwner()->GetPos().x)
-			m_vecPos.x -= 300 * DT;
-		if (m_vecPos.x < pOtherCollider->GetOwner()->GetPos().x)
-			m_vecPos.x += 300 * DT;
-	}
+	
 	if (pOtherCollider->GetObjName() == L"일반커비")
 	{
-		DELETEOBJECT(this);
+		CNomalKirby* normalKirby = (CNomalKirby*)pOtherCollider->GetOwner();
+		if (normalKirby->eat)
+		{
+			DELETEOBJECT(this);
+		}
 	}
 
 }
 
 void CMonster::OnCollisionStay(CCollider* pOtherCollider)
 {
+	if (pOtherCollider->GetObjName() == L"빨아들이기")
+	{
+		dizzy = true;
+		if (m_vecPos.x > pOtherCollider->GetOwner()->GetPos().x)
+			m_vecPos.x -= 500 * DT;
+		if (m_vecPos.x < pOtherCollider->GetOwner()->GetPos().x)
+			m_vecPos.x += 500 * DT;
+	}
 }
 
 void CMonster::OnCollisionExit(CCollider* pOtherCollider)

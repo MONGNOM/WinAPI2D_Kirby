@@ -116,7 +116,7 @@ void CSwordKirby::Init()
 	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
 
-	AddCollider(ColliderType::Circle, Vector(20, 20), Vector(0, 20));
+	AddCollider(ColliderType::Rect, Vector(40, 40), Vector(0, 20));
 }
 
 void CSwordKirby::Update()
@@ -448,7 +448,10 @@ void CSwordKirby::FlyState()
 
 void CSwordKirby::AttackState()
 {
-	AttackCollider();
+	if (m_pSword == nullptr)
+	{
+		AttackCollider(Vector(50, 0), Vector(90, 100));
+	}
 	attackTimer += DT;
 	if (attackTimer > 0.2f && BUTTONDOWN('S'))
 	{
@@ -460,6 +463,12 @@ void CSwordKirby::AttackState()
 		swordkirbystate = L"LAttack";
 		if (attackTimer > 0.4f)
 		{
+			if (m_pSword != nullptr)
+			{
+				DELETEOBJECT(m_pSword);
+				m_pSword = nullptr;
+			}
+
 			m_state = State::Idle;
 			attackTimer = 0;
 		}
@@ -469,6 +478,12 @@ void CSwordKirby::AttackState()
 		swordkirbystate = L"RAttack";
 		if (attackTimer > 0.4f)
 		{
+			if (m_pSword != nullptr)
+			{
+				DELETEOBJECT(m_pSword);
+				m_pSword = nullptr;
+			}
+
 			m_state = State::Idle;
 			attackTimer = 0;
 
@@ -484,7 +499,14 @@ void CSwordKirby::AttackState()
 
 void CSwordKirby::JumpAttackState()
 {
-	AttackCollider();
+	if (m_pSword == nullptr)
+	{
+		AttackCollider(Vector(0, 0), Vector(100, 100));
+	}
+	else
+	{
+		m_pSword->SetPos(m_vecPos);
+	}
 	attackTimer += DT;
 	m_vecPos.y -= m_jumpSpeed * DT;
 
@@ -498,6 +520,11 @@ void CSwordKirby::JumpAttackState()
 	}
 	if (attackTimer > 0.4f)
 	{
+		if (m_pSword != nullptr)
+		{
+			DELETEOBJECT(m_pSword);
+			m_pSword = nullptr;
+		}
 		attackTimer = 0; 
 		m_state = State::JumpingDown;
 	}
@@ -505,7 +532,21 @@ void CSwordKirby::JumpAttackState()
 
 void CSwordKirby::DownAttackState()
 {
-	AttackCollider();
+	if (m_pSword == nullptr)
+	{
+		AttackCollider(Vector(50, 40), Vector(100, 30));
+	}
+	else
+	{
+		if (m_vecLookDir.x == -1)
+		{
+			m_pSword->SetPos(m_vecPos.x - 50, m_vecPos.y + 40);
+		}
+		if (m_vecLookDir.x == 1)
+		{
+			m_pSword->SetPos(m_vecPos.x + 50, m_vecPos.y + 40);
+		}
+	}
 	attackTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
@@ -519,17 +560,32 @@ void CSwordKirby::DownAttackState()
 	}
 	if (attackTimer > 0.4f && BUTTONDOWN('S'))
 	{
+		if (m_pSword != nullptr)
+		{
+			DELETEOBJECT(m_pSword);
+			m_pSword = nullptr;
+		}
 		Logger::Debug(L"다운점프어택중");
 		m_state = State::DownJumpAttack;
 		attackTimer = 0;
 	}
 	if (attackTimer > 0.5f && BUTTONSTAY(VK_DOWN))
 	{
+		if (m_pSword != nullptr)
+		{
+			DELETEOBJECT(m_pSword);
+			m_pSword = nullptr;
+		}
 		m_state = State::Sit;
 		attackTimer = 0;
 	}
 	if (attackTimer > 0.5f)
 	{
+		if (m_pSword != nullptr)
+		{
+			DELETEOBJECT(m_pSword);
+			m_pSword = nullptr;
+		}
 		attackTimer = 0;
 		m_state = State::Idle;
 	}
@@ -539,7 +595,21 @@ void CSwordKirby::DownAttackState()
 
 void CSwordKirby::DownJumpAttackState()
 {
-	AttackCollider();
+	if (m_pSword == nullptr)
+	{
+		AttackCollider(Vector(50, 0), Vector(90, 100));
+	}
+	else
+	{
+		if (m_vecLookDir.x == -1)
+		{
+			m_pSword->SetPos(m_vecPos.x - 50, m_vecPos.y);
+		}
+		if (m_vecLookDir.x == 1)
+		{
+			m_pSword->SetPos(m_vecPos.x + 50, m_vecPos.y);
+		}
+	}
 	attackTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
@@ -556,6 +626,11 @@ void CSwordKirby::DownJumpAttackState()
 		m_vecPos.y += m_fSpeed * 10 * DT;
 		if (m_groundchecker ==true)
 		{
+			if (m_pSword != nullptr)
+			{
+				DELETEOBJECT(m_pSword);
+				m_pSword = nullptr;
+			}
 			attackTimer = 0;
 			m_state = State::Idle;
 		}
@@ -565,7 +640,36 @@ void CSwordKirby::DownJumpAttackState()
 
 void CSwordKirby::AttackingState()
 {
-	AttackCollider();
+	if (m_pSword == nullptr)
+	{
+		AttackCollider(Vector(50, 0), Vector(90, 90));
+	}
+
+	if (attackTimer > 0.3f)
+	{
+		if (m_pSword != nullptr)
+		{
+			DELETEOBJECT(m_pSword);
+			m_pSword = nullptr;
+		}
+	}
+	else if (attackTimer > 0.4f)
+	{
+		AttackCollider(Vector(50, 0), Vector(90, 90));
+	}
+	else if (attackTimer > 0.7f)
+	{
+		if (m_pSword != nullptr)
+		{
+			DELETEOBJECT(m_pSword);
+			m_pSword = nullptr;
+		}
+	}
+	else if (attackTimer > 0.8f)
+	{
+		AttackCollider(Vector(50, 0), Vector(90, 90));
+	}
+
 	attackTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
@@ -577,6 +681,11 @@ void CSwordKirby::AttackingState()
 	}
 	if (attackTimer > 1.f)
 	{
+		if (m_pSword != nullptr)
+		{
+			DELETEOBJECT(m_pSword);
+			m_pSword = nullptr;
+		}
 		attackTimer = 0;
 		m_state = State::Idle;
 	}
@@ -586,6 +695,7 @@ void CSwordKirby::AttackingState()
 	}
 }
 
+/*
 void CSwordKirby::AttackCollider()
 {
 	m_pSword = new CSword();
@@ -596,6 +706,23 @@ void CSwordKirby::AttackCollider()
 	if (m_vecLookDir.x == 1)
 	{
 		m_pSword->SetPos(m_vecPos.x + 50, m_vecPos.y);
+	}
+	ADDOBJECT(m_pSword);
+
+}
+*/
+void CSwordKirby::AttackCollider(Vector position, Vector scale)
+{
+	m_pSword = new CSword();
+	if (m_vecLookDir.x == -1)
+	{
+		m_pSword->SetPos(m_vecPos - position);
+		m_pSword->SetColliderSize(scale, Vector(0, 0));
+	}
+	if (m_vecLookDir.x == 1)
+	{
+		m_pSword->SetPos(m_vecPos + position);
+		m_pSword->SetColliderSize(scale, Vector(0, 0));
 	}
 	ADDOBJECT(m_pSword);
 

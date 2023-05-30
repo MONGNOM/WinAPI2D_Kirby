@@ -5,6 +5,7 @@ class Animator;
 
 class CIceAttack : public CKirbyWeapon
 {
+public:
 	CIceAttack();
 	virtual ~CIceAttack();
 
