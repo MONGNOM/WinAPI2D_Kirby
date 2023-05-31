@@ -7,6 +7,8 @@ public:
 	CKirbyWeapon();
 	virtual ~CKirbyWeapon();
 	int damage;
+	Vector m_vecLookDir;
+
 
 protected:
 	void Init() override;

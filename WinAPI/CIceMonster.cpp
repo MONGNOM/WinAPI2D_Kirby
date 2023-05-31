@@ -20,6 +20,7 @@ CIceMonster::CIceMonster()
 	m_pAttackImage = nullptr;
 	m_pIceDieImage = nullptr;
 	hp = 2;
+	m_strName = L"얼음몬스터";
 }
 
 CIceMonster::~CIceMonster()
@@ -118,9 +119,11 @@ void CIceMonster::WalkState()
 void CIceMonster::DieState()
 {
 	dieTime += DT;
+	if (iceDie)
+	{
 		if (m_vecLookDir.x == 1)
 		{
-			iceState = L"DieR";
+			iceState = L"IceDie";
 			if (dieTime > 1.f)
 			{
 				dieTime = 0;
@@ -136,6 +139,28 @@ void CIceMonster::DieState()
 				DELETEOBJECT(this);
 			}
 		}
+	}
+	else
+	{
+		if (m_vecLookDir.x == 1)
+		{
+			iceState = L"DieR";
+			if (dieTime > 1.f)
+			{
+				dieTime = 0;
+				DELETEOBJECT(this);
+			}
+		}
+		if (m_vecLookDir.x == -1)
+		{
+			iceState = L"DieL";
+			if (dieTime > 1.f)
+			{
+				dieTime = 0;
+				DELETEOBJECT(this);
+			}
+		}
+	}
 	
 }
 
@@ -165,6 +190,8 @@ void CIceMonster::DizzyState()
 		}
 	}
 }
+
+
 
 void CIceMonster::AnimatorUpdate()
 {

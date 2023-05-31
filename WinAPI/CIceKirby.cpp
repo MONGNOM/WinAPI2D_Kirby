@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "CIceKirby.h"
 #include "CIceAttack.h"
+#include "CNomalKirby.h"
 
 CIceKirby::CIceKirby()
 {
@@ -94,6 +95,9 @@ void CIceKirby::Update()
 	case State::Attacking:
 		AttackingState();
 		break;
+	case State::Takeoff:
+		TakeOffState();
+		break;
 	default:
 		break;
 	}
@@ -170,6 +174,10 @@ void CIceKirby::IdleState()
 		Jump();
 		m_state = State::Jump;
 	}
+	if (BUTTONDOWN('D'))
+	{
+		m_state = State::Takeoff;
+	}
 }
 
 void CIceKirby::WalkState()
@@ -214,6 +222,10 @@ void CIceKirby::WalkState()
 		Jump();
 		m_state = State::Jump;
 	}
+	if (BUTTONDOWN('D'))
+	{
+		m_state = State::Takeoff;
+	}
 }
 
 void CIceKirby::RunState()
@@ -255,6 +267,10 @@ void CIceKirby::RunState()
 	{
 		Jump();
 		m_state = State::Jump;
+	}
+	if (BUTTONDOWN('D'))
+	{
+		m_state = State::Takeoff;
 	}
 }
 
@@ -529,5 +545,14 @@ void CIceKirby::DeleteAttackArea()
 		DELETEOBJECT(m_piceAttack);
 		m_piceAttack = nullptr;
 	}
+}
+
+void CIceKirby::TakeOffState()
+{
+	m_pNormalKirby = new CNomalKirby();
+	m_pNormalKirby->SetPos(m_vecPos);
+	ADDOBJECT(m_pNormalKirby);
+	DELETEOBJECT(this);
+	CAMERA->SetTargetObj(m_pNormalKirby);
 }
 

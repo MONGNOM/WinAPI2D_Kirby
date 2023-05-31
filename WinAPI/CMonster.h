@@ -17,6 +17,7 @@ public:
 	
 
 
+	bool iceDie;
 	Vector m_vecLookDir; 
 	Vector m_vecMoveDir;
 	

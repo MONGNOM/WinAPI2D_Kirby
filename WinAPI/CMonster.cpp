@@ -18,7 +18,7 @@ CMonster::CMonster()
 	dieTime = 0;
 	hp = 10;
 	dizzy = false;
-	
+	iceDie = false;
 }
 
 CMonster::~CMonster()
@@ -68,7 +68,16 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 		TakeDamage(pWeapon->damage);
 		Logger::Debug(L"커비와 충돌");
 	}
-
+	if (pOtherCollider->GetObjName() == L"얼리기")
+	{
+		CKirbyWeapon* pWeapon = (CKirbyWeapon*)pOtherCollider->GetOwner();
+		TakeDamage(pWeapon->damage);
+		iceDie = true;
+	}
+	else
+	{
+		iceDie = false;
+	}
 	
 	
 	if (pOtherCollider->GetObjName() == L"일반커비")
@@ -78,6 +87,11 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 		{
 			DELETEOBJECT(this);
 		}
+		if (this != nullptr)
+		{
+			normalKirby->eating = true;
+		}
+		
 	}
 
 }
@@ -86,7 +100,7 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 void CMonster::OnCollisionStay(CCollider* pOtherCollider)
 {
 	if (pOtherCollider->GetObjName() == L"빨아들이기")
-	{
+	{ 
 		dizzy = true;
 		if (m_vecPos.x > pOtherCollider->GetOwner()->GetPos().x)
 			m_vecPos.x -= 500 * DT;

@@ -5,6 +5,7 @@
 #include "CScene.h"
 #include "CPathManager.h"
 #include "CEventManager.h"
+#include "CNomalKirby.h"
 
 
 CSwordKirby::CSwordKirby()
@@ -26,7 +27,7 @@ CSwordKirby::CSwordKirby()
 	m_pJumpDownImage		= nullptr;
 	m_pDownJumpAttackImage	= nullptr;
 	m_pAttackingImage		= nullptr;
-
+	m_pNormalKirby			= nullptr;
 	m_LpIdleImage			= nullptr;
 	m_LpMoveImage			= nullptr;
 	m_LpRunImage			= nullptr;
@@ -164,6 +165,8 @@ void CSwordKirby::Update()
 	case State::Attacking:
 		AttackingState();
 		break;
+	case State::Takeoff:
+		TakeOffState();
 	default:
 		break;
 	}
@@ -243,6 +246,10 @@ void CSwordKirby::IdleState()
 		Jump();
 		m_state = State::Jump;
 	}
+	if (BUTTONDOWN('D'))
+	{
+		m_state = State::Takeoff;
+	}
 }
 
 void CSwordKirby::WalkState()
@@ -287,6 +294,10 @@ void CSwordKirby::WalkState()
 		Jump();
 		m_state = State::Jump;
 	}
+	if (BUTTONDOWN('D'))
+	{
+		m_state = State::Takeoff;
+	}
 }
 
 void CSwordKirby::RunState()
@@ -328,6 +339,10 @@ void CSwordKirby::RunState()
 	{
 		Jump();
 		m_state = State::Jump;
+	}
+	if (BUTTONDOWN('D'))
+	{
+		m_state = State::Takeoff;
 	}
 }
 
@@ -693,6 +708,15 @@ void CSwordKirby::AttackingState()
 	{
 		m_vecPos.y += m_gravity * DT;
 	}
+}
+
+void CSwordKirby::TakeOffState()
+{
+	m_pNormalKirby = new CNomalKirby();
+	m_pNormalKirby->SetPos(m_vecPos);
+	ADDOBJECT(m_pNormalKirby);
+	DELETEOBJECT(this);
+	CAMERA->SetTargetObj(m_pNormalKirby);
 }
 
 /*

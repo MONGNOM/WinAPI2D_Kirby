@@ -5,7 +5,7 @@ CIceAttack::CIceAttack()
 {
 	m_pAnimator = nullptr;
 	m_pAttackImage = nullptr;
-	//m_strName = L"얼리기";
+	m_strName = L"얼리기";
 	damage = 1;
 
 }

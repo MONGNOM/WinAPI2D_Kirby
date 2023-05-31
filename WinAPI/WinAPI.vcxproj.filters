@@ -234,6 +234,9 @@
     <ClInclude Include="CKirbyEat.h">
       <Filter>GameObject\Stage01\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="CKirbyShot.h">
+      <Filter>GameObject\Stage01\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -378,6 +381,9 @@
       <Filter>GameObject\Stage01\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="CIceAttack.cpp">
+      <Filter>GameObject\Stage01\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="CKirbyShot.cpp">
       <Filter>GameObject\Stage01\Weapon</Filter>
     </ClCompile>
   </ItemGroup>

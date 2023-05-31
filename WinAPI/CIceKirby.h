@@ -4,12 +4,13 @@
 class CIceAttack;
 class CImage;
 class CAnimator;
+class CNomalKirby;
 
 class CIceKirby : public CKirby
 {
 public:
 
-	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown, Attacking };
+	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown, Attacking, Takeoff };
 
 	CIceKirby();
 	virtual ~CIceKirby();
@@ -23,6 +24,7 @@ private:
 	State m_state;
 	CAnimator* m_pAnimator;
 	CIceAttack* m_piceAttack;
+	CNomalKirby* m_pNormalKirby;
 
 	void Jump();
 	void IdleState();
@@ -37,6 +39,7 @@ private:
 	void AttackingState();
 	void CreatAttackArea();
 	void DeleteAttackArea();
+	void TakeOffState();
 
 	CImage* m_pIdleImage;
 	CImage* m_pMoveImage;

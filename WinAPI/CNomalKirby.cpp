@@ -10,25 +10,37 @@
 #include "CImage.h"
 #include "CAnimator.h"
 #include "CKirbyEat.h"
+#include "CKirbyShot.h"
+#include "CIceKirby.h"
+#include "CSwordKirby.h"
+
 
 
 CNomalKirby::CNomalKirby()
 {
-	m_state			= State::Idle;
-	m_pAnimator		= nullptr;
-	m_pIdleLImage   = nullptr;
-	m_pIdleRImage   = nullptr;
-	m_pMoveLImage   = nullptr;
-	m_pMoveRImage   = nullptr;
-	m_pRunImage     = nullptr;
-	m_pDownImage    = nullptr;
-	m_pFlyImage	    = nullptr;
-	m_pJumpImage	= nullptr;
-	m_pJumpingImage = nullptr;
-	m_pAttackImage	= nullptr;
-	m_pKirbyEat = nullptr;
-	eat = false;
-	m_strName = L"일반커비";
+	m_state				= State::Idle;
+	m_pAnimator			= nullptr;
+	m_pIdleLImage		= nullptr;
+	m_pIdleRImage		= nullptr;
+	m_pMoveLImage		= nullptr;
+	m_pMoveRImage		= nullptr;
+	m_pRunImage			= nullptr;
+	m_pDownImage		= nullptr;
+	m_pFlyImage			= nullptr;
+	m_pJumpImage		= nullptr;
+	m_pJumpingImage		= nullptr;
+	m_pAttackImage		= nullptr;
+	m_pKirbyEat			= nullptr;
+	m_pEatWalkImage		= nullptr;
+	m_pEatChangeImage	= nullptr;
+	m_pEatAttackImage	= nullptr;
+	eating				= false;
+	eat					= false;
+	ice					= false;
+	sword				= false;
+	attackTimer			= 0;
+	changeTimer			= 0;
+	m_strName			= L"일반커비";
 }
 
 CNomalKirby::~CNomalKirby()
@@ -38,15 +50,18 @@ CNomalKirby::~CNomalKirby()
 
 void CNomalKirby::Init()
 {
-	m_pIdleLImage	= RESOURCE->LoadImg(L"KirbyIdleL",	L"Image\\Kirby\\Basic\\KirbyIdleL.png"	);
-	m_pIdleRImage	= RESOURCE->LoadImg(L"KirbyIdleR",	L"Image\\Kirby\\Basic\\KirbyIdleR.png"	);
-	m_pMoveLImage	= RESOURCE->LoadImg(L"KirbyLW",		L"Image\\Kirby\\Basic\\KirbyLW.png"		);
-	m_pMoveRImage	= RESOURCE->LoadImg(L"KirbyRW",		L"Image\\Kirby\\Basic\\KirbyRW.png"		);
-	m_pRunImage		= RESOURCE->LoadImg(L"KirbyRun",	L"Image\\Kirby\\Basic\\KirbyRun.png"	);
-	m_pDownImage	= RESOURCE->LoadImg(L"KirbyDown",	L"Image\\Kirby\\Basic\\KirbyDown.png"	);
-	m_pFlyImage		= RESOURCE->LoadImg(L"KirbyFly",	L"Image\\Kirby\\Basic\\KirbyFly.png"	);
-	m_pJumpImage	= RESOURCE->LoadImg(L"KirbyJump",	L"Image\\Kirby\\Basic\\KirbyJump.png"	);
-	m_pAttackImage	= RESOURCE->LoadImg(L"KirbyAttack",	L"Image\\Kirby\\Basic\\KirbyEat.png"	);
+	m_pIdleLImage		= RESOURCE->LoadImg(L"KirbyIdleL",		L"Image\\Kirby\\Basic\\KirbyIdleL.png"	);
+	m_pIdleRImage		= RESOURCE->LoadImg(L"KirbyIdleR",		L"Image\\Kirby\\Basic\\KirbyIdleR.png"	);
+	m_pMoveLImage		= RESOURCE->LoadImg(L"KirbyLW",			L"Image\\Kirby\\Basic\\KirbyLW.png"		);
+	m_pMoveRImage		= RESOURCE->LoadImg(L"KirbyRW",			L"Image\\Kirby\\Basic\\KirbyRW.png"		);
+	m_pRunImage			= RESOURCE->LoadImg(L"KirbyRun",		L"Image\\Kirby\\Basic\\KirbyRun.png"	);
+	m_pDownImage		= RESOURCE->LoadImg(L"KirbyDown",		L"Image\\Kirby\\Basic\\KirbyDown.png"	);
+	m_pFlyImage			= RESOURCE->LoadImg(L"KirbyFly",		L"Image\\Kirby\\Basic\\KirbyFly.png"	);
+	m_pJumpImage		= RESOURCE->LoadImg(L"KirbyJump",		L"Image\\Kirby\\Basic\\KirbyJump.png"	);
+	m_pAttackImage		= RESOURCE->LoadImg(L"KirbyAttack",		L"Image\\Kirby\\Basic\\KirbyEat.png"	);
+	m_pEatWalkImage		= RESOURCE->LoadImg(L"KirbyEatWalk",	L"Image\\Kirby\\Basic\\KirbyEatRun.png"	);
+	m_pEatChangeImage	= RESOURCE->LoadImg(L"KirbyEatChange",	L"Image\\Kirby\\Basic\\KirbyDiner.png"	);
+	m_pEatAttackImage	= RESOURCE->LoadImg(L"KirbyEatAttack",	L"Image\\Kirby\\Basic\\KirbyNotEat.png"	);
 
 	m_pAnimator = new CAnimator;
 	m_pAnimator->CreateAnimation(L"IdleR",		m_pIdleRImage,	Vector(  0.f,   0.f), Vector( 45.f,  43.f), Vector(  45.f,   0.f), 0.1f, 1);
@@ -68,7 +83,17 @@ void CNomalKirby::Init()
 	m_pAnimator->CreateAnimation(L"RAttack",	m_pAttackImage,	Vector(0.f,  0.f), Vector( 57.f,  57.f), Vector(  70.f,   0.f), 0.08f, 5);
 	m_pAnimator->CreateAnimation(L"LAttack",	m_pAttackImage,	Vector(0.f,  95.f), Vector( 57.f,  57.f), Vector(  70.f,   0.f), 0.08f, 5);
 
-	m_pAnimator->Play(L"IdleR", false);
+
+	//Eat
+	m_pAnimator->CreateAnimation(L"EatIdleR",	m_pEatChangeImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(0.f, 0.f), 0.f, 1);
+	m_pAnimator->CreateAnimation(L"EatIdleL",	m_pEatChangeImage, Vector(0.f, 100.f), Vector(50.f, 50.f), Vector(0.f, 0.f), 0.f, 1);
+	m_pAnimator->CreateAnimation(L"EatLW",		m_pEatWalkImage,	Vector(60.f, 100.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 15);
+	m_pAnimator->CreateAnimation(L"EatRW",		m_pEatWalkImage,	Vector(70.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.05f, 15);
+	m_pAnimator->CreateAnimation(L"EatAttackR", m_pEatAttackImage, Vector(0.f, 0.f), Vector(57.f, 57.f), Vector(70.f, 0.f), 0.08f, 5);
+	m_pAnimator->CreateAnimation(L"EatAttackL", m_pEatAttackImage, Vector(0.f, 95.f), Vector(57.f, 57.f), Vector(70.f, 0.f), 0.08f, 5);
+	m_pAnimator->CreateAnimation(L"EatChangeR", m_pEatChangeImage, Vector(0.f, 0.f), Vector(57.f, 57.f), Vector(70.f, 0.f), 0.04f, 9);
+	m_pAnimator->CreateAnimation(L"EatChangeL", m_pEatChangeImage, Vector(0.f, 95.f), Vector(57.f, 57.f), Vector(70.f, 0.f), 0.04f, 9);
+	m_pAnimator->Play(L"EatIdleR", false);
 	AddComponent(m_pAnimator);
 
 	AddCollider(ColliderType::Rect, Vector(40, 40), Vector(0, 0));
@@ -108,6 +133,18 @@ void CNomalKirby::Update()
 	case State::Flying:
 		FlyingState();
 		break;
+	case State::Change:
+		ChangeState();
+		break;
+	case State::Eating:
+		EatingState();
+		break;
+	case State::EatWalk:
+		EatWalkState();
+		break;
+	case State::EatAttack:
+		EatAttackState();
+		break;
 	default:
 		break;
 	}
@@ -121,8 +158,9 @@ void CNomalKirby::Render()
 
 void CNomalKirby::AnimatorUpdate()
 {
-	m_pAnimator->Play(Icekirbystate, false);
+	m_pAnimator->Play(normalkirbystate, false);
 }
+
 
 
 void CNomalKirby::Jump()
@@ -143,11 +181,11 @@ void CNomalKirby::IdleState()
 	}
 	if (m_vecLookDir.x == -1)
 	{
-		Icekirbystate = L"IdleL";
+		normalkirbystate = L"IdleL";
 	}
 	else if (m_vecLookDir.x == 1)
 	{
-		Icekirbystate = L"IdleR";
+		normalkirbystate = L"IdleR";
 	}
 	if (BUTTONSTAY(VK_LEFT))
 	{
@@ -197,13 +235,13 @@ void CNomalKirby::WalkState()
 	{
 		m_vecMoveDir.x = -1;
 		m_vecPos.x -= m_fSpeed * DT;
-		Icekirbystate = L"LW";
+		normalkirbystate = L"LW";
 	}
 	else if (BUTTONSTAY(VK_RIGHT))
 	{
 		m_vecMoveDir.x = 1;
 		m_vecPos.x += m_fSpeed * DT;
-		Icekirbystate = L"RW";
+		normalkirbystate = L"RW";
 
 	}
 
@@ -240,13 +278,13 @@ void CNomalKirby::RunState()
 	if (BUTTONSTAY(VK_LEFT))
 	{
 		m_vecMoveDir.x = -1;
-		Icekirbystate = L"LRun";
+		normalkirbystate = L"LRun";
 		m_vecPos.x -= m_fSpeed * DT;
 	}
 	else if (BUTTONSTAY(VK_RIGHT))
 	{
 		m_vecMoveDir.x = 1;
-		Icekirbystate = L"RRun";
+		normalkirbystate = L"RRun";
 		m_vecPos.x += m_fSpeed * DT;
 	}
 	if (!(BUTTONSTAY(VK_RIGHT) || BUTTONSTAY(VK_LEFT)))
@@ -278,7 +316,7 @@ void CNomalKirby::JumpState()
 
 	if (m_vecLookDir.x == -1)
 	{
-		Icekirbystate = L"LJump";
+		normalkirbystate = L"LJump";
 		if (BUTTONSTAY(VK_RIGHT))
 		{
 			m_vecPos.x += m_fSpeed * DT;
@@ -296,7 +334,7 @@ void CNomalKirby::JumpState()
 	}
 	if (m_vecLookDir.x == 1)
 	{
-		Icekirbystate = L"RJump";
+		normalkirbystate = L"RJump";
 		if (BUTTONSTAY(VK_RIGHT))
 		{
 			m_vecPos.x += m_fSpeed * DT;
@@ -318,20 +356,20 @@ void CNomalKirby::SitState()
 {
 	if (m_vecLookDir.x == 1)
 	{
-		Icekirbystate = L"RDown";
+		normalkirbystate = L"RDown";
 		if (BUTTONSTAY(VK_DOWN) && BUTTONSTAY(VK_LEFT))
 		{
 			m_vecLookDir.x = -1;
-			Icekirbystate = L"LDown";
+			normalkirbystate = L"LDown";
 		}
 	}
 	else if (m_vecLookDir.x == -1)
 	{
-		Icekirbystate = L"LDown";
+		normalkirbystate = L"LDown";
 		if (BUTTONSTAY(VK_DOWN) && BUTTONDOWN(VK_LEFT))
 		{
 			m_vecLookDir.x = 1;
-			Icekirbystate = L"RDown";
+			normalkirbystate = L"RDown";
 		}
 	}
 	if (!BUTTONSTAY(VK_DOWN))
@@ -345,7 +383,7 @@ void CNomalKirby::FlyState()
 	m_fSpeed = 100;
 	if (m_vecLookDir.x == 1)
 	{
-		Icekirbystate = L"RFly";
+		normalkirbystate = L"RFly";
 		if (flyTimer > 0.4f)
 		{ 
 			flyTimer = 0;
@@ -354,7 +392,7 @@ void CNomalKirby::FlyState()
 	}
 	else if (m_vecLookDir.x == -1)
 	{
-		Icekirbystate = L"LFly";
+		normalkirbystate = L"LFly";
 		if (flyTimer > 0.4f)
 		{
 			flyTimer = 0;
@@ -382,11 +420,11 @@ void CNomalKirby::AttackState()
 
 	if (m_vecLookDir.x == -1)
 	{
-		Icekirbystate = L"LAttack";
+		normalkirbystate = L"LAttack";
 	}
 	if (m_vecLookDir.x == 1)
 	{
-		Icekirbystate = L"RAttack";
+		normalkirbystate = L"RAttack";
 	}
 	if (BUTTONUP('S'))
 	{
@@ -397,6 +435,148 @@ void CNomalKirby::AttackState()
 		}
 		m_state = State::Idle;
 	}
+	if (eating)
+	{
+		m_state = State::Eating;
+	}
+}
+
+void CNomalKirby::EatingState()
+{
+	if (m_pKirbyEat != nullptr)
+	{
+		DELETEOBJECT(m_pKirbyEat);
+		m_pKirbyEat = nullptr;
+	}
+	if (m_groundchecker == false)
+	{
+		m_vecPos.y += m_gravity * DT;
+	}
+	if (m_vecLookDir.x == -1)
+	{
+		normalkirbystate = L"EatIdleL";
+	}
+	else if (m_vecLookDir.x == 1)
+	{
+		normalkirbystate = L"EatIdleR";
+	}
+	if (BUTTONSTAY(VK_LEFT))
+	{
+		m_state = State::EatWalk;
+	}
+	if (BUTTONSTAY(VK_RIGHT))
+	{
+		m_state = State::EatWalk;
+	}
+	if (BUTTONDOWN('S'))
+	{
+		m_state = State::EatAttack;
+	}
+	if (BUTTONDOWN(VK_DOWN))
+	{
+		m_state = State::Change;
+	}
+}
+
+void CNomalKirby::ChangeState()
+{
+	changeTimer += DT;
+	if (m_groundchecker == false)
+	{
+		m_vecPos.y += m_gravity * DT;
+	}
+	if (m_vecLookDir.x == -1)
+	{
+		normalkirbystate = L"EatChangeL";
+		if (changeTimer > 0.36f)
+		{
+			changeTimer = 0;
+			if (ice)
+				IceKirbyChange();
+			if (sword)
+				SwordirbyChange();
+			else
+				m_state = State::Idle;
+		}
+	}
+	else if (m_vecLookDir.x == 1)
+	{
+		normalkirbystate = L"EatChangeR";
+		if (changeTimer > 0.36f)
+		{
+			changeTimer = 0;
+			if (ice)
+				IceKirbyChange();
+			if (sword)
+				SwordirbyChange();
+			else
+				m_state = State::Idle;
+		}
+	}
+}
+
+void CNomalKirby::EatWalkState()
+{
+	if (BUTTONSTAY(VK_LEFT))
+	{
+		m_vecMoveDir.x = -1;
+		m_vecPos.x -= m_fSpeed * DT;
+		normalkirbystate = L"EatLW";
+	}
+	else if (BUTTONSTAY(VK_RIGHT))
+	{
+		m_vecMoveDir.x = 1;
+		m_vecPos.x += m_fSpeed * DT;
+		normalkirbystate = L"EatRW";
+	}
+
+	if (!(BUTTONSTAY(VK_RIGHT) || BUTTONSTAY(VK_LEFT)))
+	{
+		m_state = State::Eating;
+	}
+	if (BUTTONDOWN('S'))
+	{
+		m_state = State::EatAttack;
+	}
+	if (BUTTONSTAY(VK_DOWN))
+	{
+		m_state = State::Change;
+	}
+}
+
+void CNomalKirby::EatAttackState()
+{
+	ice = false;
+	sword = false;
+	m_pKirbyShot = new CKirbyShot(m_vecLookDir);
+	attackTimer += DT;
+	if (m_groundchecker == false)
+	{
+		m_vecPos.y += m_gravity * DT;
+	}
+	if (m_vecLookDir.x == -1)
+	{
+		normalkirbystate = L"EatAttackL";
+		if (attackTimer > 0.2f)
+		{
+			m_pKirbyShot->SetPos(m_vecPos);
+			eating = false;
+			m_state = State::Idle;
+			attackTimer = 0;
+		}
+	}
+	else if (m_vecLookDir.x == 1)
+	{
+		normalkirbystate = L"EatAttackR";
+		if (attackTimer > 0.2f)
+		{
+			m_pKirbyShot->SetPos(m_vecPos);
+			eating = false;
+			m_state = State::Idle;
+			attackTimer = 0;
+		}
+	}
+	ADDOBJECT(m_pKirbyShot);
 }
 
 void CNomalKirby::AttackCollider()
@@ -416,12 +596,13 @@ void CNomalKirby::AttackCollider()
 }
 
 
+
 void CNomalKirby::JumpingDownState()
 {
 	m_vecPos.y -= m_jumpSpeed * DT;
 	if (m_vecLookDir.x == -1)
 	{
-		Icekirbystate = L"LJumping";
+		normalkirbystate = L"LJumping";
 		if (BUTTONSTAY(VK_RIGHT))
 		{
 			m_vecPos.x += m_fSpeed * DT;
@@ -439,7 +620,7 @@ void CNomalKirby::JumpingDownState()
 	}
 	if (m_vecLookDir.x == 1)
 	{
-		Icekirbystate = L"RJumping";
+		normalkirbystate = L"RJumping";
 		if (BUTTONSTAY(VK_RIGHT))
 		{
 			m_vecPos.x += m_fSpeed * DT;
@@ -485,11 +666,11 @@ void CNomalKirby::FlyingState()
 
 	if (m_vecLookDir.x == 1)
 	{
-		Icekirbystate = L"RFlying";
+		normalkirbystate = L"RFlying";
 	}
 	else if (m_vecLookDir.x == -1)
 	{
-		Icekirbystate = L"LFlying";
+		normalkirbystate = L"LFlying";
 	}
 	
 	if(BUTTONDOWN('S'))
@@ -509,5 +690,37 @@ void CNomalKirby::Release()
 
 }
 
+void CNomalKirby::IceKirbyChange()
+{
+	icekirby = new CIceKirby();
+	icekirby->SetPos(m_vecPos);
+	ADDOBJECT(icekirby);
+	CAMERA->SetTargetObj(icekirby);
+	DELETEOBJECT(this);
+}
+
+void CNomalKirby::SwordirbyChange()
+{
+	swordKriby = new CSwordKirby();
+	swordKriby->SetPos(m_vecPos);
+	ADDOBJECT(swordKriby);
+	CAMERA->SetTargetObj(swordKriby);
+	DELETEOBJECT(this);
+
+}
+
+void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)
+{
+	CKirby::OnCollisionEnter(pOtherCollider);
+	if (pOtherCollider->GetObjName() == L"얼음몬스터" && eat)
+	{
+		ice = true;
+	}
+	if (pOtherCollider->GetObjName() == L"칼몬스터" && eat)
+	{
+		sword = true;
+	}
+
+}
 
 

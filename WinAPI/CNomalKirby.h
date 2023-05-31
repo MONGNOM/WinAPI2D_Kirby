@@ -4,23 +4,31 @@
 
 class CImage;
 class CAnimator;
+class CKirbyShot;
+class CIceKirby;
+class CSwordKirby;
 
 class CNomalKirby : public CKirby
 {
 public:
 
-	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown };
+	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown, Eating, Change, EatWalk, EatAttack};
 
 	CNomalKirby();
 	virtual ~CNomalKirby();
 
+	bool sword;
+	bool ice;
 	bool eat;
+	bool eating;
 private:
 	
-	wstring Icekirbystate;
+	wstring normalkirbystate;
 	State m_state;
 	CAnimator* m_pAnimator;
 
+	float attackTimer;
+	float changeTimer;
 	void Jump();
 	void IdleState();
 	void WalkState();
@@ -31,7 +39,16 @@ private:
 	void JumpingDownState();
 	void FlyingState();
 	void AttackState();
+	void EatingState();
+	void ChangeState();
+	void EatWalkState();
+	void EatAttackState();
 	void AttackCollider();
+	void IceKirbyChange();
+	void SwordirbyChange();
+
+	CIceKirby* icekirby;
+	CSwordKirby* swordKriby;
 
 	CImage* m_pIdleLImage;
 	CImage* m_pIdleRImage;
@@ -43,7 +60,11 @@ private:
 	CImage* m_pJumpImage;
 	CImage* m_pJumpingImage;
 	CImage* m_pAttackImage;
+	CImage* m_pEatChangeImage;
+	CImage* m_pEatWalkImage;
+	CImage* m_pEatAttackImage;
 	CKirbyEat* m_pKirbyEat;
+	CKirbyShot* m_pKirbyShot;
 
 
 private:
@@ -53,6 +74,9 @@ private:
 	void Release() override;
 
 	void AnimatorUpdate();
+
+	void OnCollisionEnter(CCollider* pOtherCollider) override;
+
 
 
 };

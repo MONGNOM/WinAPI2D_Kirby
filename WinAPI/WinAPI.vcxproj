@@ -160,6 +160,7 @@
     <ClInclude Include="CImageObject.h" />
     <ClInclude Include="CInputManager.h" />
     <ClInclude Include="CKirbyEat.h" />
+    <ClInclude Include="CKirbyShot.h" />
     <ClInclude Include="CKirbyWeapon.h" />
     <ClInclude Include="CNomalKirby.h" />
     <ClInclude Include="CMissile.h" />
@@ -220,6 +221,7 @@
     <ClCompile Include="CImageObject.cpp" />
     <ClCompile Include="CInputManager.cpp" />
     <ClCompile Include="CKirbyEat.cpp" />
+    <ClCompile Include="CKirbyShot.cpp" />
     <ClCompile Include="CKirbyWeapon.cpp" />
     <ClCompile Include="CNomalKirby.cpp" />
     <ClCompile Include="CMissile.cpp" />

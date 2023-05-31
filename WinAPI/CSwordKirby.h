@@ -1,9 +1,11 @@
 #pragma once
 #include "CKirby.h"
 class CSword;
+class CNomalKirby;
+
 class CSwordKirby : public CKirby
 {
-	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown, JumpAttack, DownAttack, Attacking, DownJumpAttack};
+	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown, JumpAttack, DownAttack, Attacking, DownJumpAttack, Takeoff};
 
 public:
 	CSwordKirby();
@@ -18,6 +20,7 @@ private:
 	State m_state;
 	CAnimator* m_pAnimator;
 	CSword* m_pSword;
+	CNomalKirby* m_pNormalKirby;
 	void Jump();
 	void IdleState();
 	void WalkState();
@@ -32,7 +35,7 @@ private:
 	void DownAttackState();
 	void DownJumpAttackState();
 	void AttackingState();
-	void AttackCollider();
+	void TakeOffState();
 	void AttackCollider(Vector position, Vector scale);
 
 

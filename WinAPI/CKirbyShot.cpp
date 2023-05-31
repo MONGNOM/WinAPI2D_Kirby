@@ -1,0 +1,39 @@
+#include "framework.h"
+#include "CKirbyShot.h"
+#include "CNomalKirby.h"
+
+CKirbyShot::CKirbyShot(Vector dir)
+{
+	m_pAnimator = nullptr;
+	m_pAttackImage = nullptr;
+	m_vecLookDir = dir;
+}
+
+CKirbyShot::~CKirbyShot()
+{
+}
+
+void CKirbyShot::Init()
+{
+	m_pAttackImage = RESOURCE->LoadImg(L"KirbyShot", L"Image\\ShotEffect.png");
+	m_pAnimator = new CAnimator;
+	m_pAnimator->CreateAnimation(L"AttackR", m_pAttackImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(50.f, 0.f), 0.08f, 2);
+
+	m_pAnimator->Play(L"AttackR", false);
+	AddComponent(m_pAnimator);
+
+	AddCollider(ColliderType::Rect, Vector(40, 40), Vector(0, 0));
+}
+
+void CKirbyShot::Update()
+{
+	m_vecPos += m_vecLookDir * 300 * DT;
+}
+
+void CKirbyShot::OnCollisionEnter(CCollider* pOtherCollider)
+{
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Monster || pOtherCollider->GetOwner()->GetLayer() == Layer::Tile)
+	{
+		DELETEOBJECT(this);
+	}
+}

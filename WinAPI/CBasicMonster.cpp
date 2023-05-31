@@ -103,22 +103,46 @@ void CBasicMonster::WalkState()
 void CBasicMonster::DieState()
 {
 	dieTime += DT;
-	if (m_vecLookDir.x == 1)
+	if (iceDie)
 	{
-		Basicstate = L"IceDie";
-		if (dieTime > 1.f)
+		if (m_vecLookDir.x == 1)
 		{
-			dieTime = 0;
-			DELETEOBJECT(this);
+			Basicstate = L"IceDie";
+			if (dieTime > 1.f)
+			{
+				dieTime = 0;
+				DELETEOBJECT(this);
+			}
+		}
+		if (m_vecLookDir.x == -1)
+		{
+			Basicstate = L"IceDie";
+			if (dieTime > 1.f)
+			{
+				dieTime = 0;
+				DELETEOBJECT(this);
+			}
 		}
 	}
-	if (m_vecLookDir.x == -1)
+	else
 	{
-		Basicstate = L"DieL";
-		if (dieTime > 1.f)
+		if (m_vecLookDir.x == 1)
 		{
-			dieTime = 0;
-			DELETEOBJECT(this);
+			Basicstate = L"DieR";
+			if (dieTime > 1.f)
+			{
+				dieTime = 0;
+				DELETEOBJECT(this);
+			}
+		}
+		if (m_vecLookDir.x == -1)
+		{
+			Basicstate = L"DieL";
+			if (dieTime > 1.f)
+			{
+				dieTime = 0;
+				DELETEOBJECT(this);
+			}
 		}
 	}
 }

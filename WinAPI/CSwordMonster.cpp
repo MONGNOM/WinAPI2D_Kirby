@@ -14,6 +14,7 @@ CSwordMonster::CSwordMonster()
 	m_pIdleImage = nullptr;
 	m_pMoveImage = nullptr;
 	m_pIceDieImage = nullptr;
+	m_strName = L"Ä®¸ó½ºÅÍ";
 
 	m_state = State::Idle;
 	hp = 2;
@@ -152,22 +153,46 @@ void CSwordMonster::AttackState2()
 void CSwordMonster::DieState()
 {
 	dieTime += DT;
-	if (m_vecLookDir.x == 1)
+	if (iceDie)
 	{
-		swordstate = L"DieR";
-		if (dieTime > 1.f)
+		if (m_vecLookDir.x == 1)
 		{
-			dieTime = 0;
-			DELETEOBJECT(this);
+			swordstate = L"BIceDie";
+			if (dieTime > 1.f)
+			{
+				dieTime = 0;
+				DELETEOBJECT(this);
+			}
+		}
+		if (m_vecLookDir.x == -1)
+		{
+			swordstate = L"BIceDie";
+			if (dieTime > 1.f)
+			{
+				dieTime = 0;
+				DELETEOBJECT(this);
+			}
 		}
 	}
-	if (m_vecLookDir.x == -1)
+	else
 	{
-		swordstate = L"BIceDie";
-		if (dieTime > 1.f)
+		if (m_vecLookDir.x == 1)
 		{
-			dieTime = 0;
-			DELETEOBJECT(this);
+			swordstate = L"DieR";
+			if (dieTime > 1.f)
+			{
+				dieTime = 0;
+				DELETEOBJECT(this);
+			}
+		}
+		if (m_vecLookDir.x == -1)
+		{
+			swordstate = L"DieL";
+			if (dieTime > 1.f)
+			{
+				dieTime = 0;
+				DELETEOBJECT(this);
+			}
 		}
 	}
 }

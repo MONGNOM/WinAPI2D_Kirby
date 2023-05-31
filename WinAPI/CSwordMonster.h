@@ -9,7 +9,7 @@ class CSwordMonster :
 {
 public:
 
-	enum class State { Idle, Walk, Attack, Attack2, Die, Dizzy };
+	enum class State { Idle, Walk, Attack, Attack2, Die, Dizzy};
 
 	CSwordMonster();
 	virtual ~CSwordMonster();

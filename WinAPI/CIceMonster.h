@@ -22,7 +22,6 @@ private:
 	void DieState();
 	void AttackState();
 	void DizzyState();
-
 	CImage* m_pMoveImage;
 	CImage* m_pDieImage;
 	CImage* m_pIceDieImage;
