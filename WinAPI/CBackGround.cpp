@@ -16,7 +16,7 @@ void CBackGround::Init()
 	m_pBossmapImage = RESOURCE->LoadImg(L"Background1", L"Image\\Monster\\King\\BossStage.png");
 	m_pAnimator		= new CAnimator;
 
-	m_pAnimator->CreateAnimation(L"bossmap", m_pBossmapImage, Vector(0.f, 0.f), Vector(1040.f, 1145.f), Vector(1060.f, 0.f), 0.15f, 12);
+	m_pAnimator->CreateAnimation(L"bossmap", m_pBossmapImage, Vector(0.f, 0.f), Vector(790.f, 800.f), Vector(850.f, 0.f), 0.05f, 12);
 
 
 	m_pAnimator->Play(L"bossmap", false);

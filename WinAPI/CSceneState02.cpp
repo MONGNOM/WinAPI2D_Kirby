@@ -44,15 +44,15 @@ void CSceneState02::Init()
 
 void CSceneState02::Enter()
 {
-	CBackGround* pback = new CBackGround();
-	pback->SetPos(0, 0);
-	AddGameObject(pback);
+	//CBackGround* pback = new CBackGround();
+	//pback->SetPos(WINSIZEX * 0.5f, WINSIZEY * 0.5f);
+	//AddGameObject(pback);
 
 	CImageObject* BossBackGround = new CImageObject;
-	BossBackGround->SetImage(RESOURCE->LoadImg(L"BbackGround1", L"Image\\Monster\\King\\BossStage12345.png"));
+	BossBackGround->SetImage(RESOURCE->LoadImg(L"BbackGround1", L"Image\\Monster\\King\\BossStage1.png"));
 	AddGameObject(BossBackGround);
 
-	CAMERA->SetTargetPos(Vector(430, 400));
+	CAMERA->SetTargetPos(Vector(432, 400));
 	CAMERA->FadeIn(0.25f);
 	LoadTile(GETPATH + L"Tile\\Stage02.tile");
 }
