@@ -141,7 +141,9 @@
   <ItemGroup>
     <ClInclude Include="CAnimation.h" />
     <ClInclude Include="CAnimator.h" />
+    <ClInclude Include="CBackGround.h" />
     <ClInclude Include="CBasicMonster.h" />
+    <ClInclude Include="CBossMonster.h" />
     <ClInclude Include="CButton.h" />
     <ClInclude Include="CCameraController.h" />
     <ClInclude Include="CCameraManager.h" />
@@ -176,6 +178,7 @@
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneManager.h" />
     <ClInclude Include="CSceneStage01.h" />
+    <ClInclude Include="CSceneState02.h" />
     <ClInclude Include="CSceneTileTool.h" />
     <ClInclude Include="CSceneTitle.h" />
     <ClInclude Include="CImage.h" />
@@ -202,7 +205,9 @@
   <ItemGroup>
     <ClCompile Include="CAnimation.cpp" />
     <ClCompile Include="CAnimator.cpp" />
+    <ClCompile Include="CBackGround.cpp" />
     <ClCompile Include="CBasicMonster.cpp" />
+    <ClCompile Include="CBossMonster.cpp" />
     <ClCompile Include="CButton.cpp" />
     <ClCompile Include="CCameraController.cpp" />
     <ClCompile Include="CCameraManager.cpp" />
@@ -237,6 +242,7 @@
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CSceneManager.cpp" />
     <ClCompile Include="CSceneStage01.cpp" />
+    <ClCompile Include="CSceneState02.cpp" />
     <ClCompile Include="CSceneTileTool.cpp" />
     <ClCompile Include="CSceneTitle.cpp" />
     <ClCompile Include="CImage.cpp" />

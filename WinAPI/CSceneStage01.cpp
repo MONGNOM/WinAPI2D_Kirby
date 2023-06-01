@@ -19,6 +19,7 @@
 #include "CPanel.h"
 #include "CImageObject.h"
 #include "CResourceManager.h"
+#include "CBossMonster.h"
 
 
 CSceneStage01::CSceneStage01()
@@ -29,6 +30,7 @@ CSceneStage01::CSceneStage01()
 	swordkirby = nullptr;
 	iceMonster = nullptr;
 	swordMonster = nullptr;
+	bossMonster = nullptr;
 }
 
 CSceneStage01::~CSceneStage01()
@@ -37,34 +39,42 @@ CSceneStage01::~CSceneStage01()
 
 void CSceneStage01::Init()
 {
-	pkirby = new CNomalKirby();
-	pkirby->SetPos(100, 300);
-	AddGameObject(pkirby);
+}
 
-	/*swordkirby = new CSwordKirby();
-	swordkirby->SetPos(300, 300);
+void CSceneStage01::Enter()
+{
+
+	/*pkirby = new CNomalKirby();
+	pkirby->SetPos(100, 300);
+	AddGameObject(pkirby);*/
+
+	swordkirby = new CSwordKirby();
+	swordkirby->SetPos(100, 300);
 	AddGameObject(swordkirby);
 
-	icekirby = new CIceKirby();
+	/*icekirby = new CIceKirby();
 	icekirby->SetPos(200, 300);
 	AddGameObject(icekirby);*/
 
-	pBasicMonster = new CBasicMonster();
+	/*pBasicMonster = new CBasicMonster();
 	pBasicMonster->SetPos(400, 300);
 	AddGameObject(pBasicMonster);
 
 	iceMonster = new CIceMonster();
 	iceMonster->SetPos(500, 300);
-	AddGameObject(iceMonster);
+	AddGameObject(iceMonster);*/
 
 	swordMonster = new CSwordMonster();
-	swordMonster->SetPos(600, 300);
+	swordMonster->SetPos(500, 300);
 	AddGameObject(swordMonster);
-	
+
+	bossMonster = new CBossMonster();
+	bossMonster->SetPos(200, 300);
+	AddGameObject(bossMonster);
 
 	CCameraController* pCamController = new CCameraController;
 	AddGameObject(pCamController);
-	
+
 	/*CImageObject* pBackGround = new CImageObject();
 	pBackGround->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\BackGround2.png"));
 	pBackGround->SetPos(0, 0);
@@ -74,12 +84,7 @@ void CSceneStage01::Init()
 	pGround->SetImage(RESOURCE->LoadImg(L"Ground", L"Image\\Ground.png"));
 	pGround->SetPos(0, 0);
 	AddGameObject(pGround);
-	
-}
-
-void CSceneStage01::Enter()
-{
-	CAMERA->SetTargetObj(pkirby);
+	CAMERA->SetTargetObj(swordkirby);
 	CAMERA->FadeIn(0.25f);
 	LoadTile(GETPATH + L"Tile\\Stage01.tile");
 }
@@ -91,6 +96,11 @@ void CSceneStage01::Update()
 		CAMERA->FadeOut(0.25f);
 		DELAYCHANGESCENE(GroupScene::Title, 0.25f);
 	}
+	if (BUTTONDOWN(VK_SPACE))
+	{
+		CAMERA->FadeOut(0.25f);
+		DELAYCHANGESCENE(GroupScene::Stage02, 0.25f);
+	}
 	
 }
 
@@ -100,6 +110,7 @@ void CSceneStage01::Render()
 
 void CSceneStage01::Exit()
 {
+	DeleteAll();
 }
 
 void CSceneStage01::Release()

@@ -15,7 +15,10 @@ CMonster::CMonster()
 	m_groundchecker = false;
 	m_groundCounter = 0;
 	m_gravity = 300;
-	dieTime = 0;
+	dieTimer = 0;
+	idleTimer = 0;
+	attackTimer = 0;
+	walkTimer = 0;
 	hp = 10;
 	dizzy = false;
 	iceDie = false;

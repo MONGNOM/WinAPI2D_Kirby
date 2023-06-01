@@ -10,7 +10,11 @@ public:
 	CMonster();
 	virtual ~CMonster();
 
-	float dieTime;
+	float dieTimer;
+	float walkTimer;
+	float idleTimer;
+	float attackTimer;
+	
 	int hp;
 	bool dizzy;
 	bool m_groundchecker;

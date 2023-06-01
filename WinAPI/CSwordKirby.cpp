@@ -158,7 +158,7 @@ void CSwordKirby::Update()
 		break;
 	case State::DownAttack:
 		DownAttackState();
-		break;
+		break; 
 	case State::DownJumpAttack:
 		DownJumpAttackState();
 		break;

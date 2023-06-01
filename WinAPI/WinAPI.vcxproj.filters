@@ -237,6 +237,15 @@
     <ClInclude Include="CKirbyShot.h">
       <Filter>GameObject\Stage01\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="CBossMonster.h">
+      <Filter>GameObject\Stage01\Monster\h</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneState02.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CBackGround.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -385,6 +394,15 @@
     </ClCompile>
     <ClCompile Include="CKirbyShot.cpp">
       <Filter>GameObject\Stage01\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossMonster.cpp">
+      <Filter>GameObject\Stage01\Monster\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneState02.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CBackGround.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

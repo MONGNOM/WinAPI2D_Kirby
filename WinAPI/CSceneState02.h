@@ -3,24 +3,18 @@
 #include "CNomalKirby.h"
 #include "CIceKirby.h"
 #include "CSwordKirby.h"
-#include "CBasicMonster.h"
-#include "CIceMonster.h"
-#include "CSwordMonster.h"
 #include "CBossMonster.h"
 
-class CSceneStage01 : public CScene
+class Image;
+class Animaotr;
+
+class CSceneState02 : public CScene
 {
 public:
-	CSceneStage01();
-	virtual ~CSceneStage01();
+	CSceneState02();
+	virtual ~CSceneState02();
 
 private:
-	CBasicMonster* pBasicMonster;
-	CNomalKirby* pkirby;
-	CIceKirby* icekirby;
-	CSwordKirby* swordkirby;
-	CIceMonster* iceMonster;
-	CSwordMonster* swordMonster;
 	CBossMonster* bossMonster;
 
 private:
@@ -31,3 +25,4 @@ private:
 	void Exit()		override;
 	void Release()	override;
 };
+

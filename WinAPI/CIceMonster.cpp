@@ -118,24 +118,24 @@ void CIceMonster::WalkState()
 
 void CIceMonster::DieState()
 {
-	dieTime += DT;
+	dieTimer += DT;
 	if (iceDie)
 	{
 		if (m_vecLookDir.x == 1)
 		{
 			iceState = L"IceDie";
-			if (dieTime > 1.f)
+			if (dieTimer > 1.f)
 			{
-				dieTime = 0;
+				dieTimer = 0;
 				DELETEOBJECT(this);
 			}
 		}
 		if (m_vecLookDir.x == -1)
 		{
 			iceState = L"IceDie";
-			if (dieTime > 1.f)
+			if (dieTimer > 1.f)
 			{
-				dieTime = 0;
+				dieTimer = 0;
 				DELETEOBJECT(this);
 			}
 		}
@@ -145,18 +145,18 @@ void CIceMonster::DieState()
 		if (m_vecLookDir.x == 1)
 		{
 			iceState = L"DieR";
-			if (dieTime > 1.f)
+			if (dieTimer > 1.f)
 			{
-				dieTime = 0;
+				dieTimer = 0;
 				DELETEOBJECT(this);
 			}
 		}
 		if (m_vecLookDir.x == -1)
 		{
 			iceState = L"DieL";
-			if (dieTime > 1.f)
+			if (dieTimer > 1.f)
 			{
-				dieTime = 0;
+				dieTimer = 0;
 				DELETEOBJECT(this);
 			}
 		}
@@ -170,22 +170,22 @@ void CIceMonster::AttackState()
 
 void CIceMonster::DizzyState()
 {
-	dieTime += DT;
+	dieTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
 		iceState = L"DizzyR";
-		if (dieTime > 0.5f)
+		if (dieTimer > 0.5f)
 		{
-			dieTime = 0;
+			dieTimer = 0;
 			m_state = State::Walk;
 		}
 	}
 	if (m_vecLookDir.x == -1)
 	{
 		iceState = L"DizzyL";
-		if (dieTime > 0.5f)
+		if (dieTimer > 0.5f)
 		{
-			dieTime = 0;
+			dieTimer = 0;
 			m_state = State::Walk;
 		}
 	}

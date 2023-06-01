@@ -45,7 +45,7 @@ void CSceneTitle::Render()
 		WINSIZEX * 0.5f + 100,
 		WINSIZEY * 0.5f + 10,
 		Color(0, 0, 0, 1.f),
-		20.f);
+		50.f);
 }
 
 void CSceneTitle::Exit()
