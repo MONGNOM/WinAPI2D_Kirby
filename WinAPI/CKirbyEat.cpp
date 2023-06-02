@@ -39,13 +39,6 @@ void CKirbyEat::Release()
 {
 }
 
-//void CKirbyEat::OnCollisionEnter(CCollider* pOtherCollider)
-//{
-//	if (pOtherCollider->GetObjName() == L"¸ó½ºÅÍ")
-//	{
-//		CMonster* monster = (CMonster*)pOtherCollider->GetOwner();
-//		
-//	}
-//}
+
 
 

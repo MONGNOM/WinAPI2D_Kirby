@@ -30,6 +30,8 @@ enum class GroupScene
 	TileTool,
 
 	Stage01,
+	
+	Bonus,
 
 	Stage02,
 
@@ -45,6 +47,7 @@ enum class Layer
 	Default,
 	Tile,
 	Monster,
+	Item,
 	Player,
 	Weapon,
 	Missile,

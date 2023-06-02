@@ -84,6 +84,7 @@ void CSceneStage01::Enter()
 	pGround->SetImage(RESOURCE->LoadImg(L"Ground", L"Image\\Ground.png"));
 	pGround->SetPos(0, 0);
 	AddGameObject(pGround);
+
 	CAMERA->SetTargetObj(swordkirby);
 	CAMERA->FadeIn(0.25f);
 	LoadTile(GETPATH + L"Tile\\Stage01.tile");
@@ -99,7 +100,7 @@ void CSceneStage01::Update()
 	if (BUTTONDOWN(VK_SPACE))
 	{
 		CAMERA->FadeOut(0.25f);
-		DELAYCHANGESCENE(GroupScene::Stage02, 0.25f);
+		DELAYCHANGESCENE(GroupScene::Bonus, 0.25f);
 	}
 	
 }

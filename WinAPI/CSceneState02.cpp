@@ -52,6 +52,10 @@ void CSceneState02::Enter()
 	BossBackGround->SetImage(RESOURCE->LoadImg(L"BbackGround1", L"Image\\Monster\\King\\BossStage1.png"));
 	AddGameObject(BossBackGround);
 
+	bossMonster = new CBossMonster();
+	bossMonster->SetPos(700, 450);
+	AddGameObject(bossMonster);
+
 	CAMERA->SetTargetPos(Vector(432, 400));
 	CAMERA->FadeIn(0.25f);
 	LoadTile(GETPATH + L"Tile\\Stage02.tile");

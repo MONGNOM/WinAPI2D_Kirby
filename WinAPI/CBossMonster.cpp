@@ -12,7 +12,7 @@ CBossMonster::CBossMonster()
 	m_pJumpImage = nullptr;
 	m_pIceDieImage = nullptr;
  	m_pAttackImageL2 = nullptr;
-
+	m_vecLookDir = Vector(-1, 0);
 	m_state = State::Idle;
 	hp = 1;
 }
@@ -36,7 +36,7 @@ void CBossMonster::Init()
 	m_pAnimator->CreateAnimation(L"IdleR", m_pIdleImage, Vector(0.f, 0.f), Vector(150.f, 180.f), Vector(190.f, 0.f), 0.5f, 2);
 	m_pAnimator->CreateAnimation(L"WalkR", m_pMoveImage, Vector(770.f, 0.f), Vector(150.f, 180.f), Vector(190.f, 0.f), 0.15f, 4);
 	m_pAnimator->CreateAnimation(L"DieR", m_pDieImage, Vector(0.f, 0.f), Vector(180.f, 200.f), Vector(225.f, 0.f), 0.25f, 4,false);
-	m_pAnimator->CreateAnimation(L"AttackR", m_pAttackImage, Vector(0.f, 0.f), Vector(165.f, 200.f), Vector(210.f, 0.f), 0.15f, 7,false);
+	m_pAnimator->CreateAnimation(L"AttackR", m_pAttackImage, Vector(0.f, 0.f), Vector(165.f, 200.f), Vector(210.f, 0.f), 0.2f, 7,false);
 	m_pAnimator->CreateAnimation(L"Attack2R", m_pAttackImage2, Vector(0.f, 0.f), Vector(280.f, 220.f), Vector(375.f, 0.f), 0.15f, 7);
 	m_pAnimator->CreateAnimation(L"DizzyR", m_pDieImage, Vector(0.f, 0.f), Vector(180.f, 200.f), Vector(180.f, 0.f), 0.f, 1);
 
@@ -44,7 +44,7 @@ void CBossMonster::Init()
 	m_pAnimator->CreateAnimation(L"IdleL", m_pIdleImage, Vector(1350.f, 450.f), Vector(160.f, 180.f), Vector(-190.f, 0.f), 0.5f, 2);
 	m_pAnimator->CreateAnimation(L"WalkL", m_pMoveImage, Vector(590.f, 430.f), Vector(160.f, 180.f), Vector(-190.f, 0.f), 0.15f, 4);
 	m_pAnimator->CreateAnimation(L"DieL", m_pDieImage, Vector(670.f, 290.f), Vector(180.f, 200.f), Vector(-225.f, 0.f), 0.25f, 4, false);
-	m_pAnimator->CreateAnimation(L"AttackL", m_pAttackImage, Vector(1260.f, 270.f), Vector(165.f, 210.f), Vector(-210.f, 0.f), 0.15f, 7,false);
+	m_pAnimator->CreateAnimation(L"AttackL", m_pAttackImage, Vector(1260.f, 270.f), Vector(165.f, 210.f), Vector(-210.f, 0.f), 0.2f, 7,false);
 	m_pAnimator->CreateAnimation(L"Attack2L", m_pAttackImageL2, Vector(2430.f, 0.f), Vector(280.f, 220.f), Vector(-375.f, 0.f), 0.15f, 7);
 	m_pAnimator->CreateAnimation(L"DizzyL", m_pDieImage, Vector(1150.f, 490.f), Vector(145.f, 100.f), Vector(0.f, 0.f), 0.15f, 1);
 

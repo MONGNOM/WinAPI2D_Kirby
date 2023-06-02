@@ -143,6 +143,7 @@
     <ClInclude Include="CAnimator.h" />
     <ClInclude Include="CBackGround.h" />
     <ClInclude Include="CBasicMonster.h" />
+    <ClInclude Include="CBonusMap.h" />
     <ClInclude Include="CBossMonster.h" />
     <ClInclude Include="CButton.h" />
     <ClInclude Include="CCameraController.h" />
@@ -155,20 +156,24 @@
     <ClInclude Include="CGameObject.h" />
     <ClInclude Include="CGroundTile.h" />
     <ClInclude Include="CIceAttack.h" />
+    <ClInclude Include="CIceItem.h" />
     <ClInclude Include="CIceKirby.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="CIceMonster.h" />
     <ClInclude Include="CImageObject.h" />
     <ClInclude Include="CInputManager.h" />
+    <ClInclude Include="CItem.h" />
     <ClInclude Include="CKirbyEat.h" />
     <ClInclude Include="CKirbyShot.h" />
     <ClInclude Include="CKirbyWeapon.h" />
+    <ClInclude Include="CMeat.h" />
     <ClInclude Include="CNomalKirby.h" />
     <ClInclude Include="CMissile.h" />
     <ClInclude Include="CMonster.h" />
     <ClInclude Include="CPanel.h" />
     <ClInclude Include="CPathManager.h" />
+    <ClInclude Include="CPersimmon.h" />
     <ClInclude Include="CPlayer.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
@@ -185,6 +190,7 @@
     <ClInclude Include="CSound.h" />
     <ClInclude Include="CSoundManager.h" />
     <ClInclude Include="CSword.h" />
+    <ClInclude Include="CSwordItem.h" />
     <ClInclude Include="CSwordKirby.h" />
     <ClInclude Include="CSwordMonster.h" />
     <ClInclude Include="CTile.h" />
@@ -207,6 +213,7 @@
     <ClCompile Include="CAnimator.cpp" />
     <ClCompile Include="CBackGround.cpp" />
     <ClCompile Include="CBasicMonster.cpp" />
+    <ClCompile Include="CBonusMap.cpp" />
     <ClCompile Include="CBossMonster.cpp" />
     <ClCompile Include="CButton.cpp" />
     <ClCompile Include="CCameraController.cpp" />
@@ -219,20 +226,24 @@
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CGroundTile.cpp" />
     <ClCompile Include="CIceAttack.cpp" />
+    <ClCompile Include="CIceItem.cpp" />
     <ClCompile Include="CIceKirby.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="CIceMonster.cpp" />
     <ClCompile Include="CImageObject.cpp" />
     <ClCompile Include="CInputManager.cpp" />
+    <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CKirbyEat.cpp" />
     <ClCompile Include="CKirbyShot.cpp" />
     <ClCompile Include="CKirbyWeapon.cpp" />
+    <ClCompile Include="CMeat.cpp" />
     <ClCompile Include="CNomalKirby.cpp" />
     <ClCompile Include="CMissile.cpp" />
     <ClCompile Include="CMonster.cpp" />
     <ClCompile Include="CPanel.cpp" />
     <ClCompile Include="CPathManager.cpp" />
+    <ClCompile Include="CPersimmon.cpp" />
     <ClCompile Include="CPlayer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -249,6 +260,7 @@
     <ClCompile Include="CSound.cpp" />
     <ClCompile Include="CSoundManager.cpp" />
     <ClCompile Include="CSword.cpp" />
+    <ClCompile Include="CSwordItem.cpp" />
     <ClCompile Include="CSwordKirby.cpp" />
     <ClCompile Include="CSwordMonster.cpp" />
     <ClCompile Include="CTile.cpp" />
