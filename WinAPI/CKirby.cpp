@@ -17,6 +17,7 @@ CKirby::CKirby()
 	flyTimer = 0;
 	m_groundCounter = 0;
 	m_gravity = 300;
+	stage1 = true;
 }
 
 CKirby::~CKirby()

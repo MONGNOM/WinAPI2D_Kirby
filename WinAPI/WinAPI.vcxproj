@@ -144,6 +144,7 @@
     <ClInclude Include="CBackGround.h" />
     <ClInclude Include="CBasicMonster.h" />
     <ClInclude Include="CBonusMap.h" />
+    <ClInclude Include="CBossDoor.h" />
     <ClInclude Include="CBossMonster.h" />
     <ClInclude Include="CButton.h" />
     <ClInclude Include="CCameraController.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="CCollisionManager.h" />
     <ClInclude Include="CComponent.h" />
     <ClInclude Include="CCore.h" />
+    <ClInclude Include="CDoor.h" />
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CGameObject.h" />
     <ClInclude Include="CGroundTile.h" />
@@ -214,6 +216,7 @@
     <ClCompile Include="CBackGround.cpp" />
     <ClCompile Include="CBasicMonster.cpp" />
     <ClCompile Include="CBonusMap.cpp" />
+    <ClCompile Include="CBossDoor.cpp" />
     <ClCompile Include="CBossMonster.cpp" />
     <ClCompile Include="CButton.cpp" />
     <ClCompile Include="CCameraController.cpp" />
@@ -222,6 +225,7 @@
     <ClCompile Include="CCollisionManager.cpp" />
     <ClCompile Include="CComponent.cpp" />
     <ClCompile Include="CCore.cpp" />
+    <ClCompile Include="CDoor.cpp" />
     <ClCompile Include="CEventManager.cpp" />
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CGroundTile.cpp" />

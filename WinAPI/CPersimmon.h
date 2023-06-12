@@ -1,11 +1,15 @@
 #pragma once
 #include "CItem.h"
+
+class CImage;
+
 class CPersimmon : public CItem
 {
 public:
 	CPersimmon();
 	virtual ~CPersimmon();
 
+	CImage* image;
 
 private:
 	void Init() override;

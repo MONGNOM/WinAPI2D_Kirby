@@ -5,6 +5,7 @@
 
 CPersimmon::CPersimmon()
 {
+	image = nullptr;
 }
 
 CPersimmon::~CPersimmon()
@@ -13,21 +14,22 @@ CPersimmon::~CPersimmon()
 
 void CPersimmon::Init()
 {
-	CImageObject* Persimmon = new CImageObject();
-	Persimmon->SetImage(RESOURCE->LoadImg(L"Persimmon", L"Image\\Persimmon.png"));
-	Persimmon->SetPos(400, 300);
-	ADDOBJECT(Persimmon);
-
-	AddCollider(ColliderType::Rect, Vector(50, 50), Vector(0, 0));
+	image = RESOURCE->LoadImg(L"Persimmon", L"Image\\Persimmon.png");
+	AddCollider(ColliderType::Rect, Vector(30, 30), Vector(15, 15));
 }
 
 void CPersimmon::Update()
 {
-
 }
 
 void CPersimmon::Render()
 {
+	RENDER->Image(image,
+		m_vecPos.x,
+		m_vecPos.y,
+		m_vecPos.x + (float)image->GetWidth(),
+		m_vecPos.y + (float)image->GetHeight()
+	);
 }
 
 void CPersimmon::Release()

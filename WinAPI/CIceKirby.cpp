@@ -25,6 +25,7 @@ CIceKirby::~CIceKirby()
 
 void CIceKirby::Init()
 {
+	CAMERA->SetTargetObj(this);
 	m_pIdleImage	= RESOURCE->LoadImg(L"IceKirbyIdleL",	L"Image\\Kirby\\Ice\\IceKirby.png");
 	m_pAttackImage	= RESOURCE->LoadImg(L"IceKirbyAttack",	L"Image\\Kirby\\Ice\\IceKirbyAttackPose.png");
 	m_pMoveImage	= RESOURCE->LoadImg(L"IceKirbyW",		L"Image\\Kirby\\Ice\\IceKirbyWalk.png");

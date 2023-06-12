@@ -19,6 +19,7 @@ public:
 	float m_jumpSpeed;
 	float m_gravity;
 	int m_groundCounter;
+	bool stage1;
 
 	Vector m_vecMoveDir;
 	Vector m_vecLookDir;

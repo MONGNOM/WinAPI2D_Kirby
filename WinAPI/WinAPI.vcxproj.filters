@@ -70,6 +70,9 @@
     <Filter Include="GameObject\Stage01\Monster\cpp">
       <UniqueIdentifier>{9d4a86ad-737e-46b5-80a4-c6ab75fe6033}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Item">
+      <UniqueIdentifier>{2eecebc1-0549-49fa-b0fa-029f8693f8ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -246,6 +249,30 @@
     <ClInclude Include="CBackGround.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="CDoor.h">
+      <Filter>GameObject\Stage01</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossDoor.h">
+      <Filter>GameObject\Stage01</Filter>
+    </ClInclude>
+    <ClInclude Include="CBonusMap.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CPersimmon.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CSwordItem.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CMeat.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CItem.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CIceItem.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -403,6 +430,30 @@
     </ClCompile>
     <ClCompile Include="CBackGround.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CDoor.cpp">
+      <Filter>GameObject\Stage01</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossDoor.cpp">
+      <Filter>GameObject\Stage01</Filter>
+    </ClCompile>
+    <ClCompile Include="CMeat.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CBonusMap.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CIceItem.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CPersimmon.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CSwordItem.cpp">
+      <Filter>GameObject\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

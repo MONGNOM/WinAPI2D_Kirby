@@ -48,6 +48,7 @@ enum class Layer
 	Tile,
 	Monster,
 	Item,
+	Door,
 	Player,
 	Weapon,
 	Missile,

@@ -695,7 +695,6 @@ void CNomalKirby::IceKirbyChange()
 	icekirby = new CIceKirby();
 	icekirby->SetPos(m_vecPos);
 	ADDOBJECT(icekirby);
-	CAMERA->SetTargetObj(icekirby);
 	DELETEOBJECT(this);
 }
 
@@ -704,7 +703,6 @@ void CNomalKirby::SwordirbyChange()
 	swordKriby = new CSwordKirby();
 	swordKriby->SetPos(m_vecPos);
 	ADDOBJECT(swordKriby);
-	CAMERA->SetTargetObj(swordKriby);
 	DELETEOBJECT(this);
 
 }
@@ -712,6 +710,7 @@ void CNomalKirby::SwordirbyChange()
 void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)
 {
 	CKirby::OnCollisionEnter(pOtherCollider);
+	
 	if (pOtherCollider->GetObjName() == L"얼음몬스터" && eat)
 	{
 		ice = true;
@@ -721,6 +720,15 @@ void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)
 		sword = true;
 	}
 
+	if (pOtherCollider->GetObjName() == L"얼음아이템")
+	{
+		IceKirbyChange();
+	}
+
+	if (pOtherCollider->GetObjName() == L"검아이템")
+	{
+		SwordirbyChange();
+	}
 }
 
 

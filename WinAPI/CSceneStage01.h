@@ -7,6 +7,7 @@
 #include "CIceMonster.h"
 #include "CSwordMonster.h"
 #include "CBossMonster.h"
+#include "CDoor.h"
 
 class CSceneStage01 : public CScene
 {

@@ -21,7 +21,6 @@
 #include "CResourceManager.h"
 #include "CBossMonster.h"
 
-
 CSceneStage01::CSceneStage01()
 {
 	pkirby = nullptr;
@@ -49,7 +48,7 @@ void CSceneStage01::Enter()
 	AddGameObject(pkirby);*/
 
 	swordkirby = new CSwordKirby();
-	swordkirby->SetPos(100, 300);
+	swordkirby->SetPos(4930, 300);
 	AddGameObject(swordkirby);
 
 	/*icekirby = new CIceKirby();
@@ -64,13 +63,18 @@ void CSceneStage01::Enter()
 	iceMonster->SetPos(500, 300);
 	AddGameObject(iceMonster);*/
 
+	CDoor* door = new CDoor();
+	door->SetPos(4830, 350);
+	AddGameObject(door);
+
+
 	swordMonster = new CSwordMonster();
 	swordMonster->SetPos(500, 300);
 	AddGameObject(swordMonster);
 
 	bossMonster = new CBossMonster();
 	bossMonster->SetPos(200, 300);
-	AddGameObject(bossMonster);
+	//AddGameObject(bossMonster);
 
 	CCameraController* pCamController = new CCameraController;
 	AddGameObject(pCamController);
@@ -97,12 +101,6 @@ void CSceneStage01::Update()
 		CAMERA->FadeOut(0.25f);
 		DELAYCHANGESCENE(GroupScene::Title, 0.25f);
 	}
-	if (BUTTONDOWN(VK_SPACE))
-	{
-		CAMERA->FadeOut(0.25f);
-		DELAYCHANGESCENE(GroupScene::Bonus, 0.25f);
-	}
-	
 }
 
 void CSceneStage01::Render()
