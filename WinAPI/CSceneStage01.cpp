@@ -48,7 +48,7 @@ void CSceneStage01::Enter()
 	AddGameObject(pkirby);*/
 
 	swordkirby = new CSwordKirby();
-	swordkirby->SetPos(4930, 300);
+	swordkirby->SetPos(200, 300);
 	AddGameObject(swordkirby);
 
 	/*icekirby = new CIceKirby();
@@ -100,6 +100,12 @@ void CSceneStage01::Update()
 	{
 		CAMERA->FadeOut(0.25f);
 		DELAYCHANGESCENE(GroupScene::Title, 0.25f);
+	}
+
+	if (BUTTONDOWN(VK_SPACE))
+	{
+		CAMERA->FadeOut(0.25f);
+		DELAYCHANGESCENE(GroupScene::Bonus, 0.25f);
 	}
 }
 

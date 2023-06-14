@@ -56,6 +56,10 @@ void CSceneState02::Enter()
 	bossMonster->SetPos(700, 450);
 	AddGameObject(bossMonster);
 
+	pkirby = new CNomalKirby();
+	pkirby->SetPos(100, 500);
+	AddGameObject(pkirby);
+
 	CAMERA->SetTargetPos(Vector(432, 400));
 	CAMERA->FadeIn(0.25f);
 	LoadTile(GETPATH + L"Tile\\Stage02.tile");

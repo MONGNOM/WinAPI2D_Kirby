@@ -16,6 +16,8 @@ public:
 
 private:
 	CBossMonster* bossMonster;
+	CNomalKirby* pkirby;
+
 
 private:
 	void Init()		override;

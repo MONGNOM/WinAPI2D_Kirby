@@ -12,6 +12,7 @@
 #include "CMeat.h"
 #include "CIceItem.h"
 #include "CSwordItem.h"
+#include "CNomalKirby.h"
 
 
 CBonusMap::CBonusMap()
@@ -55,12 +56,9 @@ void CBonusMap::Enter()
 	meat->SetPos(200, 470);
 	AddGameObject(meat);
 
-
-
 	CBossDoor* door = new CBossDoor();
 	door->SetPos(435, 425);
 	AddGameObject(door);
-
 
 	CAMERA->FadeIn(0.25f);
 	LoadTile(GETPATH + L"Tile\\Stage03.tile");

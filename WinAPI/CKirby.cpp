@@ -2,6 +2,7 @@
 #include "CKirby.h"
 CKirby::CKirby()
 {
+	hp = 5;
 	m_fSpeed = 0.f;
 	m_jumpSpeed = 0.f;
 	m_vecPos = Vector(0, 0);
@@ -30,6 +31,7 @@ void CKirby::Init()
 
 void CKirby::Update()
 {
+	Logger::Debug(to_wstring(hp));
 	m_jumpSpeed -= m_gravity * DT;
 	fallTimer += DT;
 	lastLeftInputTime += DT;
@@ -51,6 +53,10 @@ void CKirby::OnCollisionEnter(CCollider* pOtherCollider)
 	{
 		m_groundCounter++;
 		m_groundchecker = true;
+	}
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Monster)
+	{
+		hp -= 1;
 	}
 }
 

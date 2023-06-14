@@ -155,6 +155,7 @@
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CDoor.h" />
     <ClInclude Include="CEventManager.h" />
+    <ClInclude Include="CGameManager.h" />
     <ClInclude Include="CGameObject.h" />
     <ClInclude Include="CGroundTile.h" />
     <ClInclude Include="CIceAttack.h" />
@@ -227,6 +228,7 @@
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CDoor.cpp" />
     <ClCompile Include="CEventManager.cpp" />
+    <ClCompile Include="CGameManager.cpp" />
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CGroundTile.cpp" />
     <ClCompile Include="CIceAttack.cpp" />
