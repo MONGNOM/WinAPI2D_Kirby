@@ -48,13 +48,13 @@ void CSceneStage01::Enter()
 	pkirby->SetPos(100, 300);
 	AddGameObject(pkirby);
 
-	/*pBasicMonster = new CBasicMonster();
+	pBasicMonster = new CBasicMonster();
 	pBasicMonster->SetPos(400, 300);
 	AddGameObject(pBasicMonster);
 
 	iceMonster = new CIceMonster();
 	iceMonster->SetPos(500, 300);
-	AddGameObject(iceMonster);*/
+	AddGameObject(iceMonster);
 
 	CDoor* door = new CDoor();
 	door->SetPos(4830, 350);
@@ -62,7 +62,7 @@ void CSceneStage01::Enter()
 
 
 	swordMonster = new CSwordMonster();
-	swordMonster->SetPos(500, 300);
+	swordMonster->SetPos(800, 200);
 	AddGameObject(swordMonster);
 
 	CCameraController* pCamController = new CCameraController;
