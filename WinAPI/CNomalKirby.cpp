@@ -13,6 +13,7 @@
 #include "CKirbyShot.h"
 #include "CIceKirby.h"
 #include "CSwordKirby.h"
+#include "CGameManager.h"
 
 
 
@@ -36,8 +37,8 @@ CNomalKirby::CNomalKirby()
 	m_pEatAttackImage	= nullptr;
 	eating				= false;
 	eat					= false;
-	ice					= false;
-	sword				= false;
+	ice					= GAME->ice;
+	sword				= GAME->sword;
 	attackTimer			= 0;
 	changeTimer			= 0;
 	m_strName			= L"일반커비";
@@ -102,7 +103,10 @@ void CNomalKirby::Init()
 
 void CNomalKirby::Update()
 {
-	
+
+	GAME->ice = ice;
+	GAME->sword = sword;
+
 	CKirby::Update();
 	switch (m_state)
 	{
@@ -723,11 +727,13 @@ void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"얼음아이템")
 	{
 		IceKirbyChange();
+		GAME->ice = true;
 	}
 
 	if (pOtherCollider->GetObjName() == L"검아이템")
 	{
 		SwordirbyChange();
+		GAME->sword = true;
 	}
 }
 

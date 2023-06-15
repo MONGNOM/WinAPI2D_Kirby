@@ -13,6 +13,9 @@
 #include "CIceItem.h"
 #include "CSwordItem.h"
 #include "CNomalKirby.h"
+#include "CGameManager.h"
+#include "CIceKirby.h"
+#include "CSwordKirby.h"
 
 
 CBonusMap::CBonusMap()
@@ -31,10 +34,24 @@ void CBonusMap::Init()
 
 void CBonusMap::Enter()
 {
-
-	pkirby = new CNomalKirby();
-	pkirby->SetPos(100, 500);
-	AddGameObject(pkirby);
+	if (GAME->ice)
+	{
+		CIceKirby* icekirby = new CIceKirby();
+		icekirby->SetPos(100, 500);
+		AddGameObject(icekirby);
+	}
+	else if (GAME->sword)
+	{
+		CSwordKirby* swordkirby = new CSwordKirby();
+		swordkirby->SetPos(100, 500);
+		AddGameObject(swordkirby);
+	}
+	else
+	{
+		pkirby = new CNomalKirby();
+		pkirby->SetPos(100, 500);
+		AddGameObject(pkirby);
+	}
 
 	CImageObject* Bonus = new CImageObject;
 	Bonus->SetImage(RESOURCE->LoadImg(L"BounsMap", L"Image\\Bonus3.png"));

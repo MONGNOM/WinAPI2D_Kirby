@@ -2,6 +2,8 @@
 #include "CPersimmon.h"
 #include "CImageObject.h"
 #include "CEventManager.h"
+#include "CKirby.h"
+#include "CGameManager.h"
 
 CPersimmon::CPersimmon()
 {
@@ -34,4 +36,15 @@ void CPersimmon::Render()
 
 void CPersimmon::Release()
 {
+}
+
+void CPersimmon::OnCollisionEnter(CCollider* pOtherCollider)
+{
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Player)
+	{
+		CKirby* Kirby = (CKirby*)pOtherCollider->GetOwner();
+		Kirby->playerHp = GAME->maxHp;
+		DELETEOBJECT(this);
+		Logger::Debug(L"아이템을 먹었다");
+	}
 }

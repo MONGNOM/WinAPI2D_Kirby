@@ -22,6 +22,7 @@
 #include "CRenderManager.h"
 #include "CGameObject.h"
 #include "CBackGround.h"
+#include "CGameManager.h"
 
 
 
@@ -44,9 +45,24 @@ void CSceneState02::Init()
 
 void CSceneState02::Enter()
 {
-	//CBackGround* pback = new CBackGround();
-	//pback->SetPos(WINSIZEX * 0.5f, WINSIZEY * 0.5f);
-	//AddGameObject(pback);
+	if (GAME->ice)
+	{
+		CIceKirby* icekirby = new CIceKirby();
+		icekirby->SetPos(100, 500);
+		AddGameObject(icekirby);
+	}
+	else if (GAME->sword)
+	{
+		CSwordKirby* swordkirby = new CSwordKirby();
+		swordkirby->SetPos(100, 500);
+		AddGameObject(swordkirby);
+	}
+	else
+	{
+		pkirby = new CNomalKirby();
+		pkirby->SetPos(100, 500);
+		AddGameObject(pkirby);
+	}
 
 	CImageObject* BossBackGround = new CImageObject;
 	BossBackGround->SetImage(RESOURCE->LoadImg(L"BbackGround1", L"Image\\Monster\\King\\BossStage1.png"));
@@ -55,10 +71,6 @@ void CSceneState02::Enter()
 	bossMonster = new CBossMonster();
 	bossMonster->SetPos(700, 450);
 	AddGameObject(bossMonster);
-
-	pkirby = new CNomalKirby();
-	pkirby->SetPos(100, 500);
-	AddGameObject(pkirby);
 
 	CAMERA->SetTargetPos(Vector(432, 400));
 	CAMERA->FadeIn(0.25f);

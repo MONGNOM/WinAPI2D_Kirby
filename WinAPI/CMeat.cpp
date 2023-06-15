@@ -1,5 +1,7 @@
 #include "framework.h"
 #include "CMeat.h"
+#include "CKirby.h"
+#include "CGameManager.h"
 
 CMeat::CMeat()
 {
@@ -32,4 +34,18 @@ void CMeat::Render()
 
 void CMeat::Release()
 {
+}
+
+void CMeat::OnCollisionEnter(CCollider* pOtherCollider)
+{
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Player)
+	{
+		CKirby* Kirby = (CKirby*)pOtherCollider->GetOwner();
+		if (Kirby->playerHp += GAME->maxHp * 0.5 > 5)
+			Kirby->playerHp = GAME->maxHp;
+		else
+			Kirby->playerHp += GAME->maxHp  * 0.5;
+		DELETEOBJECT(this);
+		Logger::Debug(L"아이템을 먹었다");
+	}
 }

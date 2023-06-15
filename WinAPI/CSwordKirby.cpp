@@ -6,6 +6,7 @@
 #include "CPathManager.h"
 #include "CEventManager.h"
 #include "CNomalKirby.h"
+#include "CGameManager.h"
 
 
 CSwordKirby::CSwordKirby()
@@ -43,6 +44,8 @@ CSwordKirby::CSwordKirby()
 	m_LpDownJumpAttackImage = nullptr;
 	m_LpAttackingImage		= nullptr;
 	m_pSword = nullptr;
+	GAME->ice = false;
+
 }
 
 CSwordKirby::~CSwordKirby()
@@ -717,6 +720,7 @@ void CSwordKirby::TakeOffState()
 	ADDOBJECT(m_pNormalKirby);
 	DELETEOBJECT(this);
 	CAMERA->SetTargetObj(m_pNormalKirby);
+	GAME->sword = false;
 }
 
 /*

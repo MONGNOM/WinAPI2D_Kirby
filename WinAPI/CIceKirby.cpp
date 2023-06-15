@@ -2,6 +2,7 @@
 #include "CIceKirby.h"
 #include "CIceAttack.h"
 #include "CNomalKirby.h"
+#include "CGameManager.h"
 
 CIceKirby::CIceKirby()
 {
@@ -16,6 +17,8 @@ CIceKirby::CIceKirby()
 	m_pJumpImage = nullptr;
 	m_pAttackImage = nullptr;
 	m_piceAttack = nullptr;
+	GAME->sword = false;
+
 }
 
 CIceKirby::~CIceKirby()
@@ -555,5 +558,7 @@ void CIceKirby::TakeOffState()
 	ADDOBJECT(m_pNormalKirby);
 	DELETEOBJECT(this);
 	CAMERA->SetTargetObj(m_pNormalKirby);
+	GAME->ice = false;
+
 }
 

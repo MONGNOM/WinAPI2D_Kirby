@@ -1,8 +1,10 @@
 #include "framework.h"
 #include "CKirby.h"
+#include "CGameManager.h"
+
 CKirby::CKirby()
 {
-	hp = 5;
+	playerHp = GAME->curHp;
 	m_fSpeed = 0.f;
 	m_jumpSpeed = 0.f;
 	m_vecPos = Vector(0, 0);
@@ -31,7 +33,8 @@ void CKirby::Init()
 
 void CKirby::Update()
 {
-	Logger::Debug(to_wstring(hp));
+	GAME->curHp = playerHp;
+	Logger::Debug(to_wstring(playerHp));
 	m_jumpSpeed -= m_gravity * DT;
 	fallTimer += DT;
 	lastLeftInputTime += DT;
@@ -56,7 +59,7 @@ void CKirby::OnCollisionEnter(CCollider* pOtherCollider)
 	}
 	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Monster)
 	{
-		hp -= 1;
+		playerHp -= 1;
 	}
 }
 

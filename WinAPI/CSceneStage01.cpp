@@ -43,17 +43,9 @@ void CSceneStage01::Init()
 void CSceneStage01::Enter()
 {
 
-	/*pkirby = new CNomalKirby();
+	pkirby = new CNomalKirby();
 	pkirby->SetPos(100, 300);
-	AddGameObject(pkirby);*/
-
-	swordkirby = new CSwordKirby();
-	swordkirby->SetPos(200, 300);
-	AddGameObject(swordkirby);
-
-	/*icekirby = new CIceKirby();
-	icekirby->SetPos(200, 300);
-	AddGameObject(icekirby);*/
+	AddGameObject(pkirby);
 
 	/*pBasicMonster = new CBasicMonster();
 	pBasicMonster->SetPos(400, 300);
@@ -72,10 +64,6 @@ void CSceneStage01::Enter()
 	swordMonster->SetPos(500, 300);
 	AddGameObject(swordMonster);
 
-	bossMonster = new CBossMonster();
-	bossMonster->SetPos(200, 300);
-	//AddGameObject(bossMonster);
-
 	CCameraController* pCamController = new CCameraController;
 	AddGameObject(pCamController);
 
@@ -89,7 +77,7 @@ void CSceneStage01::Enter()
 	pGround->SetPos(0, 0);
 	AddGameObject(pGround);
 
-	CAMERA->SetTargetObj(swordkirby);
+	CAMERA->SetTargetObj(pkirby);
 	CAMERA->FadeIn(0.25f);
 	LoadTile(GETPATH + L"Tile\\Stage01.tile");
 }

@@ -4,26 +4,29 @@
 
 CGameManager::CGameManager()
 {
-	playerHp = kirby->hp;
+	ice = false;
+	sword = false;
+	maxHp = 5;
+	curHp = maxHp;
 }
 
 CGameManager::~CGameManager()
 {
 }
 
-//void CGameManager::Init()
-//{
-//}
-//
-//void CGameManager::Update()
-//{
-//}
-//
-//void CGameManager::Render()
-//{
-//}
+void CGameManager::Init()
+{
+}
+
+void CGameManager::Update()
+{
+}
+
+void CGameManager::Render()
+{
+}
 
 void CGameManager::GetPlayerHp()
 {
-	GAME->playerHp;
+	GAME->curHp;
 }

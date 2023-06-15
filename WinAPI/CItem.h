@@ -12,7 +12,7 @@ protected:
 	void Update() override;
 	void Render() override;
 	void Release() override;
-	void OnCollisionEnter(CCollider* pOtherCollider) override;
+	virtual void OnCollisionEnter(CCollider* pOtherCollider) override;
 
 };
 

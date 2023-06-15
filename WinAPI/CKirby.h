@@ -12,7 +12,7 @@ public:
 	bool m_groundchecker;
 
 public:
-	float hp;
+	float playerHp;
 	float fallTimer;
 	float flyTimer;
 
