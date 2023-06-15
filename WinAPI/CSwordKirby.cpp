@@ -54,8 +54,6 @@ CSwordKirby::~CSwordKirby()
 
 void CSwordKirby::Init()
 {
-	CAMERA->SetTargetObj(this);
-	
 	//¿À¸¥ÂÊ
 	m_pIdleImage			= RESOURCE->LoadImg(L"SwordKirbyIdleL",				L"Image\\Kirby\\SwordKirby\\sword kirby Idle.png");
 	m_pAttackImage			= RESOURCE->LoadImg(L"SwordKirbyAttack",			L"Image\\Kirby\\SwordKirby\\sword kirby Attack.png");
@@ -719,7 +717,6 @@ void CSwordKirby::TakeOffState()
 	m_pNormalKirby->SetPos(m_vecPos);
 	ADDOBJECT(m_pNormalKirby);
 	DELETEOBJECT(this);
-	CAMERA->SetTargetObj(m_pNormalKirby);
 	GAME->sword = false;
 }
 

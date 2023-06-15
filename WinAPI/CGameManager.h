@@ -6,13 +6,11 @@ class CGameManager : public SingleTon<CGameManager>
 {
 	friend SingleTon<CCameraManager>;
 	friend CCore;
-	enum class PlayerState {Normal, Ice, Sword};
 
 public:
 	CGameManager();
 	virtual ~CGameManager();
 
-	//PlayerState state;
 
 	bool ice;
 	bool sword;
@@ -21,6 +19,7 @@ public:
 	float curHp;
 	CKirby* kirby;
 
+	Vector playerPos;
 public:
 	void Init();		// 게임시작시 초기화 작업
 	void Update();		// 프레임마다 게임로직 진행

@@ -31,6 +31,7 @@
 
 CSceneState02::CSceneState02()
 {
+	pkirby = nullptr;
 	bossMonster = nullptr;
 }
 
@@ -79,6 +80,7 @@ void CSceneState02::Enter()
 
 void CSceneState02::Update()
 {
+	 
 	if (BUTTONDOWN(VK_ESCAPE))
 	{
 		CAMERA->FadeOut(0.25f);

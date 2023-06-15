@@ -8,6 +8,7 @@ CIceKirby::CIceKirby()
 {
 	attackTimer = 0;
 	m_state = State::Idle;
+	m_pNormalKirby = nullptr;
 	m_pAnimator = nullptr;
 	m_pIdleImage = nullptr;
 	m_pMoveImage = nullptr;
@@ -18,7 +19,6 @@ CIceKirby::CIceKirby()
 	m_pAttackImage = nullptr;
 	m_piceAttack = nullptr;
 	GAME->sword = false;
-
 }
 
 CIceKirby::~CIceKirby()
@@ -28,7 +28,6 @@ CIceKirby::~CIceKirby()
 
 void CIceKirby::Init()
 {
-	CAMERA->SetTargetObj(this);
 	m_pIdleImage	= RESOURCE->LoadImg(L"IceKirbyIdleL",	L"Image\\Kirby\\Ice\\IceKirby.png");
 	m_pAttackImage	= RESOURCE->LoadImg(L"IceKirbyAttack",	L"Image\\Kirby\\Ice\\IceKirbyAttackPose.png");
 	m_pMoveImage	= RESOURCE->LoadImg(L"IceKirbyW",		L"Image\\Kirby\\Ice\\IceKirbyWalk.png");
@@ -557,7 +556,6 @@ void CIceKirby::TakeOffState()
 	m_pNormalKirby->SetPos(m_vecPos);
 	ADDOBJECT(m_pNormalKirby);
 	DELETEOBJECT(this);
-	CAMERA->SetTargetObj(m_pNormalKirby);
 	GAME->ice = false;
 
 }

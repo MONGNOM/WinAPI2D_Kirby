@@ -20,6 +20,7 @@
 #include "CImageObject.h"
 #include "CResourceManager.h"
 #include "CBossMonster.h"
+#include "CGameManager.h"
 
 CSceneStage01::CSceneStage01()
 {
@@ -77,13 +78,23 @@ void CSceneStage01::Enter()
 	pGround->SetPos(0, 0);
 	AddGameObject(pGround);
 
-	CAMERA->SetTargetObj(pkirby);
 	CAMERA->FadeIn(0.25f);
 	LoadTile(GETPATH + L"Tile\\Stage01.tile");
 }
 
 void CSceneStage01::Update()
 {
+	if (GAME->playerPos.x >= 4658)
+	{
+		CAMERA->SetTargetPos(Vector(4658, GAME->playerPos.y), 0.1f);
+	}
+	else if (GAME->playerPos.x <= 400)
+	{
+		CAMERA->SetTargetPos(Vector(400, GAME->playerPos.y), 0.1f);
+	}
+	else
+		CAMERA->SetTargetPos(GAME->playerPos, 0.1f);
+
 	if (BUTTONDOWN(VK_ESCAPE))
 	{
 		CAMERA->FadeOut(0.25f);

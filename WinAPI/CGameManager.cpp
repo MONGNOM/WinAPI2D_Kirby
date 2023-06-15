@@ -8,6 +8,7 @@ CGameManager::CGameManager()
 	sword = false;
 	maxHp = 5;
 	curHp = maxHp;
+	playerPos = Vector(0, 0);
 }
 
 CGameManager::~CGameManager()

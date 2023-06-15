@@ -33,6 +33,7 @@ void CKirby::Init()
 
 void CKirby::Update()
 {
+	GAME->playerPos = m_vecPos;
 	GAME->curHp = playerHp;
 	Logger::Debug(to_wstring(playerHp));
 	m_jumpSpeed -= m_gravity * DT;
