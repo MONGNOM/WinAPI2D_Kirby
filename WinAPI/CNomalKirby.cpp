@@ -495,9 +495,9 @@ void CNomalKirby::ChangeState()
 		if (changeTimer > 0.36f)
 		{
 			changeTimer = 0;
-			if (ice)
+			if (ice && !sword)
 				IceKirbyChange();
-			if (sword)
+			if (sword && !ice)
 				SwordirbyChange();
 			else
 				m_state = State::Idle;

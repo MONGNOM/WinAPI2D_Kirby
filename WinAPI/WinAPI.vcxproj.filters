@@ -276,6 +276,12 @@
     <ClInclude Include="CGameManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CKirbyHp.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossHp.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -459,6 +465,12 @@
       <Filter>GameObject\Item</Filter>
     </ClCompile>
     <ClCompile Include="CGameManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CKirbyHp.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossHp.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

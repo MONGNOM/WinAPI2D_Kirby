@@ -6,6 +6,8 @@ CGameManager::CGameManager()
 {
 	ice = false;
 	sword = false;
+
+	BossHp = 11;
 	maxHp = 5;
 	curHp = maxHp;
 	playerPos = Vector(0, 0);

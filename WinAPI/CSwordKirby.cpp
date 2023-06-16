@@ -717,7 +717,7 @@ void CSwordKirby::TakeOffState()
 	m_pNormalKirby->SetPos(m_vecPos);
 	ADDOBJECT(m_pNormalKirby);
 	DELETEOBJECT(this);
-	GAME->sword = false;
+	m_pNormalKirby->sword = false;
 }
 
 /*

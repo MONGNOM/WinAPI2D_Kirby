@@ -1,6 +1,7 @@
 #pragma once
 #include "CGameObject.h"
 
+
 class CKirby : public CGameObject
 {
 public:

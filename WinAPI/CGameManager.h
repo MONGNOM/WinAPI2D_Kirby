@@ -15,9 +15,9 @@ public:
 	bool ice;
 	bool sword;
 
+	int BossHp;
 	float maxHp;
 	float curHp;
-	CKirby* kirby;
 
 	Vector playerPos;
 public:

@@ -1,9 +1,24 @@
 #include "framework.h"
 #include "CKirby.h"
 #include "CGameManager.h"
+#include "CKirbyHp.h"
+#include "CEventManager.h"
 
 CKirby::CKirby()
 {
+/* 메모장
+	
+	구현 내용:
+	UI : 커비 체력과 상태, 보스 체력바
+	백그라운드배경
+	사운드
+	몬스터 거리에 따른 패턴
+	
+	수정 사항:
+	바닥뚫기
+	벽뚫기
+*/ 
+
 	playerHp = GAME->curHp;
 	m_fSpeed = 0.f;
 	m_jumpSpeed = 0.f;
@@ -41,6 +56,11 @@ void CKirby::Update()
 	lastLeftInputTime += DT;
 	lastRightInputTime += DT;
 	m_vecLookDir = m_vecMoveDir;
+
+	CKirbyHp* hp = new CKirbyHp();
+	hp->SetPos(110, 550);
+	hp->SetScale(270, 50);
+	ADDOBJECT(hp);
 }
 
 void CKirby::Render()

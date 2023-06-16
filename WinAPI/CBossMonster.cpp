@@ -1,5 +1,7 @@
 #include "framework.h"
 #include "CBossMonster.h"
+#include "CBossHp.h"
+#include "CGameManager.h"
 
 CBossMonster::CBossMonster()
 {
@@ -14,7 +16,7 @@ CBossMonster::CBossMonster()
  	m_pAttackImageL2 = nullptr;
 	m_vecLookDir = Vector(-1, 0);
 	m_state = State::Idle;
-	hp = 1;
+	hp = GAME->BossHp;
 }
 
 CBossMonster::~CBossMonster()
@@ -24,6 +26,12 @@ CBossMonster::~CBossMonster()
 
 void CBossMonster::Init()
 {
+
+	CBossHp* BossHP = new CBossHp;
+	BossHP->SetPos(550, 537);
+	BossHP->SetScale(432, 94);
+	ADDOBJECT(BossHP);
+
 	m_pMoveImage		= RESOURCE->LoadImg(L"BossMonsterMove", L"Image\\Monster\\King\\KingisBack.png");
 	m_pDieImage			= RESOURCE->LoadImg(L"BossMonsterDie", L"Image\\Monster\\King\\KingDie.png");
 	m_pAttackImage		= RESOURCE->LoadImg(L"BossMonsterAttack", L"Image\\Monster\\King\\KingJump.png");
@@ -58,6 +66,8 @@ void CBossMonster::Init()
 
 void CBossMonster::Update()
 { 
+	GAME->BossHp = hp;
+
 	// 시선 돌리는 기준 잡아야함
 	CMonster::Update();
 	switch (m_state)

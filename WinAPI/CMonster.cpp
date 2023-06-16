@@ -19,7 +19,7 @@ CMonster::CMonster()
 	idleTimer = 0;
 	attackTimer = 0;
 	walkTimer = 0;
-	hp = 10;
+	hp = 0;
 	dizzy = false;
 	iceDie = false;
 }

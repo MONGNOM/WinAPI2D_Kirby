@@ -556,7 +556,6 @@ void CIceKirby::TakeOffState()
 	m_pNormalKirby->SetPos(m_vecPos);
 	ADDOBJECT(m_pNormalKirby);
 	DELETEOBJECT(this);
-	GAME->ice = false;
-
+	m_pNormalKirby->ice = false;
 }
 
