@@ -16,6 +16,7 @@
 #include "CGameManager.h"
 #include "CIceKirby.h"
 #include "CSwordKirby.h"
+#include "CKirbyIcon.h"
 
 
 CBonusMap::CBonusMap()
@@ -37,28 +38,28 @@ void CBonusMap::Enter()
 	if (GAME->ice)
 	{
 		CIceKirby* icekirby = new CIceKirby();
-		icekirby->SetPos(100, 500);
+		icekirby->SetPos(100, 450);
 		AddGameObject(icekirby);
 	}
 	else if (GAME->sword)
 	{
 		CSwordKirby* swordkirby = new CSwordKirby();
-		swordkirby->SetPos(100, 500);
+		swordkirby->SetPos(100, 450);
 		AddGameObject(swordkirby);
 	}
 	else
 	{
 		pkirby = new CNomalKirby();
-		pkirby->SetPos(100, 500);
+		pkirby->SetPos(100, 450);
 		AddGameObject(pkirby);
 	}
 
 	CImageObject* Bonus = new CImageObject;
-	Bonus->SetImage(RESOURCE->LoadImg(L"BounsMap", L"Image\\Bonus3.png"));
+	Bonus->SetImage(RESOURCE->LoadImg(L"BounsMap", L"Image\\Bonus4.png"));
 	AddGameObject(Bonus);
 
 	pPersimon = new CPersimmon();
-	pPersimon->SetPos(635, 470);
+	pPersimon->SetPos(525, 115);
 	AddGameObject(pPersimon);
 
 	CIceItem* iceitem = new CIceItem();
@@ -70,12 +71,17 @@ void CBonusMap::Enter()
 	AddGameObject(sworditem);
 
 	CMeat* meat = new CMeat();
-	meat->SetPos(200, 470);
+	meat->SetPos(275, 115);
 	AddGameObject(meat);
 
 	CBossDoor* door = new CBossDoor();
-	door->SetPos(435, 425);
+	door->SetPos(415, 330);
 	AddGameObject(door);
+
+	CKirbyIcon* icon = new CKirbyIcon;
+	icon->SetPos(8, 558);
+	icon->SetScale(125, 50);
+	AddGameObject(icon);
 
 	CAMERA->FadeIn(0.25f);
 	LoadTile(GETPATH + L"Tile\\Stage03.tile");

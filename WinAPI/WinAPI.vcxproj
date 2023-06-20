@@ -170,6 +170,7 @@
     <ClInclude Include="CItem.h" />
     <ClInclude Include="CKirbyEat.h" />
     <ClInclude Include="CKirbyHp.h" />
+    <ClInclude Include="CKirbyIcon.h" />
     <ClInclude Include="CKirbyShot.h" />
     <ClInclude Include="CKirbyWeapon.h" />
     <ClInclude Include="CMeat.h" />
@@ -245,6 +246,7 @@
     <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CKirbyEat.cpp" />
     <ClCompile Include="CKirbyHp.cpp" />
+    <ClCompile Include="CKirbyIcon.cpp" />
     <ClCompile Include="CKirbyShot.cpp" />
     <ClCompile Include="CKirbyWeapon.cpp" />
     <ClCompile Include="CMeat.cpp" />

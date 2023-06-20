@@ -23,6 +23,7 @@
 #include "CGameObject.h"
 #include "CBackGround.h"
 #include "CGameManager.h"
+#include "CKirbyIcon.h"
 
 
 
@@ -72,6 +73,11 @@ void CSceneState02::Enter()
 	bossMonster = new CBossMonster();
 	bossMonster->SetPos(700, 450);
 	AddGameObject(bossMonster);
+
+	CKirbyIcon* icon = new CKirbyIcon;
+	icon->SetPos(8, 558);
+	icon->SetScale(125, 50);
+	AddGameObject(icon);
 
 	CAMERA->SetTargetPos(Vector(432, 400));
 	CAMERA->FadeIn(0.25f);

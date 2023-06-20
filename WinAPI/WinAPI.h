@@ -51,6 +51,7 @@ enum class Layer
 	Door,
 	Player,
 	Weapon,
+	MWeapon,
 	Missile,
 
 	Ui,

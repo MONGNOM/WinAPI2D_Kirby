@@ -21,6 +21,9 @@ public:
 	bool ice;
 	bool eat;
 	bool eating;
+	bool iceicon;
+	bool swordicon;
+
 private:
 	
 	wstring normalkirbystate;

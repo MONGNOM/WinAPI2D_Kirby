@@ -282,6 +282,9 @@
     <ClInclude Include="CBossHp.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CKirbyIcon.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -471,6 +474,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CBossHp.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CKirbyIcon.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

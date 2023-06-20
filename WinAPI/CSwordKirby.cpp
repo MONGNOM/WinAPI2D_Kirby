@@ -7,12 +7,14 @@
 #include "CEventManager.h"
 #include "CNomalKirby.h"
 #include "CGameManager.h"
+#include "CImageObject.h"
 
 
 CSwordKirby::CSwordKirby()
 {
 	attackTimer = 0;
 	m_state = State::Idle;
+	GAME->ice				= false;
 	m_pAnimator				= nullptr;
 	m_pIdleImage			= nullptr;
 	m_pMoveImage			= nullptr;
@@ -43,8 +45,8 @@ CSwordKirby::CSwordKirby()
 	m_LpJumpDownImage		= nullptr;
 	m_LpDownJumpAttackImage = nullptr;
 	m_LpAttackingImage		= nullptr;
-	m_pSword = nullptr;
-	GAME->ice = false;
+	m_SwordIconImage		= nullptr;
+	m_pSword				= nullptr;
 
 }
 
@@ -54,6 +56,7 @@ CSwordKirby::~CSwordKirby()
 
 void CSwordKirby::Init()
 {
+	CKirby::Init();
 	//오른쪽
 	m_pIdleImage			= RESOURCE->LoadImg(L"SwordKirbyIdleL",				L"Image\\Kirby\\SwordKirby\\sword kirby Idle.png");
 	m_pAttackImage			= RESOURCE->LoadImg(L"SwordKirbyAttack",			L"Image\\Kirby\\SwordKirby\\sword kirby Attack.png");
@@ -68,6 +71,7 @@ void CSwordKirby::Init()
 	m_pJumpDownImage		= RESOURCE->LoadImg(L"SwordKirbyJumpDown",			L"Image\\Kirby\\SwordKirby\\sword kirby jumping down.png");
 	m_pDownJumpAttackImage	= RESOURCE->LoadImg(L"SwordKirbyDownJumpAttack",	L"Image\\Kirby\\SwordKirby\\sword kirby DownJumpAttack.png");
 	m_pAttackingImage		= RESOURCE->LoadImg(L"SwordKirbyAttacking",			L"Image\\Kirby\\SwordKirby\\sword kirby Attacking.png");
+
 
 
 	//오른쪽

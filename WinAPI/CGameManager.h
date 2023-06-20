@@ -14,6 +14,8 @@ public:
 
 	bool ice;
 	bool sword;
+	bool iceicon;
+	bool swordicon;
 
 	int BossHp;
 	float maxHp;

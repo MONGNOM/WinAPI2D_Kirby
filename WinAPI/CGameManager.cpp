@@ -6,6 +6,9 @@ CGameManager::CGameManager()
 {
 	ice = false;
 	sword = false;
+	iceicon = false;
+	swordicon = false;
+
 
 	BossHp = 11;
 	maxHp = 5;

@@ -21,6 +21,7 @@
 #include "CResourceManager.h"
 #include "CBossMonster.h"
 #include "CGameManager.h"
+#include "CKirbyIcon.h"
 
 CSceneStage01::CSceneStage01()
 {
@@ -67,6 +68,11 @@ void CSceneStage01::Enter()
 
 	CCameraController* pCamController = new CCameraController;
 	AddGameObject(pCamController);
+
+	CKirbyIcon* icon = new CKirbyIcon;
+	icon->SetPos(8, 558);
+	icon->SetScale(125, 50);
+	AddGameObject(icon);
 
 	/*CImageObject* pBackGround = new CImageObject();
 	pBackGround->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\BackGround2.png"));

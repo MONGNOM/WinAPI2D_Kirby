@@ -70,6 +70,8 @@ private:
 	CImage* m_LpDownJumpAttackImage;
 	CImage* m_LpAttackingImage;
 
+	CImage* m_SwordIconImage;
+
 
 
 private:

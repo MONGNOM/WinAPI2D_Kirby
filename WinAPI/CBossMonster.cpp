@@ -26,7 +26,6 @@ CBossMonster::~CBossMonster()
 
 void CBossMonster::Init()
 {
-
 	CBossHp* BossHP = new CBossHp;
 	BossHP->SetPos(550, 537);
 	BossHP->SetScale(432, 94);
@@ -54,10 +53,10 @@ void CBossMonster::Init()
 	m_pAnimator->CreateAnimation(L"DieL", m_pDieImage, Vector(670.f, 290.f), Vector(180.f, 200.f), Vector(-225.f, 0.f), 0.25f, 4, false);
 	m_pAnimator->CreateAnimation(L"AttackL", m_pAttackImage, Vector(1260.f, 270.f), Vector(165.f, 210.f), Vector(-210.f, 0.f), 0.2f, 7,false);
 	m_pAnimator->CreateAnimation(L"Attack2L", m_pAttackImageL2, Vector(2430.f, 0.f), Vector(280.f, 220.f), Vector(-375.f, 0.f), 0.15f, 7);
-	m_pAnimator->CreateAnimation(L"DizzyL", m_pDieImage, Vector(1150.f, 490.f), Vector(145.f, 100.f), Vector(0.f, 0.f), 0.15f, 1);
+	m_pAnimator->CreateAnimation(L"DizzyL", m_pDieImage, Vector(660.f, 300.f), Vector(180.f, 200.f), Vector(0.f, 0.f), 0.15f, 1);
 
 
-	m_pAnimator->Play(L"IdleR", false);
+	m_pAnimator->Play(L"DizzyL", false);
 	AddComponent(m_pAnimator);
 
 	AddCollider(ColliderType::Rect, Vector(170, 180), Vector(0, 0));
@@ -236,6 +235,8 @@ void CBossMonster::DizzyState()
 		{
 			m_state = State::Idle;
 			dieTimer = 0;
+			dizzy = false;
+
 		}
 	}
 	if (m_vecLookDir.x == -1)
@@ -244,6 +245,7 @@ void CBossMonster::DizzyState()
 		if (dieTimer > 0.5f)
 		{
 			m_state = State::Idle;
+			dizzy = false;
 			dieTimer = 0;
 		}
 	}

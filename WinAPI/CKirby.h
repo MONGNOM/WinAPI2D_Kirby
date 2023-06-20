@@ -1,6 +1,6 @@
 #pragma once
 #include "CGameObject.h"
-
+#include "CKirbyHp.h"
 
 class CKirby : public CGameObject
 {
@@ -22,6 +22,8 @@ public:
 	float m_gravity;
 	int m_groundCounter;
 	bool stage1;
+
+	CKirbyHp* hp;
 
 	Vector m_vecMoveDir;
 	Vector m_vecLookDir;

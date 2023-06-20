@@ -37,8 +37,12 @@ CNomalKirby::CNomalKirby()
 	m_pEatAttackImage	= nullptr;
 	eating				= false;
 	eat					= false;
+	swordicon			= false;
+	iceicon				= false;
 	ice					= GAME->ice;
 	sword				= GAME->sword;
+	iceicon				= GAME->iceicon;
+	swordicon			= GAME->swordicon;
 	attackTimer			= 0;
 	changeTimer			= 0;
 	m_strName			= L"일반커비";
@@ -51,6 +55,7 @@ CNomalKirby::~CNomalKirby()
 
 void CNomalKirby::Init()
 {
+	CKirby::Init();
 	m_pIdleLImage		= RESOURCE->LoadImg(L"KirbyIdleL",		L"Image\\Kirby\\Basic\\KirbyIdleL.png"	);
 	m_pIdleRImage		= RESOURCE->LoadImg(L"KirbyIdleR",		L"Image\\Kirby\\Basic\\KirbyIdleR.png"	);
 	m_pMoveLImage		= RESOURCE->LoadImg(L"KirbyLW",			L"Image\\Kirby\\Basic\\KirbyLW.png"		);
@@ -98,14 +103,16 @@ void CNomalKirby::Init()
 	AddComponent(m_pAnimator);
 
 	AddCollider(ColliderType::Rect, Vector(40, 40), Vector(0, 0));
+
 }
 
 
 void CNomalKirby::Update()
 {
-
 	GAME->ice = ice;
 	GAME->sword = sword;
+	GAME->iceicon = iceicon;
+	GAME->swordicon = swordicon;
 
 	CKirby::Update();
 	switch (m_state)
@@ -178,6 +185,8 @@ void CNomalKirby::Jump()
 
 void CNomalKirby::IdleState()
 {
+	swordicon = false;
+	iceicon = false;
 	eat = false;
 	if (m_groundchecker == false)
 	{
@@ -696,6 +705,7 @@ void CNomalKirby::Release()
 
 void CNomalKirby::IceKirbyChange()
 {
+	GAME->iceicon = true;
 	icekirby = new CIceKirby();
 	icekirby->SetPos(m_vecPos);
 	ADDOBJECT(icekirby);
@@ -704,6 +714,7 @@ void CNomalKirby::IceKirbyChange()
 
 void CNomalKirby::SwordirbyChange()
 {
+	GAME-> swordicon = true;
 	swordKriby = new CSwordKirby();
 	swordKriby->SetPos(m_vecPos);
 	ADDOBJECT(swordKriby);
@@ -713,15 +724,22 @@ void CNomalKirby::SwordirbyChange()
 
 void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)
 {
-	CKirby::OnCollisionEnter(pOtherCollider);
-	
+	if (pOtherCollider->GetObjName() == L"바닥")
+	{
+		m_groundCounter++;
+		m_groundchecker = true;
+	}
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Monster && !eat) 
+	{
+		playerHp -= 1;
+	}
 	if (pOtherCollider->GetObjName() == L"얼음몬스터" && eat)
 	{
-		ice = true;
+			ice = true;
 	}
 	if (pOtherCollider->GetObjName() == L"칼몬스터" && eat)
 	{
-		sword = true;
+			sword = true;
 	}
 
 	if (pOtherCollider->GetObjName() == L"얼음아이템")

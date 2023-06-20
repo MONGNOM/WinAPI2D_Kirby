@@ -9,14 +9,14 @@ CKirby::CKirby()
 /* 메모장
 	
 	구현 내용:
-	UI : 커비 체력과 상태, 보스 체력바
+	
+	몬스터 거리에 따른 패턴
+	보스 다시 자르기
 	백그라운드배경
 	사운드
-	몬스터 거리에 따른 패턴
 	
 	수정 사항:
-	바닥뚫기
-	벽뚫기
+	바닥뚫기, 벽뚫기 => 교수님 소스 가져다 쓰기 [완]
 */ 
 
 	playerHp = GAME->curHp;
@@ -44,23 +44,23 @@ CKirby::~CKirby()
 
 void CKirby::Init()
 {
+	hp = new CKirbyHp();
+	hp->SetPos(110, 550);
+	hp->SetScale(270, 50);
+	ADDOBJECT(hp);
 }
 
 void CKirby::Update()
 {
 	GAME->playerPos = m_vecPos;
 	GAME->curHp = playerHp;
-	Logger::Debug(to_wstring(playerHp));
 	m_jumpSpeed -= m_gravity * DT;
 	fallTimer += DT;
 	lastLeftInputTime += DT;
 	lastRightInputTime += DT;
 	m_vecLookDir = m_vecMoveDir;
 
-	CKirbyHp* hp = new CKirbyHp();
-	hp->SetPos(110, 550);
-	hp->SetScale(270, 50);
-	ADDOBJECT(hp);
+	
 }
 
 void CKirby::Render()
