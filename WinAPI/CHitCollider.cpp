@@ -8,6 +8,9 @@ CHitCollider::CHitCollider()
 {
 	m_layer = Layer::HitCollider;
 	m_strName = L"공격콜라이더";
+	colliderx = 50;
+	collidery = 50;
+
 }
 
 CHitCollider::~CHitCollider()
@@ -16,7 +19,7 @@ CHitCollider::~CHitCollider()
 
 void CHitCollider::Init()
 {
-	AddCollider(ColliderType::Rect, Vector(100, 100), Vector(0, 0));
+	AddCollider(ColliderType::Rect, Vector(colliderx, collidery), Vector(0, 0));
 }
 
 void CHitCollider::Update()
@@ -30,14 +33,22 @@ void CHitCollider::Render()
 void CHitCollider::Release()
 {
 }
+void CHitCollider::SetColliderScale(float x, float y)
+{
+	colliderx = x;
+	collidery = y;
+}
 void CHitCollider::SetMonster(CMonster* monster)
 {
 	this->monster = monster;
 }
-void CHitCollider::OnCollisionEnter(CCollider* pOtherCollider)
+void CHitCollider::OnCollisionStay(CCollider* pOtherCollider)
 {
 	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Player)
 	{
+		if (monster->GetPos().x > pOtherCollider->GetOwner()->GetPos().x)
+		monster->m_vecLookDir = Vector(-1,0);
+		else
 		monster->m_vecLookDir = Vector(1, 0);
 		// 플레이어가 콜라이더에 부딪히면 부딪히면 몬스터의 시선은 플레이어의 위치를 봐라
 	}

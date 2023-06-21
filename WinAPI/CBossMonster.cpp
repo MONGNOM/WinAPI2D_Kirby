@@ -31,6 +31,7 @@ void CBossMonster::Init()
 	BossHP->SetScale(432, 94);
 	ADDOBJECT(BossHP);
 
+	CMonster::Init();
 	m_pMoveImage		= RESOURCE->LoadImg(L"BossMonsterMove", L"Image\\Monster\\King\\KingisBack.png");
 	m_pDieImage			= RESOURCE->LoadImg(L"BossMonsterDie", L"Image\\Monster\\King\\KingDie.png");
 	m_pAttackImage		= RESOURCE->LoadImg(L"BossMonsterAttack", L"Image\\Monster\\King\\KingJump.png");
@@ -55,6 +56,7 @@ void CBossMonster::Init()
 	m_pAnimator->CreateAnimation(L"Attack2L", m_pAttackImageL2, Vector(2430.f, 0.f), Vector(280.f, 220.f), Vector(-375.f, 0.f), 0.15f, 7);
 	m_pAnimator->CreateAnimation(L"DizzyL", m_pDieImage, Vector(660.f, 300.f), Vector(180.f, 200.f), Vector(0.f, 0.f), 0.15f, 1);
 
+	collider->SetColliderScale(400, 300);
 
 	m_pAnimator->Play(L"DizzyL", false);
 	AddComponent(m_pAnimator);
@@ -66,6 +68,7 @@ void CBossMonster::Init()
 void CBossMonster::Update()
 { 
 	GAME->BossHp = hp;
+	collider->SetPos(m_vecPos);
 
 	// 시선 돌리는 기준 잡아야함
 	CMonster::Update();
@@ -211,7 +214,7 @@ void CBossMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this);
+				DELETEOBJECT(this); DELETEOBJECT(collider);
 			}
 		}
 		if (m_vecLookDir.x == -1)
@@ -220,7 +223,7 @@ void CBossMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this);
+				DELETEOBJECT(this); DELETEOBJECT(collider);
 			}
 		}
 }

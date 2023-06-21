@@ -603,7 +603,6 @@ void CNomalKirby::AttackCollider()
 	if (m_vecLookDir.x == 1)
 	{
 		m_pKirbyEat->SetPos(m_vecPos.x + 35, m_vecPos.y);
-
 	}
 	ADDOBJECT(m_pKirbyEat);
 }
@@ -719,7 +718,6 @@ void CNomalKirby::SwordirbyChange()
 	swordKriby->SetPos(m_vecPos);
 	ADDOBJECT(swordKriby);
 	DELETEOBJECT(this);
-
 }
 
 void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)

@@ -13,7 +13,7 @@ CMonsterWeapon::~CMonsterWeapon()
 
 void CMonsterWeapon::Init()
 {
-	AddCollider(ColliderType::Rect, Vector(10, 10), Vector(0, 0));
+	AddCollider(ColliderType::Rect, Vector(50, 50), Vector(0, 0));
 
 }
 

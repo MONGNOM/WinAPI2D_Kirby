@@ -31,7 +31,6 @@ CMonster::~CMonster()
 void CMonster::Init()
 {
 	collider = new CHitCollider();
-	collider->SetPos(m_vecPos);
 	collider->SetMonster(this);
 	ADDOBJECT(collider);
 }
@@ -99,6 +98,7 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 		if (normalKirby->eat)
 		{
 			DELETEOBJECT(this);
+			DELETEOBJECT(collider);
 		}
 		if (this != nullptr)
 		{

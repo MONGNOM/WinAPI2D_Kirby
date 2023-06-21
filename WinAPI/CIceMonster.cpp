@@ -30,6 +30,8 @@ CIceMonster::~CIceMonster()
 
 void CIceMonster::Init()
 {
+
+	CMonster::Init();
 	m_pMoveImage	= RESOURCE->LoadImg(L"IceMonsterMove", L"Image\\Monster\\IceMonster\\IceMonsterWalk.png");
 	m_pDieImage		= RESOURCE->LoadImg(L"IceMonsterDie", L"Image\\Monster\\IceMonster\\IceMonsterDie.png");
 	m_pAttackImage	= RESOURCE->LoadImg(L"IceMonsterAttack", L"Image\\Monster\\IceMonster\\IceMonsterAttackPose.png");
@@ -52,6 +54,7 @@ void CIceMonster::Init()
 
 	m_pAnimator->Play(L"WalkR", false);
 	AddComponent(m_pAnimator);
+	collider->SetColliderScale(200, 100);
 
 	AddCollider(ColliderType::Circle, Vector(20, 20), Vector(0, 0));
 
@@ -59,9 +62,9 @@ void CIceMonster::Init()
 
 void CIceMonster::Update()
 {
-	
-
 	CMonster::Update();
+	collider->SetPos(m_vecPos);
+
 	switch (m_state)
 	{
 	case CIceMonster::State::Walk:
@@ -127,7 +130,7 @@ void CIceMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this);
+				DELETEOBJECT(this); DELETEOBJECT(collider);
 			}
 		}
 		if (m_vecLookDir.x == -1)
@@ -136,7 +139,7 @@ void CIceMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this);
+				DELETEOBJECT(this); DELETEOBJECT(collider);
 			}
 		}
 	}
@@ -148,7 +151,7 @@ void CIceMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this);
+				DELETEOBJECT(this); DELETEOBJECT(collider);
 			}
 		}
 		if (m_vecLookDir.x == -1)
@@ -157,7 +160,7 @@ void CIceMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this);
+				DELETEOBJECT(this); DELETEOBJECT(collider);
 			}
 		}
 	}

@@ -63,14 +63,14 @@ void CSwordMonster::Init()
 
 	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
-
+	collider->SetColliderScale(250, 100);
 	AddCollider(ColliderType::Rect, Vector(100, 100), Vector(0, 0));
 }
 
 void CSwordMonster::Update()
 {
-	
 	CMonster::Update();
+	collider->SetPos(m_vecPos);
 	switch (m_state)
 	{
 	case CSwordMonster::State::Idle:
@@ -205,7 +205,7 @@ void CSwordMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this);
+				DELETEOBJECT(this); DELETEOBJECT(collider);
 			}
 		}
 		if (m_vecLookDir.x == -1)
@@ -214,7 +214,7 @@ void CSwordMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this);
+				DELETEOBJECT(this); DELETEOBJECT(collider);
 			}
 		}
 	}
@@ -226,7 +226,7 @@ void CSwordMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this);
+				DELETEOBJECT(this); DELETEOBJECT(collider);
 			}
 		}
 		if (m_vecLookDir.x == -1)
@@ -235,7 +235,7 @@ void CSwordMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this);
+				DELETEOBJECT(this); DELETEOBJECT(collider);
 			}
 		}
 	}

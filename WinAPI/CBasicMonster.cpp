@@ -30,6 +30,8 @@ CBasicMonster::~CBasicMonster()
 
 void CBasicMonster::Init()
 {
+	CMonster::Init();
+
 	m_pMoveImage	= RESOURCE->LoadImg(L"BasicMonsterWalk",	L"Image\\Monster\\BasicMonster\\BasicMonster.png");
 	m_pDieImage		= RESOURCE->LoadImg(L"BasicMonsterDie",		L"Image\\Monster\\BasicMonster\\BasicMonsterDie.png");
 	m_pIceDieImage = RESOURCE->LoadImg(L"IceDie", L"Image\\MonstericeStatesmall.png");
@@ -60,6 +62,8 @@ void CBasicMonster::AnimatorUpdate()
 void CBasicMonster::Update()
 {
 	CMonster::Update();
+	collider->SetPos(m_vecPos);
+
 	switch(m_state)
 	{
 	case State::Walk:
@@ -111,7 +115,7 @@ void CBasicMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this);
+				DELETEOBJECT(this); DELETEOBJECT(collider);
 			}
 		}
 		if (m_vecLookDir.x == -1)
@@ -120,7 +124,7 @@ void CBasicMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this);
+				DELETEOBJECT(this); DELETEOBJECT(collider);
 			}
 		}
 	}
@@ -132,7 +136,7 @@ void CBasicMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this);
+				DELETEOBJECT(this); DELETEOBJECT(collider);
 			}
 		}
 		if (m_vecLookDir.x == -1)
@@ -141,7 +145,7 @@ void CBasicMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this);
+				DELETEOBJECT(this); DELETEOBJECT(collider);
 			}
 		}
 	}
