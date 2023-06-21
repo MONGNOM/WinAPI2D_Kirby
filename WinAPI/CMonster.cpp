@@ -8,7 +8,7 @@
 
 CMonster::CMonster()
 {
-	m_vecScale = Vector(100, 100);
+	collider = nullptr;
 	m_layer = Layer::Monster;
 	m_fSpeed = 0.f;
 	m_vecLookDir = Vector(1, 0);
@@ -30,11 +30,15 @@ CMonster::~CMonster()
 
 void CMonster::Init()
 {
-
+	collider = new CHitCollider();
+	collider->SetPos(m_vecPos);
+	collider->SetMonster(this);
+	ADDOBJECT(collider);
 }
 
 void CMonster::Update()
 {
+
 	if (m_groundchecker == false)
 	{
 		m_vecPos.y += m_gravity * DT;
@@ -56,6 +60,12 @@ void CMonster::TakeDamage(int damage)
 	dizzy = true;
 }
 
+
+
+CMonster* CMonster::GetMonster()
+{
+	return this;
+}
 
 void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 {

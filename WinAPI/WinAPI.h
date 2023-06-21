@@ -52,6 +52,7 @@ enum class Layer
 	Player,
 	Weapon,
 	MWeapon,
+	HitCollider,
 	Missile,
 
 	Ui,

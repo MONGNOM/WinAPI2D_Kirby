@@ -1,5 +1,6 @@
 #pragma once
 #include "CGameObject.h"
+#include "CHitCollider.h"
 
 class CImage;
 class CAnimtor;
@@ -24,6 +25,7 @@ public:
 	bool iceDie;
 	Vector m_vecLookDir; 
 	Vector m_vecMoveDir;
+	CHitCollider* collider;
 	
 
 	int m_groundCounter;
@@ -37,6 +39,10 @@ protected:
 	void Update() override;
 	void Render() override;
 	void Release() override;
+
+public:
+	
+	CMonster* GetMonster();
 
 	void OnCollisionEnter(CCollider* pOtherCollider) override;
 	void OnCollisionStay(CCollider* pOtherCollider) override;

@@ -5,7 +5,6 @@ class CMonsterWeapon : public CGameObject
 public:
 	CMonsterWeapon();
 	virtual ~CMonsterWeapon();
-	Vector m_vecLookDir;
 
 
 protected:

@@ -28,6 +28,7 @@ CSwordMonster::~CSwordMonster()
 
 void CSwordMonster::Init()
 {
+	CMonster::Init();
 	m_pMoveImage	= RESOURCE->LoadImg(L"SwordMonsterMove",	L"Image\\Monster\\SwordMonster\\SwordMonster.png");
 	m_pDieImage		= RESOURCE->LoadImg(L"SwordMonsterDie",		L"Image\\Monster\\SwordMonster\\SwordMonster.png");
 	m_pAttackImage	= RESOURCE->LoadImg(L"SwordMonsterAttack",	L"Image\\Monster\\SwordMonster\\SwordMonsterAttack.png");
