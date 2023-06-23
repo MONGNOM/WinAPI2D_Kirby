@@ -10,7 +10,7 @@ CMonster::CMonster()
 {
 	collider = nullptr;
 	m_layer = Layer::Monster;
-	m_fSpeed = 0.f;
+	m_fSpeed = 200.f;
 	m_vecLookDir = Vector(1, 0);
 	m_groundchecker = false;
 	m_groundCounter = 0;
@@ -22,6 +22,7 @@ CMonster::CMonster()
 	hp = 0;
 	dizzy = false;
 	iceDie = false;
+
 }
 
 CMonster::~CMonster()
@@ -38,10 +39,11 @@ void CMonster::Init()
 void CMonster::Update()
 {
 
-	if (m_groundchecker == false)
+	/*if (m_groundCounter == 0)
 	{
 		m_vecPos.y += m_gravity * DT;
-	}
+	}*/
+
 }
 
 void CMonster::Render()

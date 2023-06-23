@@ -84,6 +84,10 @@ void CBasicMonster::Update()
 
 void CBasicMonster::WalkState()
 {
+	if (m_groundchecker == false)
+	{
+		m_vecPos.y += m_gravity * DT;
+	}
 	if (m_vecLookDir.x == 1 && hp > 0)
 	{
 		Basicstate = L"WalkR";

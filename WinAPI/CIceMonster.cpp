@@ -102,6 +102,10 @@ void CIceMonster::WalkState()
 {
 	walkTimer += DT;
 	
+	if (m_groundchecker == false)
+	{
+		m_vecPos.y += m_gravity * DT;
+	}
 	if (dizzy)
 	{
 		m_state = State::Dizzy;

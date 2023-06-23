@@ -17,9 +17,13 @@ CBossMonster::CBossMonster()
 	m_pBossImageR = nullptr;
 	m_pBossImageL = nullptr;
 	m_pWeapon = nullptr;
+	Attack = true;
+	jumpDown = true;
 	m_vecLookDir = Vector(-1, 0);
 	m_state = State::Fear;
 	hp = GAME->BossHp;
+	m_jumpSpeed = 0.f;
+
 }
 
 CBossMonster::~CBossMonster()
@@ -70,7 +74,7 @@ void CBossMonster::Init()
 	m_pAnimator->CreateAnimation(L"JumpL", m_pBossImageL, Vector(2040.f, 300.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.15f, 4, false);
 	m_pAnimator->CreateAnimation(L"JumpDownL", m_pBossImageL, Vector(640.f, 300.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.f, 1);
 
-	collider->SetColliderScale(400, 300);
+	collider->SetColliderScale(800, 300);
 
 	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
@@ -81,10 +85,12 @@ void CBossMonster::Init()
 
 void CBossMonster::Update()
 { 
-	// 시선 돌리는 기준 잡아야함
-	// 망치 어택 기준
-	// 점프	어택 기준
 	
+	// 중력 다시 업데이트에서 체크한번 해야함
+	// 공중에서 망치 어택했을때 콜라이더 안따라옴 그거 체크 
+
+	m_jumpSpeed -= m_gravity * DT;
+
 	Logger::Debug(bossstate);
 	GAME->BossHp = hp;
 	collider->SetPos(m_vecPos);
@@ -128,8 +134,6 @@ void CBossMonster::Update()
 
 	if (dizzy) m_state = State::Dizzy;
 
-	//죽는 시점 조건을 주자
-	if (hp <= 0) m_state = State::Die;
 	AnimatorUpdate();
 }
 
@@ -142,7 +146,8 @@ void CBossMonster::Release()
 }
 void CBossMonster::IdleState()
 {
-
+	if (hp <= 0) m_state = State::Die;
+	
 	idleTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
@@ -174,7 +179,7 @@ void CBossMonster::WalkState()
 		if (walkTimer > 5.f)
 		{
 			walkTimer = 0;
-			m_state = State::Attack;
+			BasicAttack();
 		}
 	}
 	if (m_vecLookDir.x == -1)
@@ -184,9 +189,11 @@ void CBossMonster::WalkState()
 		if (walkTimer > 5.f)
 		{
 			walkTimer = 0;
-			m_state = State::Attack;
+			BasicAttack();
 		}
+
 	}
+	
 }
 
 void CBossMonster::AttackState()
@@ -280,70 +287,80 @@ void CBossMonster::DizzyState()
 
 void CBossMonster::JumpState()
 {
-	attackTimer += DT;
+	m_vecPos.y -= m_jumpSpeed * DT;
+
 	if (m_vecLookDir.x == 1)
 	{
+		m_vecPos.x += 50 * DT;
+
 		bossstate = L"JumpR";
-		m_state = State::JumpDown;
+		if (m_jumpSpeed < 0)
+		{
+			JumpDown();
+		}
 	}
 	if (m_vecLookDir.x == -1)
 	{
+		m_vecPos.x -= 50 * DT;
+
 		bossstate = L"JumpL";
-		m_state = State::JumpDown;
+		if (m_jumpSpeed < 0)
+		{
+			JumpDown();
+		}
 	}
 }
 
 void CBossMonster::JumpDownState()
 {
-	// ground chcker가 true면 idle 상태로 전환
+		m_vecPos.y -= m_jumpSpeed * DT;
 	if (m_vecLookDir.x == 1)
 	{
 		bossstate = L"JumpDownR";
-		
-		m_state = State::Idle;
+		if (m_groundchecker)
+		{
+			m_state = State::Idle;
+		}
 	}
 	if (m_vecLookDir.x == -1)
 	{
 		bossstate = L"JumpDownL";
-		m_state = State::Idle;
+		if (m_groundchecker)
+		{
+			m_state = State::Idle;
+		}
 	}
 }
 
 void CBossMonster::JumpAttackState()
 {
-	attackTimer += DT;
-
-	// ground chcker가 true면 idle 상태로 전환 어택타이머 지우고
+	m_vecPos.y -= m_jumpSpeed * DT;
 	if (m_pWeapon == nullptr)
 		MonsterAttackCollider();
 
 	if (m_vecLookDir.x == 1)
 	{
 		bossstate = L"JumpAttackR";
-		if (attackTimer > 1.6f)
+		if (m_groundchecker)
 		{
-
 			if (m_pWeapon != nullptr)
 			{
 				DELETEOBJECT(m_pWeapon);
 				m_pWeapon = nullptr;
 			}
-			attackTimer = 0;
 			m_state = State::Idle;
 		}
 	}
 	if (m_vecLookDir.x == -1)
 	{
 		bossstate = L"JumpAttackL";
-		if (attackTimer > 1.6f)
+		if (m_groundchecker)
 		{
-
 			if (m_pWeapon != nullptr)
 			{
 				DELETEOBJECT(m_pWeapon);
 				m_pWeapon = nullptr;
 			}
-			attackTimer = 0;
 			m_state = State::Idle;
 		}
 	}
@@ -351,6 +368,10 @@ void CBossMonster::JumpAttackState()
 
 void CBossMonster::FearState()
 {
+	if (m_groundchecker == false)
+	{
+		m_vecPos.y += m_gravity * DT;
+	}
 	attackTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
@@ -394,6 +415,35 @@ void CBossMonster::DisappearState()
 			dieTimer = 0;
 			DELETEOBJECT(this); DELETEOBJECT(collider);
 		}
+	}
+}
+
+void CBossMonster::BasicAttack()
+{
+	if (Attack)
+	{
+		Attack = false;
+		m_state = State::Attack;
+	}
+	else
+	{
+		m_jumpSpeed = 300.f;
+		m_state = State::Jump;
+		Attack = true;
+	}
+}
+
+void CBossMonster::JumpDown()
+{
+	if (jumpDown)
+	{
+		jumpDown = false;
+		m_state = State::JumpDown;
+	}
+	else
+	{
+		jumpDown = true;
+		m_state = State::JumpAttack;
 	}
 }
 

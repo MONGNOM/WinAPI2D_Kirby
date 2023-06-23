@@ -102,6 +102,10 @@ void CSwordMonster::Update()
 void CSwordMonster::IdleState()
 {
 	idleTimer += DT;
+	if (m_groundchecker == false)
+	{
+		m_vecPos.y += m_gravity * DT;
+	}
 	if (m_vecLookDir.x == 1)
 	{
 		swordstate = L"IdleR";

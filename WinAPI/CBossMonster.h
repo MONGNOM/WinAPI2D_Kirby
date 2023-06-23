@@ -19,7 +19,10 @@ private:
 	State m_state;
 	CAnimator* m_pAnimator;
 
+	bool Attack;
+	bool jumpDown;
 
+	float m_jumpSpeed;
 	void IdleState();
 	void WalkState();
 	void AttackState();
@@ -31,6 +34,8 @@ private:
 	void FearState();
 	void DisappearState();
 	
+	void BasicAttack();
+	void JumpDown();
 	
 	void MonsterAttackCollider();
 
