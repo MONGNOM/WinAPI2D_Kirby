@@ -10,6 +10,7 @@
 #include "CKirbyWeapon.h"
 
 
+
 CIceMonster::CIceMonster()
 {
 	m_vecLookDir = Vector(-1, 0);
@@ -19,6 +20,7 @@ CIceMonster::CIceMonster()
 	m_pDieImage = nullptr;
 	m_pAttackImage = nullptr;
 	m_pIceDieImage = nullptr;
+	iceAttack = nullptr;
 	hp = 2;
 	m_strName = L"얼음몬스터";
 }
@@ -26,6 +28,7 @@ CIceMonster::CIceMonster()
 CIceMonster::~CIceMonster()
 {
 }
+
 
 
 void CIceMonster::Init()
@@ -46,8 +49,8 @@ void CIceMonster::Init()
 	m_pAnimator->CreateAnimation(L"DieL", m_pDieImage, Vector(0.f, 100.f), Vector(60.f, 60.f), Vector(60.f, 0.f), 0.5f, 2);
 	m_pAnimator->CreateAnimation(L"DizzyR", m_pDieImage, Vector(0.f, 0.f), Vector(60.f, 60.f), Vector(60.f, 0.f), 0.5f, 1);
 	m_pAnimator->CreateAnimation(L"DizzyL", m_pDieImage, Vector(0.f, 100.f), Vector(60.f, 60.f), Vector(60.f, 0.f), 0.5f, 1);
-	m_pAnimator->CreateAnimation(L"AttackR", m_pAttackImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 6);
-	m_pAnimator->CreateAnimation(L"AttackL", m_pAttackImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.15f, 6);
+	m_pAnimator->CreateAnimation(L"AttackR", m_pAttackImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.2f, 3, false);
+	m_pAnimator->CreateAnimation(L"AttackL", m_pAttackImage, Vector(135.f, 120.f), Vector(50.f, 50.f), Vector(-70.f, 0.f), 0.2f, 3, false);
 
 	m_pAnimator->CreateAnimation(L"IceDie", m_pIceDieImage, Vector(0.f, 0.f), Vector(54.f, 57.f), Vector(0.f, 0.f), 0.5f, 1);
 
@@ -97,18 +100,8 @@ void CIceMonster::Release()
 
 void CIceMonster::WalkState()
 {
-	if (m_vecLookDir.x == 1)
-	{
-		iceState = L"WalkR";
-		m_vecPos.x += 50 * DT;
-
-	}
-	if (m_vecLookDir.x == -1)
-	{
-		iceState = L"WalkL";
-		m_vecPos.x -= 50 * DT;
-
-	}
+	walkTimer += DT;
+	
 	if (dizzy)
 	{
 		m_state = State::Dizzy;
@@ -116,6 +109,26 @@ void CIceMonster::WalkState()
 	if (hp <= 0)
 	{
 		m_state = State::Die;
+	}
+	if (m_vecLookDir.x == 1)
+	{
+		iceState = L"WalkR";
+		m_vecPos.x += 50 * DT;
+		if (walkTimer > 3.f)
+		{
+			walkTimer = 0;
+			m_state = State::Attack;
+		}
+	}
+	if (m_vecLookDir.x == -1)
+	{
+		iceState = L"WalkL";
+		m_vecPos.x -= 50 * DT;
+		if (walkTimer > 3.f)
+		{
+			walkTimer = 0;
+			m_state = State::Attack;
+		}
 	}
 }
 
@@ -169,6 +182,41 @@ void CIceMonster::DieState()
 
 void CIceMonster::AttackState()
 {
+	attackTimer += DT;
+
+	if (iceAttack == nullptr)
+		MonsterAttackCollider();
+
+	if (m_vecLookDir.x == 1)
+	{
+		iceState = L"AttackR";
+		if (attackTimer > 2.0f)
+		{
+			if (iceAttack != nullptr)
+			{
+				DELETEOBJECT(iceAttack);
+				iceAttack = nullptr;
+			}
+			attackTimer = 0;
+			m_state = State::Walk;
+
+		}
+	}
+	if (m_vecLookDir.x == -1)
+	{
+		iceState = L"AttackL";
+		if (attackTimer > 2.0f)
+		{
+			if (iceAttack != nullptr)
+			{
+				DELETEOBJECT(iceAttack);
+				iceAttack = nullptr;
+			}
+			attackTimer = 0;
+			m_state = State::Walk;
+
+		}
+	}
 }
 
 void CIceMonster::DizzyState()
@@ -194,6 +242,21 @@ void CIceMonster::DizzyState()
 	}
 }
 
+void CIceMonster::MonsterAttackCollider()
+{
+	iceAttack = new CMonsterIceAttack();
+	if (m_vecLookDir.x == -1)
+	{
+		iceAttack->SetMonsterWeaponScale(100, 50);
+		iceAttack->SetPos(m_vecPos.x - 70, m_vecPos.y);
+	}
+	if (m_vecLookDir.x == 1)
+	{
+		iceAttack->SetMonsterWeaponScale(100, 50);
+		iceAttack->SetPos(m_vecPos.x + 70 ,m_vecPos.y);
+	}
+	ADDOBJECT(iceAttack);
+}
 
 
 void CIceMonster::AnimatorUpdate()

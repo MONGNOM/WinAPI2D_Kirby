@@ -1,6 +1,6 @@
 #pragma once
 #include "CMonster.h"
-
+#include "CMonsterIceAttack.h"
 class CImage;
 class CAnimator;
 
@@ -26,6 +26,8 @@ private:
 	CImage* m_pDieImage;
 	CImage* m_pIceDieImage;
 	CImage* m_pAttackImage;
+	CMonsterIceAttack* iceAttack;
+	void MonsterAttackCollider();
 
 private:
 	void Init() override;

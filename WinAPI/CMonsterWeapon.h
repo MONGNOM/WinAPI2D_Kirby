@@ -6,7 +6,11 @@ public:
 	CMonsterWeapon();
 	virtual ~CMonsterWeapon();
 
+	float colliderX;
+	float colliderY;
 
+	void SetMonsterWeaponScale(float x, float y);
+	
 protected:
 	void Init() override;
 	void Update() override;

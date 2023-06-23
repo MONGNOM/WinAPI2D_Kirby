@@ -184,12 +184,21 @@ void CBossMonster::AttackState()
 
 void CBossMonster::AttackState2()
 {
+	if (m_pWeapon == nullptr)
+		MonsterAttackCollider();
+
 	attackTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
 		bossstate = L"Attack2R";
 		if (attackTimer > 1.5f)
 		{
+
+			if (m_pWeapon != nullptr)
+			{
+				DELETEOBJECT(m_pWeapon);
+				m_pWeapon = nullptr;
+			}
 			attackTimer = 0;
 			m_state = State::Idle;
 		}
@@ -199,6 +208,12 @@ void CBossMonster::AttackState2()
 		bossstate = L"Attack2L";
 		if (attackTimer > 1.5f)
 		{
+
+			if (m_pWeapon != nullptr)
+			{
+				DELETEOBJECT(m_pWeapon);
+				m_pWeapon = nullptr;
+			}
 			attackTimer = 0;
 			m_state = State::Idle;
 		}
@@ -256,6 +271,22 @@ void CBossMonster::DizzyState()
 
 void CBossMonster::JumpState()
 {
+}
+
+void CBossMonster::MonsterAttackCollider()
+{
+	m_pWeapon = new CMonsterWeapon();
+	if (m_vecLookDir.x == -1)
+	{
+		m_pWeapon->SetMonsterWeaponScale(150, 200);
+		m_pWeapon->SetPos(m_vecPos.x - 150, m_vecPos.y);
+	}
+	if (m_vecLookDir.x == 1)
+	{
+		m_pWeapon->SetMonsterWeaponScale(150, 200);
+		m_pWeapon->SetPos(m_vecPos.x + 150, m_vecPos.y);
+	}
+	ADDOBJECT(m_pWeapon);
 }
 
 void CBossMonster::AnimatorUpdate()

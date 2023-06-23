@@ -727,7 +727,7 @@ void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)
 		m_groundCounter++;
 		m_groundchecker = true;
 	}
-	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Monster && !eat) 
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Monster && !eat || pOtherCollider->GetOwner()->GetLayer() == Layer::MWeapon)
 	{
 		playerHp -= 1;
 	}

@@ -150,6 +150,9 @@ void CSwordMonster::WalkState()
 
 void CSwordMonster::AttackState()
 {
+	if (m_pWeapon == nullptr)
+		MonsterAttackCollider();
+
 	attackTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
@@ -158,6 +161,12 @@ void CSwordMonster::AttackState()
 		{
 			attackTimer = 0;
 			m_state = State::Attack2;
+			if (m_pWeapon != nullptr)
+			{
+				DELETEOBJECT(m_pWeapon);
+				m_pWeapon = nullptr;
+			}
+
 		}
 	}
 	if (m_vecLookDir.x == -1)
@@ -167,6 +176,12 @@ void CSwordMonster::AttackState()
 		{
 			attackTimer = 0;
 			m_state = State::Attack2;
+			if (m_pWeapon != nullptr)
+			{
+				DELETEOBJECT(m_pWeapon);
+				m_pWeapon = nullptr;
+			}
+
 		}
 	}
 }
@@ -174,11 +189,20 @@ void CSwordMonster::AttackState()
 void CSwordMonster::AttackState2()
 {
 	attackTimer += DT;
+	
+	if (m_pWeapon == nullptr)
+		MonsterAttackCollider();
+
 	if (m_vecLookDir.x == 1)
 	{
 		swordstate = L"Attack2R";
 		if (attackTimer > 0.7f)
 		{
+			if (m_pWeapon != nullptr)
+			{
+				DELETEOBJECT(m_pWeapon);
+				m_pWeapon = nullptr;
+			}
 			attackTimer = 0;
 			m_state = State::Idle;
 		}
@@ -188,6 +212,11 @@ void CSwordMonster::AttackState2()
 		swordstate = L"Attack2L";
 		if (attackTimer > 0.7f)
 		{
+			if (m_pWeapon != nullptr)
+			{
+				DELETEOBJECT(m_pWeapon);
+				m_pWeapon = nullptr;
+			}
 			attackTimer = 0;
 			m_state = State::Idle;
 		}
@@ -262,6 +291,22 @@ void CSwordMonster::DizzyState()
 			dieTimer = 0;
 		}
 	}
+}
+
+void CSwordMonster::MonsterAttackCollider()
+{
+	m_pWeapon = new CMonsterWeapon();
+	if (m_vecLookDir.x == -1)
+	{
+		m_pWeapon->SetMonsterWeaponScale(70, 100);
+		m_pWeapon->SetPos(m_vecPos.x - 70, m_vecPos.y);
+	}
+	if (m_vecLookDir.x == 1)
+	{
+		m_pWeapon->SetMonsterWeaponScale(70, 100);
+		m_pWeapon->SetPos(m_vecPos.x + 70, m_vecPos.y);
+	}
+	ADDOBJECT(m_pWeapon);
 }
 
 void CSwordMonster::Render()

@@ -291,6 +291,9 @@
     <ClInclude Include="CHitCollider.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CMonsterIceAttack.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -489,6 +492,9 @@
       <Filter>GameObject\Stage01\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="CHitCollider.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonsterIceAttack.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

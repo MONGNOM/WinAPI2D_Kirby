@@ -1,5 +1,6 @@
 #pragma once
 #include "CMonster.h"
+#include "CMonsterWeapon.h"
 
 class CImage;
 class CAnimator;
@@ -25,6 +26,9 @@ private:
 	void AttackState2();
 	void DieState();
 	void DizzyState();
+	void MonsterAttackCollider();
+
+	CMonsterWeapon* m_pWeapon;
 
 	CImage* m_pIdleImage;
 	CImage* m_pMoveImage;

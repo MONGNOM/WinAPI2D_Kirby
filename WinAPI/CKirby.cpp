@@ -82,6 +82,9 @@ void CKirby::OnCollisionEnter(CCollider* pOtherCollider)
 	{
 		playerHp -= 1;
 	}
+	if(pOtherCollider->GetOwner()->GetLayer() == Layer::MWeapon)
+		playerHp -= 1;
+
 }
 
 void CKirby::OnCollisionStay(CCollider* pOtherCollider)

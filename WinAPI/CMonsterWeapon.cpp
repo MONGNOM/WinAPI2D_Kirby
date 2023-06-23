@@ -5,15 +5,25 @@ CMonsterWeapon::CMonsterWeapon()
 {
 	m_layer = Layer::MWeapon;
 	m_strName = L"몬스터무기";
+	colliderX = 50;
+	colliderY = 50;
+
 }
 
 CMonsterWeapon::~CMonsterWeapon()
 {
 }
 
+void CMonsterWeapon::SetMonsterWeaponScale(float x, float y)
+{
+	colliderX = x;
+	colliderY = y;
+
+}
+
 void CMonsterWeapon::Init()
 {
-	AddCollider(ColliderType::Rect, Vector(50, 50), Vector(0, 0));
+	AddCollider(ColliderType::Rect, Vector(colliderX, colliderY), Vector(0, 0));
 
 }
 

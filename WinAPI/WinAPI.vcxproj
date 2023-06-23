@@ -175,6 +175,7 @@
     <ClInclude Include="CKirbyShot.h" />
     <ClInclude Include="CKirbyWeapon.h" />
     <ClInclude Include="CMeat.h" />
+    <ClInclude Include="CMonsterIceAttack.h" />
     <ClInclude Include="CMonsterWeapon.h" />
     <ClInclude Include="CNomalKirby.h" />
     <ClInclude Include="CMissile.h" />
@@ -253,6 +254,7 @@
     <ClCompile Include="CKirbyShot.cpp" />
     <ClCompile Include="CKirbyWeapon.cpp" />
     <ClCompile Include="CMeat.cpp" />
+    <ClCompile Include="CMonsterIceAttack.cpp" />
     <ClCompile Include="CMonsterWeapon.cpp" />
     <ClCompile Include="CNomalKirby.cpp" />
     <ClCompile Include="CMissile.cpp" />
