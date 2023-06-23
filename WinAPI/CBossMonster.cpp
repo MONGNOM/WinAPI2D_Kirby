@@ -14,8 +14,11 @@ CBossMonster::CBossMonster()
 	m_pJumpImage = nullptr;
 	m_pIceDieImage = nullptr;
  	m_pAttackImageL2 = nullptr;
+	m_pBossImageR = nullptr;
+	m_pBossImageL = nullptr;
+	m_pWeapon = nullptr;
 	m_vecLookDir = Vector(-1, 0);
-	m_state = State::Idle;
+	m_state = State::Fear;
 	hp = GAME->BossHp;
 }
 
@@ -32,6 +35,9 @@ void CBossMonster::Init()
 	ADDOBJECT(BossHP);
 
 	CMonster::Init();
+	m_pBossImageR		= RESOURCE->LoadImg(L"BossR", L"Image\\Monster\\King\\kingRight.png");
+	m_pBossImageL		= RESOURCE->LoadImg(L"BossL", L"Image\\Monster\\King\\kingLeft.png");
+
 	m_pMoveImage		= RESOURCE->LoadImg(L"BossMonsterMove", L"Image\\Monster\\King\\KingisBack.png");
 	m_pDieImage			= RESOURCE->LoadImg(L"BossMonsterDie", L"Image\\Monster\\King\\KingDie.png");
 	m_pAttackImage		= RESOURCE->LoadImg(L"BossMonsterAttack", L"Image\\Monster\\King\\KingJump.png");
@@ -41,24 +47,32 @@ void CBossMonster::Init()
 
 	m_pAnimator = new CAnimator;
 	//오른쪽
-	m_pAnimator->CreateAnimation(L"IdleR", m_pIdleImage, Vector(0.f, 0.f), Vector(150.f, 180.f), Vector(190.f, 0.f), 0.5f, 2);
-	m_pAnimator->CreateAnimation(L"WalkR", m_pMoveImage, Vector(770.f, 0.f), Vector(150.f, 180.f), Vector(190.f, 0.f), 0.15f, 4);
-	m_pAnimator->CreateAnimation(L"DieR", m_pDieImage, Vector(0.f, 0.f), Vector(180.f, 200.f), Vector(225.f, 0.f), 0.25f, 4,false);
-	m_pAnimator->CreateAnimation(L"AttackR", m_pAttackImage, Vector(0.f, 0.f), Vector(165.f, 200.f), Vector(210.f, 0.f), 0.2f, 7,false);
-	m_pAnimator->CreateAnimation(L"Attack2R", m_pAttackImage2, Vector(0.f, 0.f), Vector(280.f, 220.f), Vector(375.f, 0.f), 0.15f, 7);
-	m_pAnimator->CreateAnimation(L"DizzyR", m_pDieImage, Vector(0.f, 0.f), Vector(180.f, 200.f), Vector(180.f, 0.f), 0.f, 1);
+	m_pAnimator->CreateAnimation(L"IdleR", m_pBossImageR, Vector(0.f, 0.f), Vector(200.f, 203.f), Vector(280.f, 0.f), 0.2f, 4);
+	m_pAnimator->CreateAnimation(L"WalkR", m_pBossImageR, Vector(1120.f, 0.f), Vector(200.f, 203.f), Vector(280.f, 0.f), 0.15f, 4);
+	m_pAnimator->CreateAnimation(L"DieR",	m_pBossImageR, Vector(280.f, 1500.f), Vector(210.f, 203.f), Vector(290.f, 0.f), 0.15f, 3);
+	m_pAnimator->CreateAnimation(L"AttackR", m_pBossImageR, Vector(0.f, 580.f), Vector(210.f, 250.f), Vector(280.f, 0.f), 0.2f, 8,false);
+	m_pAnimator->CreateAnimation(L"JumpAttackR", m_pBossImageR, Vector(0.f, 900.f), Vector(200.f, 250.f), Vector(280.f, 0.f), 0.15f, 1,false);
+	m_pAnimator->CreateAnimation(L"DizzyR", m_pBossImageR, Vector(0.f, 1500.f), Vector(200.f, 203.f), Vector(280.f, 0.f), 0.1f, 1);
+	m_pAnimator->CreateAnimation(L"FearR", m_pBossImageR, Vector(0.f, 1200.f), Vector(200.f, 203.f), Vector(280.f, 0.f), 0.1f, 2);
+	m_pAnimator->CreateAnimation(L"DisappearR", m_pBossImageR, Vector(1120.f, 1500.f), Vector(200.f, 203.f), Vector(280.f, 0.f), 0.15f, 3);
+	m_pAnimator->CreateAnimation(L"JumpR", m_pBossImageR, Vector(0.f, 300.f), Vector(200.f, 203.f), Vector(280.f, 0.f), 0.15f, 4, false);
+	m_pAnimator->CreateAnimation(L"JumpDownR", m_pBossImageR, Vector(1400.f, 300.f), Vector(200.f, 203.f), Vector(280.f, 0.f), 0.f, 1);
 
 	// 왼쪽
-	m_pAnimator->CreateAnimation(L"IdleL", m_pIdleImage, Vector(1350.f, 450.f), Vector(160.f, 180.f), Vector(-190.f, 0.f), 0.5f, 2);
-	m_pAnimator->CreateAnimation(L"WalkL", m_pMoveImage, Vector(590.f, 430.f), Vector(160.f, 180.f), Vector(-190.f, 0.f), 0.15f, 4);
-	m_pAnimator->CreateAnimation(L"DieL", m_pDieImage, Vector(670.f, 290.f), Vector(180.f, 200.f), Vector(-225.f, 0.f), 0.25f, 4, false);
-	m_pAnimator->CreateAnimation(L"AttackL", m_pAttackImage, Vector(1260.f, 270.f), Vector(165.f, 210.f), Vector(-210.f, 0.f), 0.2f, 7,false);
-	m_pAnimator->CreateAnimation(L"Attack2L", m_pAttackImageL2, Vector(2430.f, 0.f), Vector(280.f, 220.f), Vector(-375.f, 0.f), 0.15f, 7);
-	m_pAnimator->CreateAnimation(L"DizzyL", m_pDieImage, Vector(660.f, 300.f), Vector(180.f, 200.f), Vector(0.f, 0.f), 0.15f, 1);
+	m_pAnimator->CreateAnimation(L"IdleL", m_pBossImageL, Vector(2040.f, 0.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.2f, 4);
+	m_pAnimator->CreateAnimation(L"WalkL", m_pBossImageL, Vector(920.f, 0.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.15f, 4);
+	m_pAnimator->CreateAnimation(L"DieL", m_pBossImageL, Vector(1750.f, 1500.f), Vector(210.f, 203.f), Vector(-290.f, 0.f), 0.25f, 3);
+	m_pAnimator->CreateAnimation(L"AttackL", m_pBossImageL, Vector(2040.f, 580.f), Vector(210.f, 250.f), Vector(-280.f, 0.f), 0.2f, 8,false);
+	m_pAnimator->CreateAnimation(L"JumpAttackL", m_pBossImageL, Vector(2040.f, 900.f), Vector(200.f, 250.f), Vector(-280.f, 0.f), 0.15f, 1,false);
+	m_pAnimator->CreateAnimation(L"DizzyL", m_pBossImageL, Vector(2040.f, 1500.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.15f, 1);
+	m_pAnimator->CreateAnimation(L"FearL", m_pBossImageL, Vector(2040.f, 1200.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.1f, 2);
+	m_pAnimator->CreateAnimation(L"DisappearL", m_pBossImageL, Vector(920.f, 1500.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.15f, 3);
+	m_pAnimator->CreateAnimation(L"JumpL", m_pBossImageL, Vector(2040.f, 300.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.15f, 4, false);
+	m_pAnimator->CreateAnimation(L"JumpDownL", m_pBossImageL, Vector(640.f, 300.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.f, 1);
 
 	collider->SetColliderScale(400, 300);
 
-	m_pAnimator->Play(L"DizzyL", false);
+	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
 
 	AddCollider(ColliderType::Rect, Vector(170, 180), Vector(0, 0));
@@ -67,10 +81,14 @@ void CBossMonster::Init()
 
 void CBossMonster::Update()
 { 
+	// 시선 돌리는 기준 잡아야함
+	// 망치 어택 기준
+	// 점프	어택 기준
+	
+	Logger::Debug(bossstate);
 	GAME->BossHp = hp;
 	collider->SetPos(m_vecPos);
 
-	// 시선 돌리는 기준 잡아야함
 	CMonster::Update();
 	switch (m_state)
 	{
@@ -83,8 +101,8 @@ void CBossMonster::Update()
 	case CBossMonster::State::Attack:
 		AttackState();
 		break;
-	case CBossMonster::State::Attack2:
-		AttackState2();
+	case CBossMonster::State::JumpAttack:
+		JumpAttackState();
 		break;
 	case CBossMonster::State::Die:
 		DieState();
@@ -95,11 +113,22 @@ void CBossMonster::Update()
 	case CBossMonster::State::Jump:
 		JumpState();
 		break;
+	case CBossMonster::State::JumpDown:
+		JumpDownState();
+		break;
+	case CBossMonster::State::Fear:
+		FearState();
+		break;
+	case CBossMonster::State::Disappear:
+		DisappearState();
+		break;
 	default:
 		break;
 	}
 
 	if (dizzy) m_state = State::Dizzy;
+
+	//죽는 시점 조건을 주자
 	if (hp <= 0) m_state = State::Die;
 	AnimatorUpdate();
 }
@@ -113,6 +142,7 @@ void CBossMonster::Release()
 }
 void CBossMonster::IdleState()
 {
+
 	idleTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
@@ -162,51 +192,29 @@ void CBossMonster::WalkState()
 void CBossMonster::AttackState()
 {
 	attackTimer += DT;
+
+	if (m_pWeapon == nullptr)
+		MonsterAttackCollider();
+
 	if (m_vecLookDir.x == 1)
 	{
 		bossstate = L"AttackR";
-		if (attackTimer > 3.f)
+		if (attackTimer > 1.6f)
 		{
+
+			if (m_pWeapon != nullptr)
+			{
+				DELETEOBJECT(m_pWeapon);
+				m_pWeapon = nullptr;
+			}
 			attackTimer = 0;
-			m_state = State::Attack2;
+			m_state = State::Idle;
 		}
 	}
 	if (m_vecLookDir.x == -1)
 	{
 		bossstate = L"AttackL";
-		if (attackTimer > 3.f)
-		{
-			attackTimer = 0;
-			m_state = State::Attack2;
-		}
-	}
-}
-
-void CBossMonster::AttackState2()
-{
-	if (m_pWeapon == nullptr)
-		MonsterAttackCollider();
-
-	attackTimer += DT;
-	if (m_vecLookDir.x == 1)
-	{
-		bossstate = L"Attack2R";
-		if (attackTimer > 1.5f)
-		{
-
-			if (m_pWeapon != nullptr)
-			{
-				DELETEOBJECT(m_pWeapon);
-				m_pWeapon = nullptr;
-			}
-			attackTimer = 0;
-			m_state = State::Idle;
-		}
-	}
-	if (m_vecLookDir.x == -1)
-	{
-		bossstate = L"Attack2L";
-		if (attackTimer > 1.5f)
+		if (attackTimer > 1.6f)
 		{
 
 			if (m_pWeapon != nullptr)
@@ -219,6 +227,7 @@ void CBossMonster::AttackState2()
 		}
 	}
 }
+
 
 void CBossMonster::DieState()
 {
@@ -229,7 +238,7 @@ void CBossMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this); DELETEOBJECT(collider);
+ 				m_state = State::Disappear;
 			}
 		}
 		if (m_vecLookDir.x == -1)
@@ -238,7 +247,7 @@ void CBossMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this); DELETEOBJECT(collider);
+				m_state = State::Disappear;
 			}
 		}
 }
@@ -271,6 +280,121 @@ void CBossMonster::DizzyState()
 
 void CBossMonster::JumpState()
 {
+	attackTimer += DT;
+	if (m_vecLookDir.x == 1)
+	{
+		bossstate = L"JumpR";
+		m_state = State::JumpDown;
+	}
+	if (m_vecLookDir.x == -1)
+	{
+		bossstate = L"JumpL";
+		m_state = State::JumpDown;
+	}
+}
+
+void CBossMonster::JumpDownState()
+{
+	// ground chcker가 true면 idle 상태로 전환
+	if (m_vecLookDir.x == 1)
+	{
+		bossstate = L"JumpDownR";
+		
+		m_state = State::Idle;
+	}
+	if (m_vecLookDir.x == -1)
+	{
+		bossstate = L"JumpDownL";
+		m_state = State::Idle;
+	}
+}
+
+void CBossMonster::JumpAttackState()
+{
+	attackTimer += DT;
+
+	// ground chcker가 true면 idle 상태로 전환 어택타이머 지우고
+	if (m_pWeapon == nullptr)
+		MonsterAttackCollider();
+
+	if (m_vecLookDir.x == 1)
+	{
+		bossstate = L"JumpAttackR";
+		if (attackTimer > 1.6f)
+		{
+
+			if (m_pWeapon != nullptr)
+			{
+				DELETEOBJECT(m_pWeapon);
+				m_pWeapon = nullptr;
+			}
+			attackTimer = 0;
+			m_state = State::Idle;
+		}
+	}
+	if (m_vecLookDir.x == -1)
+	{
+		bossstate = L"JumpAttackL";
+		if (attackTimer > 1.6f)
+		{
+
+			if (m_pWeapon != nullptr)
+			{
+				DELETEOBJECT(m_pWeapon);
+				m_pWeapon = nullptr;
+			}
+			attackTimer = 0;
+			m_state = State::Idle;
+		}
+	}
+}
+
+void CBossMonster::FearState()
+{
+	attackTimer += DT;
+	if (m_vecLookDir.x == 1)
+	{
+		
+		bossstate = L"FearR";
+
+		if (attackTimer > 1.15f)
+		{
+			attackTimer = 0;
+			m_state = State::Idle;
+		}
+	}
+	if (m_vecLookDir.x == -1)
+	{
+		bossstate = L"FearL";
+		if (attackTimer > 1.15f)
+		{
+			attackTimer = 0;
+			m_state = State::Idle;
+		}
+	}
+}
+
+void CBossMonster::DisappearState()
+{
+	dieTimer += DT;
+	if (m_vecLookDir.x == 1)
+	{
+		bossstate = L"DisappearR";
+		if (dieTimer > 1.f)
+		{
+			dieTimer = 0;
+			DELETEOBJECT(this); DELETEOBJECT(collider);
+		}
+	}
+	if (m_vecLookDir.x == -1)
+	{
+		bossstate = L"DisappearL";
+		if (dieTimer > 1.f)
+		{
+			dieTimer = 0;
+			DELETEOBJECT(this); DELETEOBJECT(collider);
+		}
+	}
 }
 
 void CBossMonster::MonsterAttackCollider()

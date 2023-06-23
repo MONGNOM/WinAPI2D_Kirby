@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "CSceneStage01.h"
+#include "CSceneState02.h"
 
 #include "WinAPI.h"
 #include "CInputManager.h"
@@ -111,6 +112,12 @@ void CSceneStage01::Update()
 	{
 		CAMERA->FadeOut(0.25f);
 		DELAYCHANGESCENE(GroupScene::Bonus, 0.25f);
+	}
+
+	if (BUTTONDOWN('1'))
+	{
+		CAMERA->FadeOut(0.25f);
+		DELAYCHANGESCENE(GroupScene::Stage02, 0.25f);
 	}
 }
 

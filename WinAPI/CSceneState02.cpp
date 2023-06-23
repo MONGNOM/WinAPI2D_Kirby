@@ -71,7 +71,7 @@ void CSceneState02::Enter()
 	AddGameObject(BossBackGround);
 
 	bossMonster = new CBossMonster();
-	bossMonster->SetPos(700, 450);
+	bossMonster->SetPos(700, 450); // 700 450
 	AddGameObject(bossMonster);
 
 	CKirbyIcon* icon = new CKirbyIcon;

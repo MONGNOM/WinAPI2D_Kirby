@@ -8,7 +8,7 @@ class Animator;
 
 class CBossMonster : public CMonster
 {
-	enum class State { Idle, Walk, Attack, Attack2, Die, Dizzy, Jump};
+	enum class State { Idle, Walk, Attack, Die, Dizzy, Jump, JumpDown, JumpAttack, Fear, Disappear };
 
 public:
 	CBossMonster();
@@ -19,13 +19,19 @@ private:
 	State m_state;
 	CAnimator* m_pAnimator;
 
+
 	void IdleState();
 	void WalkState();
 	void AttackState();
-	void AttackState2();
 	void DieState();
 	void DizzyState();
 	void JumpState();
+	void JumpDownState();
+	void JumpAttackState();
+	void FearState();
+	void DisappearState();
+	
+	
 	void MonsterAttackCollider();
 
 	
@@ -37,6 +43,10 @@ private:
 	CImage* m_pIceDieImage;
 	CImage* m_pJumpImage;
 	CImage* m_pAttackImageL2;
+
+	CImage* m_pBossImageR;
+	CImage* m_pBossImageL;
+
 
 	CMonsterWeapon* m_pWeapon;
 
