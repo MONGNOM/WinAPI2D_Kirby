@@ -52,13 +52,14 @@ void CIceMonster::Init()
 	m_pAnimator->CreateAnimation(L"AttackR", m_pAttackImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.2f, 3, false);
 	m_pAnimator->CreateAnimation(L"AttackL", m_pAttackImage, Vector(135.f, 120.f), Vector(50.f, 50.f), Vector(-70.f, 0.f), 0.2f, 3, false);
 
-	m_pAnimator->CreateAnimation(L"IceDie", m_pIceDieImage, Vector(0.f, 0.f), Vector(54.f, 57.f), Vector(0.f, 0.f), 0.5f, 1);
-
+	attackCollider = new CMonsterAttackCollider();
+	attackCollider->SetIceMonster(this);
+	ADDOBJECT(attackCollider);
 
 	m_pAnimator->Play(L"WalkR", false);
 	AddComponent(m_pAnimator);
 	collider->SetColliderScale(200, 100);
-
+	attackCollider->SetColliderScale(500, 100);
 	AddCollider(ColliderType::Circle, Vector(20, 20), Vector(0, 0));
 
 }
@@ -67,6 +68,7 @@ void CIceMonster::Update()
 {
 	CMonster::Update();
 	collider->SetPos(m_vecPos);
+	attackCollider->SetPos(m_vecPos);
 
 	switch (m_state)
 	{
@@ -84,7 +86,14 @@ void CIceMonster::Update()
 	default:
 		break;
 	}
-
+	if (dizzy)
+	{
+		m_state = State::Dizzy;
+	}
+	if (hp <= 0)
+	{
+		m_state = State::Die;
+	}
 	AnimatorUpdate();
 }
 
@@ -106,14 +115,7 @@ void CIceMonster::WalkState()
 	{
 		m_vecPos.y += m_gravity * DT;
 	}
-	if (dizzy)
-	{
-		m_state = State::Dizzy;
-	}
-	if (hp <= 0)
-	{
-		m_state = State::Die;
-	}
+	
 	if (m_vecLookDir.x == 1)
 	{
 		iceState = L"WalkR";
@@ -147,7 +149,8 @@ void CIceMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this); DELETEOBJECT(collider);
+				DELETEOBJECT(iceAttack);
+				DELETEOBJECT(this); DELETEOBJECT(collider); DELETEOBJECT(attackCollider);
 			}
 		}
 		if (m_vecLookDir.x == -1)
@@ -156,7 +159,8 @@ void CIceMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this); DELETEOBJECT(collider);
+				DELETEOBJECT(iceAttack);
+				DELETEOBJECT(this); DELETEOBJECT(collider); DELETEOBJECT(attackCollider);
 			}
 		}
 	}
@@ -168,7 +172,8 @@ void CIceMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this); DELETEOBJECT(collider);
+				DELETEOBJECT(iceAttack);
+				DELETEOBJECT(this); DELETEOBJECT(collider); DELETEOBJECT(attackCollider);
 			}
 		}
 		if (m_vecLookDir.x == -1)
@@ -177,7 +182,8 @@ void CIceMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this); DELETEOBJECT(collider);
+				DELETEOBJECT(iceAttack);
+				DELETEOBJECT(this); DELETEOBJECT(collider); DELETEOBJECT(attackCollider);
 			}
 		}
 	}
@@ -190,7 +196,17 @@ void CIceMonster::AttackState()
 
 	if (iceAttack == nullptr)
 		MonsterAttackCollider();
-
+	else
+	{
+		if (m_vecLookDir.x == -1)
+		{
+			iceAttack->SetPos(m_vecPos.x - 70, m_vecPos.y);
+		}
+		if (m_vecLookDir.x == 1)
+		{
+			iceAttack->SetPos(m_vecPos.x + 70, m_vecPos.y);
+		}
+	}
 	if (m_vecLookDir.x == 1)
 	{
 		iceState = L"AttackR";

@@ -294,6 +294,9 @@
     <ClInclude Include="CMonsterIceAttack.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CMonsterAttackCollider.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -495,6 +498,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="CMonsterIceAttack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonsterAttackCollider.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

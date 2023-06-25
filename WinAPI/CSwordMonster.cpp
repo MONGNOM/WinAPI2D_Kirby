@@ -28,6 +28,11 @@ CSwordMonster::~CSwordMonster()
 
 void CSwordMonster::Init()
 {
+	attackCollider = new CMonsterAttackCollider();
+	attackCollider->SetSwordMonster(this);
+	ADDOBJECT(attackCollider);
+	attackCollider->SetColliderScale(150, 100);
+
 	CMonster::Init();
 	m_pMoveImage	= RESOURCE->LoadImg(L"SwordMonsterMove",	L"Image\\Monster\\SwordMonster\\SwordMonster.png");
 	m_pDieImage		= RESOURCE->LoadImg(L"SwordMonsterDie",		L"Image\\Monster\\SwordMonster\\SwordMonster.png");
@@ -40,14 +45,14 @@ void CSwordMonster::Init()
 	m_pLIdleImage		= RESOURCE->LoadImg(L"LSwordMonsterIdle", L"Image\\Monster\\SwordMonster\\SwordMonsterL.png");
 	
 	m_pIceDieImage = RESOURCE->LoadImg(L"BIceDie", L"Image\\MonstericeStatebig.png");
-
+	
 
 	m_pAnimator = new CAnimator;
 	//¿À¸¥ÂÊ
 	m_pAnimator->CreateAnimation(L"IdleR",		m_pIdleImage,		Vector(0.f, 0.f), Vector(125.f, 101.f), Vector(125.f, 0.f), 0.5f, 2);
 	m_pAnimator->CreateAnimation(L"WalkR",		m_pMoveImage,		Vector(248.f, 0.f), Vector(125.f, 101.f), Vector(132.f, 0.f), 0.15f, 6);
 	m_pAnimator->CreateAnimation(L"DieR",		m_pDieImage,		Vector(0.f, 490.f), Vector(145.f, 100.f), Vector(145.f, 0.f), 0.5f, 2);
-	m_pAnimator->CreateAnimation(L"AttackR",	m_pAttackImage,		Vector(0.f, 0.f), Vector(135.f, 110.f), Vector(280.f, 0.f), 0.07f, 9,false);
+	m_pAnimator->CreateAnimation(L"AttackR",	m_pAttackImage,		Vector(0.f, 0.f), Vector(135.f, 110.f), Vector(280.f, 0.f), 0.07f, 9, false);
 	m_pAnimator->CreateAnimation(L"Attack2R",	m_pAttackImage2,	Vector(0.f, 0.f), Vector(135.f, 112.f), Vector(280.f, 0.f), 0.07f, 6, false);
 	m_pAnimator->CreateAnimation(L"DizzyR",		m_pDieImage,		Vector(0.f, 490.f), Vector(145.f, 100.f), Vector(0.f, 0.f), 0.15f, 1);
 	
@@ -70,7 +75,10 @@ void CSwordMonster::Init()
 void CSwordMonster::Update()
 {
 	CMonster::Update();
+
 	collider->SetPos(m_vecPos);
+	attackCollider->SetPos(m_vecPos);
+
 	switch (m_state)
 	{
 	case CSwordMonster::State::Idle:
@@ -101,6 +109,7 @@ void CSwordMonster::Update()
 
 void CSwordMonster::IdleState()
 {
+	
 	idleTimer += DT;
 	if (m_groundchecker == false)
 	{
@@ -156,7 +165,17 @@ void CSwordMonster::AttackState()
 {
 	if (m_pWeapon == nullptr)
 		MonsterAttackCollider();
-
+	else
+	{
+		if (m_vecLookDir.x == -1)
+		{
+			m_pWeapon->SetPos(m_vecPos.x - 70, m_vecPos.y);
+		}
+		if (m_vecLookDir.x == 1)
+		{
+			m_pWeapon->SetPos(m_vecPos.x + 70, m_vecPos.y);
+		}
+	}
 	attackTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
@@ -196,7 +215,14 @@ void CSwordMonster::AttackState2()
 	
 	if (m_pWeapon == nullptr)
 		MonsterAttackCollider();
-
+	if (m_vecLookDir.x == -1)
+	{
+		m_pWeapon->SetPos(m_vecPos.x - 70, m_vecPos.y);
+	}
+	if (m_vecLookDir.x == 1)
+	{
+		m_pWeapon->SetPos(m_vecPos.x + 70, m_vecPos.y);
+	}
 	if (m_vecLookDir.x == 1)
 	{
 		swordstate = L"Attack2R";
@@ -229,6 +255,7 @@ void CSwordMonster::AttackState2()
 
 void CSwordMonster::DieState()
 {
+	
 	dieTimer += DT;
 	if (iceDie)
 	{
@@ -238,7 +265,7 @@ void CSwordMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this); DELETEOBJECT(collider);
+				DELETEOBJECT(this); DELETEOBJECT(collider); DELETEOBJECT(attackCollider);
 			}
 		}
 		if (m_vecLookDir.x == -1)
@@ -247,7 +274,7 @@ void CSwordMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this); DELETEOBJECT(collider);
+				DELETEOBJECT(this); DELETEOBJECT(collider); DELETEOBJECT(attackCollider);
 			}
 		}
 	}
@@ -259,7 +286,7 @@ void CSwordMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this); DELETEOBJECT(collider);
+				DELETEOBJECT(this); DELETEOBJECT(collider); DELETEOBJECT(attackCollider);
 			}
 		}
 		if (m_vecLookDir.x == -1)
@@ -268,7 +295,7 @@ void CSwordMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(this); DELETEOBJECT(collider);
+				DELETEOBJECT(this); DELETEOBJECT(collider); DELETEOBJECT(attackCollider);
 			}
 		}
 	}

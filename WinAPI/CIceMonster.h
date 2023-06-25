@@ -1,6 +1,10 @@
 #pragma once
 #include "CMonster.h"
 #include "CMonsterIceAttack.h"
+#include "CMonsterAttackCollider.h"
+
+
+class CMonsterAttackCollider;
 class CImage;
 class CAnimator;
 
@@ -13,9 +17,9 @@ public:
 	CIceMonster();
 	virtual ~CIceMonster();
 
+	State m_state;
 private:
 	wstring iceState;
-	State m_state;
 	CAnimator* m_pAnimator;
 
 	void WalkState();
@@ -27,6 +31,7 @@ private:
 	CImage* m_pIceDieImage;
 	CImage* m_pAttackImage;
 	CMonsterIceAttack* iceAttack;
+	CMonsterAttackCollider* attackCollider;
 	void MonsterAttackCollider();
 
 private:

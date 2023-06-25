@@ -1,6 +1,7 @@
 #pragma once
 #include "CGameObject.h"
 class CMonster;
+
 class CHitCollider : public CGameObject
 {
 public:
@@ -15,6 +16,7 @@ public:
 	void Render() override;
 	void Release() override;
 	CMonster* monster;
+	
 
 	void SetColliderScale(float x, float y);
 	void SetMonster(CMonster* monster);

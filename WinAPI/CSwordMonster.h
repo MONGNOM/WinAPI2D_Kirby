@@ -1,7 +1,9 @@
 #pragma once
 #include "CMonster.h"
 #include "CMonsterWeapon.h"
+#include "CMonsterAttackCollider.h"
 
+class CMonsterAttackCollider;
 class CImage;
 class CAnimator;
 
@@ -14,10 +16,11 @@ public:
 
 	CSwordMonster();
 	virtual ~CSwordMonster();
+	CMonsterAttackCollider* attackCollider;
 
+	State m_state;
 private:
 	wstring swordstate;
-	State m_state;
 	CAnimator* m_pAnimator;
 
 	void IdleState();

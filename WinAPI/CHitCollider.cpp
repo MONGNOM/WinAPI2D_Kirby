@@ -3,6 +3,7 @@
 #include "CMonster.h"
 #include "CKirby.h"
 #include "CSwordMonster.h"
+#include "CIceMonster.h"
 
 CHitCollider::CHitCollider()
 {
@@ -42,14 +43,21 @@ void CHitCollider::SetMonster(CMonster* monster)
 {
 	this->monster = monster;
 }
+
+
+
 void CHitCollider::OnCollisionStay(CCollider* pOtherCollider)
 {
 	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Player)
 	{
+		// 플레이어쪽 방향으로 시선돌리기
 		if (monster->GetPos().x > pOtherCollider->GetOwner()->GetPos().x)
 		monster->m_vecLookDir = Vector(-1,0);
 		else
 		monster->m_vecLookDir = Vector(1, 0);
-		// 플레이어가 콜라이더에 부딪히면 부딪히면 몬스터의 시선은 플레이어의 위치를 봐라
+		// 플레이어가 닿으면 상태가 어택으로 되어야함  [조건] 
+		
+		//attackMonser-> m_state = CIceMonster::State::Attack; 로 하면 아이스몬스터는 바뀌는데 다른몬스터 콜라이더랑 부딪히면 오류남
+		
 	}
 }

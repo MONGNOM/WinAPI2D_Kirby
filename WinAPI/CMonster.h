@@ -2,8 +2,10 @@
 #include "CGameObject.h"
 #include "CHitCollider.h"
 
+
 class CImage;
 class CAnimtor;
+class CMonsterAttackCollider;
 
 class CMonster : public CGameObject
 {
@@ -27,7 +29,6 @@ public:
 	Vector m_vecMoveDir;
 	CHitCollider* collider;
 	
-
 	int m_groundCounter;
 	float m_fSpeed;
 	float m_gravity;

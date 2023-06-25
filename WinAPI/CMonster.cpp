@@ -38,11 +38,7 @@ void CMonster::Init()
 
 void CMonster::Update()
 {
-
-	/*if (m_groundCounter == 0)
-	{
-		m_vecPos.y += m_gravity * DT;
-	}*/
+	
 
 }
 

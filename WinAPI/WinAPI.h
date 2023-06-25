@@ -73,4 +73,3 @@ enum class TypeTile
 	Size,
 };
 
-

@@ -87,7 +87,7 @@ void CBossMonster::Update()
 { 
 	
 	// 중력 다시 업데이트에서 체크한번 해야함
-	// 공중에서 망치 어택했을때 콜라이더 안따라옴 그거 체크 
+	
 
 	m_jumpSpeed -= m_gravity * DT;
 
@@ -337,7 +337,17 @@ void CBossMonster::JumpAttackState()
 	m_vecPos.y -= m_jumpSpeed * DT;
 	if (m_pWeapon == nullptr)
 		MonsterAttackCollider();
-
+	else
+	{
+		if (m_vecLookDir.x == -1)
+		{
+			m_pWeapon->SetPos(m_vecPos.x - 150, m_vecPos.y);
+		}
+		if (m_vecLookDir.x == 1)
+		{
+			m_pWeapon->SetPos(m_vecPos.x + 150, m_vecPos.y);
+		}
+	}
 	if (m_vecLookDir.x == 1)
 	{
 		bossstate = L"JumpAttackR";
@@ -438,7 +448,7 @@ void CBossMonster::JumpDown()
 	if (jumpDown)
 	{
 		jumpDown = false;
-		m_state = State::JumpDown;
+		m_state = State::JumpAttack;
 	}
 	else
 	{
@@ -453,7 +463,7 @@ void CBossMonster::MonsterAttackCollider()
 	if (m_vecLookDir.x == -1)
 	{
 		m_pWeapon->SetMonsterWeaponScale(150, 200);
-		m_pWeapon->SetPos(m_vecPos.x - 150, m_vecPos.y);
+		m_pWeapon->SetPos(m_vecPos.x -150, m_vecPos.y);
 	}
 	if (m_vecLookDir.x == 1)
 	{
