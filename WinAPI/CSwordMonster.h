@@ -43,7 +43,7 @@ private:
 	CImage* m_pLIdleImage;
 	CImage* m_pLAttackImage;
 	CImage* m_pLAttackImage2;
-
+	void OnCollisionEnter(CCollider* pOtherCollider);
 	void Init() override;
 	void Update() override;
 	void Render() override;

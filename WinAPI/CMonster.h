@@ -2,10 +2,8 @@
 #include "CGameObject.h"
 #include "CHitCollider.h"
 
-
 class CImage;
 class CAnimtor;
-class CMonsterAttackCollider;
 
 class CMonster : public CGameObject
 {

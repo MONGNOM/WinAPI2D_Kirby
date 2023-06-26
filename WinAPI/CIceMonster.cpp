@@ -8,6 +8,7 @@
 #include "CEventManager.h"
 #include "CRenderManager.h"
 #include "CKirbyWeapon.h"
+#include "CNomalKirby.h"
 
 
 
@@ -59,7 +60,7 @@ void CIceMonster::Init()
 	m_pAnimator->Play(L"WalkR", false);
 	AddComponent(m_pAnimator);
 	collider->SetColliderScale(200, 100);
-	attackCollider->SetColliderScale(500, 100);
+	attackCollider->SetColliderScale(250, 100);
 	AddCollider(ColliderType::Circle, Vector(20, 20), Vector(0, 0));
 
 }
@@ -276,6 +277,26 @@ void CIceMonster::MonsterAttackCollider()
 		iceAttack->SetPos(m_vecPos.x + 70 ,m_vecPos.y);
 	}
 	ADDOBJECT(iceAttack);
+}
+
+void CIceMonster::OnCollisionEnter(CCollider* pOtherCollider)
+{
+	CMonster::OnCollisionEnter(pOtherCollider);
+	if (pOtherCollider->GetObjName() == L"일반커비")
+	{
+		CNomalKirby* normalKirby = (CNomalKirby*)pOtherCollider->GetOwner();
+		if (normalKirby->eat)
+		{
+			if (iceAttack != nullptr && attackCollider != nullptr)
+			{
+				DELETEOBJECT(iceAttack);
+				DELETEOBJECT(attackCollider);
+				iceAttack = nullptr;
+				attackCollider = nullptr;
+			}
+		}
+	}
+
 }
 
 

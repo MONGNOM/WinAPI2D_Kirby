@@ -75,10 +75,10 @@ void CSceneStage01::Enter()
 	icon->SetScale(125, 50);
 	AddGameObject(icon);
 
-	/*CImageObject* pBackGround = new CImageObject();
-	pBackGround->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\BackGround2.png"));
-	pBackGround->SetPos(0, 0);
-	AddGameObject(pBackGround);*/
+	CImageObject* pBackGround = new CImageObject();
+	pBackGround->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\BackGround3.png"));
+	pBackGround->SetPos(0, -200);
+	AddGameObject(pBackGround);
 
 	CImageObject* pGround = new CImageObject();
 	pGround->SetImage(RESOURCE->LoadImg(L"Ground", L"Image\\Ground.png"));

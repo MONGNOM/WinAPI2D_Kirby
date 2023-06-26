@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "CSwordMonster.h"
+#include "CNomalKirby.h"
 
 CSwordMonster::CSwordMonster()
 {
@@ -31,7 +32,7 @@ void CSwordMonster::Init()
 	attackCollider = new CMonsterAttackCollider();
 	attackCollider->SetSwordMonster(this);
 	ADDOBJECT(attackCollider);
-	attackCollider->SetColliderScale(150, 100);
+	attackCollider->SetColliderScale(300, 100);
 
 	CMonster::Init();
 	m_pMoveImage	= RESOURCE->LoadImg(L"SwordMonsterMove",	L"Image\\Monster\\SwordMonster\\SwordMonster.png");
@@ -52,16 +53,16 @@ void CSwordMonster::Init()
 	m_pAnimator->CreateAnimation(L"IdleR",		m_pIdleImage,		Vector(0.f, 0.f), Vector(125.f, 101.f), Vector(125.f, 0.f), 0.5f, 2);
 	m_pAnimator->CreateAnimation(L"WalkR",		m_pMoveImage,		Vector(248.f, 0.f), Vector(125.f, 101.f), Vector(132.f, 0.f), 0.15f, 6);
 	m_pAnimator->CreateAnimation(L"DieR",		m_pDieImage,		Vector(0.f, 490.f), Vector(145.f, 100.f), Vector(145.f, 0.f), 0.5f, 2);
-	m_pAnimator->CreateAnimation(L"AttackR",	m_pAttackImage,		Vector(0.f, 0.f), Vector(135.f, 110.f), Vector(280.f, 0.f), 0.07f, 9, false);
-	m_pAnimator->CreateAnimation(L"Attack2R",	m_pAttackImage2,	Vector(0.f, 0.f), Vector(135.f, 112.f), Vector(280.f, 0.f), 0.07f, 6, false);
+	m_pAnimator->CreateAnimation(L"AttackR",	m_pAttackImage,		Vector(0.f, 20.f), Vector(420.f, 170.f), Vector(420.f, 0.f), 0.07f, 9, false);
+	m_pAnimator->CreateAnimation(L"Attack2R",	m_pAttackImage2,	Vector(0.f, 0.f), Vector(420.f, 110.f), Vector(420.f, 0.f), 0.07f, 6, false);
 	m_pAnimator->CreateAnimation(L"DizzyR",		m_pDieImage,		Vector(0.f, 490.f), Vector(145.f, 100.f), Vector(0.f, 0.f), 0.15f, 1);
 	
 	// 왼쪽
 	m_pAnimator->CreateAnimation(L"IdleL",		m_pLIdleImage,		Vector(1172.f, 0.f), Vector(125.f, 101.f), Vector(-125.f, 0.f), 0.5f, 2);
 	m_pAnimator->CreateAnimation(L"WalkL",		m_pLIdleImage,		Vector(920.f, 0.f), Vector(125.f, 101.f), Vector(-132.f, 0.f), 0.15f, 6);
 	m_pAnimator->CreateAnimation(L"DieL",		m_pLIdleImage,		Vector(1150.f, 490.f), Vector(145.f, 100.f), Vector(-145.f, 0.f), 0.5f, 2);
-	m_pAnimator->CreateAnimation(L"AttackL",	m_pLAttackImage,	Vector(2400.f, 0.f), Vector(135.f, 110.f), Vector(-280.f, 0.f), 0.07f, 9, false);
-	m_pAnimator->CreateAnimation(L"Attack2L",	m_pLAttackImage2,	Vector(1565.f, 0.f), Vector(135.f, 112.f), Vector(-280.f, 0.f), 0.07f, 6, false);
+	m_pAnimator->CreateAnimation(L"AttackL",	m_pLAttackImage,	Vector(3360.f, 20.f), Vector(420.f, 170.f), Vector(-420.f, 0.f), 0.07f, 9, false);
+	m_pAnimator->CreateAnimation(L"Attack2L",	m_pLAttackImage2,	Vector(2100.f, 0.f), Vector(420.f, 110.f), Vector(-420.f, 0.f), 0.07f, 6, false);
 	m_pAnimator->CreateAnimation(L"DizzyL",		m_pLIdleImage,		Vector(1150.f, 490.f), Vector(145.f, 100.f), Vector(0.f, 0.f), 0.15f, 1); 
 
 	m_pAnimator->CreateAnimation(L"BIceDie", m_pIceDieImage, Vector(0.f, 0.f), Vector(99.f, 100.f), Vector(0.f, 0.f), 0.5f, 1);
@@ -265,6 +266,7 @@ void CSwordMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
+				DELETEOBJECT(m_pWeapon);
 				DELETEOBJECT(this); DELETEOBJECT(collider); DELETEOBJECT(attackCollider);
 			}
 		}
@@ -274,6 +276,7 @@ void CSwordMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
+				DELETEOBJECT(m_pWeapon);
 				DELETEOBJECT(this); DELETEOBJECT(collider); DELETEOBJECT(attackCollider);
 			}
 		}
@@ -286,6 +289,7 @@ void CSwordMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
+				DELETEOBJECT(m_pWeapon);
 				DELETEOBJECT(this); DELETEOBJECT(collider); DELETEOBJECT(attackCollider);
 			}
 		}
@@ -295,6 +299,7 @@ void CSwordMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
+				DELETEOBJECT(m_pWeapon);
 				DELETEOBJECT(this); DELETEOBJECT(collider); DELETEOBJECT(attackCollider);
 			}
 		}
@@ -348,6 +353,24 @@ void CSwordMonster::Release()
 {
 }
 
+void CSwordMonster::OnCollisionEnter(CCollider* pOtherCollider)
+{
+	CMonster::OnCollisionEnter(pOtherCollider);
+	if (pOtherCollider->GetObjName() == L"일반커비")
+	{
+		CNomalKirby* normalKirby = (CNomalKirby*)pOtherCollider->GetOwner();
+		if (normalKirby->eat)
+		{
+			if (m_pWeapon != nullptr && attackCollider != nullptr)
+			{
+				DELETEOBJECT(m_pWeapon);
+				DELETEOBJECT(attackCollider);
+				
+			}
+		}
+	}
+
+}
 void CSwordMonster::AnimatorUpdate()
 {
 	m_pAnimator->Play(swordstate, false);

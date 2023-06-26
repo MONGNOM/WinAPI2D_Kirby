@@ -17,13 +17,13 @@ public:
 	CIceMonster();
 	virtual ~CIceMonster();
 
+	void DieState();
 	State m_state;
 private:
 	wstring iceState;
 	CAnimator* m_pAnimator;
 
 	void WalkState();
-	void DieState();
 	void AttackState();
 	void DizzyState();
 	CImage* m_pMoveImage;
@@ -33,6 +33,7 @@ private:
 	CMonsterIceAttack* iceAttack;
 	CMonsterAttackCollider* attackCollider;
 	void MonsterAttackCollider();
+	void OnCollisionEnter(CCollider* pOtherCollider);
 
 private:
 	void Init() override;

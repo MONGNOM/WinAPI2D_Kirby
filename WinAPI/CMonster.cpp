@@ -5,6 +5,8 @@
 #include "CCollider.h"
 #include "CKirbyWeapon.h"
 #include "CNomalKirby.h"
+#include "CMonsterAttackCollider.h"
+#include "CMonsterWeapon.h"
 
 CMonster::CMonster()
 {
