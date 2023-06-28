@@ -25,7 +25,7 @@ void CSceneTitle::Enter()
 	CAMERA->FadeIn(0.25f);
 
 	CImageObject* Title = new CImageObject;
-	Title->SetImage(RESOURCE->LoadImg(L"Title", L"Image\\Title.png"));
+	Title->SetImage(RESOURCE->LoadImg(L"Title", L"Image\\Opening000000.235.bmp"));
 	AddGameObject(Title);
 }
 

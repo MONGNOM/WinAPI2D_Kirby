@@ -76,8 +76,8 @@ void CSceneStage01::Enter()
 	AddGameObject(icon);
 
 	CImageObject* pBackGround = new CImageObject();
-	pBackGround->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\BackGround3.png"));
-	pBackGround->SetPos(0, -200);
+	pBackGround->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\BackGround4.png"));
+	pBackGround->SetPos(0, -300);
 	AddGameObject(pBackGround);
 
 	CImageObject* pGround = new CImageObject();
