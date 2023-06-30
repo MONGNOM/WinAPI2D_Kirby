@@ -26,6 +26,12 @@ public:
 
 private:
 	
+	CSound* ChangeSound;
+	CSound* NotChangeSound;
+	CSound* EattingSound;
+	CSound* EatSound;
+	CSound* ShotSound;
+
 	wstring normalkirbystate;
 	State m_state;
 	CAnimator* m_pAnimator;

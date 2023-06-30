@@ -47,6 +47,20 @@ void CKirby::Init()
 	hp->SetPos(110, 550);
 	hp->SetScale(270, 50);
 	ADDOBJECT(hp);
+
+	DamageSound		= RESOURCE->LoadSound(L"CDamageSound",	L"Sound\\Damage.wav");
+	FlySound		= RESOURCE->LoadSound(L"FlySound",		L"Sound\\Fly.wav");
+	
+	JumpSound		= RESOURCE->LoadSound(L"JumpSound",		L"Sound\\Jump.wav");
+	RunSound		= RESOURCE->LoadSound(L"RunSound",		L"Sound\\Run.wav");
+	TeleportSound	= RESOURCE->LoadSound(L"TeleportSound", L"Sound\\Teleport.wav");
+}
+
+
+
+void CKirby::SelectSound(CSound* pSound, float volume, bool loop)
+{
+	SOUND->Play(pSound, volume, loop);
 }
 
 void CKirby::Update()

@@ -38,6 +38,7 @@ void CMeat::Release()
 
 void CMeat::OnCollisionEnter(CCollider* pOtherCollider)
 {
+	CItem::OnCollisionEnter(pOtherCollider);
 	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Player)
 	{
 		CKirby* Kirby = (CKirby*)pOtherCollider->GetOwner();
@@ -45,8 +46,10 @@ void CMeat::OnCollisionEnter(CCollider* pOtherCollider)
 			Kirby->playerHp = GAME->maxHp;
 		else
 			Kirby->playerHp += 1;
+
+		SOUND->Play(HealHpSound, 0.1f, false);
+
 		DELETEOBJECT(this);
 		Logger::Debug(L"아이템을 먹었다");
-		// 체력이 2회복된다 디버그는 1 찍히는데 ??? 중단점 걸면 2가 찍혀있다!?
 	}
 }

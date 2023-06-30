@@ -6,6 +6,8 @@ public:
 	CItem();
 	virtual ~CItem();
 
+	CSound* ItemGetSound;
+	CSound* HealHpSound;
 
 protected:
 	void Init() override;

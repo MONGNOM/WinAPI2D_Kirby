@@ -2,8 +2,11 @@
 #include "CGameObject.h"
 #include "CKirbyHp.h"
 
+class CPersimmon;
+
 class CKirby : public CGameObject
 {
+	friend CPersimmon;
 public:
 	CKirby();
 	virtual ~CKirby();
@@ -22,6 +25,17 @@ public:
 	float m_gravity;
 	int m_groundCounter;
 	bool stage1;
+
+	CSound* JumpSound;
+	CSound* RunSound;
+
+	CSound* DamageSound;
+	CSound* FlySound;
+	CSound* TeleportSound;
+
+	
+	void SelectSound(CSound* pSound, float volume, bool loop);
+
 
 	CKirbyHp* hp;
 

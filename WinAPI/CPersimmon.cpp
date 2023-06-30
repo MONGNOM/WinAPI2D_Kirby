@@ -40,11 +40,15 @@ void CPersimmon::Release()
 
 void CPersimmon::OnCollisionEnter(CCollider* pOtherCollider)
 {
+
+	CItem::OnCollisionEnter(pOtherCollider);
 	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Player)
 	{
 		CKirby* Kirby = (CKirby*)pOtherCollider->GetOwner();
 		Kirby->playerHp = GAME->maxHp;
+		SOUND->Play(HealHpSound, 0.1f, false);
 		DELETEOBJECT(this);
 		Logger::Debug(L"아이템을 먹었다");
+		
 	}
 }

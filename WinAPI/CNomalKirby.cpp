@@ -17,6 +17,7 @@
 
 
 
+
 CNomalKirby::CNomalKirby()
 {
 	m_state				= State::Idle;
@@ -103,7 +104,11 @@ void CNomalKirby::Init()
 	AddComponent(m_pAnimator);
 
 	AddCollider(ColliderType::Rect, Vector(40, 40), Vector(0, 0));
-
+	ChangeSound = RESOURCE->LoadSound(L"ChangeSound", L"Sound\\Change.wav");
+	NotChangeSound = RESOURCE->LoadSound(L"NotChangeSound", L"Sound\\NormalChange.wav");
+	EattingSound = RESOURCE->LoadSound(L"EattingSound", L"Sound\\EattingSound.wav");
+	EatSound = RESOURCE->LoadSound(L"EatSound", L"Sound\\Eat.wav");
+	ShotSound = RESOURCE->LoadSound(L"ShotSound", L"Sound\\Shot.wav");
 }
 
 
@@ -178,6 +183,8 @@ void CNomalKirby::Jump()
 {
 	m_jumpSpeed = 300;
 	fallTimer = 0;
+	SelectSound(JumpSound, 0.1f, false);
+	
 }
 
 #pragma region 상태패턴함수
@@ -203,7 +210,10 @@ void CNomalKirby::IdleState()
 	if (BUTTONSTAY(VK_LEFT))
 	{
 		if (lastLeftInputTime < TIME_DASHABLE)
+		{
+			SelectSound(RunSound, 0.1f, false);
 			m_state = State::Run;
+		}
 		else
 			m_state = State::Walk;
 
@@ -212,7 +222,10 @@ void CNomalKirby::IdleState()
 	if (BUTTONSTAY(VK_RIGHT))
 	{
 		if (lastRightInputTime < TIME_DASHABLE)
+		{	
+			SelectSound(RunSound, 0.1f, false);
 			m_state = State::Run;
+		}
 		else
 			m_state = State::Walk;
 
@@ -233,12 +246,15 @@ void CNomalKirby::IdleState()
 	if (BUTTONDOWN('A'))
 	{
 		Jump();
+		
 		m_state = State::Jump;
 	}
 }
 
 void CNomalKirby::WalkState()
 {
+	
+
 	m_fSpeed = 100.f;
 	if (m_groundchecker == false)
 	{
@@ -283,6 +299,7 @@ void CNomalKirby::WalkState()
 
 void CNomalKirby::RunState()
 {
+	
 	m_fSpeed = 200.0f;
 	if (m_groundchecker == false)
 	{
@@ -325,18 +342,24 @@ void CNomalKirby::RunState()
 
 void CNomalKirby::JumpState() 
 {
+	if (JumpSound == nullptr)
+	{
+		SelectSound(JumpSound, 0.1f, false);
+	}
 	m_vecPos.y -= m_jumpSpeed * DT;
-
+	
 	if (m_vecLookDir.x == -1)
 	{
 		normalkirbystate = L"LJump";
 		if (BUTTONSTAY(VK_RIGHT))
 		{
+			
 			m_vecPos.x += m_fSpeed * DT;
 			m_vecMoveDir.x = 1;
 		}
 		else if (BUTTONSTAY(VK_LEFT))
 		{
+			
 			m_vecPos.x -= m_fSpeed * DT;
 			m_vecMoveDir.x = -1;
 		}
@@ -446,10 +469,14 @@ void CNomalKirby::AttackState()
 			DELETEOBJECT(m_pKirbyEat);
 			m_pKirbyEat = nullptr;
 		}
-		m_state = State::Idle;
+		{
+			SOUND->Pause(EattingSound);
+			m_state = State::Idle;
+		}
 	}
 	if (eating)
 	{
+		SOUND->Pause(EattingSound);
 		m_state = State::Eating;
 	}
 }
@@ -460,6 +487,8 @@ void CNomalKirby::EatingState()
 	{
 		DELETEOBJECT(m_pKirbyEat);
 		m_pKirbyEat = nullptr;
+		SOUND->Play(EatSound, 0.1f, false);
+
 	}
 	if (m_groundchecker == false)
 	{
@@ -509,7 +538,10 @@ void CNomalKirby::ChangeState()
 			if (sword && !ice)
 				SwordirbyChange();
 			else
+			{
 				m_state = State::Idle;
+				SOUND->Play(NotChangeSound, 0.1f, false);
+			}
 		}
 	}
 	else if (m_vecLookDir.x == 1)
@@ -523,7 +555,10 @@ void CNomalKirby::ChangeState()
 			if (sword)
 				SwordirbyChange();
 			else
+			{
 				m_state = State::Idle;
+				SOUND->Play(NotChangeSound, 0.1f, false);
+			}
 		}
 	}
 }
@@ -565,6 +600,7 @@ void CNomalKirby::EatAttackState()
 
 	if (m_pKirbyShot == nullptr)
 	{
+		SOUND->Play(ShotSound, 0.1f, false);
 		m_pKirbyShot = new CKirbyShot(m_vecLookDir);
 		ADDOBJECT(m_pKirbyShot);
 		m_pKirbyShot->SetPos(m_vecPos);
@@ -602,6 +638,8 @@ void CNomalKirby::EatAttackState()
 
 void CNomalKirby::AttackCollider()
 {
+	SOUND->Play(EattingSound, 0.1f, true);
+
 	eat = true;
 	m_pKirbyEat = new CKirbyEat();
 	if (m_vecLookDir.x == -1)
@@ -613,6 +651,8 @@ void CNomalKirby::AttackCollider()
 		m_pKirbyEat->SetPos(m_vecPos.x + 35, m_vecPos.y);
 	}
 	ADDOBJECT(m_pKirbyEat);
+	
+
 }
 
 
@@ -712,6 +752,7 @@ void CNomalKirby::Release()
 
 void CNomalKirby::IceKirbyChange()
 {
+	SOUND->Play(ChangeSound, 0.1f, false);
 	GAME->iceicon = true;
 	icekirby = new CIceKirby();
 	icekirby->SetPos(m_vecPos);
@@ -721,6 +762,7 @@ void CNomalKirby::IceKirbyChange()
 
 void CNomalKirby::SwordirbyChange()
 {
+	SOUND->Play(ChangeSound, 0.1f, false);
 	GAME-> swordicon = true;
 	swordKriby = new CSwordKirby();
 	swordKriby->SetPos(m_vecPos);

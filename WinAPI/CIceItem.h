@@ -12,6 +12,7 @@ public:
 	CAnimator* m_pAnimator;
 	CImage* m_pIceItemImage;
 
+	
 private:
 	void Init() override;
 	void Update() override;
