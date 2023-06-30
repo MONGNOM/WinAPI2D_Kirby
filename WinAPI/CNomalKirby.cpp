@@ -561,8 +561,15 @@ void CNomalKirby::EatAttackState()
 {
 	ice = false;
 	sword = false;
-	m_pKirbyShot = new CKirbyShot(m_vecLookDir);
 	attackTimer += DT;
+
+	if (m_pKirbyShot == nullptr)
+	{
+		m_pKirbyShot = new CKirbyShot(m_vecLookDir);
+		ADDOBJECT(m_pKirbyShot);
+		m_pKirbyShot->SetPos(m_vecPos);
+	}
+
 	if (m_groundchecker == false)
 	{
 		m_vecPos.y += m_gravity * DT;
@@ -572,7 +579,7 @@ void CNomalKirby::EatAttackState()
 		normalkirbystate = L"EatAttackL";
 		if (attackTimer > 0.2f)
 		{
-			m_pKirbyShot->SetPos(m_vecPos);
+			m_pKirbyShot = nullptr;
 			eating = false;
 			m_state = State::Idle;
 			attackTimer = 0;
@@ -583,13 +590,14 @@ void CNomalKirby::EatAttackState()
 		normalkirbystate = L"EatAttackR";
 		if (attackTimer > 0.2f)
 		{
-			m_pKirbyShot->SetPos(m_vecPos);
+			m_pKirbyShot = nullptr;
 			eating = false;
 			m_state = State::Idle;
 			attackTimer = 0;
 		}
 	}
-	ADDOBJECT(m_pKirbyShot);
+	
+
 }
 
 void CNomalKirby::AttackCollider()

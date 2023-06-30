@@ -76,12 +76,12 @@ void CSceneStage01::Enter()
 	AddGameObject(icon);
 
 	CImageObject* pBackGround = new CImageObject();
-	pBackGround->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\BackGround4.png"));
-	pBackGround->SetPos(0, -300);
+	pBackGround->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\map12.png"));
+	pBackGround->SetPos(0, 0);
 	AddGameObject(pBackGround);
 
 	CImageObject* pGround = new CImageObject();
-	pGround->SetImage(RESOURCE->LoadImg(L"Ground", L"Image\\Ground.png"));
+	pGround->SetImage(RESOURCE->LoadImg(L"Ground", L"Image\\Ground12.png"));
 	pGround->SetPos(0, 0);
 	AddGameObject(pGround);
 
@@ -101,6 +101,11 @@ void CSceneStage01::Update()
 	}
 	else
 		CAMERA->SetTargetPos(GAME->playerPos, 0.1f);
+
+	if (GAME->playerPos.y >= 300 || GAME->playerPos.y <= 300)
+	{
+		CAMERA->SetTargetPos(Vector(GAME->playerPos.x, 300));
+	}
 
 	if (BUTTONDOWN(VK_ESCAPE))
 	{

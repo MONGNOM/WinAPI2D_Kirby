@@ -32,6 +32,7 @@ private:
 
 	float attackTimer;
 	float changeTimer;
+	float shotTimer;
 	void Jump();
 	void IdleState();
 	void WalkState();
