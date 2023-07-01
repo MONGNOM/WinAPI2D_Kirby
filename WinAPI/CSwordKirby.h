@@ -12,6 +12,7 @@ public:
 	virtual ~CSwordKirby();
 
 	float attackTimer;
+	CSound* DropSound;
 
 
 private:

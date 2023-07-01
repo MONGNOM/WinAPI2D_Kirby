@@ -19,6 +19,14 @@ private:
 	State m_state;
 	CAnimator* m_pAnimator;
 
+
+
+	CSound* AttackSound;
+	CSound* JumpSound;
+	CSound* ShoutSound;
+	CSound* WalkSound;
+	CSound* DeathSound;
+
 	bool Attack;
 	bool jumpDown;
 
@@ -33,6 +41,7 @@ private:
 	void JumpAttackState();
 	void FearState();
 	void DisappearState();
+	void Shout();
 	
 	void BasicAttack();
 	void JumpDown();

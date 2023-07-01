@@ -31,6 +31,8 @@ private:
 	void DizzyState();
 	void MonsterAttackCollider();
 
+	void DeleteObject();
+
 	CMonsterWeapon* m_pWeapon;
 
 	CImage* m_pIdleImage;

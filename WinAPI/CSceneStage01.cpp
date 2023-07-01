@@ -33,6 +33,8 @@ CSceneStage01::CSceneStage01()
 	iceMonster = nullptr;
 	swordMonster = nullptr;
 	bossMonster = nullptr;
+	Stage1Sound = RESOURCE->LoadSound(L"Stage1Sound", L"Sound\\Stage1BGM.wav");
+
 }
 
 CSceneStage01::~CSceneStage01()
@@ -45,7 +47,7 @@ void CSceneStage01::Init()
 
 void CSceneStage01::Enter()
 {
-
+	SOUND->Play(Stage1Sound, 0.1f, true);
 	pkirby = new CNomalKirby();
 	pkirby->SetPos(100, 300);
 	AddGameObject(pkirby);
@@ -132,6 +134,7 @@ void CSceneStage01::Render()
 
 void CSceneStage01::Exit()
 {
+	SOUND->Pause(Stage1Sound);
 	DeleteAll();
 }
 

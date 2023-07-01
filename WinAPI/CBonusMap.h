@@ -14,6 +14,8 @@ public:
 
 	CPersimmon* pPersimon;
 	CNomalKirby* pkirby;
+	CSound* BonusMapSound;
+
 
 private:
 	void Init()		override;

@@ -241,20 +241,18 @@ void CNomalKirby::IdleState()
 	}
 	if (BUTTONSTAY(VK_UP))
 	{
+		SelectSound(FlySound, 0.1f, false);
 		m_state = State::Fly;
 	}
 	if (BUTTONDOWN('A'))
 	{
 		Jump();
-		
 		m_state = State::Jump;
 	}
 }
 
 void CNomalKirby::WalkState()
 {
-	
-
 	m_fSpeed = 100.f;
 	if (m_groundchecker == false)
 	{
@@ -288,6 +286,7 @@ void CNomalKirby::WalkState()
 	}
 	if (BUTTONSTAY(VK_UP))
 	{
+		SelectSound(FlySound, 0.1f, false);
 		m_state = State::Fly;
 	}
 	if (BUTTONDOWN('A'))
@@ -299,7 +298,6 @@ void CNomalKirby::WalkState()
 
 void CNomalKirby::RunState()
 {
-	
 	m_fSpeed = 200.0f;
 	if (m_groundchecker == false)
 	{
@@ -331,6 +329,7 @@ void CNomalKirby::RunState()
 	}
 	if (BUTTONSTAY(VK_UP))
 	{
+		SelectSound(FlySound, 0.1f, false);
 		m_state = State::Fly;
 	}
 	if (BUTTONDOWN('A'))
@@ -422,6 +421,7 @@ void CNomalKirby::FlyState()
 		normalkirbystate = L"RFly";
 		if (flyTimer > 0.4f)
 		{ 
+			SelectSound(FlySound, 0.1f, true);
 			flyTimer = 0;
 			m_state = State::Flying;
 		}
@@ -431,6 +431,8 @@ void CNomalKirby::FlyState()
 		normalkirbystate = L"LFly";
 		if (flyTimer > 0.4f)
 		{
+			SelectSound(FlySound, 0.1f, true);
+
 			flyTimer = 0;
 			m_state = State::Flying;
 
@@ -438,15 +440,11 @@ void CNomalKirby::FlyState()
 	}
 	else if(BUTTONUP(VK_UP))
 	{
+
 		m_jumpSpeed = 0;
 		m_state = State::JumpingDown;
 	}
 	
-	if (BUTTONDOWN('S'))
-	{
-		m_state = State::Attack;
-	}
-
 }
 
 void CNomalKirby::AttackState()
@@ -639,7 +637,6 @@ void CNomalKirby::EatAttackState()
 void CNomalKirby::AttackCollider()
 {
 	SOUND->Play(EattingSound, 0.1f, true);
-
 	eat = true;
 	m_pKirbyEat = new CKirbyEat();
 	if (m_vecLookDir.x == -1)
@@ -698,6 +695,7 @@ void CNomalKirby::JumpingDownState()
 	}
 	if (BUTTONDOWN('A'))
 	{
+		SelectSound(FlySound, 0.1f, false);
 		flyTimer = 0;
 		m_state = State::Fly;
 	}
@@ -735,6 +733,7 @@ void CNomalKirby::FlyingState()
 	
 	if(BUTTONDOWN('S'))
 	{
+		SOUND->Pause(FlySound);
 		m_jumpSpeed = 0;
 		m_state = State::JumpingDown;
 	}

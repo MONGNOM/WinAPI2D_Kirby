@@ -24,6 +24,8 @@ CMonster::CMonster()
 	hp = 0;
 	dizzy = false;
 	iceDie = false;
+	DamageSound = RESOURCE->LoadSound(L"MonsterDamageSound", L"Sound\\Damage.wav");
+	DeathSound	= RESOURCE->LoadSound(L"MonsterDeathSound", L"Sound\\MonsterDeath.wav");
 
 }
 
@@ -55,6 +57,7 @@ void CMonster::Release()
 
 void CMonster::TakeDamage(int damage)
 {
+	SOUND->Play(DamageSound, 0.1f, false);
 	hp -= damage;
 	dizzy = true;
 }
@@ -78,7 +81,6 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 	{
 		CKirbyWeapon* pWeapon = (CKirbyWeapon*)pOtherCollider->GetOwner();
 		TakeDamage(pWeapon->damage);
-		Logger::Debug(L"目厚客 面倒");
 	}
 	if (pOtherCollider->GetObjName() == L"倔府扁")
 	{
@@ -99,6 +101,7 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 		{
 			DELETEOBJECT(this);
 			DELETEOBJECT(collider);
+			SOUND->Play(DeathSound, 0.1f, false);
 		}
 		if (this != nullptr)
 		{

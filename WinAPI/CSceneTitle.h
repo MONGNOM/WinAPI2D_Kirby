@@ -7,6 +7,10 @@ public:
 	CSceneTitle();
 	virtual ~CSceneTitle();
 
+	CSound* TitleSound;
+	CSound* ClickSound;
+
+
 private:
 	void Init()		override;
 	void Enter()	override;

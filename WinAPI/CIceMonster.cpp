@@ -89,12 +89,15 @@ void CIceMonster::Update()
 	}
 	if (dizzy)
 	{
+		dizzy = false;
 		m_state = State::Dizzy;
 	}
 	if (hp <= 0)
 	{
 		m_state = State::Die;
+		SOUND->Play(DeathSound, 0.1f, false);
 	}
+	
 	AnimatorUpdate();
 }
 
@@ -242,6 +245,7 @@ void CIceMonster::AttackState()
 
 void CIceMonster::DizzyState()
 {
+	
 	dieTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{

@@ -93,11 +93,14 @@ void CKirby::OnCollisionEnter(CCollider* pOtherCollider)
 	}
 	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Monster)
 	{
+		SOUND->Play(DamageSound, 0.1f, false);
 		playerHp -= 1;
 	}
-	if(pOtherCollider->GetOwner()->GetLayer() == Layer::MWeapon)
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::MWeapon)
+	{
+		SOUND->Play(DamageSound, 0.1f, false);
 		playerHp -= 1;
-
+	}
 }
 
 void CKirby::OnCollisionStay(CCollider* pOtherCollider)

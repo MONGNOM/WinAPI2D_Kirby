@@ -23,6 +23,8 @@ private:
 	CIceMonster* iceMonster;
 	CSwordMonster* swordMonster;
 	CBossMonster* bossMonster;
+	CSound* Stage1Sound;
+
 
 private:
 	void Init()		override;

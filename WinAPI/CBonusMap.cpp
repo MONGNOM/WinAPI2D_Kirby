@@ -23,6 +23,8 @@ CBonusMap::CBonusMap()
 {
 	pPersimon = nullptr;
 	pkirby = nullptr;
+	BonusMapSound = RESOURCE->LoadSound(L"BonusMapSound", L"Sound\\StageSelect.wav");
+
 }
 
 CBonusMap::~CBonusMap()
@@ -35,6 +37,7 @@ void CBonusMap::Init()
 
 void CBonusMap::Enter()
 {
+	SOUND->Play(BonusMapSound, 0.1f, true);
 	if (GAME->ice)
 	{
 		CIceKirby* icekirby = new CIceKirby();
@@ -106,6 +109,7 @@ void CBonusMap::Render()
 void CBonusMap::Exit()
 {
 	DeleteAll();
+	SOUND->Pause(BonusMapSound);
 }
 
 void CBonusMap::Release()

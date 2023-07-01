@@ -63,6 +63,8 @@ void CBasicMonster::Update()
 {
 	CMonster::Update();
 	collider->SetPos(m_vecPos);
+	Logger::Debug(Basicstate);
+
 
 	switch(m_state)
 	{
@@ -101,9 +103,11 @@ void CBasicMonster::WalkState()
 	if (dizzy)
 	{
 		m_state = State::Dizzy;
+		dizzy = false;
 	}
 	if (hp <= 0)
 	{
+		SOUND->Play(DeathSound, 0.1f, false);
 		m_state = State::Die;
 	}
 }

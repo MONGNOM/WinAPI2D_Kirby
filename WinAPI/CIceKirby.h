@@ -19,6 +19,8 @@ public:
 
 
 private:
+	CSound* IceSound;
+	CSound* DropSound;
 
 	wstring icekirbystate;
 	State m_state;

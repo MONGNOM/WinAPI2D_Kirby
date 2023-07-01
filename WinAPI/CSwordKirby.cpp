@@ -47,6 +47,8 @@ CSwordKirby::CSwordKirby()
 	m_LpAttackingImage		= nullptr;
 	m_SwordIconImage		= nullptr;
 	m_pSword				= nullptr;
+	DropSound = RESOURCE->LoadSound(L"DropSound", L"Sound\\Drop.wav");
+
 
 }
 
@@ -198,6 +200,7 @@ void CSwordKirby::AnimatorUpdate()
 
 void CSwordKirby::Jump()
 {
+	SelectSound(JumpSound, 0.1f, false);
 	m_jumpSpeed = 300;
 	fallTimer = 0;
 }
@@ -219,7 +222,10 @@ void CSwordKirby::IdleState()
 	if (BUTTONSTAY(VK_LEFT))
 	{
 		if (lastLeftInputTime < TIME_DASHABLE)
+		{
+			SelectSound(RunSound, 0.1f, false);
 			m_state = State::Run;
+		}
 		else
 			m_state = State::Walk;
 
@@ -228,7 +234,10 @@ void CSwordKirby::IdleState()
 	if (BUTTONSTAY(VK_RIGHT))
 	{
 		if (lastRightInputTime < TIME_DASHABLE)
+		{
+			SelectSound(RunSound, 0.1f, false);
 			m_state = State::Run;
+		}
 		else
 			m_state = State::Walk;
 
@@ -244,6 +253,7 @@ void CSwordKirby::IdleState()
 	}
 	if (BUTTONSTAY(VK_UP))
 	{
+		SelectSound(FlySound, 0.1f, false);
 		m_state = State::Fly;
 	}
 	if (BUTTONDOWN('A'))
@@ -292,6 +302,7 @@ void CSwordKirby::WalkState()
 	}
 	if (BUTTONSTAY(VK_UP))
 	{
+		SelectSound(FlySound, 0.1f, false);
 		m_state = State::Fly;
 	}
 	if (BUTTONDOWN('A'))
@@ -301,6 +312,7 @@ void CSwordKirby::WalkState()
 	}
 	if (BUTTONDOWN('D'))
 	{
+		SOUND->Play(DropSound, 0.1f, false);
 		m_state = State::Takeoff;
 	}
 }
@@ -338,6 +350,7 @@ void CSwordKirby::RunState()
 	}
 	if (BUTTONSTAY(VK_UP))
 	{
+		SelectSound(FlySound, 0.1f, false);
 		m_state = State::Fly;
 	}
 	if (BUTTONDOWN('A'))
@@ -347,6 +360,7 @@ void CSwordKirby::RunState()
 	}
 	if (BUTTONDOWN('D'))
 	{
+		SOUND->Play(DropSound, 0.1f, false);
 		m_state = State::Takeoff;
 	}
 }
@@ -439,6 +453,7 @@ void CSwordKirby::FlyState()
 		swordkirbystate = L"RFly";
 		if (flyTimer > 0.4f)
 		{
+			SelectSound(FlySound, 0.1f, true);
 			flyTimer = 0;
 			m_state = State::Flying;
 		}
@@ -448,6 +463,7 @@ void CSwordKirby::FlyState()
 		swordkirbystate = L"LFly";
 		if (flyTimer > 0.4f)
 		{
+			SelectSound(FlySound, 0.1f, true);
 			flyTimer = 0;
 			m_state = State::Flying;
 
@@ -485,6 +501,7 @@ void CSwordKirby::AttackState()
 		{
 			if (m_pSword != nullptr)
 			{
+				//SOUND->Pause(IceSound);
 				DELETEOBJECT(m_pSword);
 				m_pSword = nullptr;
 			}
@@ -500,6 +517,7 @@ void CSwordKirby::AttackState()
 		{
 			if (m_pSword != nullptr)
 			{
+				//SOUND->Pause(IceSound);
 				DELETEOBJECT(m_pSword);
 				m_pSword = nullptr;
 			}
@@ -542,6 +560,7 @@ void CSwordKirby::JumpAttackState()
 	{
 		if (m_pSword != nullptr)
 		{
+			//SOUND->Pause(IceSound);
 			DELETEOBJECT(m_pSword);
 			m_pSword = nullptr;
 		}
@@ -582,6 +601,7 @@ void CSwordKirby::DownAttackState()
 	{
 		if (m_pSword != nullptr)
 		{
+			//SOUND->Pause(IceSound);
 			DELETEOBJECT(m_pSword);
 			m_pSword = nullptr;
 		}
@@ -593,6 +613,7 @@ void CSwordKirby::DownAttackState()
 	{
 		if (m_pSword != nullptr)
 		{
+			//SOUND->Pause(IceSound);
 			DELETEOBJECT(m_pSword);
 			m_pSword = nullptr;
 		}
@@ -603,6 +624,7 @@ void CSwordKirby::DownAttackState()
 	{
 		if (m_pSword != nullptr)
 		{
+			//SOUND->Pause(IceSound);
 			DELETEOBJECT(m_pSword);
 			m_pSword = nullptr;
 		}
@@ -648,6 +670,7 @@ void CSwordKirby::DownJumpAttackState()
 		{
 			if (m_pSword != nullptr)
 			{
+				//SOUND->Pause(IceSound);
 				DELETEOBJECT(m_pSword);
 				m_pSword = nullptr;
 			}
@@ -742,6 +765,7 @@ void CSwordKirby::AttackCollider()
 */
 void CSwordKirby::AttackCollider(Vector position, Vector scale)
 {
+	//SOUND->Play(IceSound, 0.1f, true);
 	m_pSword = new CSword();
 	if (m_vecLookDir.x == -1)
 	{
@@ -806,6 +830,7 @@ void CSwordKirby::JumpingDownState()
 	}
 	if (BUTTONDOWN('A'))
 	{
+		SelectSound(FlySound, 0.1f, false);
 		flyTimer = 0;
 		m_state = State::Fly;
 	}

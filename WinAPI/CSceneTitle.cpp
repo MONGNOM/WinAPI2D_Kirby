@@ -10,6 +10,9 @@
 
 CSceneTitle::CSceneTitle()
 {
+
+	ClickSound = RESOURCE->LoadSound(L"ClickSound", L"Sound\\Click.wav");
+
 }
 
 CSceneTitle::~CSceneTitle()
@@ -22,6 +25,8 @@ void CSceneTitle::Init()
 
 void CSceneTitle::Enter()
 {
+	TitleSound = RESOURCE->LoadSound(L"TitleSound", L"Sound\\KirbyMainBgm.mp3");
+	SOUND->Play(TitleSound, 0.1f, true);
 	CAMERA->FadeIn(0.25f);
 
 	CImageObject* Title = new CImageObject;
@@ -38,6 +43,7 @@ void CSceneTitle::Update()
 	if (BUTTONDOWN(VK_SPACE))
 	{
 		CAMERA->FadeOut(0.25f);
+		SOUND->Play(ClickSound, 0.1f, false);
 		DELAYCHANGESCENE(GroupScene::Stage01, 0.25f);
 	}
 }
@@ -55,6 +61,8 @@ void CSceneTitle::Render()
 
 void CSceneTitle::Exit()
 {
+	SOUND->Pause(TitleSound);
+
 }
 
 void CSceneTitle::Release()

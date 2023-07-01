@@ -19,7 +19,8 @@ public:
 	int hp;
 	bool dizzy;
 	bool m_groundchecker;
-	
+	CSound* DamageSound;
+	CSound* DeathSound;
 
 
 	bool iceDie;

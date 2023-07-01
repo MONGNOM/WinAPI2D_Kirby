@@ -25,15 +25,13 @@
 #include "CGameManager.h"
 #include "CKirbyIcon.h"
 
-
-
-
-
-
 CSceneState02::CSceneState02()
 {
 	pkirby = nullptr;
 	bossMonster = nullptr;
+	BossBGMSound = RESOURCE->LoadSound(L"BossMapSound", L"Sound\\BossBgm.mp3");
+	ClickSound = RESOURCE->LoadSound(L"BossClickSound", L"Sound\\Click.wav");
+
 }
 
 CSceneState02::~CSceneState02()
@@ -47,6 +45,8 @@ void CSceneState02::Init()
 
 void CSceneState02::Enter()
 {
+	SOUND->Play(BossBGMSound, 0.1f, true);
+
 	if (GAME->ice)
 	{
 		CIceKirby* icekirby = new CIceKirby();
@@ -91,6 +91,7 @@ void CSceneState02::Update()
 	{
 		CAMERA->FadeOut(0.25f);
 		DELAYCHANGESCENE(GroupScene::Title, 0.25f);
+		SOUND->Play(ClickSound, 0.1f, false);
 	}
 	
 }
@@ -101,6 +102,7 @@ void CSceneState02::Render()
 
 void CSceneState02::Exit()
 {
+	SOUND->Pause(BossBGMSound);
 	DeleteAll();
 }
 

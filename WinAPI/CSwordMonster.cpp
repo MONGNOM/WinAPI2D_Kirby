@@ -103,8 +103,17 @@ void CSwordMonster::Update()
 		break;
 	}
 
-	if (dizzy) m_state = State::Dizzy;
-	if (hp <= 0) m_state = State::Die;
+	
+	if (dizzy)
+	{
+		m_state =State::Dizzy;
+		dizzy = false;
+	}
+		if (hp <= 0)
+	{
+		m_state = State::Die;
+		SOUND->Play(DeathSound, 0.1f, false);
+	}
 	AnimatorUpdate();
 }
 
@@ -266,8 +275,7 @@ void CSwordMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(m_pWeapon);
-				DELETEOBJECT(this); DELETEOBJECT(collider); DELETEOBJECT(attackCollider);
+				DeleteObject();
 			}
 		}
 		if (m_vecLookDir.x == -1)
@@ -276,8 +284,7 @@ void CSwordMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(m_pWeapon);
-				DELETEOBJECT(this); DELETEOBJECT(collider); DELETEOBJECT(attackCollider);
+				DeleteObject();
 			}
 		}
 	}
@@ -289,8 +296,8 @@ void CSwordMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(m_pWeapon);
-				DELETEOBJECT(this); DELETEOBJECT(collider); DELETEOBJECT(attackCollider);
+				DeleteObject();
+
 			}
 		}
 		if (m_vecLookDir.x == -1)
@@ -299,8 +306,7 @@ void CSwordMonster::DieState()
 			if (dieTimer > 1.f)
 			{
 				dieTimer = 0;
-				DELETEOBJECT(m_pWeapon);
-				DELETEOBJECT(this); DELETEOBJECT(collider); DELETEOBJECT(attackCollider);
+				DeleteObject();
 			}
 		}
 	}
@@ -308,6 +314,8 @@ void CSwordMonster::DieState()
 
 void CSwordMonster::DizzyState()
 {
+	
+
 	dieTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
@@ -343,6 +351,26 @@ void CSwordMonster::MonsterAttackCollider()
 		m_pWeapon->SetPos(m_vecPos.x + 70, m_vecPos.y);
 	}
 	ADDOBJECT(m_pWeapon);
+}
+
+void CSwordMonster::DeleteObject()
+{
+	DELETEOBJECT(this); 
+	DELETEOBJECT(collider);
+	DELETEOBJECT(attackCollider);
+	if (m_pWeapon != nullptr)
+	{
+		DELETEOBJECT(m_pWeapon);
+		m_pWeapon = nullptr;
+	}
+	/*if (m_pWeapon != nullptr)
+	{
+		m_pWeapon = nullptr;
+	}
+	if (m_pWeapon != nullptr) 
+	{
+		m_pWeapon = nullptr;
+	}*/
 }
 
 void CSwordMonster::Render()

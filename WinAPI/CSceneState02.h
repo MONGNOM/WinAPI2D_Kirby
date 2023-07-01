@@ -17,6 +17,8 @@ public:
 private:
 	CBossMonster* bossMonster;
 	CNomalKirby* pkirby;
+	CSound* BossBGMSound;
+	CSound* ClickSound;
 
 
 private:

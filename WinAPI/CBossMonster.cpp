@@ -23,11 +23,17 @@ CBossMonster::CBossMonster()
 	m_state = State::Fear;
 	hp = GAME->BossHp;
 	m_jumpSpeed = 0.f;
+	JumpSound = RESOURCE->LoadSound(L"BossJumpSound", L"Sound\\BossJump.wav");
+	AttackSound = RESOURCE->LoadSound(L"BossAttackSound", L"Sound\\BossAttack.wav");
+	ShoutSound = RESOURCE->LoadSound(L"BossShoutSound", L"Sound\\BossShout.wav");
+	WalkSound = RESOURCE->LoadSound(L"BossWalkSound", L"Sound\\BossWalk.wav");
+	DeathSound = RESOURCE->LoadSound(L"BossDeathSound", L"Sound\\BossDeath.wav");
 
 }
 
 CBossMonster::~CBossMonster()
 {
+
 }
 
 
@@ -85,13 +91,8 @@ void CBossMonster::Init()
 
 void CBossMonster::Update()
 { 
-	
-	// 중력 다시 업데이트에서 체크한번 해야함
-	
-
 	m_jumpSpeed -= m_gravity * DT;
 
-	Logger::Debug(bossstate);
 	GAME->BossHp = hp;
 	collider->SetPos(m_vecPos);
 
@@ -132,8 +133,11 @@ void CBossMonster::Update()
 		break;
 	}
 
-	if (dizzy) m_state = State::Dizzy;
-
+	if (dizzy)
+	{
+		m_state = State::Dizzy;
+		dizzy = false;
+	}
 	AnimatorUpdate();
 }
 
@@ -146,14 +150,18 @@ void CBossMonster::Release()
 }
 void CBossMonster::IdleState()
 {
-	if (hp <= 0) m_state = State::Die;
-	
+	if (hp <= 0)
+	{
+		SOUND->Play(DeathSound, 0.1f, false);
+		m_state = State::Die;
+	}
 	idleTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
 		bossstate = L"IdleR";
 		if (idleTimer > 2.f)
 		{
+			SOUND->Play(WalkSound, 0.1f, true);
 			idleTimer = 0;
 			m_state = State::Walk;
 		}
@@ -163,6 +171,7 @@ void CBossMonster::IdleState()
 		bossstate = L"IdleL";
 		if (idleTimer > 2.f)
 		{
+			SOUND->Play(WalkSound, 0.1f, true);
 			idleTimer = 0;
 			m_state = State::Walk;
 		}
@@ -378,6 +387,7 @@ void CBossMonster::JumpAttackState()
 
 void CBossMonster::FearState()
 {
+	Shout(); //한번나오게 수정
 	if (m_groundchecker == false)
 	{
 		m_vecPos.y += m_gravity * DT;
@@ -390,6 +400,7 @@ void CBossMonster::FearState()
 
 		if (attackTimer > 1.15f)
 		{
+			SOUND->Pause(ShoutSound);
 			attackTimer = 0;
 			m_state = State::Idle;
 		}
@@ -399,6 +410,7 @@ void CBossMonster::FearState()
 		bossstate = L"FearL";
 		if (attackTimer > 1.15f)
 		{
+			SOUND->Pause(ShoutSound);
 			attackTimer = 0;
 			m_state = State::Idle;
 		}
@@ -428,8 +440,14 @@ void CBossMonster::DisappearState()
 	}
 }
 
+void CBossMonster::Shout()
+{
+		SOUND->Play(ShoutSound, 0.1f, true);
+}
+
 void CBossMonster::BasicAttack()
 {
+	SOUND->Pause(WalkSound);
 	if (Attack)
 	{
 		Attack = false;
@@ -447,11 +465,13 @@ void CBossMonster::JumpDown()
 {
 	if (jumpDown)
 	{
+		SOUND->Play(AttackSound, 0.1f, false);
 		jumpDown = false;
 		m_state = State::JumpAttack;
 	}
 	else
 	{
+		SOUND->Play(AttackSound, 0.1f, false);
 		jumpDown = true;
 		m_state = State::JumpAttack;
 	}
@@ -459,6 +479,7 @@ void CBossMonster::JumpDown()
 
 void CBossMonster::MonsterAttackCollider()
 {
+	SOUND->Play(AttackSound, 0.1f, false);
 	m_pWeapon = new CMonsterWeapon();
 	if (m_vecLookDir.x == -1)
 	{
