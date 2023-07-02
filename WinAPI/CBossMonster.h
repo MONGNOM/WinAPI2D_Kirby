@@ -29,7 +29,6 @@ private:
 
 	bool Attack;
 	bool jumpDown;
-
 	float m_jumpSpeed;
 	void IdleState();
 	void WalkState();
@@ -47,16 +46,6 @@ private:
 	void JumpDown();
 	
 	void MonsterAttackCollider();
-
-	
-	CImage* m_pIdleImage;
-	CImage* m_pMoveImage;
-	CImage* m_pDieImage;
-	CImage* m_pAttackImage;
-	CImage* m_pAttackImage2;
-	CImage* m_pIceDieImage;
-	CImage* m_pJumpImage;
-	CImage* m_pAttackImageL2;
 
 	CImage* m_pBossImageR;
 	CImage* m_pBossImageL;

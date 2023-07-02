@@ -182,7 +182,6 @@ void CIceKirby::IdleState()
 	}
 	if (BUTTONSTAY(VK_UP))
 	{
-		SelectSound(FlySound, 0.1f, false);
 		m_state = State::Fly;
 	}
 	if (BUTTONDOWN('A'))
@@ -192,7 +191,7 @@ void CIceKirby::IdleState()
 	}
 	if (BUTTONDOWN('D'))
 	{
-		SOUND->Play(DropSound, 0.1f, false);
+		SOUND->Play(DropSound, 0.5f, false);
 		m_state = State::Takeoff;
 	}
 }
@@ -232,7 +231,6 @@ void CIceKirby::WalkState()
 	}
 	if (BUTTONSTAY(VK_UP))
 	{
-		SelectSound(FlySound, 0.1f, false);
 		m_state = State::Fly;
 	}
 	if (BUTTONDOWN('A'))
@@ -242,7 +240,7 @@ void CIceKirby::WalkState()
 	}
 	if (BUTTONDOWN('D'))
 	{
-		SOUND->Play(DropSound, 0.1f, false);
+		SOUND->Play(DropSound, 0.5f, false);
 		m_state = State::Takeoff;
 	}
 }
@@ -280,7 +278,6 @@ void CIceKirby::RunState()
 	}
 	if (BUTTONSTAY(VK_UP))
 	{
-		SelectSound(FlySound, 0.1f, false);
 		m_state = State::Fly;
 	}
 	if (BUTTONDOWN('A'))
@@ -290,7 +287,7 @@ void CIceKirby::RunState()
 	}
 	if (BUTTONDOWN('D'))
 	{
-		SOUND->Play(DropSound, 0.1f, false);
+		SOUND->Play(DropSound, 0.5f, false);
 		m_state = State::Takeoff;
 	}
 }
@@ -371,7 +368,7 @@ void CIceKirby::FlyState()
 		icekirbystate = L"RFly";
 		if (flyTimer > 0.4f)
 		{
-			SelectSound(FlySound, 0.1f, true);
+			SelectSound(FlySound, 0.5f, true);
 			flyTimer = 0;
 			m_state = State::Flying;
 		}
@@ -381,7 +378,7 @@ void CIceKirby::FlyState()
 		icekirbystate = L"LFly";
 		if (flyTimer > 0.4f)
 		{
-			SelectSound(FlySound, 0.1f, true);
+			SelectSound(FlySound, 0.5f, true);
 			flyTimer = 0;
 			m_state = State::Flying;
 
@@ -494,7 +491,6 @@ void CIceKirby::JumpingDownState()
 	}
 	if (BUTTONDOWN('A'))
 	{
-		SelectSound(FlySound, 0.1f, false);
 		flyTimer = 0;
 		m_state = State::Fly;
 	}
@@ -545,7 +541,7 @@ void CIceKirby::FlyingState()
 
 void CIceKirby::CreatAttackArea()
 {
-	SOUND->Play(IceSound, 0.1f, true);
+	SOUND->Play(IceSound, 0.5f, true);
 	m_piceAttack = new CIceAttack();
 	if (m_vecLookDir.x == -1)
 	{

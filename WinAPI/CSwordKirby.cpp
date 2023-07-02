@@ -253,7 +253,6 @@ void CSwordKirby::IdleState()
 	}
 	if (BUTTONSTAY(VK_UP))
 	{
-		SelectSound(FlySound, 0.1f, false);
 		m_state = State::Fly;
 	}
 	if (BUTTONDOWN('A'))
@@ -263,6 +262,7 @@ void CSwordKirby::IdleState()
 	}
 	if (BUTTONDOWN('D'))
 	{
+		SOUND->Play(DropSound, 0.5f, false);
 		m_state = State::Takeoff;
 	}
 }
@@ -302,7 +302,6 @@ void CSwordKirby::WalkState()
 	}
 	if (BUTTONSTAY(VK_UP))
 	{
-		SelectSound(FlySound, 0.1f, false);
 		m_state = State::Fly;
 	}
 	if (BUTTONDOWN('A'))
@@ -312,7 +311,7 @@ void CSwordKirby::WalkState()
 	}
 	if (BUTTONDOWN('D'))
 	{
-		SOUND->Play(DropSound, 0.1f, false);
+		SOUND->Play(DropSound, 0.5f, false);
 		m_state = State::Takeoff;
 	}
 }
@@ -350,7 +349,6 @@ void CSwordKirby::RunState()
 	}
 	if (BUTTONSTAY(VK_UP))
 	{
-		SelectSound(FlySound, 0.1f, false);
 		m_state = State::Fly;
 	}
 	if (BUTTONDOWN('A'))
@@ -360,7 +358,7 @@ void CSwordKirby::RunState()
 	}
 	if (BUTTONDOWN('D'))
 	{
-		SOUND->Play(DropSound, 0.1f, false);
+		SOUND->Play(DropSound, 0.5f, false);
 		m_state = State::Takeoff;
 	}
 }
@@ -453,7 +451,7 @@ void CSwordKirby::FlyState()
 		swordkirbystate = L"RFly";
 		if (flyTimer > 0.4f)
 		{
-			SelectSound(FlySound, 0.1f, true);
+			SelectSound(FlySound, 0.5f, true);
 			flyTimer = 0;
 			m_state = State::Flying;
 		}
@@ -463,7 +461,7 @@ void CSwordKirby::FlyState()
 		swordkirbystate = L"LFly";
 		if (flyTimer > 0.4f)
 		{
-			SelectSound(FlySound, 0.1f, true);
+			SelectSound(FlySound, 0.5f, true);
 			flyTimer = 0;
 			m_state = State::Flying;
 
@@ -830,7 +828,6 @@ void CSwordKirby::JumpingDownState()
 	}
 	if (BUTTONDOWN('A'))
 	{
-		SelectSound(FlySound, 0.1f, false);
 		flyTimer = 0;
 		m_state = State::Fly;
 	}

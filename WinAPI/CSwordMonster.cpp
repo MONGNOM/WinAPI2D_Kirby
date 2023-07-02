@@ -109,11 +109,7 @@ void CSwordMonster::Update()
 		m_state =State::Dizzy;
 		dizzy = false;
 	}
-		if (hp <= 0)
-	{
-		m_state = State::Die;
-		SOUND->Play(DeathSound, 0.1f, false);
-	}
+	
 	AnimatorUpdate();
 }
 
@@ -314,8 +310,11 @@ void CSwordMonster::DieState()
 
 void CSwordMonster::DizzyState()
 {
-	
-
+	if (hp <= 0)
+	{
+		m_state = State::Die;
+		SOUND->Play(DeathSound, 0.1f, false);
+	}
 	dieTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
@@ -363,14 +362,7 @@ void CSwordMonster::DeleteObject()
 		DELETEOBJECT(m_pWeapon);
 		m_pWeapon = nullptr;
 	}
-	/*if (m_pWeapon != nullptr)
-	{
-		m_pWeapon = nullptr;
-	}
-	if (m_pWeapon != nullptr) 
-	{
-		m_pWeapon = nullptr;
-	}*/
+	
 }
 
 void CSwordMonster::Render()
@@ -393,7 +385,6 @@ void CSwordMonster::OnCollisionEnter(CCollider* pOtherCollider)
 			{
 				DELETEOBJECT(m_pWeapon);
 				DELETEOBJECT(attackCollider);
-				
 			}
 		}
 	}

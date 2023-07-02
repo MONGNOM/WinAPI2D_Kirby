@@ -82,16 +82,7 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 		CKirbyWeapon* pWeapon = (CKirbyWeapon*)pOtherCollider->GetOwner();
 		TakeDamage(pWeapon->damage);
 	}
-	if (pOtherCollider->GetObjName() == L"얼리기")
-	{
-		CKirbyWeapon* pWeapon = (CKirbyWeapon*)pOtherCollider->GetOwner();
-		TakeDamage(pWeapon->damage);
-		iceDie = true;
-	}
-	else
-	{
-		iceDie = false;
-	}
+	
 	
 	
 	if (pOtherCollider->GetObjName() == L"일반커비")
@@ -122,6 +113,16 @@ void CMonster::OnCollisionStay(CCollider* pOtherCollider)
 			m_vecPos.x -= 500 * DT;
 		if (m_vecPos.x < pOtherCollider->GetOwner()->GetPos().x)
 			m_vecPos.x += 500 * DT;
+	}
+	if (pOtherCollider->GetObjName() == L"얼리기")
+	{
+		CKirbyWeapon* pWeapon = (CKirbyWeapon*)pOtherCollider->GetOwner();
+		TakeDamage(pWeapon->damage);
+		iceDie = true;
+	}
+	else
+	{
+		iceDie = false;
 	}
 }
 

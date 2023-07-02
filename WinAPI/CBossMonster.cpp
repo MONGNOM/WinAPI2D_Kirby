@@ -6,14 +6,6 @@
 CBossMonster::CBossMonster()
 {
 	m_pAnimator = nullptr;
-	m_pAttackImage = nullptr;
-	m_pAttackImage2 = nullptr;
-	m_pDieImage = nullptr;
-	m_pIdleImage = nullptr;
-	m_pMoveImage = nullptr;
-	m_pJumpImage = nullptr;
-	m_pIceDieImage = nullptr;
- 	m_pAttackImageL2 = nullptr;
 	m_pBossImageR = nullptr;
 	m_pBossImageL = nullptr;
 	m_pWeapon = nullptr;
@@ -48,12 +40,6 @@ void CBossMonster::Init()
 	m_pBossImageR		= RESOURCE->LoadImg(L"BossR", L"Image\\Monster\\King\\kingRight.png");
 	m_pBossImageL		= RESOURCE->LoadImg(L"BossL", L"Image\\Monster\\King\\kingLeft.png");
 
-	m_pMoveImage		= RESOURCE->LoadImg(L"BossMonsterMove", L"Image\\Monster\\King\\KingisBack.png");
-	m_pDieImage			= RESOURCE->LoadImg(L"BossMonsterDie", L"Image\\Monster\\King\\KingDie.png");
-	m_pAttackImage		= RESOURCE->LoadImg(L"BossMonsterAttack", L"Image\\Monster\\King\\KingJump.png");
-	m_pAttackImage2		= RESOURCE->LoadImg(L"BossMonsterAttack2", L"Image\\Monster\\King\\king1.png");
-	m_pIdleImage		= RESOURCE->LoadImg(L"BossMonsterIdle", L"Image\\Monster\\King\\KingisBack.png");
-	m_pAttackImageL2	= RESOURCE->LoadImg(L"BossMonsterAttack2L", L"Image\\Monster\\King\\king1L.png");
 
 	m_pAnimator = new CAnimator;
 	//오른쪽
@@ -152,7 +138,6 @@ void CBossMonster::IdleState()
 {
 	if (hp <= 0)
 	{
-		SOUND->Play(DeathSound, 0.1f, false);
 		m_state = State::Die;
 	}
 	idleTimer += DT;
@@ -253,6 +238,7 @@ void CBossMonster::DieState()
 			bossstate = L"DieR";
 			if (dieTimer > 1.f)
 			{
+				SOUND->Play(DeathSound, 0.1f, false);
 				dieTimer = 0;
  				m_state = State::Disappear;
 			}
@@ -260,8 +246,9 @@ void CBossMonster::DieState()
 		if (m_vecLookDir.x == -1)
 		{
 			bossstate = L"DieL";
-			if (dieTimer > 1.f)
+			if (dieTimer > 1.f) 
 			{
+				SOUND->Play(DeathSound, 0.1f, false);
 				dieTimer = 0;
 				m_state = State::Disappear;
 			}
@@ -387,7 +374,7 @@ void CBossMonster::JumpAttackState()
 
 void CBossMonster::FearState()
 {
-	Shout(); //한번나오게 수정
+	Shout();
 	if (m_groundchecker == false)
 	{
 		m_vecPos.y += m_gravity * DT;
@@ -479,7 +466,7 @@ void CBossMonster::JumpDown()
 
 void CBossMonster::MonsterAttackCollider()
 {
-	SOUND->Play(AttackSound, 0.1f, false);
+	SOUND->Play(AttackSound, 0.3f, false);
 	m_pWeapon = new CMonsterWeapon();
 	if (m_vecLookDir.x == -1)
 	{

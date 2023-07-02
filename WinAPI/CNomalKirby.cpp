@@ -241,7 +241,6 @@ void CNomalKirby::IdleState()
 	}
 	if (BUTTONSTAY(VK_UP))
 	{
-		SelectSound(FlySound, 0.1f, false);
 		m_state = State::Fly;
 	}
 	if (BUTTONDOWN('A'))
@@ -286,7 +285,6 @@ void CNomalKirby::WalkState()
 	}
 	if (BUTTONSTAY(VK_UP))
 	{
-		SelectSound(FlySound, 0.1f, false);
 		m_state = State::Fly;
 	}
 	if (BUTTONDOWN('A'))
@@ -329,7 +327,6 @@ void CNomalKirby::RunState()
 	}
 	if (BUTTONSTAY(VK_UP))
 	{
-		SelectSound(FlySound, 0.1f, false);
 		m_state = State::Fly;
 	}
 	if (BUTTONDOWN('A'))
@@ -414,14 +411,13 @@ void CNomalKirby::SitState()
 void CNomalKirby::FlyState()
 {
 	flyTimer += DT;
-	//땅에있고  && 0.5초동안 플라이
 	m_fSpeed = 100;
 	if (m_vecLookDir.x == 1)
 	{
 		normalkirbystate = L"RFly";
 		if (flyTimer > 0.4f)
 		{ 
-			SelectSound(FlySound, 0.1f, true);
+			SelectSound(FlySound, 0.5f, true);
 			flyTimer = 0;
 			m_state = State::Flying;
 		}
@@ -431,7 +427,7 @@ void CNomalKirby::FlyState()
 		normalkirbystate = L"LFly";
 		if (flyTimer > 0.4f)
 		{
-			SelectSound(FlySound, 0.1f, true);
+			SelectSound(FlySound, 0.5f, true);
 
 			flyTimer = 0;
 			m_state = State::Flying;
@@ -695,7 +691,6 @@ void CNomalKirby::JumpingDownState()
 	}
 	if (BUTTONDOWN('A'))
 	{
-		SelectSound(FlySound, 0.1f, false);
 		flyTimer = 0;
 		m_state = State::Fly;
 	}
