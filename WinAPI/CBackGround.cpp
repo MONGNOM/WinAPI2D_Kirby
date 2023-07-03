@@ -19,7 +19,8 @@ void CBackGround::Init()
 
 void CBackGround::Update()
 {
-	m_vecPos = Vector(CAMERA->GetTargetPos());
+	m_vecPos = Vector(CAMERA->GetTargetPos().x  , CAMERA->GetTargetPos().y);
+	//여기서 스크롤링을 만등러주면 되겠구먼
 }
 
 void CBackGround::Render()

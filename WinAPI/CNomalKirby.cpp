@@ -252,6 +252,7 @@ void CNomalKirby::IdleState()
 
 void CNomalKirby::WalkState()
 {
+	
 	m_fSpeed = 100.f;
 	if (m_groundchecker == false)
 	{
@@ -296,6 +297,8 @@ void CNomalKirby::WalkState()
 
 void CNomalKirby::RunState()
 {
+	
+
 	m_fSpeed = 200.0f;
 	if (m_groundchecker == false)
 	{
@@ -516,6 +519,7 @@ void CNomalKirby::EatingState()
 
 void CNomalKirby::ChangeState()
 {
+
 	changeTimer += DT;
 	if (m_groundchecker == false)
 	{
@@ -559,6 +563,8 @@ void CNomalKirby::ChangeState()
 
 void CNomalKirby::EatWalkState()
 {
+	
+
 	if (BUTTONSTAY(VK_LEFT))
 	{
 		m_vecMoveDir.x = -1;

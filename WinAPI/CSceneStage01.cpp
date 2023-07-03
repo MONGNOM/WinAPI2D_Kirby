@@ -62,7 +62,7 @@ void CSceneStage01::Enter()
 	AddGameObject(iceMonster);
 
 	CDoor* door = new CDoor();
-	door->SetPos(4830, 350);
+	door->SetPos(2800, 350);
 	AddGameObject(door);
 
 
@@ -94,21 +94,22 @@ void CSceneStage01::Enter()
 
 void CSceneStage01::Update()
 {
-	if (GAME->playerPos.x >= 4658)
+
+	if (GAME->playerPos.x >= 2800)
 	{
-		CAMERA->SetTargetPos(Vector(4658, GAME->playerPos.y), 0.1f);
+		CAMERA->SetTargetPos(Vector(2800, 300), 0.1f);
 	}
 	else if (GAME->playerPos.x <= 400)
 	{
-		CAMERA->SetTargetPos(Vector(400, GAME->playerPos.y), 0.1f);
+		CAMERA->SetTargetPos(Vector(400, 300), 0.1f);
 	}
 	else
-		CAMERA->SetTargetPos(GAME->playerPos, 0.1f);
-
-	if (GAME->playerPos.y >= 300 || GAME->playerPos.y <= 300)
 	{
-		CAMERA->SetTargetPos(Vector(GAME->playerPos.x, 300));
+		CAMERA->SetTargetPos(Vector(GAME->playerPos.x, 300), 0.1f);
+
 	}
+
+
 
 	if (BUTTONDOWN(VK_ESCAPE))
 	{
