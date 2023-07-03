@@ -8,8 +8,7 @@ public:
 	virtual ~CBackGround();
 
 private:
-	CAnimator* m_pAnimator;
-	CImage* m_pBossmapImage;
+	CImage* m_pStage1BackGroundImage;
 
 private:
 	void Init() override;

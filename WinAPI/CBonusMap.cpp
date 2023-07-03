@@ -87,7 +87,7 @@ void CBonusMap::Enter()
 	AddGameObject(icon);
 
 	CAMERA->FadeIn(0.25f);
-	LoadTile(GETPATH + L"Tile\\Stage03.tile");
+	LoadTile(GETPATH + L"Tile\\Stage02.tile");
 }
 
 void CBonusMap::Update()

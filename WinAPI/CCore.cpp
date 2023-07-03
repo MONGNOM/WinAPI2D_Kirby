@@ -28,6 +28,7 @@ CCore::~CCore()
 void CCore::Init()
 {
 	TIME->Init();
+	GAME->Init();
 	RENDER->Init();
 	INPUT->Init();
 	EVENT->Init();
@@ -46,6 +47,7 @@ void CCore::Update()
 	// 이전 프레임에서 추가된 이벤트를 프레임 초기에 한꺼번에 처리
 	EVENT->Update();
 	TIME->Update();
+	GAME->Update();
 	INPUT->Update();
 	SCENE->Update();
 	CAMERA->Update();

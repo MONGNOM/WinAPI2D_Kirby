@@ -3,8 +3,8 @@
 
 CBackGround::CBackGround()
 {
-	m_pBossmapImage = nullptr;
-	m_pAnimator = nullptr;
+	m_pStage1BackGroundImage = nullptr;
+	m_vecPos = Vector(0, 0);
 }
 
 CBackGround::~CBackGround()
@@ -13,23 +13,18 @@ CBackGround::~CBackGround()
 
 void CBackGround::Init()
 {
-	m_pBossmapImage = RESOURCE->LoadImg(L"Background1", L"Image\\Monster\\King\\BossStage.png");
-	m_pAnimator		= new CAnimator;
-
-	m_pAnimator->CreateAnimation(L"bossmap", m_pBossmapImage, Vector(0.f, 0.f), Vector(790.f, 800.f), Vector(850.f, 0.f), 0.05f, 12);
-
-
-	m_pAnimator->Play(L"bossmap", false);
-	AddComponent(m_pAnimator);
-
+	m_pStage1BackGroundImage = RESOURCE->LoadImg(L"BackGround", L"Image\\map12.png");
+	
 }
 
 void CBackGround::Update()
 {
+	m_vecPos = Vector(CAMERA->GetTargetPos());
 }
 
 void CBackGround::Render()
 {
+	RENDER->Image(m_pStage1BackGroundImage, CAMERA->GetTargetPos().x - 400, CAMERA->GetTargetPos().y - 300, CAMERA->GetTargetPos().x + 1024 , CAMERA->GetTargetPos().y+ 320);
 }
 
 void CBackGround::Release()

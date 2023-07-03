@@ -20,6 +20,7 @@ CBossMonster::CBossMonster()
 	ShoutSound = RESOURCE->LoadSound(L"BossShoutSound", L"Sound\\BossShout.wav");
 	WalkSound = RESOURCE->LoadSound(L"BossWalkSound", L"Sound\\BossWalk.wav");
 	DeathSound = RESOURCE->LoadSound(L"BossDeathSound", L"Sound\\BossDeath.wav");
+	GAME->invincible = 1.0f;
 
 }
 
@@ -72,7 +73,7 @@ void CBossMonster::Init()
 	AddComponent(m_pAnimator);
 
 	AddCollider(ColliderType::Rect, Vector(170, 180), Vector(0, 0));
-
+	Shout();
 }
 
 void CBossMonster::Update()
@@ -310,11 +311,29 @@ void CBossMonster::JumpState()
 void CBossMonster::JumpDownState()
 {
 		m_vecPos.y -= m_jumpSpeed * DT;
+	if (m_pWeapon == nullptr)
+		MonsterAttackCollider();
+	else
+	{
+		if (m_vecLookDir.x == -1)
+		{
+			m_pWeapon->SetPos(m_vecPos.x - 150, m_vecPos.y);
+		}
+		if (m_vecLookDir.x == 1)
+		{
+			m_pWeapon->SetPos(m_vecPos.x + 150, m_vecPos.y);
+		}
+	}
 	if (m_vecLookDir.x == 1)
 	{
 		bossstate = L"JumpDownR";
 		if (m_groundchecker)
 		{
+			if (m_pWeapon != nullptr)
+			{
+				DELETEOBJECT(m_pWeapon);
+				m_pWeapon = nullptr;
+			}
 			m_state = State::Idle;
 		}
 	}
@@ -323,6 +342,11 @@ void CBossMonster::JumpDownState()
 		bossstate = L"JumpDownL";
 		if (m_groundchecker)
 		{
+			if (m_pWeapon != nullptr)
+			{
+				DELETEOBJECT(m_pWeapon);
+				m_pWeapon = nullptr;
+			}
 			m_state = State::Idle;
 		}
 	}
@@ -374,7 +398,7 @@ void CBossMonster::JumpAttackState()
 
 void CBossMonster::FearState()
 {
-	Shout();
+	
 	if (m_groundchecker == false)
 	{
 		m_vecPos.y += m_gravity * DT;
@@ -385,7 +409,7 @@ void CBossMonster::FearState()
 		
 		bossstate = L"FearR";
 
-		if (attackTimer > 1.15f)
+		if (attackTimer > 0.8f)
 		{
 			SOUND->Pause(ShoutSound);
 			attackTimer = 0;
@@ -395,7 +419,7 @@ void CBossMonster::FearState()
 	if (m_vecLookDir.x == -1)
 	{
 		bossstate = L"FearL";
-		if (attackTimer > 1.15f)
+		if (attackTimer > 1.8f)
 		{
 			SOUND->Pause(ShoutSound);
 			attackTimer = 0;
@@ -410,7 +434,7 @@ void CBossMonster::DisappearState()
 	if (m_vecLookDir.x == 1)
 	{
 		bossstate = L"DisappearR";
-		if (dieTimer > 1.f)
+		if (dieTimer > 1.8f)
 		{
 			dieTimer = 0;
 			DELETEOBJECT(this); DELETEOBJECT(collider);
@@ -429,7 +453,7 @@ void CBossMonster::DisappearState()
 
 void CBossMonster::Shout()
 {
-		SOUND->Play(ShoutSound, 0.1f, true);
+		SOUND->Play(ShoutSound, 0.5f, true);
 }
 
 void CBossMonster::BasicAttack()
@@ -452,13 +476,11 @@ void CBossMonster::JumpDown()
 {
 	if (jumpDown)
 	{
-		SOUND->Play(AttackSound, 0.1f, false);
 		jumpDown = false;
-		m_state = State::JumpAttack;
+		m_state = State::JumpDown;
 	}
 	else
 	{
-		SOUND->Play(AttackSound, 0.1f, false);
 		jumpDown = true;
 		m_state = State::JumpAttack;
 	}

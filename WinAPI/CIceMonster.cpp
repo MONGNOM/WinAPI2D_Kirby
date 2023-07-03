@@ -92,11 +92,7 @@ void CIceMonster::Update()
 		dizzy = false;
 		m_state = State::Dizzy;
 	}
-	if (hp <= 0)
-	{
-		m_state = State::Die;
-		SOUND->Play(DeathSound, 0.1f, false);
-	}
+	
 	
 	AnimatorUpdate();
 }
@@ -114,7 +110,11 @@ void CIceMonster::Release()
 void CIceMonster::WalkState()
 {
 	walkTimer += DT;
-	
+	if (hp <= 0)
+	{
+		m_state = State::Die;
+		SOUND->Play(DeathSound, 0.1f, false);
+	}
 	if (m_groundchecker == false)
 	{
 		m_vecPos.y += m_gravity * DT;

@@ -12,7 +12,7 @@ public:
 	virtual ~CTile();
 
 public:
-	const static int TILESIZE = 24;
+	const static int TILESIZE = 12;
 
 protected:
 	TypeTile m_type;

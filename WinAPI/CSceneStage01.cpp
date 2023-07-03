@@ -26,6 +26,7 @@
 
 CSceneStage01::CSceneStage01()
 {
+	backstage1 = nullptr;
 	pkirby = nullptr;
 	icekirby = nullptr;
 	pBasicMonster = nullptr;
@@ -77,10 +78,10 @@ void CSceneStage01::Enter()
 	icon->SetScale(125, 50);
 	AddGameObject(icon);
 
-	CImageObject* pBackGround = new CImageObject();
-	pBackGround->SetImage(RESOURCE->LoadImg(L"BackGround", L"Image\\map12.png"));
-	pBackGround->SetPos(0, 0);
-	AddGameObject(pBackGround);
+	backstage1 = new CBackGround();
+	AddGameObject(backstage1);
+
+	
 
 	CImageObject* pGround = new CImageObject();
 	pGround->SetImage(RESOURCE->LoadImg(L"Ground", L"Image\\Ground12.png"));

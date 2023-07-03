@@ -7,6 +7,7 @@
 #include "CNomalKirby.h"
 #include "CMonsterAttackCollider.h"
 #include "CMonsterWeapon.h"
+#include "CGameManager.h"
 
 CMonster::CMonster()
 {
@@ -26,7 +27,7 @@ CMonster::CMonster()
 	iceDie = false;
 	DamageSound = RESOURCE->LoadSound(L"MonsterDamageSound", L"Sound\\Damage.wav");
 	DeathSound	= RESOURCE->LoadSound(L"MonsterDeathSound", L"Sound\\MonsterDeath.wav");
-
+	GAME->invincible = 0.5f;
 }
 
 CMonster::~CMonster()
@@ -80,7 +81,16 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"무기")
 	{
 		CKirbyWeapon* pWeapon = (CKirbyWeapon*)pOtherCollider->GetOwner();
-		TakeDamage(pWeapon->damage);
+		
+		if (GAME->monsterhpnotDown == true)
+		{
+			hp -= 0;
+		}
+		else
+		{
+			TakeDamage(pWeapon->damage);
+		}
+		GAME->monsterHit = true;
 	}
 	
 	
@@ -98,7 +108,6 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 		{
 			normalKirby->eating = true;
 		}
-		
 	}
 
 }
@@ -117,8 +126,16 @@ void CMonster::OnCollisionStay(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"얼리기")
 	{
 		CKirbyWeapon* pWeapon = (CKirbyWeapon*)pOtherCollider->GetOwner();
-		TakeDamage(pWeapon->damage);
 		iceDie = true;
+		if (GAME->monsterhpnotDown == true)
+		{
+			hp -= 0;
+		}
+		else
+		{
+			TakeDamage(pWeapon->damage);
+		}
+		GAME->monsterHit = true;
 	}
 	else
 	{

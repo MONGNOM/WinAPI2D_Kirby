@@ -80,6 +80,7 @@ void CSwordMonster::Update()
 	collider->SetPos(m_vecPos);
 	attackCollider->SetPos(m_vecPos);
 
+	Logger::Debug(swordstate);
 	switch (m_state)
 	{
 	case CSwordMonster::State::Idle:
@@ -102,48 +103,51 @@ void CSwordMonster::Update()
 	default:
 		break;
 	}
-
 	
-	if (dizzy)
-	{
-		m_state =State::Dizzy;
-		dizzy = false;
-	}
+	
 	
 	AnimatorUpdate();
 }
 
 void CSwordMonster::IdleState()
 {
-	
-	idleTimer += DT;
-	if (m_groundchecker == false)
+	if (dizzy)
 	{
-		m_vecPos.y += m_gravity * DT;
+		m_state = State::Dizzy;
+		dizzy = false;
 	}
-	if (m_vecLookDir.x == 1)
-	{
-		swordstate = L"IdleR";
-		if (idleTimer > 2.f)
+		idleTimer += DT;
+		if (m_groundchecker == false)
 		{
-			idleTimer = 0;
-			m_state = State::Walk;
+			m_vecPos.y += m_gravity * DT;
 		}
-	}
-	if (m_vecLookDir.x == -1)
-	{
-		swordstate = L"IdleL";
-		if (idleTimer > 2.f)
+		if (m_vecLookDir.x == 1)
 		{
-			idleTimer = 0;
-			m_state = State::Walk;
+			swordstate = L"IdleR";
+			if (idleTimer > 2.f)
+			{
+				idleTimer = 0;
+				m_state = State::Walk;
+			}
 		}
-	}
-
+		if (m_vecLookDir.x == -1)
+		{
+			swordstate = L"IdleL";
+			if (idleTimer > 2.f)
+			{
+				idleTimer = 0;
+				m_state = State::Walk;
+			}
+		}
 }
 
 void CSwordMonster::WalkState()
 {
+	if (dizzy)
+	{
+		m_state = State::Dizzy;
+		dizzy = false;
+	}
 	walkTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
@@ -169,6 +173,11 @@ void CSwordMonster::WalkState()
 
 void CSwordMonster::AttackState()
 {
+	if (dizzy)
+	{
+		m_state = State::Dizzy;
+		dizzy = false;
+	}
 	if (m_pWeapon == nullptr)
 		MonsterAttackCollider();
 	else
@@ -270,8 +279,8 @@ void CSwordMonster::DieState()
 			swordstate = L"BIceDie";
 			if (dieTimer > 1.f)
 			{
-				dieTimer = 0;
 				DeleteObject();
+				dieTimer = 0;
 			}
 		}
 		if (m_vecLookDir.x == -1)
@@ -279,8 +288,8 @@ void CSwordMonster::DieState()
 			swordstate = L"BIceDie";
 			if (dieTimer > 1.f)
 			{
-				dieTimer = 0;
 				DeleteObject();
+				dieTimer = 0;
 			}
 		}
 	}
@@ -291,8 +300,8 @@ void CSwordMonster::DieState()
 			swordstate = L"DieR";
 			if (dieTimer > 1.f)
 			{
-				dieTimer = 0;
 				DeleteObject();
+				dieTimer = 0;
 
 			}
 		}
@@ -301,8 +310,8 @@ void CSwordMonster::DieState()
 			swordstate = L"DieL";
 			if (dieTimer > 1.f)
 			{
-				dieTimer = 0;
 				DeleteObject();
+				dieTimer = 0;
 			}
 		}
 	}

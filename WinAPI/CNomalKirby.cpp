@@ -745,7 +745,7 @@ void CNomalKirby::Release()
 }
 
 void CNomalKirby::IceKirbyChange()
-{
+{ 
 	SOUND->Play(ChangeSound, 0.1f, false);
 	GAME->iceicon = true;
 	icekirby = new CIceKirby();
@@ -773,7 +773,16 @@ void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)
 	}
 	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Monster && !eat || pOtherCollider->GetOwner()->GetLayer() == Layer::MWeapon)
 	{
-		playerHp -= 1;
+		if (GAME->HpNotDown == true)
+		{
+			playerHp -= 0;
+
+		}
+		else
+		{
+			playerHp -= 1;
+		}
+		GAME->PlayerHit = true;
 	}
 	if (pOtherCollider->GetObjName() == L"얼음몬스터" && eat)
 	{

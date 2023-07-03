@@ -8,6 +8,7 @@
 #include "CSwordMonster.h"
 #include "CBossMonster.h"
 #include "CDoor.h"
+#include "CBackGround.h"
 
 class CSceneStage01 : public CScene
 {
@@ -24,7 +25,7 @@ private:
 	CSwordMonster* swordMonster;
 	CBossMonster* bossMonster;
 	CSound* Stage1Sound;
-
+	CBackGround* backstage1;
 
 private:
 	void Init()		override;

@@ -81,7 +81,7 @@ void CSceneState02::Enter()
 
 	CAMERA->SetTargetPos(Vector(432, 400));
 	CAMERA->FadeIn(0.25f);
-	LoadTile(GETPATH + L"Tile\\Stage02.tile");
+	LoadTile(GETPATH + L"Tile\\Stage03.tile");
 }
 
 void CSceneState02::Update()

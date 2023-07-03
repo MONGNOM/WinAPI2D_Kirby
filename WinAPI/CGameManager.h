@@ -11,6 +11,13 @@ public:
 	CGameManager();
 	virtual ~CGameManager();
 
+	bool monsterHit;
+	bool monsterhpnotDown;
+	float monsterhitTime;
+	float invincible;
+	bool PlayerHit;
+	bool HpNotDown;
+	float HitTime;
 
 	bool ice;
 	bool sword;
