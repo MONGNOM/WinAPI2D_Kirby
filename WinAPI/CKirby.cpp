@@ -10,7 +10,6 @@ CKirby::CKirby()
 	
 	내일 구현 할 내용:
 	=========================================================
-	아이스 이펙트 교체
 	데미지 받으면 뒤로 굴르는거 추가해줘야함 + 무적 애니메이션 추가
 	변신 풀리는 추가 <별모양 날아가게>
 	변신후 설명화면뜨고 버튼누르면 꺼짐
@@ -80,6 +79,7 @@ void CKirby::SelectSound(CSound* pSound, float volume, bool loop)
 
 void CKirby::Update()
 {
+	GAME->playerLoockDirX = m_vecLookDir.x;
 	GAME->playerPos = m_vecPos;
 	GAME->curHp = playerHp;
 	m_jumpSpeed -= m_gravity * DT;

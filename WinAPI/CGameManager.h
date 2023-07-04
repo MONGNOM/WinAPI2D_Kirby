@@ -27,7 +27,7 @@ public:
 	int BossHp;
 	float maxHp;
 	float curHp;
-
+	float playerLoockDirX;
 	Vector playerPos;
 public:
 	void Init();		// 게임시작시 초기화 작업

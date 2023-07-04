@@ -21,6 +21,7 @@ CGameManager::CGameManager()
 	curHp = maxHp;
 	playerPos = Vector(0, 0);
 	invincible = 0;
+	playerLoockDirX = 0;
 }
 
 CGameManager::~CGameManager()

@@ -63,9 +63,8 @@ void CIceKirby::Init()
 	m_pAnimator->CreateAnimation(L"LAttacking", m_pAttackImage, Vector(210.f, 100.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.06f, 2);
 	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
-
+	
 	AddCollider(ColliderType::Rect, Vector(40, 40), Vector(0, 0));
-	m_piceAttack = new CIceAttack();
 }
 
 void CIceKirby::Update()
@@ -543,7 +542,7 @@ void CIceKirby::FlyingState()
 void CIceKirby::CreatAttackArea()
 {
 	SOUND->Play(IceSound, 0.5f, true);
-	
+	m_piceAttack = new CIceAttack();
 	m_piceAttack->Attack();
 	if (m_vecLookDir.x == -1)
 	{
