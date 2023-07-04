@@ -19,13 +19,13 @@ void CBackGround::Init()
 
 void CBackGround::Update()
 {
-	m_vecPos = Vector(CAMERA->GetTargetPos().x  , CAMERA->GetTargetPos().y);
-	//여기서 스크롤링을 만등러주면 되겠구먼
+	m_vecPos = Vector(CAMERA->GetLookAt().x , CAMERA->GetLookAt().y);
 }
 
 void CBackGround::Render()
 {
-	RENDER->Image(m_pStage1BackGroundImage, CAMERA->GetTargetPos().x - 400, CAMERA->GetTargetPos().y - 300, CAMERA->GetTargetPos().x + 1024 , CAMERA->GetTargetPos().y+ 320);
+	
+	RENDER->Image(m_pStage1BackGroundImage, CAMERA->GetLookAt().x * 0.8f - 400, CAMERA->GetLookAt().y * 0.8f - 300, CAMERA->GetLookAt().x * 0.8f + 1024 , CAMERA->GetLookAt().y * 0.8f + 320);
 }
 
 void CBackGround::Release()

@@ -38,7 +38,7 @@ void CDoor::Update()
 
 void CDoor::Render()
 {
-	RENDER->FillRect(m_vecPos.x - 35, m_vecPos.y + 10, m_vecPos.x + 35, m_vecPos.y + 125);
+	RENDER->FillRect(m_vecPos.x -35, m_vecPos.y + 10, m_vecPos.x + 35, m_vecPos.y + 105);
 
 }
 
