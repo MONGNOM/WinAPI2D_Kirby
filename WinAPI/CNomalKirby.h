@@ -12,7 +12,8 @@ class CNomalKirby : public CKirby
 {
 public:
 
-	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown, Eating, Change, EatWalk, EatAttack};
+	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown, Eating, Change, EatWalk, EatAttack, Disappear
+	};
 
 	CNomalKirby();
 	virtual ~CNomalKirby();
@@ -23,6 +24,7 @@ public:
 	bool eating;
 	bool iceicon;
 	bool swordicon;
+	void DisappearState();
 
 private:
 	

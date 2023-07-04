@@ -54,7 +54,8 @@ enum class Layer
 	MWeapon,
 	HitCollider,
 	Missile,
-
+	Ice,
+	Effect,
 	Ui,
 	Size,
 };

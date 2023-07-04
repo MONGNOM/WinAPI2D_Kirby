@@ -28,6 +28,7 @@ CMonster::CMonster()
 	DamageSound = RESOURCE->LoadSound(L"MonsterDamageSound", L"Sound\\Damage.wav");
 	DeathSound	= RESOURCE->LoadSound(L"MonsterDeathSound", L"Sound\\MonsterDeath.wav");
 	GAME->invincible = 0.5f;
+	effect = nullptr;
 }
 
 CMonster::~CMonster()
@@ -36,6 +37,7 @@ CMonster::~CMonster()
 
 void CMonster::Init()
 {
+	
 	collider = new CHitCollider();
 	collider->SetMonster(this);
 	ADDOBJECT(collider);
@@ -61,6 +63,13 @@ void CMonster::TakeDamage(int damage)
 	SOUND->Play(DamageSound, 0.1f, false);
 	hp -= damage;
 	dizzy = true;
+}
+
+void CMonster::Effect(float x)
+{
+	effect = new CEffect();
+	effect->SetPos(x,m_vecPos.y);
+	ADDOBJECT(effect);
 }
 
 
@@ -123,10 +132,10 @@ void CMonster::OnCollisionStay(CCollider* pOtherCollider)
 		if (m_vecPos.x < pOtherCollider->GetOwner()->GetPos().x)
 			m_vecPos.x += 500 * DT;
 	}
-	if (pOtherCollider->GetObjName() == L"¾ó¸®±â")
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Ice)
 	{
-		CKirbyWeapon* pWeapon = (CKirbyWeapon*)pOtherCollider->GetOwner();
 		iceDie = true;
+		CKirbyWeapon* pWeapon = (CKirbyWeapon*)pOtherCollider->GetOwner();
 		if (GAME->monsterhpnotDown == true)
 		{
 			hp -= 0;

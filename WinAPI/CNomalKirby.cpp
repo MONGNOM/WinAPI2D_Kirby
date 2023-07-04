@@ -54,9 +54,12 @@ CNomalKirby::~CNomalKirby()
 
 }
 
+
+
 void CNomalKirby::Init()
 {
 	CKirby::Init();
+
 	m_pIdleLImage		= RESOURCE->LoadImg(L"KirbyIdleL",		L"Image\\Kirby\\Basic\\KirbyIdleL.png"	);
 	m_pIdleRImage		= RESOURCE->LoadImg(L"KirbyIdleR",		L"Image\\Kirby\\Basic\\KirbyIdleR.png"	);
 	m_pMoveLImage		= RESOURCE->LoadImg(L"KirbyLW",			L"Image\\Kirby\\Basic\\KirbyLW.png"		);
@@ -71,6 +74,7 @@ void CNomalKirby::Init()
 	m_pEatAttackImage	= RESOURCE->LoadImg(L"KirbyEatAttack",	L"Image\\Kirby\\Basic\\KirbyNotEat.png"	);
 
 	m_pAnimator = new CAnimator;
+	m_pAnimator->CreateAnimation(L"Disappear",	m_pMoveLImage, Vector(0.f, 0.f), Vector(1.f, 1.f), Vector(1.f, 0.f), 0.f, 1);
 	m_pAnimator->CreateAnimation(L"IdleR",		m_pIdleRImage,	Vector(  0.f,   0.f), Vector( 45.f,  43.f), Vector(  45.f,   0.f), 0.1f, 1);
 	m_pAnimator->CreateAnimation(L"IdleL",		m_pIdleLImage,	Vector(  0.f,   0.f), Vector( 45.f,  43.f), Vector(  45.f,   0.f), 0.1f, 1);
 	m_pAnimator->CreateAnimation(L"LW",			m_pMoveLImage,	Vector(  0.f,   0.f), Vector( 60.f,  50.f), Vector(  70.f,   0.f), 0.05f, 10);
@@ -161,6 +165,9 @@ void CNomalKirby::Update()
 	case State::EatAttack:
 		EatAttackState();
 		break;
+	case State::Disappear:
+		DisappearState();
+		break;
 	default:
 		break;
 	}
@@ -178,6 +185,18 @@ void CNomalKirby::AnimatorUpdate()
 }
 
 
+void CNomalKirby::DisappearState()
+{
+	changeTimer += DT;
+	normalkirbystate = L"Disappear";
+	if (changeTimer > 0.42f)
+	{
+		DELETEOBJECT(this);
+		DELETEOBJECT(effect);
+		changeTimer = 0;
+	}
+
+}
 
 void CNomalKirby::Jump()
 {
@@ -532,9 +551,21 @@ void CNomalKirby::ChangeState()
 		{
 			changeTimer = 0;
 			if (ice && !sword)
+			{
+				Effect(m_vecPos.x);
+				effect->kirbyChangeEffect();
 				IceKirbyChange();
-			if (sword && !ice)
+				m_state = State::Disappear;
+
+			}
+			else if (sword && !ice)
+			{
+				Effect(m_vecPos.x);
+				effect->kirbyChangeEffect();
 				SwordirbyChange();
+				m_state = State::Disappear;
+
+			}
 			else
 			{
 				m_state = State::Idle;
@@ -548,10 +579,21 @@ void CNomalKirby::ChangeState()
 		if (changeTimer > 0.36f)
 		{
 			changeTimer = 0;
-			if (ice)
+			if (ice && !sword)
+			{
+				Effect(m_vecPos.x);
+				effect->kirbyChangeEffect();
 				IceKirbyChange();
-			if (sword)
+				m_state = State::Disappear;
+
+			}
+			else if (sword && !ice)
+			{
+				Effect(m_vecPos.x);
+				effect->kirbyChangeEffect();
 				SwordirbyChange();
+				m_state = State::Disappear;
+			}
 			else
 			{
 				m_state = State::Idle;
@@ -559,12 +601,11 @@ void CNomalKirby::ChangeState()
 			}
 		}
 	}
+	
 }
 
 void CNomalKirby::EatWalkState()
 {
-	
-
 	if (BUTTONSTAY(VK_LEFT))
 	{
 		m_vecMoveDir.x = -1;
@@ -757,7 +798,7 @@ void CNomalKirby::IceKirbyChange()
 	icekirby = new CIceKirby();
 	icekirby->SetPos(m_vecPos);
 	ADDOBJECT(icekirby);
-	DELETEOBJECT(this);
+	
 }
 
 void CNomalKirby::SwordirbyChange()
@@ -765,9 +806,9 @@ void CNomalKirby::SwordirbyChange()
 	SOUND->Play(ChangeSound, 0.1f, false);
 	GAME-> swordicon = true;
 	swordKriby = new CSwordKirby();
-	swordKriby->SetPos(m_vecPos);
+	swordKriby->SetPos(m_vecPos.x,m_vecPos.y -20);
 	ADDOBJECT(swordKriby);
-	DELETEOBJECT(this);
+	
 }
 
 void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)

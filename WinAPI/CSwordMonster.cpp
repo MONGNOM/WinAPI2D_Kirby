@@ -49,10 +49,11 @@ void CSwordMonster::Init()
 	
 
 	m_pAnimator = new CAnimator;
+	m_pAnimator->CreateAnimation(L"Disappear", m_pMoveImage, Vector(0.f, 0.f), Vector(1.f, 1.f), Vector(1.f, 0.f), 0.f, 1);
 	//¿À¸¥ÂÊ
 	m_pAnimator->CreateAnimation(L"IdleR",		m_pIdleImage,		Vector(0.f, 0.f), Vector(125.f, 101.f), Vector(125.f, 0.f), 0.5f, 2);
 	m_pAnimator->CreateAnimation(L"WalkR",		m_pMoveImage,		Vector(248.f, 0.f), Vector(125.f, 101.f), Vector(132.f, 0.f), 0.15f, 6);
-	m_pAnimator->CreateAnimation(L"DieR",		m_pDieImage,		Vector(0.f, 490.f), Vector(145.f, 100.f), Vector(145.f, 0.f), 0.5f, 2);
+	m_pAnimator->CreateAnimation(L"DieR",		m_pDieImage,		Vector(0.f, 490.f), Vector(145.f, 100.f), Vector(145.f, 0.f), 0.3f, 2,false);
 	m_pAnimator->CreateAnimation(L"AttackR",	m_pAttackImage,		Vector(0.f, 20.f), Vector(420.f, 170.f), Vector(420.f, 0.f), 0.07f, 9, false);
 	m_pAnimator->CreateAnimation(L"Attack2R",	m_pAttackImage2,	Vector(0.f, 0.f), Vector(420.f, 110.f), Vector(420.f, 0.f), 0.07f, 6, false);
 	m_pAnimator->CreateAnimation(L"DizzyR",		m_pDieImage,		Vector(0.f, 490.f), Vector(145.f, 100.f), Vector(0.f, 0.f), 0.15f, 1);
@@ -60,7 +61,7 @@ void CSwordMonster::Init()
 	// ¿ÞÂÊ
 	m_pAnimator->CreateAnimation(L"IdleL",		m_pLIdleImage,		Vector(1172.f, 0.f), Vector(125.f, 101.f), Vector(-125.f, 0.f), 0.5f, 2);
 	m_pAnimator->CreateAnimation(L"WalkL",		m_pLIdleImage,		Vector(920.f, 0.f), Vector(125.f, 101.f), Vector(-132.f, 0.f), 0.15f, 6);
-	m_pAnimator->CreateAnimation(L"DieL",		m_pLIdleImage,		Vector(1150.f, 490.f), Vector(145.f, 100.f), Vector(-145.f, 0.f), 0.5f, 2);
+	m_pAnimator->CreateAnimation(L"DieL",		m_pLIdleImage,		Vector(1150.f, 490.f), Vector(145.f, 100.f), Vector(-145.f, 0.f), 0.3f, 2,false);
 	m_pAnimator->CreateAnimation(L"AttackL",	m_pLAttackImage,	Vector(3360.f, 20.f), Vector(420.f, 170.f), Vector(-420.f, 0.f), 0.07f, 9, false);
 	m_pAnimator->CreateAnimation(L"Attack2L",	m_pLAttackImage2,	Vector(2100.f, 0.f), Vector(420.f, 110.f), Vector(-420.f, 0.f), 0.07f, 6, false);
 	m_pAnimator->CreateAnimation(L"DizzyL",		m_pLIdleImage,		Vector(1150.f, 490.f), Vector(145.f, 100.f), Vector(0.f, 0.f), 0.15f, 1); 
@@ -80,7 +81,6 @@ void CSwordMonster::Update()
 	collider->SetPos(m_vecPos);
 	attackCollider->SetPos(m_vecPos);
 
-	Logger::Debug(swordstate);
 	switch (m_state)
 	{
 	case CSwordMonster::State::Idle:
@@ -100,6 +100,10 @@ void CSwordMonster::Update()
 		break;
 	case State::Dizzy:
 		DizzyState();
+		break;
+	case State::Disappear:
+		DisappearState();
+		break;
 	default:
 		break;
 	}
@@ -277,7 +281,7 @@ void CSwordMonster::DieState()
 		if (m_vecLookDir.x == 1)
 		{
 			swordstate = L"BIceDie";
-			if (dieTimer > 1.f)
+			if (dieTimer > 0.6f)
 			{
 				DeleteObject();
 				dieTimer = 0;
@@ -286,7 +290,7 @@ void CSwordMonster::DieState()
 		if (m_vecLookDir.x == -1)
 		{
 			swordstate = L"BIceDie";
-			if (dieTimer > 1.f)
+			if (dieTimer > 0.6f)
 			{
 				DeleteObject();
 				dieTimer = 0;
@@ -295,10 +299,11 @@ void CSwordMonster::DieState()
 	}
 	else
 	{
+		
 		if (m_vecLookDir.x == 1)
 		{
 			swordstate = L"DieR";
-			if (dieTimer > 1.f)
+			if (dieTimer > 0.6f)
 			{
 				DeleteObject();
 				dieTimer = 0;
@@ -308,7 +313,7 @@ void CSwordMonster::DieState()
 		if (m_vecLookDir.x == -1)
 		{
 			swordstate = L"DieL";
-			if (dieTimer > 1.f)
+			if (dieTimer > 0.6f)
 			{
 				DeleteObject();
 				dieTimer = 0;
@@ -361,9 +366,20 @@ void CSwordMonster::MonsterAttackCollider()
 	ADDOBJECT(m_pWeapon);
 }
 
+void CSwordMonster::DisappearState()
+{
+	dieTimer += DT;
+	swordstate = L"Disappear";
+	if (dieTimer > 0.42f)
+	{
+		dieTimer = 0;
+		DELETEOBJECT(this);
+		DELETEOBJECT(effect);
+	}
+}
+
 void CSwordMonster::DeleteObject()
 {
-	DELETEOBJECT(this); 
 	DELETEOBJECT(collider);
 	DELETEOBJECT(attackCollider);
 	if (m_pWeapon != nullptr)
@@ -371,7 +387,9 @@ void CSwordMonster::DeleteObject()
 		DELETEOBJECT(m_pWeapon);
 		m_pWeapon = nullptr;
 	}
-	
+	Effect(m_vecPos.x + 10);
+	effect->MonsterDeathEffect();
+	m_state = State::Disappear;
 }
 
 void CSwordMonster::Render()
@@ -393,6 +411,7 @@ void CSwordMonster::OnCollisionEnter(CCollider* pOtherCollider)
 			if (m_pWeapon != nullptr && attackCollider != nullptr)
 			{
 				DELETEOBJECT(m_pWeapon);
+				DELETEOBJECT(collider);
 				DELETEOBJECT(attackCollider);
 			}
 		}

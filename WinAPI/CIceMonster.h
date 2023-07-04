@@ -12,7 +12,7 @@ class CIceMonster : public CMonster
 {
 public: 
 	
-	enum class State {Walk, Dizzy ,Die, Attack};
+	enum class State {Walk, Dizzy ,Die, Attack, Disappear};
 
 	CIceMonster();
 	virtual ~CIceMonster();
@@ -22,7 +22,7 @@ public:
 private:
 	wstring iceState;
 	CAnimator* m_pAnimator;
-
+	void DisappearState();
 	void WalkState();
 	void AttackState();
 	void DizzyState();
@@ -34,6 +34,8 @@ private:
 	CMonsterAttackCollider* attackCollider;
 	void MonsterAttackCollider();
 	void OnCollisionEnter(CCollider* pOtherCollider);
+
+	void DeleteObject();
 
 private:
 	void Init() override;

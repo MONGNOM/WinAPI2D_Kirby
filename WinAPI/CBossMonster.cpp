@@ -63,7 +63,8 @@ void CBossMonster::Init()
 	m_pAnimator->CreateAnimation(L"JumpAttackL", m_pBossImageL, Vector(2040.f, 900.f), Vector(200.f, 250.f), Vector(-280.f, 0.f), 0.15f, 1,false);
 	m_pAnimator->CreateAnimation(L"DizzyL", m_pBossImageL, Vector(2040.f, 1500.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.15f, 1);
 	m_pAnimator->CreateAnimation(L"FearL", m_pBossImageL, Vector(2040.f, 1200.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.1f, 2);
-	m_pAnimator->CreateAnimation(L"DisappearL", m_pBossImageL, Vector(920.f, 1500.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.15f, 3);
+	//m_pAnimator->CreateAnimation(L"DisappearL", m_pBossImageL, Vector(920.f, 1500.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.15f, 3);
+	m_pAnimator->CreateAnimation(L"DisappearL", m_pBossImageL, Vector(0.f, 0.f), Vector(1.f, 1.f), Vector(1.f, 0.f), 0.f, 1);
 	m_pAnimator->CreateAnimation(L"JumpL", m_pBossImageL, Vector(2040.f, 300.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.15f, 4, false);
 	m_pAnimator->CreateAnimation(L"JumpDownL", m_pBossImageL, Vector(640.f, 300.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.f, 1);
 
@@ -239,6 +240,8 @@ void CBossMonster::DieState()
 			bossstate = L"DieR";
 			if (dieTimer > 1.f)
 			{
+				Effect(m_vecPos.x + 10);
+				effect->MonsterDeathEffect();
 				SOUND->Play(DeathSound, 0.1f, false);
 				dieTimer = 0;
  				m_state = State::Disappear;
@@ -249,6 +252,8 @@ void CBossMonster::DieState()
 			bossstate = L"DieL";
 			if (dieTimer > 1.f) 
 			{
+				Effect(m_vecPos.x + 10);
+				effect->MonsterDeathEffect();
 				SOUND->Play(DeathSound, 0.1f, false);
 				dieTimer = 0;
 				m_state = State::Disappear;
@@ -433,19 +438,23 @@ void CBossMonster::DisappearState()
 	dieTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
+		
 		bossstate = L"DisappearR";
-		if (dieTimer > 1.8f)
+		if (dieTimer > 0.42f)
 		{
 			dieTimer = 0;
+			DELETEOBJECT(effect);
 			DELETEOBJECT(this); DELETEOBJECT(collider);
 		}
 	}
 	if (m_vecLookDir.x == -1)
 	{
+	
 		bossstate = L"DisappearL";
-		if (dieTimer > 1.f)
+		if (dieTimer > 0.42f)
 		{
 			dieTimer = 0;
+			DELETEOBJECT(effect);
 			DELETEOBJECT(this); DELETEOBJECT(collider);
 		}
 	}

@@ -7,6 +7,7 @@ CIceAttack::CIceAttack()
 	m_pAnimator = nullptr;
 	m_pAttackImage = nullptr;
 	m_strName = L"¾ó¸®±â";
+	m_layer = Layer::Ice;
 	damage = 1;
 }
 

@@ -12,7 +12,7 @@ class CSwordMonster :
 {
 public:
 
-	enum class State { Idle, Walk, Attack, Attack2, Die, Dizzy};
+	enum class State { Idle, Walk, Attack, Attack2, Die, Dizzy, Disappear};
 
 	CSwordMonster();
 	virtual ~CSwordMonster();
@@ -30,6 +30,7 @@ private:
 	void DieState();
 	void DizzyState();
 	void MonsterAttackCollider();
+	void DisappearState();
 
 	void DeleteObject();
 

@@ -8,7 +8,7 @@ class CBasicMonster : public CMonster
 {
 public:
 
-	enum class State { Walk, Die, Dizzy};
+	enum class State { Walk, Die, Dizzy, Disappear};
 
 	CBasicMonster();
 	virtual ~CBasicMonster();
@@ -23,6 +23,7 @@ private:
 	void WalkState();
 	void DieState();
 	void DizzyState();
+	void DisappearState();
 
 	CImage* m_pIceDieImage;
 

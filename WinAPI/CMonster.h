@@ -1,9 +1,11 @@
 #pragma once
 #include "CGameObject.h"
 #include "CHitCollider.h"
+#include "CEffect.h"
 
 class CImage;
 class CAnimtor;
+class CEffect;
 
 class CMonster : public CGameObject
 {
@@ -21,7 +23,7 @@ public:
 	bool m_groundchecker;
 	CSound* DamageSound;
 	CSound* DeathSound;
-
+	CEffect* effect;
 
 	bool iceDie;
 	Vector m_vecLookDir; 
@@ -33,6 +35,7 @@ public:
 	float m_gravity;
 public:
 	void TakeDamage(int damage);
+	void Effect(float x);
 
 protected:
 	void Init() override;

@@ -31,6 +31,8 @@ CIceKirby::~CIceKirby()
 
 void CIceKirby::Init()
 {
+	
+
 	CKirby::Init();
 	m_pIdleImage	= RESOURCE->LoadImg(L"IceKirbyIdleL",	L"Image\\Kirby\\Ice\\IceKirby.png");
 	m_pAttackImage	= RESOURCE->LoadImg(L"IceKirbyAttack",	L"Image\\Kirby\\Ice\\IceKirbyAttackPose.png");
@@ -136,6 +138,7 @@ void CIceKirby::Jump()
 
 void CIceKirby::IdleState()
 {
+	
 	if (m_groundchecker == false)
 	{
 		m_vecPos.y += m_gravity * DT;

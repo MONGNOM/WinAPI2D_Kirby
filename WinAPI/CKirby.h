@@ -1,6 +1,8 @@
 #pragma once
 #include "CGameObject.h"
 #include "CKirbyHp.h"
+#include "CEffect.h"
+
 
 
 class CKirby : public CGameObject
@@ -17,6 +19,8 @@ public:
 	float playerHp;
 	float fallTimer;
 	float flyTimer;
+	CEffect* effect;
+
 
 	float m_fSpeed;
 	float m_jumpSpeed;
@@ -31,7 +35,8 @@ public:
 	CSound* FlySound;
 	CSound* TeleportSound;
 
-	
+	void Effect(float x);
+
 	void SelectSound(CSound* pSound, float volume, bool loop);
 
 
