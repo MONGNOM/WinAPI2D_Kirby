@@ -20,7 +20,6 @@ private:
 	CAnimator* m_pAnimator;
 
 
-
 	CSound* AttackSound;
 	CSound* JumpSound;
 	CSound* ShoutSound;

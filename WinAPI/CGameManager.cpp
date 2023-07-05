@@ -6,8 +6,10 @@ CGameManager::CGameManager()
 {
 	ice = false;
 	sword = false;
+
 	iceicon = false;
 	swordicon = false;
+	
 	PlayerHit = false;
 	HpNotDown = false;
 	HitTime = 0;
