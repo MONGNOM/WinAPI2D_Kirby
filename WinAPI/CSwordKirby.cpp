@@ -224,6 +224,8 @@ void CSwordKirby::IdleState()
 		if (lastLeftInputTime < TIME_DASHABLE)
 		{
 			SelectSound(RunSound, 0.1f, false);
+			Effect(m_vecPos.x);
+			effect->KirbyDashEffectL();
 			m_state = State::Run;
 		}
 		else
@@ -236,6 +238,8 @@ void CSwordKirby::IdleState()
 		if (lastRightInputTime < TIME_DASHABLE)
 		{
 			SelectSound(RunSound, 0.1f, false);
+			Effect(m_vecPos.x);
+			effect->KirbyDashEffectR();
 			m_state = State::Run;
 		}
 		else
@@ -325,39 +329,47 @@ void CSwordKirby::RunState()
 	}
 	if (BUTTONSTAY(VK_LEFT))
 	{
+		effect->SetPos(m_vecPos.x + 30, m_vecPos.y + 25);
 		m_vecMoveDir.x = -1;
 		swordkirbystate = L"LRun";
 		m_vecPos.x -= m_fSpeed * DT;
 	}
 	else if (BUTTONSTAY(VK_RIGHT))
 	{
+		effect->SetPos(m_vecPos.x - 30, m_vecPos.y + 25);
 		m_vecMoveDir.x = 1;
 		swordkirbystate = L"RRun";
 		m_vecPos.x += m_fSpeed * DT;
 	}
 	if (!(BUTTONSTAY(VK_RIGHT) || BUTTONSTAY(VK_LEFT)))
 	{
+		DELETEOBJECT(effect);
 		m_state = State::Idle;
 	}
 	if (BUTTONDOWN('S'))
 	{
+		DELETEOBJECT(effect);
 		m_state = State::Attack;
 	}
 	if (BUTTONSTAY(VK_DOWN))
 	{
+		DELETEOBJECT(effect);
 		m_state = State::Sit;
 	}
 	if (BUTTONSTAY(VK_UP))
 	{
+		DELETEOBJECT(effect);
 		m_state = State::Fly;
 	}
 	if (BUTTONDOWN('A'))
 	{
+		DELETEOBJECT(effect);
 		Jump();
 		m_state = State::Jump;
 	}
 	if (BUTTONDOWN('D'))
 	{
+		DELETEOBJECT(effect);
 		SOUND->Play(DropSound, 0.5f, false);
 		m_state = State::Takeoff;
 	}

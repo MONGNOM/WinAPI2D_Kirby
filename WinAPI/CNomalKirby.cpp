@@ -231,6 +231,8 @@ void CNomalKirby::IdleState()
 		if (lastLeftInputTime < TIME_DASHABLE)
 		{
 			SelectSound(RunSound, 0.1f, false);
+			Effect(m_vecPos.x);
+			effect->KirbyDashEffectL();
 			m_state = State::Run;
 		}
 		else
@@ -243,6 +245,8 @@ void CNomalKirby::IdleState()
 		if (lastRightInputTime < TIME_DASHABLE)
 		{	
 			SelectSound(RunSound, 0.1f, false);
+			Effect(m_vecPos.x);
+			effect->KirbyDashEffectR();
 			m_state = State::Run;
 		}
 		else
@@ -316,8 +320,6 @@ void CNomalKirby::WalkState()
 
 void CNomalKirby::RunState()
 {
-	
-
 	m_fSpeed = 200.0f;
 	if (m_groundchecker == false)
 	{
@@ -325,34 +327,41 @@ void CNomalKirby::RunState()
 	}
 	if (BUTTONSTAY(VK_LEFT))
 	{
+		effect->SetPos(m_vecPos.x + 35, m_vecPos.y + 5);
 		m_vecMoveDir.x = -1;
 		normalkirbystate = L"LRun";
 		m_vecPos.x -= m_fSpeed * DT;
 	}
 	else if (BUTTONSTAY(VK_RIGHT))
 	{
+		effect->SetPos(m_vecPos.x - 35 ,m_vecPos.y + 5);
 		m_vecMoveDir.x = 1;
 		normalkirbystate = L"RRun";
 		m_vecPos.x += m_fSpeed * DT;
 	}
 	if (!(BUTTONSTAY(VK_RIGHT) || BUTTONSTAY(VK_LEFT)))
 	{
+		DELETEOBJECT(effect);
 		m_state = State::Idle;
 	}
 	if (BUTTONDOWN('S'))
 	{
+		DELETEOBJECT(effect);
 		m_state = State::Attack;
 	}
 	if (BUTTONSTAY(VK_DOWN))
 	{
+		DELETEOBJECT(effect);
 		m_state = State::Sit;
 	}
 	if (BUTTONSTAY(VK_UP))
 	{
+		DELETEOBJECT(effect);
 		m_state = State::Fly;
 	}
 	if (BUTTONDOWN('A'))
 	{
+		DELETEOBJECT(effect);
 		Jump();
 		m_state = State::Jump;
 	}
@@ -806,7 +815,7 @@ void CNomalKirby::SwordirbyChange()
 	SOUND->Play(ChangeSound, 0.1f, false);
 	GAME-> swordicon = true;
 	swordKriby = new CSwordKirby();
-	swordKriby->SetPos(m_vecPos.x,m_vecPos.y -20);
+	swordKriby->SetPos(m_vecPos.x,m_vecPos.y -30);
 	ADDOBJECT(swordKriby);
 	
 }
@@ -843,12 +852,14 @@ void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"얼음아이템")
 	{
 		IceKirbyChange();
+		DELETEOBJECT(this);
 		GAME->ice = true;
 	}
 
 	if (pOtherCollider->GetObjName() == L"검아이템")
 	{
 		SwordirbyChange();
+		DELETEOBJECT(this);
 		GAME->sword = true;
 	}
 }

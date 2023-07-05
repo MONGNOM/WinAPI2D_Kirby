@@ -1,5 +1,6 @@
 #pragma once
 #include "CKirbyWeapon.h"
+#include "CEffect.h"
 
 class Image;
 class Animator;
@@ -10,8 +11,10 @@ public:
 	CKirbyShot(Vector dir);
 	virtual ~CKirbyShot();
 	
+
 	CAnimator* m_pAnimator;
 	CImage* m_pAttackImage;
+	CEffect* effect;
 
 public:
 	void Init() override;

@@ -123,8 +123,11 @@ void CBossMonster::Update()
 
 	if (dizzy)
 	{
+		Effect(m_vecPos.x);
+		effect->BossAttackEffect();
 		m_state = State::Dizzy;
 		dizzy = false;
+		effect -> effectDestory = true;
 	}
 	AnimatorUpdate();
 }
@@ -462,7 +465,7 @@ void CBossMonster::DisappearState()
 
 void CBossMonster::Shout()
 {
-		SOUND->Play(ShoutSound, 0.5f, true);
+	SOUND->Play(ShoutSound, 0.5f, true);
 }
 
 void CBossMonster::BasicAttack()

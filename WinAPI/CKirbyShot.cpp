@@ -34,6 +34,11 @@ void CKirbyShot::OnCollisionEnter(CCollider* pOtherCollider)
 {
 	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Monster || pOtherCollider->GetOwner()->GetLayer() == Layer::Tile)
 	{
+		effect = new CEffect();
+		effect->effectDestory = true;
+		effect->SetPos(m_vecPos);
+		ADDOBJECT(effect);
+		effect->NomalAttackDestoryEffect();
 		DELETEOBJECT(this);
 	}
 }
