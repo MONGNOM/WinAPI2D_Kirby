@@ -191,6 +191,7 @@ void CNomalKirby::DisappearState()
 		GAME->iceicon = true;
 	if (sword)
 		GAME->swordicon = true;
+
 	changeTimer += DT;
 	normalkirbystate = L"Disappear";
 	if (changeTimer > 0.42f)
@@ -837,7 +838,6 @@ void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)
 		if (GAME->HpNotDown == true)
 		{
 			playerHp -= 0;
-
 		}
 		else
 		{

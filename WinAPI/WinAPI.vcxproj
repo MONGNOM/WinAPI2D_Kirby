@@ -150,6 +150,7 @@
     <ClInclude Include="CButton.h" />
     <ClInclude Include="CCameraController.h" />
     <ClInclude Include="CCameraManager.h" />
+    <ClInclude Include="CChangeFormStar.h" />
     <ClInclude Include="CCollider.h" />
     <ClInclude Include="CCollisionManager.h" />
     <ClInclude Include="CComponent.h" />
@@ -231,6 +232,7 @@
     <ClCompile Include="CButton.cpp" />
     <ClCompile Include="CCameraController.cpp" />
     <ClCompile Include="CCameraManager.cpp" />
+    <ClCompile Include="CChangeFormStar.cpp" />
     <ClCompile Include="CCollider.cpp" />
     <ClCompile Include="CCollisionManager.cpp" />
     <ClCompile Include="CComponent.cpp" />

@@ -4,6 +4,7 @@
 #include "CEffect.h"
 
 
+class CChanCChangeFormStar;
 
 class CKirby : public CGameObject
 {
@@ -38,7 +39,7 @@ public:
 	void Effect(float x);
 
 	void SelectSound(CSound* pSound, float volume, bool loop);
-
+	CChanCChangeFormStar* changestar;
 
 	CKirbyHp* hp;
 

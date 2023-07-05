@@ -15,9 +15,9 @@ CKirbyShot::~CKirbyShot()
 
 void CKirbyShot::Init()
 {
-	m_pAttackImage = RESOURCE->LoadImg(L"KirbyShot", L"Image\\ShotEffect.png");
+	m_pAttackImage = RESOURCE->LoadImg(L"KirbyShot", L"Image\\ShotEffect1.png");
 	m_pAnimator = new CAnimator;
-	m_pAnimator->CreateAnimation(L"AttackR", m_pAttackImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(50.f, 0.f), 0.08f, 2);
+	m_pAnimator->CreateAnimation(L"AttackR", m_pAttackImage, Vector(0.f, 0.f), Vector(75.f, 79.f), Vector(78.f, 0.f), 0.02f, 8);
 
 	m_pAnimator->Play(L"AttackR", false);
 	AddComponent(m_pAnimator);

@@ -27,7 +27,6 @@ public:
 	void DisappearState();
 
 private:
-	
 	CSound* ChangeSound;
 	CSound* NotChangeSound;
 	CSound* EattingSound;
