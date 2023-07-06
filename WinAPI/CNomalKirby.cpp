@@ -507,6 +507,7 @@ void CNomalKirby::AttackState()
 	}
 	if (eating)
 	{
+		eating = false;
 		SOUND->Pause(EattingSound);
 		m_state = State::Eating;
 	}
@@ -571,7 +572,6 @@ void CNomalKirby::ChangeState()
 				effect->kirbyChangeEffect();
 				IceKirbyChange();
 				m_state = State::Disappear;
-
 			}
 			else if (sword && !ice)
 			{
@@ -653,7 +653,7 @@ void CNomalKirby::EatAttackState()
 	ice = false;
 	sword = false;
 	attackTimer += DT;
-
+	eating = false;
 	if (m_pKirbyShot == nullptr)
 	{
 		SOUND->Play(ShotSound, 0.1f, false);
@@ -808,8 +808,11 @@ void CNomalKirby::Release()
 
 void CNomalKirby::IceKirbyChange()
 { 
+	panel = new CTransFormPanel();
+	panel->GetPos();
+	ADDOBJECT(panel);
+
 	SOUND->Play(ChangeSound, 0.1f, false);
-	
 	icekirby = new CIceKirby();
 	icekirby->SetPos(m_vecPos);
 	ADDOBJECT(icekirby);

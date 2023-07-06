@@ -7,6 +7,7 @@ CKirbyEat::CKirbyEat()
 	m_pAnimator = nullptr;
 	m_pAttackImage = nullptr;
 	m_strName = L"ª°æ∆µÈ¿Ã±‚";
+	m_layer = Layer::Eat;
 }
 
 CKirbyEat::~CKirbyEat()

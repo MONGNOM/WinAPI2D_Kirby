@@ -10,6 +10,7 @@ public:
 private:
 	CImage* m_pStage1BackGroundImage;
 
+
 private:
 	void Init() override;
 	void Update() override;

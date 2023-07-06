@@ -56,8 +56,14 @@ void CEffect::BossAttackEffect()
 	Effectstate = L"BossAttackEffect";
 }
 
+void CEffect::DropStarEffect()
+{
+	Effectstate = L"dropStarEffect";
+}
+
 void CEffect::Init()
 {
+	dropStarEffect = RESOURCE->LoadImg(L"DropStarEffect", L"Image\\DropStar.png");
 	Effect = RESOURCE->LoadImg(L"Effect", L"Image\\Effect.png");
 	BossEffect = RESOURCE->LoadImg(L"BossEffect", L"Image\\Effect1.png");
 	
@@ -70,6 +76,7 @@ void CEffect::Init()
 	m_pAnimator->CreateAnimation(L"KirbyDashEffectL", Effect, Vector(1281.f, 760.f), Vector(70.f, 30.f), Vector(-72.f, 0.f), 0.03f, 19);
 
 	m_pAnimator->CreateAnimation(L"BossAttackEffect", BossEffect, Vector(0.f, 0.f), Vector(24.f, 25.f), Vector(24.f, 0.f), 0.03f, 4);
+	m_pAnimator->CreateAnimation(L"dropStarEffect", dropStarEffect, Vector(0.f, 0.f), Vector(150.f, 150.f), Vector(150.f, 0.f), 0.09f, 3,false);
 
 	AddComponent(m_pAnimator);
 }

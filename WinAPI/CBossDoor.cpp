@@ -22,9 +22,9 @@ CBossDoor::~CBossDoor()
 
 void CBossDoor::Init()
 {
-	m_DoorImage = RESOURCE->LoadImg(L"DoorEffect", L"Image\\Door1.png");
+	m_DoorImage = RESOURCE->LoadImg(L"DoorEffect", L"Image\\StarEffect.png");
 	m_pAnimator = new CAnimator;
-	m_pAnimator->CreateAnimation(L"Star", m_DoorImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(50.f, 0.f), 0.1f, 5, true);
+	m_pAnimator->CreateAnimation(L"Star", m_DoorImage, Vector(0.f, 0.f), Vector(75.f, 79.f), Vector(78.f, 0.f), 0.05f, 8);
 
 	m_pAnimator->Play(L"Star", false);
 	AddComponent(m_pAnimator);

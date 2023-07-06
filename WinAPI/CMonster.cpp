@@ -112,11 +112,9 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 			DELETEOBJECT(this);
 			DELETEOBJECT(collider);
 			SOUND->Play(DeathSound, 0.1f, false);
-		}
-		if (this != nullptr)
-		{
 			normalKirby->eating = true;
 		}
+		
 	}
 
 }
@@ -124,7 +122,7 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 
 void CMonster::OnCollisionStay(CCollider* pOtherCollider)
 {
-	if (pOtherCollider->GetObjName() == L"»¡¾ÆµéÀÌ±â")
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Eat)
 	{ 
 		dizzy = true;
 		if (m_vecPos.x > pOtherCollider->GetOwner()->GetPos().x)

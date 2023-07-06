@@ -21,6 +21,7 @@ void CCollisionManager::Init()
 	CheckLayer(Layer::Monster, Layer::Weapon);
 	CheckLayer(Layer::Monster, Layer::Player);
 	CheckLayer(Layer::Monster, Layer::Ice);
+	CheckLayer(Layer::Monster, Layer::Eat);
 	CheckLayer(Layer::Tile, Layer::Player);
 	CheckLayer(Layer::Tile, Layer::Monster);
 	CheckLayer(Layer::Tile, Layer::Weapon);
@@ -28,6 +29,9 @@ void CCollisionManager::Init()
 	CheckLayer(Layer::Player, Layer::Door);
 	CheckLayer(Layer::Player, Layer::MWeapon);
 	CheckLayer(Layer::Player, Layer::HitCollider);
+	CheckLayer(Layer::ChangeFormStar, Layer::Player);
+	CheckLayer(Layer::ChangeFormStar, Layer::Eat);
+	CheckLayer(Layer::ChangeFormStar, Layer::Tile);
 
 }
 

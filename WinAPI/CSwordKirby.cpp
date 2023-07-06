@@ -487,7 +487,8 @@ void CSwordKirby::FlyState()
 
 	if (BUTTONDOWN('S'))
 	{
-		m_state = State::Attack;
+		m_jumpSpeed = 0;
+		m_state = State::JumpingDown;
 	}
 
 }
@@ -750,6 +751,10 @@ void CSwordKirby::AttackingState()
 
 void CSwordKirby::TakeOffState()
 {
+	changestar = new CChangeFormStar();
+	changestar->SetPos(m_vecPos);
+	ADDOBJECT(changestar);
+	changestar->ChangeStarName(L"Ä®º°");
 	m_pNormalKirby = new CNomalKirby();
 	m_pNormalKirby->SetPos(m_vecPos);
 	ADDOBJECT(m_pNormalKirby);
@@ -877,6 +882,7 @@ void CSwordKirby::FlyingState()
 
 	if (BUTTONDOWN('S'))
 	{
+		SOUND->Pause(FlySound);
 		m_jumpSpeed = 0;
 		m_state = State::JumpingDown;
 	}

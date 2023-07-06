@@ -2,9 +2,8 @@
 #include "CGameObject.h"
 #include "CKirbyHp.h"
 #include "CEffect.h"
-
-
-class CChanCChangeFormStar;
+#include "CChangeFormStar.h"
+#include "CTransFormPanel.h"
 
 class CKirby : public CGameObject
 {
@@ -39,7 +38,9 @@ public:
 	void Effect(float x);
 
 	void SelectSound(CSound* pSound, float volume, bool loop);
-	CChanCChangeFormStar* changestar;
+
+	CChangeFormStar* changestar;
+	CTransFormPanel* panel;
 
 	CKirbyHp* hp;
 

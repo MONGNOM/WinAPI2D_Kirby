@@ -20,12 +20,14 @@ public:
 	void KirbyDashEffectL();
 	void KirbyDashEffectR();
 	void BossAttackEffect();
+	void DropStarEffect();
 
 private:
 	wstring Effectstate;
 	CAnimator* m_pAnimator;
 	CImage* Effect;
 	CImage* BossEffect;
+	CImage* dropStarEffect;
 	
 	void Init() override;
 	void Update() override;

@@ -588,6 +588,13 @@ void CIceKirby::DeleteAttackArea()
 
 void CIceKirby::TakeOffState()
 {
+	Effect(m_vecPos.x);
+	effect->DropStarEffect();
+	effect->effectDestory = true;
+	changestar = new CChangeFormStar();
+	changestar->SetPos(m_vecPos);
+	ADDOBJECT(changestar);
+	changestar->ChangeStarName(L"¾óÀ½º°");
 	m_pNormalKirby = new CNomalKirby();
 	m_pNormalKirby->SetPos(m_vecPos);
 	ADDOBJECT(m_pNormalKirby);

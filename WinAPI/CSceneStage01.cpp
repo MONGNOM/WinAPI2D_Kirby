@@ -62,7 +62,7 @@ void CSceneStage01::Enter()
 	AddGameObject(iceMonster);
 
 	CDoor* door = new CDoor();
-	door->SetPos(3115, 355);
+	door->SetPos(3115, 355); 
 	AddGameObject(door);
 
 

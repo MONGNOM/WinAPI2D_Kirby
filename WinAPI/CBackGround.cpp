@@ -4,6 +4,7 @@
 CBackGround::CBackGround()
 {
 	m_pStage1BackGroundImage = nullptr;
+	
 	m_vecPos = Vector(0, 0);
 }
 
