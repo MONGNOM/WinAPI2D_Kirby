@@ -36,7 +36,7 @@ public:
 
 	void Scroll(Vector dir, float velocity);		// 카메라 스크롤
 
-	void FadeIn(float duration);		// 씬 진입 효과
+	void FadeIn(float duration, float size = 1.0f);		// 씬 진입 효과
 	void FadeOut(float duration);		// 씬 탈출 효과
 
 private:

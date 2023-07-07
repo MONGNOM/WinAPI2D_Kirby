@@ -27,6 +27,7 @@ public:
 	float m_gravity;
 	int m_groundCounter;
 	bool stage1;
+	bool m_panelOneCoin;
 
 	CSound* JumpSound;
 	CSound* RunSound;

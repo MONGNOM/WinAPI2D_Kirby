@@ -36,9 +36,9 @@ void CChangeFormStar::Update()
 {
 	//속도 조절 중력
 	changeFormStar = L"changeformstar";
-	m_vecPos.x -= GAME->playerLoockDirX - 0.1f  * DT;
-	m_vecPos.y -= GAME->playerPos.y * 0.2f * DT;
-	
+	m_vecPos.x -= GAME->playerLoockDirX - 0.01f  * DT;
+	m_vecPos.y -= GAME->playerPos.y * 0.1f * DT;
+
 	AnimatorUpdate();
 
 }

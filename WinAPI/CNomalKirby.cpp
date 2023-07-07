@@ -58,6 +58,7 @@ CNomalKirby::~CNomalKirby()
 
 void CNomalKirby::Init()
 {
+	
 	CKirby::Init();
 
 	m_pIdleLImage		= RESOURCE->LoadImg(L"KirbyIdleL",		L"Image\\Kirby\\Basic\\KirbyIdleL.png"	);
@@ -600,7 +601,7 @@ void CNomalKirby::ChangeState()
 				effect->kirbyChangeEffect();
 				IceKirbyChange();
 				m_state = State::Disappear;
-
+				 
 			}
 			else if (sword && !ice)
 			{
@@ -808,9 +809,7 @@ void CNomalKirby::Release()
 
 void CNomalKirby::IceKirbyChange()
 { 
-	panel = new CTransFormPanel();
-	panel->GetPos();
-	ADDOBJECT(panel);
+	
 
 	SOUND->Play(ChangeSound, 0.1f, false);
 	icekirby = new CIceKirby();

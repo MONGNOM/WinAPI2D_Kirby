@@ -9,6 +9,7 @@ CEffect::CEffect()
 	 effectDestory = false;
 	 effectDestoryTime = 0;
 	 BossEffect = nullptr;
+	 dropStarEffect = nullptr;
 }
 
 CEffect::~CEffect()

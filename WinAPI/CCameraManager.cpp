@@ -11,7 +11,7 @@ CCameraManager::CCameraManager()
 	m_vecTargetPos	= Vector(0, 0);
 	m_pTargetObj	= nullptr;
 	m_fTimeToTarget = 0;
-
+	
 	m_fTargetBright = 1.f;
 	m_fCurBright = 1.f;
 	m_fTimeToBright = 0.f;
@@ -69,9 +69,9 @@ void CCameraManager::Scroll(Vector dir, float velocity)
 	m_fTimeToTarget = 0;	// 스크롤은 시간차를 두지 않은 즉각 이동
 }
 
-void CCameraManager::FadeIn(float duration)
+void CCameraManager::FadeIn(float duration, float size)
 {
-	m_fTargetBright = 1.f;
+	m_fTargetBright = size;
 	m_fTimeToBright = duration;
 }
 

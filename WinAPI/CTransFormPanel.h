@@ -9,6 +9,9 @@ public:
 	virtual ~CTransFormPanel();
 
 private:
+
+	
+	float panelTimer;
 	CImage* m_picemainImage;
 	CImage* m_pswordmainImage;
 	CSound* ClickSound;

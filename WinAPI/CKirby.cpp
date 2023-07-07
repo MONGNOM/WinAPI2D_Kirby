@@ -21,12 +21,14 @@ CKirby::CKirby()
 	
 	커비
 	별모양 날아가게 = 방향 하고 중력 구현해야함 
-	변신후 설명화면뜨고 버튼누르면 꺼짐 = DELETE 위치 찾기 
  
 	보스 && 몬스터
 	보스데미지 받을때 이펙트추가 = 위치수정요망 90
 	보스몬스터 망치찍을때 별모양 만들고 먹고 뱉을수있게 [금방]
+	
+	별모양 만들어지는거 위치 수정해야하고 날아가는거 왜느림?
 
+	보스몬스터 걸을때 랑 걸어와서 때리려고 할 때 위로올라갔다 내려오는 모션 수정
 	================================================================
 	수정 사항:
 	바닥뚫기, 벽뚫기 => 교수님 소스 가져다 쓰기 = [거의 완]
@@ -49,6 +51,7 @@ CKirby::CKirby()
 	m_groundCounter = 0;
 	m_gravity = 300;
 	stage1 = true;
+	m_panelOneCoin = true;
 }
 
 CKirby::~CKirby()
@@ -94,7 +97,10 @@ void CKirby::Update()
 	lastLeftInputTime += DT;
 	lastRightInputTime += DT;
 	m_vecLookDir = m_vecMoveDir;
-
+	if (!m_panelOneCoin)
+	{
+		Logger::Debug(L"123");
+	}
 	
 }
 

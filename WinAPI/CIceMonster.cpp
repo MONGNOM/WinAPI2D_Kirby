@@ -72,7 +72,6 @@ void CIceMonster::Update()
 	collider->SetPos(m_vecPos);
 	attackCollider->SetPos(m_vecPos);
 
-	Logger::Debug(iceState);
 
 	switch (m_state)
 	{

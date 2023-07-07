@@ -1,6 +1,7 @@
 #pragma once
 #include "CMonster.h"
 #include "CMonsterWeapon.h"
+#include "BossMakeStar.h"
 
 
 class Image;
@@ -19,7 +20,7 @@ private:
 	State m_state;
 	CAnimator* m_pAnimator;
 
-
+	BossMakeStar* star;
 	CSound* AttackSound;
 	CSound* JumpSound;
 	CSound* ShoutSound;

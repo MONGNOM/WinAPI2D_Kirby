@@ -66,7 +66,6 @@ void CBasicMonster::Update()
 	CMonster::Update();
 	collider->SetPos(m_vecPos);
 
-	Logger::Debug(Basicstate);
 
 	switch(m_state)
 	{

@@ -58,7 +58,9 @@ enum class Layer
 	Missile,
 	Ice,
 	Effect,
+	Star,
 	Ui,
+	Panel,
 	Size,
 };
 

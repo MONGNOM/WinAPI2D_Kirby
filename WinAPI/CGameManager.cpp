@@ -6,7 +6,6 @@ CGameManager::CGameManager()
 {
 	ice = false;
 	sword = false;
-
 	iceicon = false;
 	swordicon = false;
 	
@@ -64,6 +63,7 @@ void CGameManager::Update()
 
 void CGameManager::Render()
 {
+	
 }
 
 void CGameManager::GetPlayerHp()

@@ -7,6 +7,7 @@ CKirbyShot::CKirbyShot(Vector dir)
 	m_pAnimator = nullptr;
 	m_pAttackImage = nullptr;
 	m_vecLookDir = dir;
+	effect = nullptr;
 }
 
 CKirbyShot::~CKirbyShot()

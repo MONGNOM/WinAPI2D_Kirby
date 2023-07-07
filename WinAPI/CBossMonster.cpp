@@ -37,6 +37,8 @@ void CBossMonster::Init()
 	BossHP->SetScale(432, 94);
 	ADDOBJECT(BossHP);
 
+	
+
 	CMonster::Init();
 	m_pBossImageR		= RESOURCE->LoadImg(L"BossR", L"Image\\Monster\\King\\kingRight.png");
 	m_pBossImageL		= RESOURCE->LoadImg(L"BossL", L"Image\\Monster\\King\\kingLeft.png");
@@ -45,7 +47,7 @@ void CBossMonster::Init()
 	m_pAnimator = new CAnimator;
 	//¿À¸¥ÂÊ
 	m_pAnimator->CreateAnimation(L"IdleR", m_pBossImageR, Vector(0.f, 0.f), Vector(200.f, 203.f), Vector(280.f, 0.f), 0.2f, 4);
-	m_pAnimator->CreateAnimation(L"WalkR", m_pBossImageR, Vector(1120.f, 0.f), Vector(200.f, 203.f), Vector(280.f, 0.f), 0.15f, 4);
+	m_pAnimator->CreateAnimation(L"WalkR", m_pBossImageR, Vector(1120.f, 0.f), Vector(200.f, 203.f), Vector(280.f, 0.f), 0.5f, 4);
 	m_pAnimator->CreateAnimation(L"DieR",	m_pBossImageR, Vector(280.f, 1500.f), Vector(210.f, 203.f), Vector(290.f, 0.f), 0.15f, 3);
 	m_pAnimator->CreateAnimation(L"AttackR", m_pBossImageR, Vector(0.f, 580.f), Vector(210.f, 250.f), Vector(280.f, 0.f), 0.2f, 8,false);
 	m_pAnimator->CreateAnimation(L"JumpAttackR", m_pBossImageR, Vector(0.f, 900.f), Vector(200.f, 250.f), Vector(280.f, 0.f), 0.15f, 1,false);
@@ -57,7 +59,7 @@ void CBossMonster::Init()
 
 	// ¿ÞÂÊ
 	m_pAnimator->CreateAnimation(L"IdleL", m_pBossImageL, Vector(2040.f, 0.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.2f, 4);
-	m_pAnimator->CreateAnimation(L"WalkL", m_pBossImageL, Vector(920.f, 0.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.15f, 4);
+	m_pAnimator->CreateAnimation(L"WalkL", m_pBossImageL, Vector(920.f, 0.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.5f, 4);
 	m_pAnimator->CreateAnimation(L"DieL", m_pBossImageL, Vector(1750.f, 1500.f), Vector(210.f, 203.f), Vector(-290.f, 0.f), 0.25f, 3);
 	m_pAnimator->CreateAnimation(L"AttackL", m_pBossImageL, Vector(2040.f, 580.f), Vector(210.f, 250.f), Vector(-280.f, 0.f), 0.2f, 8,false);
 	m_pAnimator->CreateAnimation(L"JumpAttackL", m_pBossImageL, Vector(2040.f, 900.f), Vector(200.f, 250.f), Vector(-280.f, 0.f), 0.15f, 1,false);
@@ -170,6 +172,13 @@ void CBossMonster::IdleState()
 
 void CBossMonster::WalkState()
 {
+	/*m_jumpSpeed = 10;
+
+	m_vecPos.y -= m_jumpSpeed * DT;*/
+	if (m_vecPos.y <= 200)
+	{
+		m_vecPos.y += m_jumpSpeed * DT;
+	}
 	walkTimer += DT;
 	if (m_vecLookDir.x == 1)
 	{
@@ -198,12 +207,12 @@ void CBossMonster::WalkState()
 void CBossMonster::AttackState()
 {
 	attackTimer += DT;
-
 	if (m_pWeapon == nullptr)
 		MonsterAttackCollider();
 
 	if (m_vecLookDir.x == 1)
 	{
+		m_vecPos.x += 50 * DT;
 		bossstate = L"AttackR";
 		if (attackTimer > 1.6f)
 		{
@@ -219,6 +228,7 @@ void CBossMonster::AttackState()
 	}
 	if (m_vecLookDir.x == -1)
 	{
+		m_vecPos.x -= 50 * DT;
 		bossstate = L"AttackL";
 		if (attackTimer > 1.6f)
 		{
@@ -473,11 +483,13 @@ void CBossMonster::BasicAttack()
 	SOUND->Pause(WalkSound);
 	if (Attack)
 	{
+		
 		Attack = false;
 		m_state = State::Attack;
 	}
 	else
 	{
+		
 		m_jumpSpeed = 300.f;
 		m_state = State::Jump;
 		Attack = true;
@@ -493,6 +505,7 @@ void CBossMonster::JumpDown()
 	}
 	else
 	{
+		
 		jumpDown = true;
 		m_state = State::JumpAttack;
 	}
@@ -502,17 +515,22 @@ void CBossMonster::MonsterAttackCollider()
 {
 	SOUND->Play(AttackSound, 0.3f, false);
 	m_pWeapon = new CMonsterWeapon();
+	star = new BossMakeStar();
 	if (m_vecLookDir.x == -1)
 	{
 		m_pWeapon->SetMonsterWeaponScale(150, 200);
 		m_pWeapon->SetPos(m_vecPos.x -150, m_vecPos.y);
+		star->SetPos(m_vecPos.x - 150, m_vecPos.y + 70);
 	}
 	if (m_vecLookDir.x == 1)
 	{
 		m_pWeapon->SetMonsterWeaponScale(150, 200);
 		m_pWeapon->SetPos(m_vecPos.x + 150, m_vecPos.y);
+		star->SetPos(m_vecPos.x + 150, m_vecPos.y + 70);
+
 	}
 	ADDOBJECT(m_pWeapon);
+	ADDOBJECT(star);
 }
 
 void CBossMonster::AnimatorUpdate()
