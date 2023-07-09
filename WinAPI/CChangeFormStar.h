@@ -11,6 +11,8 @@ public:
 	CChangeFormStar();
 	virtual ~CChangeFormStar();
 
+	float m_jumpSpeed;
+	float m_gravity;
 	CAnimator* m_pAnimator;
 	CImage* m_pChangeFormStarImage;
 	CSound* DeathSound;

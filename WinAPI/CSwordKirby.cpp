@@ -58,6 +58,10 @@ CSwordKirby::~CSwordKirby()
 
 void CSwordKirby::Init()
 {
+	panel = new CTransFormPanel();
+	panel->GetPos();
+	ADDOBJECT(panel);
+
 	CKirby::Init();
 	//¿À¸¥ÂÊ
 	m_pIdleImage			= RESOURCE->LoadImg(L"SwordKirbyIdleL",				L"Image\\Kirby\\SwordKirby\\sword kirby Idle.png");

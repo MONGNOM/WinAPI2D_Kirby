@@ -10,6 +10,8 @@ CChangeFormStar::CChangeFormStar()
 	m_strName = L"ChangeFormStar";
 	m_layer = Layer::ChangeFormStar;
 	DeathSound = RESOURCE->LoadSound(L"MonsterDeathSound", L"Sound\\MonsterDeath.wav");
+	m_jumpSpeed = 100;
+	m_gravity = 0;
 }
 
 CChangeFormStar::~CChangeFormStar()
@@ -34,10 +36,14 @@ void CChangeFormStar::Init()
 
 void CChangeFormStar::Update()
 {
+	m_jumpSpeed -= m_gravity * DT;
+
 	//속도 조절 중력
 	changeFormStar = L"changeformstar";
-	m_vecPos.x -= GAME->playerLoockDirX - 0.01f  * DT;
-	m_vecPos.y -= GAME->playerPos.y * 0.1f * DT;
+	//m_vecPos.x -= GAME->playerLoockDirX - 0.01f  * DT;
+	
+	if (m_jumpSpeed < 0)
+		m_vecPos.y -= m_jumpSpeed * DT;
 
 	AnimatorUpdate();
 

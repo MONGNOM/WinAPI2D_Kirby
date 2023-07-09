@@ -8,6 +8,9 @@ public:
 	CTransFormPanel();
 	virtual ~CTransFormPanel();
 
+	void IcePanel();
+	void SwordPanel();
+
 private:
 
 	

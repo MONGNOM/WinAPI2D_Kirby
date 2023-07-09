@@ -9,6 +9,8 @@ CTransFormPanel::CTransFormPanel()
 	ClickSound = RESOURCE->LoadSound(L"ClickSound", L"Sound\\Click.wav");
 	m_layer = Layer::Panel;
 	panelTimer = 0;
+	m_pswordmainImage = RESOURCE->LoadImg(L"icemain", L"Image\\Kirby\\SwordKirby\\sword kirby main.png");
+	m_picemainImage = RESOURCE->LoadImg(L"swordmain", L"Image\\Kirby\\Ice\\IcePanel.png");
 
 }
 
@@ -46,12 +48,21 @@ void CTransFormPanel::OnMouseClicked()
 {
 }
 
+void CTransFormPanel::IcePanel()
+{
+	RENDER->Image(m_picemainImage, m_vecRenderPos.x - 420, m_vecRenderPos.y - 300, m_vecRenderPos.x + 400, m_vecRenderPos.y + 300);
+}
+
+void CTransFormPanel::SwordPanel()
+{
+	RENDER->Image(m_pswordmainImage, m_vecRenderPos.x - 420, m_vecRenderPos.y - 300, m_vecRenderPos.x + 400, m_vecRenderPos.y + 300);
+}
+
 void CTransFormPanel::Init()
 {
 	
 	CAMERA->FadeOut(0.0001f);
-	m_pswordmainImage = RESOURCE->LoadImg(L"icemain", L"Image\\Kirby\\SwordKirby\\sword kirby main.png");
-	m_picemainImage = RESOURCE->LoadImg(L"swordmain", L"Image\\Kirby\\Ice\\IcePanel.png");
+	
 
 
 }
@@ -74,9 +85,10 @@ void CTransFormPanel::Update()
 
 void CTransFormPanel::Render()
 {
-	
-	RENDER->Image(m_picemainImage, m_vecRenderPos.x -420, m_vecRenderPos.y -300, m_vecRenderPos.x + 400, m_vecRenderPos.y + 300);
-	/*RENDER->Image(m_pswordmainImage, 0, 0, m_vecPos.x - WINSIZEX * 0.5f, m_vecPos.y + WINSIZEY * 0.5f);*/
+	if (GAME->ice)
+	IcePanel();
+	else if(GAME->sword)
+	SwordPanel();
 }
 
 void CTransFormPanel::Release()
