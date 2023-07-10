@@ -65,6 +65,7 @@ void CSwordKirby::Init()
 		panel->GetPos();
 		ADDOBJECT(panel);
 		GAME->swordPanel = false;
+		GAME->sword = false;
 	}
 	CKirby::Init();
 	//¿À¸¥ÂÊ

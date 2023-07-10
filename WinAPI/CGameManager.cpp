@@ -21,7 +21,7 @@ CGameManager::CGameManager()
 	monsterhpnotDown = false;
 	monsterhitTime = 0;
 
-	BossHp = 11;
+	BossHp = 110;
 	maxHp = 5;
 	curHp = maxHp;
 	playerPos = Vector(0, 0);

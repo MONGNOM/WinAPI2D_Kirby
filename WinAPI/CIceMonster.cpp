@@ -333,7 +333,7 @@ void CIceMonster::DeleteObject()
 		DELETEOBJECT(iceAttack);
 		iceAttack = nullptr;
 	}
-	Effect(m_vecPos.x);
+	Effect(m_vecPos.x,m_vecPos.y);
 	effect->MonsterDeathEffect();
 	m_state = State::Disappear;
 }

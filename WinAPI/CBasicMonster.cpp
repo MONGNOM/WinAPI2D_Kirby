@@ -119,13 +119,14 @@ void CBasicMonster::DieState()
 	dieTimer += DT;
 	if (iceDie)
 	{
+		
 		// 여기로 들어오는데 애니메이션 재생이 안된다?
 		if (m_vecLookDir.x == 1)
 		{
 			Basicstate = L"IceDie";
 			if (dieTimer > 2.0f)
 			{
-				Effect(m_vecPos.x);
+				Effect(m_vecPos.x, m_vecPos.y);
 				effect->MonsterDeathEffect();
 				m_state = State::Disappear;
 				dieTimer = 0;
@@ -137,7 +138,7 @@ void CBasicMonster::DieState()
 			Basicstate = L"IceDie";
 			if (dieTimer > 2.0f)
 			{
-				Effect(m_vecPos.x);
+				Effect(m_vecPos.x, m_vecPos.y);
 				effect->MonsterDeathEffect();
 				dieTimer = 0;
 				DELETEOBJECT(collider);
@@ -152,7 +153,7 @@ void CBasicMonster::DieState()
 			Basicstate = L"DieR";
 			if (dieTimer > 0.6f)
 			{
-				Effect(m_vecPos.x);
+				Effect(m_vecPos.x, m_vecPos.y);
 				effect->MonsterDeathEffect();
 				m_state = State::Disappear;
 				dieTimer = 0;
@@ -164,7 +165,7 @@ void CBasicMonster::DieState()
 			Basicstate = L"DieL";
 			if (dieTimer > 1.f)
 			{
-				Effect(m_vecPos.x);
+				Effect(m_vecPos.x, m_vecPos.y);
 				effect->MonsterDeathEffect();
 				dieTimer = 0;
 				DELETEOBJECT(collider);

@@ -387,7 +387,7 @@ void CSwordMonster::DeleteObject()
 		DELETEOBJECT(m_pWeapon);
 		m_pWeapon = nullptr;
 	}
-	Effect(m_vecPos.x + 10);
+	Effect(m_vecPos.x + 10, m_vecPos.y);
 	effect->MonsterDeathEffect();
 	m_state = State::Disappear;
 }

@@ -38,6 +38,7 @@ void CIceKirby::Init()
 		panel->GetPos();
 		ADDOBJECT(panel);
 		GAME->icePanel = false;
+		GAME->ice = false;
 	}
 	
 	CKirby::Init();

@@ -188,11 +188,15 @@ void CNomalKirby::AnimatorUpdate()
 
 void CNomalKirby::DisappearState()
 {
-	if (ice)
-		GAME->iceicon = true;
-	if (sword)
-		GAME->swordicon = true;
 
+	if (ice)
+	{
+		GAME->iceicon = true;
+	}
+	if (sword)
+	{
+		GAME->swordicon = true;
+	}
 	changeTimer += DT;
 	normalkirbystate = L"Disappear";
 	if (changeTimer > 0.42f)
@@ -809,13 +813,10 @@ void CNomalKirby::Release()
 
 void CNomalKirby::IceKirbyChange()
 { 
-	
-
 	SOUND->Play(ChangeSound, 0.1f, false);
 	icekirby = new CIceKirby();
 	icekirby->SetPos(m_vecPos);
 	ADDOBJECT(icekirby);
-	
 }
 
 void CNomalKirby::SwordirbyChange()

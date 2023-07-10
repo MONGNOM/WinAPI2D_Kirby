@@ -29,6 +29,14 @@ CMonster::CMonster()
 	DeathSound	= RESOURCE->LoadSound(L"MonsterDeathSound", L"Sound\\MonsterDeath.wav");
 	GAME->invincible = 0.5f;
 	effect = nullptr;
+	bossEffect  = nullptr;
+	bossEffect1 = nullptr;
+	bossEffect2 = nullptr;
+	bossEffect3 = nullptr;
+	bossEffect4 = nullptr;
+	bossEffect5 = nullptr;
+	bossEffect6 = nullptr;
+	bosseffectTimer = 0;
 }
 
 CMonster::~CMonster()
@@ -45,8 +53,7 @@ void CMonster::Init()
 
 void CMonster::Update()
 {
-	
-
+	bosseffectTimer += DT;
 }
 
 void CMonster::Render()
@@ -65,11 +72,64 @@ void CMonster::TakeDamage(int damage)
 	dizzy = true;
 }
 
-void CMonster::Effect(float x)
+void CMonster::Effect(float x, float y)
 {
 	effect = new CEffect();
-	effect->SetPos(x,m_vecPos.y);
+	effect->SetPos(x,y);
 	ADDOBJECT(effect);
+}
+
+void CMonster::BossEffect()
+{
+	effect = new CEffect();
+	effect->SetPos(m_vecPos.x, m_vecPos.y - 15);
+	effect->BossAttackEffect();
+	ADDOBJECT(effect);
+	
+	bossEffect = new CEffect();
+	bossEffect->SetPos(m_vecPos.x + 20 , m_vecPos.y + 100);
+	ADDOBJECT(bossEffect);
+	bossEffect->BossAttackEffect();
+
+	bossEffect1 = new CEffect();
+	bossEffect1->SetPos(m_vecPos.x - 50, m_vecPos.y + 20);
+	ADDOBJECT(bossEffect1);
+	bossEffect1->BossAttackEffect();
+
+	bossEffect2 = new CEffect();
+	bossEffect2->SetPos(m_vecPos.x, m_vecPos.y + 40);
+	ADDOBJECT(bossEffect2);
+	bossEffect2->BossAttackEffect();
+
+	bossEffect3 = new CEffect();
+	bossEffect3->SetPos(m_vecPos.x -35, m_vecPos.y + 70);
+	ADDOBJECT(bossEffect3);
+	bossEffect3->BossAttackEffect();
+
+	bossEffect4 = new CEffect();
+	bossEffect4->SetPos(m_vecPos.x + 50, m_vecPos.y + 55);
+	ADDOBJECT(bossEffect4);
+	bossEffect4->BossAttackEffect();
+
+	bossEffect5 = new CEffect();
+	bossEffect5->SetPos(m_vecPos.x + 50, m_vecPos.y - 5);
+	bossEffect5->BossAttackEffect();
+	ADDOBJECT(bossEffect5);
+
+	bossEffect6 = new CEffect();
+	bossEffect6->SetPos(m_vecPos.x - 30, m_vecPos.y + 50);
+	ADDOBJECT(bossEffect6);
+	bossEffect6->BossAttackEffect();
+
+	effect->effectDestory = true;
+	bossEffect->effectDestory = true;
+	bossEffect1->effectDestory = true;
+	bossEffect2->effectDestory = true;
+	bossEffect3->effectDestory = true;
+	bossEffect4->effectDestory = true;
+	bossEffect5->effectDestory = true;
+	bossEffect6->effectDestory = true;
+
 }
 
 
@@ -146,7 +206,7 @@ void CMonster::OnCollisionStay(CCollider* pOtherCollider)
 	}
 	else
 	{
-		iceDie = false;
+		//iceDie = false;
 	}
 }
 

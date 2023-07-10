@@ -53,7 +53,7 @@ void CEffect::KirbyDashEffectR()
 }
 
 void CEffect::BossAttackEffect()
-{
+{	
 	Effectstate = L"BossAttackEffect";
 }
 
@@ -84,7 +84,7 @@ void CEffect::Init()
 
 void CEffect::Update()
 {
-	
+
 	if (effectDestory)
 	{
 		effectDestoryTime += DT;

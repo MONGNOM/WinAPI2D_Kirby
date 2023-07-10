@@ -90,7 +90,7 @@ void CTransFormPanel::Render()
 		{
 			IcePanel();
 		}
-		else if (GAME->sword)
+		if (GAME->sword)
 		{
 			SwordPanel();
 		}

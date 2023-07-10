@@ -123,14 +123,7 @@ void CBossMonster::Update()
 		break;
 	}
 
-	if (dizzy)
-	{
-		Effect(m_vecPos.x);
-		effect->BossAttackEffect();
-		m_state = State::Dizzy;
-		dizzy = false;
-		effect -> effectDestory = true;
-	}
+	
 	AnimatorUpdate();
 }
 
@@ -143,6 +136,14 @@ void CBossMonster::Release()
 }
 void CBossMonster::IdleState()
 {
+	if (dizzy)
+	{
+		BossEffect();
+		
+
+		m_state = State::Dizzy;
+		dizzy = false;
+	}
 	if (hp <= 0)
 	{
 		m_state = State::Die;
@@ -172,6 +173,12 @@ void CBossMonster::IdleState()
 
 void CBossMonster::WalkState()
 {
+	if (dizzy)
+	{
+		BossEffect();
+		m_state = State::Dizzy;
+		dizzy = false;
+	}
 	/*m_jumpSpeed = 10;
 
 	m_vecPos.y -= m_jumpSpeed * DT;*/
@@ -206,6 +213,12 @@ void CBossMonster::WalkState()
 
 void CBossMonster::AttackState()
 {
+	if (dizzy)
+	{
+		BossEffect();
+		m_state = State::Dizzy;
+		dizzy = false;
+	}
 	attackTimer += DT;
 	if (m_pWeapon == nullptr)
 		MonsterAttackCollider();
@@ -247,13 +260,14 @@ void CBossMonster::AttackState()
 
 void CBossMonster::DieState()
 {
+
 	dieTimer += DT;
 		if (m_vecLookDir.x == 1)
 		{
 			bossstate = L"DieR";
 			if (dieTimer > 1.f)
 			{
-				Effect(m_vecPos.x + 10);
+				Effect(m_vecPos.x + 10, m_vecPos.y);
 				effect->MonsterDeathEffect();
 				SOUND->Play(DeathSound, 0.1f, false);
 				dieTimer = 0;
@@ -265,7 +279,7 @@ void CBossMonster::DieState()
 			bossstate = L"DieL";
 			if (dieTimer > 1.f) 
 			{
-				Effect(m_vecPos.x + 10);
+				Effect(m_vecPos.x + 10,m_vecPos.y);
 				effect->MonsterDeathEffect();
 				SOUND->Play(DeathSound, 0.1f, false);
 				dieTimer = 0;
@@ -302,6 +316,7 @@ void CBossMonster::DizzyState()
 
 void CBossMonster::JumpState()
 {
+
 	m_vecPos.y -= m_jumpSpeed * DT;
 
 	if (m_vecLookDir.x == 1)
