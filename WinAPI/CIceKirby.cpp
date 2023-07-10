@@ -32,9 +32,13 @@ CIceKirby::~CIceKirby()
 void CIceKirby::Init()
 {
 	
+	if (GAME->icePanel)
+	{
 		panel = new CTransFormPanel();
 		panel->GetPos();
 		ADDOBJECT(panel);
+		GAME->icePanel = false;
+	}
 	
 	CKirby::Init();
 	m_pIdleImage	= RESOURCE->LoadImg(L"IceKirbyIdleL",	L"Image\\Kirby\\Ice\\IceKirby.png");

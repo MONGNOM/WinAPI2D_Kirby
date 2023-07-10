@@ -8,10 +8,14 @@ CGameManager::CGameManager()
 	sword = false;
 	iceicon = false;
 	swordicon = false;
-	
+
+	icePanel = true;
+	swordPanel = true;
+
 	PlayerHit = false;
 	HpNotDown = false;
 	HitTime = 0;
+	
 
 	monsterHit = false;
 	monsterhpnotDown = false;
@@ -35,6 +39,7 @@ void CGameManager::Init()
 
 void CGameManager::Update()
 {
+
 
 	if (PlayerHit == true)
 	{

@@ -858,16 +858,21 @@ void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)
 
 	if (pOtherCollider->GetObjName() == L"얼음아이템")
 	{
-		IceKirbyChange();
-		DELETEOBJECT(this);
 		GAME->ice = true;
+		Effect(m_vecPos.x);
+		effect->kirbyChangeEffect();
+		IceKirbyChange();
+		m_state = State::Disappear;
 	}
 
 	if (pOtherCollider->GetObjName() == L"검아이템")
 	{
-		SwordirbyChange();
-		DELETEOBJECT(this);
 		GAME->sword = true;
+		Effect(m_vecPos.x);
+		effect->kirbyChangeEffect();
+		SwordirbyChange();
+		m_state = State::Disappear;
+		
 	}
 }
 

@@ -61,16 +61,15 @@ void CTransFormPanel::SwordPanel()
 void CTransFormPanel::Init()
 {
 	
-	CAMERA->FadeOut(0.0001f);
-	
-
-
+		CAMERA->FadeOut(0.5f);
 }
 
 void CTransFormPanel::Update()
 {
 	panelTimer += DT;
-	if (panelTimer > 0.5f)
+	
+
+	if (panelTimer > 1.0f)
 	{
 		CAMERA->FadeIn(0.1f, 1.0f);
 	}
@@ -85,10 +84,17 @@ void CTransFormPanel::Update()
 
 void CTransFormPanel::Render()
 {
-	if (GAME->ice)
-	IcePanel();
-	else if(GAME->sword)
-	SwordPanel();
+	if (panelTimer > 0.5f)
+	{
+		if (GAME->ice)
+		{
+			IcePanel();
+		}
+		else if (GAME->sword)
+		{
+			SwordPanel();
+		}
+	}
 }
 
 void CTransFormPanel::Release()

@@ -11,6 +11,10 @@ public:
 	CGameManager();
 	virtual ~CGameManager();
 
+	
+	bool icePanel;
+	bool swordPanel;
+
 	bool monsterHit;
 	bool monsterhpnotDown;
 	float monsterhitTime;
@@ -23,6 +27,7 @@ public:
 	bool sword;
 	bool iceicon;
 	bool swordicon;
+
 
 	int BossHp;
 	float maxHp;
