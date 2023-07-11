@@ -309,6 +309,9 @@
     <ClInclude Include="BossMakeStar.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CBossDeathBackGround.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -525,6 +528,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="BossMakeStar.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossDeathBackGround.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

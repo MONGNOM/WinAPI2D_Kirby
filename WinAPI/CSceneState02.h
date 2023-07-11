@@ -4,6 +4,7 @@
 #include "CIceKirby.h"
 #include "CSwordKirby.h"
 #include "CBossMonster.h"
+#include "CBossDeathBackGround.h"
 
 class Image;
 class Animaotr;
@@ -14,11 +15,15 @@ public:
 	CSceneState02();
 	virtual ~CSceneState02();
 
+
 private:
+
+
 	CBossMonster* bossMonster;
 	CNomalKirby* pkirby;
 	CSound* BossBGMSound;
 	CSound* ClickSound;
+	CBossDeathBackGround* bossDeathBackGround;
 
 
 private:

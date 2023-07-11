@@ -21,6 +21,7 @@ CBossMonster::CBossMonster()
 	WalkSound = RESOURCE->LoadSound(L"BossWalkSound", L"Sound\\BossWalk.wav");
 	DeathSound = RESOURCE->LoadSound(L"BossDeathSound", L"Sound\\BossDeath.wav");
 	GAME->invincible = 1.0f;
+	bossDeath = false;
 
 }
 
@@ -260,7 +261,7 @@ void CBossMonster::AttackState()
 
 void CBossMonster::DieState()
 {
-
+	bossDeath = true;
 	dieTimer += DT;
 		if (m_vecLookDir.x == 1)
 		{

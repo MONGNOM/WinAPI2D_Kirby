@@ -15,6 +15,7 @@ public:
 	CBossMonster();
 	virtual ~CBossMonster();
 
+	bool bossDeath;
 private:
 	wstring bossstate;
 	State m_state;

@@ -31,6 +31,7 @@ CSceneState02::CSceneState02()
 	bossMonster = nullptr;
 	BossBGMSound = RESOURCE->LoadSound(L"BossMapSound", L"Sound\\BossBgm.mp3");
 	ClickSound = RESOURCE->LoadSound(L"BossClickSound", L"Sound\\Click.wav");
+	bossDeathBackGround = nullptr;
 
 }
 
@@ -45,6 +46,10 @@ void CSceneState02::Init()
 
 void CSceneState02::Enter()
 {
+
+
+	
+
 	SOUND->Play(BossBGMSound, 0.1f, true);
 
 	if (GAME->ice)
@@ -66,13 +71,19 @@ void CSceneState02::Enter()
 		AddGameObject(pkirby);
 	}
 
-	CImageObject* BossBackGround = new CImageObject;
-	BossBackGround->SetImage(RESOURCE->LoadImg(L"BbackGround1", L"Image\\Monster\\King\\BossStage1.png"));
-	AddGameObject(BossBackGround);
-
 	bossMonster = new CBossMonster();
 	bossMonster->SetPos(700, 450); // 700 450
 	AddGameObject(bossMonster);
+
+	if (bossMonster->bossDeath)
+	{
+		bossDeathBackGround = new CBossDeathBackGround();
+		ADDOBJECT(bossDeathBackGround);
+	}
+
+	CImageObject* BossBackGround = new CImageObject;
+	BossBackGround->SetImage(RESOURCE->LoadImg(L"BbackGround1", L"Image\\Monster\\King\\BossStage1.png"));
+	AddGameObject(BossBackGround);
 
 	CKirbyIcon* icon = new CKirbyIcon;
 	icon->SetPos(8, 558);
@@ -86,18 +97,18 @@ void CSceneState02::Enter()
 
 void CSceneState02::Update()
 {
-	 
 	if (BUTTONDOWN(VK_ESCAPE))
 	{
 		CAMERA->FadeOut(0.25f);
 		DELAYCHANGESCENE(GroupScene::Title, 0.25f);
 		SOUND->Play(ClickSound, 0.1f, false);
 	}
-	
+
 }
 
 void CSceneState02::Render()
 {
+
 }
 
 void CSceneState02::Exit()

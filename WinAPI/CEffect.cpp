@@ -84,7 +84,6 @@ void CEffect::Init()
 
 void CEffect::Update()
 {
-
 	if (effectDestory)
 	{
 		effectDestoryTime += DT;

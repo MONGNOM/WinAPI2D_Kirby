@@ -145,6 +145,7 @@
     <ClInclude Include="CBackGround.h" />
     <ClInclude Include="CBasicMonster.h" />
     <ClInclude Include="CBonusMap.h" />
+    <ClInclude Include="CBossDeathBackGround.h" />
     <ClInclude Include="CBossDoor.h" />
     <ClInclude Include="CBossHp.h" />
     <ClInclude Include="CBossMonster.h" />
@@ -229,6 +230,7 @@
     <ClCompile Include="CBackGround.cpp" />
     <ClCompile Include="CBasicMonster.cpp" />
     <ClCompile Include="CBonusMap.cpp" />
+    <ClCompile Include="CBossDeathBackGround.cpp" />
     <ClCompile Include="CBossDoor.cpp" />
     <ClCompile Include="CBossHp.cpp" />
     <ClCompile Include="CBossMonster.cpp" />
