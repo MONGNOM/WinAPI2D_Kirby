@@ -56,3 +56,4 @@ float CTimeManager::GetDT()
 {
 	return m_fDT;
 }
+

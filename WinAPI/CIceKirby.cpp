@@ -621,7 +621,7 @@ void CIceKirby::ChangeFormState()
 
 	if (m_formChangeTimer > 1.0f)
 	{
-		CAMERA->FadeIn(0.1f);
+		CAMERA->FadeIn(0.0001f);
 		m_state = State::Idle;
 		if (GAME->icePanel)
 		{

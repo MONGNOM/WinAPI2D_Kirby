@@ -812,7 +812,7 @@ void CNomalKirby::Release()
 
 void CNomalKirby::IceKirbyChange()
 { 
-	CAMERA->FadeIn(0.1f, 0.5f);
+	CAMERA->FadeIn(0.1f, 0.7f);
 	SOUND->Play(ChangeSound, 0.1f, false);
 	icekirby = new CIceKirby();
 	icekirby->SetPos(m_vecPos);
@@ -822,7 +822,7 @@ void CNomalKirby::IceKirbyChange()
 
 void CNomalKirby::SwordirbyChange()
 {
-	CAMERA->FadeIn(0.1f, 0.5f);
+	CAMERA->FadeIn(0.1f, 0.7f);
 	SOUND->Play(ChangeSound, 0.1f, false);
 	swordKriby = new CSwordKirby();
 	swordKriby->SetPos(m_vecPos.x,m_vecPos.y -30);
