@@ -23,7 +23,7 @@ void CKirbyShot::Init()
 	m_pAnimator->Play(L"AttackR", false);
 	AddComponent(m_pAnimator);
 
-	AddCollider(ColliderType::Rect, Vector(40, 40), Vector(0, 0));
+	AddCollider(ColliderType::Rect, Vector(40, 30), Vector(0, 0));
 }
 
 void CKirbyShot::Update()
@@ -33,7 +33,7 @@ void CKirbyShot::Update()
 
 void CKirbyShot::OnCollisionEnter(CCollider* pOtherCollider)
 {
-	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Monster || pOtherCollider->GetOwner()->GetLayer() == Layer::Tile)
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Monster || pOtherCollider->GetOwner()->GetLayer() == Layer::Wall)
 	{
 		effect = new CEffect();
 		effect->effectDestory = true;

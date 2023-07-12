@@ -10,6 +10,11 @@ class CChangeFormStar : public CGameObject
 public:
 	CChangeFormStar();
 	virtual ~CChangeFormStar();
+	
+	bool m_groundchecker;
+	int m_groundCounter;
+
+
 
 	float m_jumpSpeed;
 	float m_gravity;
@@ -24,10 +29,11 @@ private:
 	void Update() override;
 	void Render() override;
 	void Release() override;
-	void OnCollisionStay(CCollider* pOtherCollider) override;
 	void AnimatorUpdate();
 
 	void OnCollisionEnter(CCollider* pOtherCollider);
+	void OnCollisionStay(CCollider* pOtherCollider) override;
+	void OnCollisionExit(CCollider* pOtherCollider) override;
 
 };
 

@@ -201,7 +201,6 @@ void CNomalKirby::DisappearState()
 	normalkirbystate = L"Disappear";
 	if (changeTimer > 0.42f)
 	{
-		
 		DELETEOBJECT(this);
 		DELETEOBJECT(effect);
 		changeTimer = 0;
@@ -813,16 +812,18 @@ void CNomalKirby::Release()
 
 void CNomalKirby::IceKirbyChange()
 { 
+	CAMERA->FadeIn(0.1f, 0.5f);
 	SOUND->Play(ChangeSound, 0.1f, false);
 	icekirby = new CIceKirby();
 	icekirby->SetPos(m_vecPos);
 	ADDOBJECT(icekirby);
+	ice = true;
 }
 
 void CNomalKirby::SwordirbyChange()
 {
+	CAMERA->FadeIn(0.1f, 0.5f);
 	SOUND->Play(ChangeSound, 0.1f, false);
-	
 	swordKriby = new CSwordKirby();
 	swordKriby->SetPos(m_vecPos.x,m_vecPos.y -30);
 	ADDOBJECT(swordKriby);
@@ -831,7 +832,7 @@ void CNomalKirby::SwordirbyChange()
 
 void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)
 {
-	if (pOtherCollider->GetObjName() == L"바닥")
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Wall)
 	{
 		m_groundCounter++;
 		m_groundchecker = true;
@@ -859,7 +860,7 @@ void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)
 
 	if (pOtherCollider->GetObjName() == L"얼음아이템")
 	{
-		GAME->ice = true;
+		ice = true;
 		Effect(m_vecPos.x);
 		effect->kirbyChangeEffect();
 		IceKirbyChange();
@@ -868,7 +869,7 @@ void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)
 
 	if (pOtherCollider->GetObjName() == L"검아이템")
 	{
-		GAME->sword = true;
+		sword = true;
 		Effect(m_vecPos.x);
 		effect->kirbyChangeEffect();
 		SwordirbyChange();

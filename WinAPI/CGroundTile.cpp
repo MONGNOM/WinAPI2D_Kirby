@@ -44,7 +44,7 @@ void CGroundTile::Release()
 void CGroundTile::OnCollisionEnter(CCollider* pOther)
 {
 	// 땅타일과 충돌했을 경우 처리
-	if (pOther->GetOwner()->GetLayer() == Layer::Player)
+	/*if (pOther->GetOwner()->GetLayer() == Layer::Player)
 	{
 		CGameObject* pPlayer = pOther->GetOwner();
 		if (pPlayer->GetPos().y < m_vecPos.y)
@@ -86,7 +86,7 @@ void CGroundTile::OnCollisionEnter(CCollider* pOther)
 		{
 			pPlayer->SetPos(Vector(pPlayer->GetPos().x - 2, pPlayer->GetPos().y));
 		}
-	}
+	}*/
 
 }
 

@@ -5,7 +5,8 @@ class CNomalKirby;
 
 class CSwordKirby : public CKirby
 {
-	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown, JumpAttack, DownAttack, Attacking, DownJumpAttack, Takeoff};
+	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown, JumpAttack, DownAttack, Attacking, DownJumpAttack, Takeoff, ChangeForm
+	};
 
 public:
 	CSwordKirby();
@@ -22,6 +23,7 @@ private:
 	CAnimator* m_pAnimator;
 	CSword* m_pSword;
 	CNomalKirby* m_pNormalKirby;
+
 	void Jump();
 	void IdleState();
 	void WalkState();
@@ -38,9 +40,11 @@ private:
 	void AttackingState();
 	void TakeOffState();
 	void AttackCollider(Vector position, Vector scale);
+	void ChangeFormState();
 
 
 
+	CImage* m_pChangeFormImage;
 	CImage* m_pIdleImage;
 	CImage* m_pMoveImage;
 	CImage* m_pRunImage;

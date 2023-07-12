@@ -38,8 +38,10 @@ void CChangeFormStar::Update()
 {
 	m_jumpSpeed -= m_gravity * DT;
 	m_vecPos.y -= m_jumpSpeed * DT;
+	if (m_groundchecker == true)
+		m_jumpSpeed = 0;
 
-	//m_vecPos.x -= GAME->playerLoockDirX  * - 0.1f * DT;
+	//m_vecPos.x -= GAME->playerLoockDirX   - 0.1f * DT;
 	changeFormStar = L"changeformstar";
 
 	AnimatorUpdate();
@@ -56,12 +58,25 @@ void CChangeFormStar::Release()
 
 void CChangeFormStar::OnCollisionStay(CCollider* pOtherCollider)
 {
+
 	if (pOtherCollider->GetObjName() == L"빨아들이기")
 	{
 		if (m_vecPos.x > pOtherCollider->GetOwner()->GetPos().x)
 			m_vecPos.x -= 500 * DT;
 		if (m_vecPos.x < pOtherCollider->GetOwner()->GetPos().x)
 			m_vecPos.x += 500 * DT;
+	}
+}
+
+void CChangeFormStar::OnCollisionExit(CCollider* pOtherCollider)
+{
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Wall)
+	{
+		--m_groundCounter;
+		if (m_groundCounter <= 0)
+		{
+			m_groundchecker = false;
+		}
 	}
 }
 
@@ -72,6 +87,11 @@ void CChangeFormStar::AnimatorUpdate()
 
 void CChangeFormStar::OnCollisionEnter(CCollider* pOtherCollider)
 {
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Wall)
+	{
+		m_groundCounter++;
+		m_groundchecker = true;
+	}
 	if (pOtherCollider->GetObjName() == L"일반커비")
 	{
 		CNomalKirby* normalKirby = (CNomalKirby*)pOtherCollider->GetOwner();

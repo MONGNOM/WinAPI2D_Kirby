@@ -19,6 +19,7 @@ public:
 	float playerHp;
 	float fallTimer;
 	float flyTimer;
+	float m_formChangeTimer;
 	CEffect* effect;
 
 

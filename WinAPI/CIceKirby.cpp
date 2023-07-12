@@ -7,7 +7,7 @@
 CIceKirby::CIceKirby()
 {
 	attackTimer = 0;
-	m_state = State::Idle;
+	m_state = State::ChangeForm;
 	m_pNormalKirby = nullptr;
 	m_pAnimator = nullptr;
 	m_pIdleImage = nullptr;
@@ -18,6 +18,7 @@ CIceKirby::CIceKirby()
 	m_pJumpImage = nullptr;
 	m_pAttackImage = nullptr;
 	m_piceAttack = nullptr;
+	m_pChangeFormImage = nullptr;
 	GAME->sword = false;
 	IceSound = RESOURCE->LoadSound(L"IceSound", L"Sound\\IceSkil.wav");
 	DropSound = RESOURCE->LoadSound(L"DropSound", L"Sound\\Drop.wav");
@@ -32,14 +33,7 @@ CIceKirby::~CIceKirby()
 void CIceKirby::Init()
 {
 	
-	if (GAME->icePanel)
-	{
-		panel = new CTransFormPanel();
-		panel->GetPos();
-		ADDOBJECT(panel);
-		GAME->icePanel = false;
-		GAME->ice = false;
-	}
+
 	
 	CKirby::Init();
 	m_pIdleImage	= RESOURCE->LoadImg(L"IceKirbyIdleL",	L"Image\\Kirby\\Ice\\IceKirby.png");
@@ -49,6 +43,7 @@ void CIceKirby::Init()
 	m_pDownImage	= RESOURCE->LoadImg(L"IceKirbyDown",	L"Image\\Kirby\\Ice\\IceKirbyDown.png");
 	m_pFlyImage		= RESOURCE->LoadImg(L"IceKirbyFly",		L"Image\\Kirby\\Ice\\IceKirbyFly.png");
 	m_pJumpImage	= RESOURCE->LoadImg(L"IceKirbyJump",	L"Image\\Kirby\\Ice\\IceKirbyJump.png");
+	m_pChangeFormImage = RESOURCE->LoadImg(L"IceKirbyChageFormPose",	L"Image\\Kirby\\SwordKirby\\sword kirby change.png");
 
 	m_pAnimator = new CAnimator;
 	m_pAnimator->CreateAnimation(L"IdleR", m_pIdleImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.8f, 2);
@@ -71,6 +66,7 @@ void CIceKirby::Init()
 	m_pAnimator->CreateAnimation(L"LJumping", m_pJumpImage, Vector(130.f, 100.f), Vector(65.f, 50.f), Vector(-70.f, 0.f), 0.08f, 2);
 	m_pAnimator->CreateAnimation(L"RAttacking", m_pAttackImage, Vector(420.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.06f, 2);
 	m_pAnimator->CreateAnimation(L"LAttacking", m_pAttackImage, Vector(210.f, 100.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.06f, 2);
+	m_pAnimator->CreateAnimation(L"ChangeFormPose", m_pChangeFormImage, Vector(0.f, 0.f), Vector(45.f, 90.f), Vector(0.f, 0.f), 0.06f, 1);
 	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
 	
@@ -114,6 +110,9 @@ void CIceKirby::Update()
 		break;
 	case State::Takeoff:
 		TakeOffState();
+		break;
+	case State::ChangeForm:
+		ChangeFormState();
 		break;
 	default:
 		break;
@@ -608,5 +607,31 @@ void CIceKirby::TakeOffState()
 	ADDOBJECT(m_pNormalKirby);
 	DELETEOBJECT(this);
 	m_pNormalKirby->ice = false;
+}
+
+void CIceKirby::ChangeFormState()
+{
+	if (m_groundchecker == false)
+	{
+		m_vecPos.y += m_gravity * DT;
+	}
+	
+	m_formChangeTimer += DT;
+	icekirbystate = L"ChangeFormPose";
+
+	if (m_formChangeTimer > 1.0f)
+	{
+		CAMERA->FadeIn(0.1f);
+		m_state = State::Idle;
+		if (GAME->icePanel)
+		{
+			panel = new CTransFormPanel();
+			panel->GetPos();
+			ADDOBJECT(panel);
+			GAME->icePanel = false;
+			
+		}
+	}
+
 }
 

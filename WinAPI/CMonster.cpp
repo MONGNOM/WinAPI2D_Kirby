@@ -141,7 +141,7 @@ CMonster* CMonster::GetMonster()
 
 void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 {
-	if (pOtherCollider->GetObjName() == L"¹Ù´Ú")
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Wall)
 	{
 		m_groundCounter++;
 		m_groundchecker = true;
@@ -212,7 +212,7 @@ void CMonster::OnCollisionStay(CCollider* pOtherCollider)
 
 void CMonster::OnCollisionExit(CCollider* pOtherCollider)
 {
-	if (pOtherCollider->GetObjName() == L"¹Ù´Ú")
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Wall)
 	{
 		--m_groundCounter;
 		if (m_groundCounter <= 0)

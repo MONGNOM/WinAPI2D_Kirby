@@ -214,6 +214,7 @@
     <ClInclude Include="CTransFormPanel.h" />
     <ClInclude Include="CUI.h" />
     <ClInclude Include="CUIManager.h" />
+    <ClInclude Include="CWallTile.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="CKirby.h" />
     <ClInclude Include="Logger.h" />
@@ -300,6 +301,7 @@
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CUIManager.cpp" />
     <ClCompile Include="CKirby.cpp" />
+    <ClCompile Include="CWallTile.cpp" />
     <ClCompile Include="WinAPI.cpp" />
   </ItemGroup>
   <ItemGroup>

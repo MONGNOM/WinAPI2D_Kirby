@@ -12,8 +12,8 @@
 
 CSwordKirby::CSwordKirby()
 {
+	m_state = State::ChangeForm;
 	attackTimer = 0;
-	m_state = State::Idle;
 	GAME->ice				= false;
 	m_pAnimator				= nullptr;
 	m_pIdleImage			= nullptr;
@@ -48,6 +48,7 @@ CSwordKirby::CSwordKirby()
 	m_SwordIconImage		= nullptr;
 	m_pSword				= nullptr;
 	DropSound = RESOURCE->LoadSound(L"DropSound", L"Sound\\Drop.wav");
+	m_pChangeFormImage = nullptr;
 
 
 }
@@ -59,14 +60,7 @@ CSwordKirby::~CSwordKirby()
 void CSwordKirby::Init()
 {
 
-	if (GAME->swordPanel)
-	{
-		panel = new CTransFormPanel();
-		panel->GetPos();
-		ADDOBJECT(panel);
-		GAME->swordPanel = false;
-		GAME->sword = false;
-	}
+	
 	CKirby::Init();
 	//오른쪽
 	m_pIdleImage			= RESOURCE->LoadImg(L"SwordKirbyIdleL",				L"Image\\Kirby\\SwordKirby\\sword kirby Idle.png");
@@ -82,6 +76,7 @@ void CSwordKirby::Init()
 	m_pJumpDownImage		= RESOURCE->LoadImg(L"SwordKirbyJumpDown",			L"Image\\Kirby\\SwordKirby\\sword kirby jumping down.png");
 	m_pDownJumpAttackImage	= RESOURCE->LoadImg(L"SwordKirbyDownJumpAttack",	L"Image\\Kirby\\SwordKirby\\sword kirby DownJumpAttack.png");
 	m_pAttackingImage		= RESOURCE->LoadImg(L"SwordKirbyAttacking",			L"Image\\Kirby\\SwordKirby\\sword kirby Attacking.png");
+	m_pChangeFormImage		= RESOURCE->LoadImg(L"SwordkirbyChageFormPose",		L"Image\\Kirby\\SwordKirby\\sword kirby change.png");
 
 
 
@@ -100,6 +95,7 @@ void CSwordKirby::Init()
 	m_pAnimator->CreateAnimation(L"RDownAttack",		m_pDownAttackImage, Vector(0.f, 0.f), Vector(116.f, 99.f), Vector(116.f, 0.f), 0.06f, 2);//완
 	m_pAnimator->CreateAnimation(L"RDownJumpAttack", m_pDownJumpAttackImage, Vector(0.f, 0.f), Vector(200.f, 126.f), Vector(210.f, 0.f), 0.03f, 18, false);//완
 	m_pAnimator->CreateAnimation(L"RAttacking",			m_pAttackingImage, Vector(47.f, 0.f),	Vector(139.f, 95.f), Vector(140.f, 0.f), 0.03f, 26, false);//완
+	m_pAnimator->CreateAnimation(L"swordChangeFormPose", m_pChangeFormImage, Vector(0.f, 0.f), Vector(45.f, 90.f), Vector(0.f, 0.f), 0.06f, 1);
 
 	//왼쪽
 	m_LpIdleImage			= RESOURCE->LoadImg(L"LSwordKirbyIdleL",			L"Image\\Kirby\\SwordKirby\\SwordL\\Lsword kirby Idle.png");
@@ -183,6 +179,7 @@ void CSwordKirby::Update()
 		break;
 	case State::Takeoff:
 		TakeOffState();
+		break;
 	default:
 		break;
 	}
@@ -803,6 +800,32 @@ void CSwordKirby::AttackCollider(Vector position, Vector scale)
 	}
 	ADDOBJECT(m_pSword);
 
+}
+
+void CSwordKirby::ChangeFormState()
+{
+
+	// 여기 들어가면서 오류터짐 
+	m_formChangeTimer += DT;
+	swordkirbystate = L"swordChangeFormPose";
+
+	if (m_groundchecker == false)
+	{
+		m_vecPos.y += m_gravity * DT;
+	}
+
+	if (m_formChangeTimer > 1.0f)
+	{
+		CAMERA->FadeIn(0.1f);
+		m_state = State::Idle;
+		if (GAME->swordPanel)
+		{
+			panel = new CTransFormPanel();
+			panel->GetPos();
+			ADDOBJECT(panel);
+			GAME->swordPanel = false;
+		}
+	}
 }
 
 void CSwordKirby::JumpingDownState()

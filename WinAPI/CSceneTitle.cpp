@@ -10,9 +10,8 @@
 
 CSceneTitle::CSceneTitle()
 {
-
 	ClickSound = RESOURCE->LoadSound(L"ClickSound", L"Sound\\Click.wav");
-
+	TitleSound = RESOURCE->LoadSound(L"TitleSound", L"Sound\\KirbyMainBgm.mp3");
 }
 
 CSceneTitle::~CSceneTitle()
@@ -25,7 +24,6 @@ void CSceneTitle::Init()
 
 void CSceneTitle::Enter()
 {
-	TitleSound = RESOURCE->LoadSound(L"TitleSound", L"Sound\\KirbyMainBgm.mp3");
 	SOUND->Play(TitleSound, 0.1f, true);
 	CAMERA->FadeIn(0.25f);
 

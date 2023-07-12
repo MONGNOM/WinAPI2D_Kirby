@@ -10,13 +10,13 @@ class CIceKirby : public CKirby
 {
 public:
 
-	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown, Attacking, Takeoff };
+	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown, Attacking, Takeoff, ChangeForm };
 
 	CIceKirby();
 	virtual ~CIceKirby();
 
 	float attackTimer;
-
+	
 
 private:
 	CSound* IceSound;
@@ -42,6 +42,7 @@ private:
 	void CreatAttackArea();
 	void DeleteAttackArea();
 	void TakeOffState();
+	void ChangeFormState();
 
 	CImage* m_pIdleImage;
 	CImage* m_pMoveImage;
@@ -50,6 +51,7 @@ private:
 	CImage* m_pFlyImage;
 	CImage* m_pJumpImage;
 	CImage* m_pAttackImage;
+	CImage* m_pChangeFormImage;
 
 
 private:

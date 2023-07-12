@@ -46,6 +46,7 @@ enum class Layer
 {
 	Default,
 	Tile,
+	Wall,
 	Monster,
 	Item,
 	Door,

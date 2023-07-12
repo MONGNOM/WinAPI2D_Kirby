@@ -312,6 +312,9 @@
     <ClInclude Include="CBossDeathBackGround.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CWallTile.h">
+      <Filter>Engine\Asset\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI.cpp">
@@ -521,9 +524,6 @@
     <ClCompile Include="CEffect.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CChangeFormStar.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CTransFormPanel.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -532,6 +532,12 @@
     </ClCompile>
     <ClCompile Include="CBossDeathBackGround.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CChangeFormStar.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CWallTile.cpp">
+      <Filter>Engine\Asset\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

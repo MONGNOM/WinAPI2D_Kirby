@@ -15,7 +15,7 @@ CGameManager::CGameManager()
 	PlayerHit = false;
 	HpNotDown = false;
 	HitTime = 0;
-	
+
 
 	monsterHit = false;
 	monsterhpnotDown = false;

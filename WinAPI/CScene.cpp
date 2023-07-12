@@ -4,7 +4,7 @@
 #include "CCameraManager.h"
 #include "CGameObject.h"
 #include "CTile.h"
-#include "CGroundTile.h"
+#include "CWallTile.h"
 
 CScene::CScene()
 {
@@ -181,7 +181,7 @@ void CScene::LoadTile(const wstring& strPath)
 		}
 		else if (TypeTile::Ground == loadTile.GetType())
 		{
-			CGroundTile* newTile = new CGroundTile;
+			CWallTile* newTile = new CWallTile;
 			newTile->SetTilePos(loadTile.GetTilePosX(), loadTile.GetTilePosY());
 			newTile->SetTileIndex(loadTile.GetTileIndex());
 
