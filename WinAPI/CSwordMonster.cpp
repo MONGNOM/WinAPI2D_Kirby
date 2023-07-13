@@ -408,6 +408,8 @@ void CSwordMonster::OnCollisionEnter(CCollider* pOtherCollider)
 		CNomalKirby* normalKirby = (CNomalKirby*)pOtherCollider->GetOwner();
 		if (normalKirby->eat)
 		{
+			DELETEOBJECT(attackCollider);
+			DELETEOBJECT(collider);
 			if (m_pWeapon != nullptr && attackCollider != nullptr)
 			{
 				DELETEOBJECT(m_pWeapon);

@@ -221,11 +221,11 @@ void CIceMonster::AttackState()
 	{
 		if (m_vecLookDir.x == -1)
 		{
-			iceAttack->SetPos(m_vecPos.x - 70, m_vecPos.y);
+			iceAttack->SetPos(m_vecPos.x - 50, m_vecPos.y);
 		}
 		if (m_vecLookDir.x == 1)
 		{
-			iceAttack->SetPos(m_vecPos.x + 70, m_vecPos.y);
+			iceAttack->SetPos(m_vecPos.x + 50, m_vecPos.y);
 		}
 	}
 	if (m_vecLookDir.x == 1)
@@ -293,13 +293,13 @@ void CIceMonster::MonsterAttackCollider()
 	iceAttack = new CMonsterIceAttack();
 	if (m_vecLookDir.x == -1)
 	{
-		iceAttack->SetMonsterWeaponScale(100, 50);
-		iceAttack->SetPos(m_vecPos.x - 70, m_vecPos.y);
+		iceAttack->SetMonsterWeaponScale(70, 30);
+		iceAttack->SetPos(m_vecPos.x - 30, m_vecPos.y);
 	}
 	if (m_vecLookDir.x == 1)
 	{
-		iceAttack->SetMonsterWeaponScale(100, 50);
-		iceAttack->SetPos(m_vecPos.x + 70 ,m_vecPos.y);
+		iceAttack->SetMonsterWeaponScale(70, 30);
+		iceAttack->SetPos(m_vecPos.x + 30 ,m_vecPos.y);
 	}
 	ADDOBJECT(iceAttack);
 }
@@ -312,10 +312,13 @@ void CIceMonster::OnCollisionEnter(CCollider* pOtherCollider)
 		CNomalKirby* normalKirby = (CNomalKirby*)pOtherCollider->GetOwner();
 		if (normalKirby->eat)
 		{
+			DELETEOBJECT(attackCollider);
+			DELETEOBJECT(collider);
 			if (iceAttack != nullptr && attackCollider != nullptr)
 			{
 				DELETEOBJECT(iceAttack);
 				DELETEOBJECT(attackCollider);
+				DELETEOBJECT(collider);
 				iceAttack = nullptr;
 				attackCollider = nullptr;
 			}

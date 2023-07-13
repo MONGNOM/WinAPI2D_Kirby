@@ -20,6 +20,7 @@
 
 CNomalKirby::CNomalKirby()
 {
+	m_strName			= L"일반커비";
 	m_state				= State::Idle;
 	m_pAnimator			= nullptr;
 	m_pIdleLImage		= nullptr;
@@ -36,6 +37,10 @@ CNomalKirby::CNomalKirby()
 	m_pEatWalkImage		= nullptr;
 	m_pEatChangeImage	= nullptr;
 	m_pEatAttackImage	= nullptr;
+	m_pDamageLImage		= nullptr;
+	m_pDamageRImage		= nullptr;
+	m_pInvincivleRImage	= nullptr;
+	m_pInvincivleLImage	= nullptr;
 	eating				= false;
 	eat					= false;
 	swordicon			= false;
@@ -46,7 +51,6 @@ CNomalKirby::CNomalKirby()
 	swordicon			= GAME->swordicon;
 	attackTimer			= 0;
 	changeTimer			= 0;
-	m_strName			= L"일반커비";
 }
 
 CNomalKirby::~CNomalKirby()
@@ -60,7 +64,15 @@ void CNomalKirby::Init()
 {
 	
 	CKirby::Init();
+	//오른쪽
+	m_pInvincivleRImage	= RESOURCE->LoadImg(L"KirbyInvincibleR",	L"Image\\Kirby\\Basic\\invincivle.png");
+	m_pDamageRImage		= RESOURCE->LoadImg(L"KirbyDamageR",		L"Image\\Kirby\\Basic\\damage.png");
 
+	//왼쪽
+	m_pInvincivleLImage = RESOURCE->LoadImg(L"KirbyInvincibleL",	L"Image\\Kirby\\Basic\\invincivleL.png");
+	m_pDamageLImage		= RESOURCE->LoadImg(L"KirbyDamageL",		L"Image\\Kirby\\Basic\\damageL.png");
+	
+	//공통
 	m_pIdleLImage		= RESOURCE->LoadImg(L"KirbyIdleL",		L"Image\\Kirby\\Basic\\KirbyIdleL.png"	);
 	m_pIdleRImage		= RESOURCE->LoadImg(L"KirbyIdleR",		L"Image\\Kirby\\Basic\\KirbyIdleR.png"	);
 	m_pMoveLImage		= RESOURCE->LoadImg(L"KirbyLW",			L"Image\\Kirby\\Basic\\KirbyLW.png"		);
@@ -75,6 +87,7 @@ void CNomalKirby::Init()
 	m_pEatAttackImage	= RESOURCE->LoadImg(L"KirbyEatAttack",	L"Image\\Kirby\\Basic\\KirbyNotEat.png"	);
 
 	m_pAnimator = new CAnimator;
+
 	m_pAnimator->CreateAnimation(L"Disappear",	m_pMoveLImage, Vector(0.f, 0.f), Vector(1.f, 1.f), Vector(1.f, 0.f), 0.f, 1);
 	m_pAnimator->CreateAnimation(L"IdleR",		m_pIdleRImage,	Vector(  0.f,   0.f), Vector( 45.f,  43.f), Vector(  45.f,   0.f), 0.1f, 1);
 	m_pAnimator->CreateAnimation(L"IdleL",		m_pIdleLImage,	Vector(  0.f,   0.f), Vector( 45.f,  43.f), Vector(  45.f,   0.f), 0.1f, 1);
@@ -93,7 +106,13 @@ void CNomalKirby::Init()
 	m_pAnimator->CreateAnimation(L"RJumping",	m_pJumpImage,	Vector(400.f,   0.f), Vector( 50.f,  50.f), Vector(  58.f,   0.f), 0.08f, 2);
 	m_pAnimator->CreateAnimation(L"LJumping",	m_pJumpImage,	Vector(400.f,  90.f), Vector( 50.f,  50.f), Vector(  58.f,   0.f), 0.08f, 2);
 	m_pAnimator->CreateAnimation(L"RAttack",	m_pAttackImage,	Vector(0.f,  0.f), Vector( 57.f,  57.f), Vector(  70.f,   0.f), 0.08f, 5);
-	m_pAnimator->CreateAnimation(L"LAttack",	m_pAttackImage,	Vector(0.f,  95.f), Vector( 57.f,  57.f), Vector(  70.f,   0.f), 0.08f, 5);
+	m_pAnimator->CreateAnimation(L"LAttack",	m_pAttackImage, Vector(0.f, 95.f), Vector(57.f, 57.f), Vector(70.f, 0.f), 0.08f, 5);
+	
+	m_pAnimator->CreateAnimation(L"RInvinclvle", m_pInvincivleRImage, Vector(0.f, 0.f), Vector(100.f, 100.f), Vector(140.f, 0.f), 0.08f, 2);
+	m_pAnimator->CreateAnimation(L"LInvinclvle", m_pInvincivleLImage, Vector(140.f, 0.f), Vector(100.f, 100.f), Vector(-140.f, 0.f), 0.08f, 2);
+
+	m_pAnimator->CreateAnimation(L"RDamage",	m_pDamageRImage,	Vector(0.f,  0.f), Vector( 100.f,  100.f), Vector( 140.f,   0.f), 0.05f, 9,false);
+	m_pAnimator->CreateAnimation(L"LDamage",	m_pDamageLImage, Vector(1020.f, 0.f), Vector(100.f, 100.f), Vector(-140.f, 0.f), 0.05f, 9,false);
 
 
 	//Eat
@@ -169,6 +188,12 @@ void CNomalKirby::Update()
 	case State::Disappear:
 		DisappearState();
 		break;
+	case State::Invincivle:
+		InvincivleState();
+		break;
+	case State::Damage:
+		DamageState();
+		break;
 	default:
 		break;
 	}
@@ -214,6 +239,110 @@ void CNomalKirby::Jump()
 	fallTimer = 0;
 	SelectSound(JumpSound, 0.1f, false);
 	
+}
+
+void CNomalKirby::DamageState()
+{
+	if (effect != nullptr)
+		DELETEOBJECT(effect);
+
+	damageTimer += DT;
+	m_fSpeed = 200.f;
+
+	if (m_groundchecker == false)
+	{
+		m_vecPos.y += m_gravity * DT;
+	}
+	if (m_vecLookDir.x == -1)
+	{
+		m_vecLookDir.x = -1;
+		m_vecPos.x += m_fSpeed * DT;
+		normalkirbystate = L"LDamage";
+		
+	}
+	else if (m_vecLookDir.x == 1)
+	{
+
+		m_vecPos.x -= m_fSpeed * DT;
+		normalkirbystate = L"RDamage";
+	}
+
+	if (damageTimer > 0.45f)
+	{
+		m_state = State::Idle;
+		damageTimer = 0;
+
+	}
+
+}
+
+void CNomalKirby::InvincivleState()
+{
+	invincivleTimer += DT;
+
+	if (m_groundchecker == false)
+	{
+		m_vecPos.y += m_gravity * DT;
+	}
+	if (m_vecLookDir.x == -1)
+	{
+		normalkirbystate = L"LInvinclvle";
+	}
+	else if (m_vecLookDir.x == 1)
+	{
+		normalkirbystate = L"RInvinclvle";
+	}
+	
+	if (invincivleTimer > 2.0f)
+	{
+		m_state = State::Idle;
+		invincivleTimer = 0;
+	}
+	if (BUTTONSTAY(VK_LEFT))
+	{
+		if (lastLeftInputTime < TIME_DASHABLE)
+		{
+			SelectSound(RunSound, 0.1f, false);
+			Effect(m_vecPos.x);
+			effect->KirbyDashEffectL();
+			m_state = State::Run;
+		}
+		else
+			m_state = State::Walk;
+
+		lastLeftInputTime = 0;
+	}
+	if (BUTTONSTAY(VK_RIGHT))
+	{
+		if (lastRightInputTime < TIME_DASHABLE)
+		{
+			SelectSound(RunSound, 0.1f, false);
+			Effect(m_vecPos.x);
+			effect->KirbyDashEffectR();
+			m_state = State::Run;
+		}
+		else
+			m_state = State::Walk;
+
+		lastRightInputTime = 0;
+	}
+	if (BUTTONDOWN('S'))
+	{
+		m_state = State::Attack;
+	}
+	if (BUTTONSTAY(VK_DOWN))
+	{
+		m_state = State::Sit;
+	}
+	if (BUTTONSTAY(VK_UP))
+	{
+		m_state = State::Fly;
+	}
+	if (BUTTONDOWN('A'))
+	{
+		Jump();
+		m_state = State::Jump;
+	}
 }
 
 #pragma region 상태패턴함수
@@ -845,6 +974,7 @@ void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)
 		}
 		else
 		{
+			m_state = State::Damage;
 			playerHp -= 1;
 		}
 		GAME->PlayerHit = true;

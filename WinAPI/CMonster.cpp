@@ -37,6 +37,8 @@ CMonster::CMonster()
 	bossEffect5 = nullptr;
 	bossEffect6 = nullptr;
 	bosseffectTimer = 0;
+	bosseffect = false;
+
 }
 
 CMonster::~CMonster()
@@ -54,6 +56,8 @@ void CMonster::Init()
 void CMonster::Update()
 {
 	bosseffectTimer += DT;
+
+	Logger::Debug(to_wstring(bosseffectTimer));
 }
 
 void CMonster::Render()
@@ -81,54 +85,85 @@ void CMonster::Effect(float x, float y)
 
 void CMonster::BossEffect()
 {
+
 	effect = new CEffect();
 	effect->SetPos(m_vecPos.x, m_vecPos.y - 15);
 	effect->BossAttackEffect();
 	ADDOBJECT(effect);
-	
-	bossEffect = new CEffect();
-	bossEffect->SetPos(m_vecPos.x + 20 , m_vecPos.y + 100);
-	ADDOBJECT(bossEffect);
-	bossEffect->BossAttackEffect();
-
-	bossEffect1 = new CEffect();
-	bossEffect1->SetPos(m_vecPos.x - 50, m_vecPos.y + 20);
-	ADDOBJECT(bossEffect1);
-	bossEffect1->BossAttackEffect();
-
-	bossEffect2 = new CEffect();
-	bossEffect2->SetPos(m_vecPos.x, m_vecPos.y + 40);
-	ADDOBJECT(bossEffect2);
-	bossEffect2->BossAttackEffect();
-
-	bossEffect3 = new CEffect();
-	bossEffect3->SetPos(m_vecPos.x -35, m_vecPos.y + 70);
-	ADDOBJECT(bossEffect3);
-	bossEffect3->BossAttackEffect();
-
-	bossEffect4 = new CEffect();
-	bossEffect4->SetPos(m_vecPos.x + 50, m_vecPos.y + 55);
-	ADDOBJECT(bossEffect4);
-	bossEffect4->BossAttackEffect();
-
-	bossEffect5 = new CEffect();
-	bossEffect5->SetPos(m_vecPos.x + 50, m_vecPos.y - 5);
-	bossEffect5->BossAttackEffect();
-	ADDOBJECT(bossEffect5);
-
-	bossEffect6 = new CEffect();
-	bossEffect6->SetPos(m_vecPos.x - 30, m_vecPos.y + 50);
-	ADDOBJECT(bossEffect6);
-	bossEffect6->BossAttackEffect();
-
 	effect->effectDestory = true;
-	bossEffect->effectDestory = true;
-	bossEffect1->effectDestory = true;
-	bossEffect2->effectDestory = true;
-	bossEffect3->effectDestory = true;
-	bossEffect4->effectDestory = true;
-	bossEffect5->effectDestory = true;
-	bossEffect6->effectDestory = true;
+
+	if (bosseffectTimer > 0.27f)
+	{
+		bossEffect = new CEffect();
+		bossEffect->SetPos(m_vecPos.x + 20, m_vecPos.y + 100);
+		ADDOBJECT(bossEffect);
+		bossEffect->BossAttackEffect();
+		bossEffect->effectDestory = true;
+
+	}
+
+	if (bosseffectTimer > 0.54f)
+	{
+
+		bossEffect1 = new CEffect();
+		bossEffect1->SetPos(m_vecPos.x - 50, m_vecPos.y + 20);
+		ADDOBJECT(bossEffect1);
+		bossEffect1->BossAttackEffect();
+		bossEffect1->effectDestory = true;
+	}
+
+	if (bosseffectTimer > 0.81f)
+	{
+		bossEffect2 = new CEffect();
+		bossEffect2->SetPos(m_vecPos.x, m_vecPos.y + 40);
+		ADDOBJECT(bossEffect2);
+		bossEffect2->BossAttackEffect();
+		bossEffect2->effectDestory = true;
+	}
+	
+		 
+	 if (bosseffectTimer > 0.81f)
+	{
+		bossEffect2 = new CEffect();
+		bossEffect2->SetPos(m_vecPos.x, m_vecPos.y + 40);
+		ADDOBJECT(bossEffect2);
+		bossEffect2->BossAttackEffect();
+		bossEffect2->effectDestory = true;
+	}
+	 if (bosseffectTimer > 1.08f)
+	{
+		bossEffect3 = new CEffect();
+		bossEffect3->SetPos(m_vecPos.x - 35, m_vecPos.y + 70);
+		ADDOBJECT(bossEffect3);
+		bossEffect3->BossAttackEffect();
+		bossEffect3->effectDestory = true;
+	}
+	 if (bosseffectTimer > 1.35f)
+	{
+		bossEffect4 = new CEffect();
+		bossEffect4->SetPos(m_vecPos.x + 50, m_vecPos.y + 55);
+		ADDOBJECT(bossEffect4);
+		bossEffect4->BossAttackEffect();
+		bossEffect4->effectDestory = true;
+	}
+	 if (bosseffectTimer > 1.61f)
+	{
+		bossEffect5 = new CEffect();
+		bossEffect5->SetPos(m_vecPos.x + 50, m_vecPos.y - 5);
+		bossEffect5->BossAttackEffect();
+		ADDOBJECT(bossEffect5);
+		bossEffect5->effectDestory = true;
+	}
+	 if (bosseffectTimer > 1.88f)
+	{
+		bossEffect6 = new CEffect();
+		bossEffect6->SetPos(m_vecPos.x - 30, m_vecPos.y + 50);
+		ADDOBJECT(bossEffect6);
+		bossEffect6->BossAttackEffect();
+		bossEffect6->effectDestory = true;
+		bosseffectTimer = 0;
+	}
+
 
 }
 

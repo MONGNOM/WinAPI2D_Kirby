@@ -12,8 +12,7 @@ class CNomalKirby : public CKirby
 {
 public:
 
-	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown, Eating, Change, EatWalk, EatAttack, Disappear
-	};
+	enum class State { Idle, Walk, Run, Jump, Sit, Fly, Attack, Flying, JumpingDown, Eating, Change, EatWalk, EatAttack, Disappear, Damage, Invincivle};
 
 	CNomalKirby();
 	virtual ~CNomalKirby();
@@ -37,10 +36,14 @@ private:
 	State m_state;
 	CAnimator* m_pAnimator;
 
+	float damageTimer;
+	float invincivleTimer;
 	float attackTimer;
 	float changeTimer;
 	float shotTimer;
 	void Jump();
+	void DamageState();
+	void InvincivleState();
 	void IdleState();
 	void WalkState();
 	void RunState();
@@ -74,6 +77,12 @@ private:
 	CImage* m_pEatChangeImage;
 	CImage* m_pEatWalkImage;
 	CImage* m_pEatAttackImage;
+
+	CImage* m_pDamageLImage;
+	CImage* m_pDamageRImage;
+	CImage* m_pInvincivleRImage;
+	CImage* m_pInvincivleLImage;
+
 	CKirbyEat* m_pKirbyEat;
 	CKirbyShot* m_pKirbyShot;
 

@@ -12,9 +12,7 @@
 
 CSwordKirby::CSwordKirby()
 {
-	if (!GAME->ice)
-	m_state = State::Idle;
-	else
+	
 	m_state = State::ChangeForm;
 
 	attackTimer = 0;
