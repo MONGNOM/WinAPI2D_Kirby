@@ -109,7 +109,7 @@ void CNomalKirby::Init()
 	m_pAnimator->CreateAnimation(L"LAttack",	m_pAttackImage, Vector(0.f, 95.f), Vector(57.f, 57.f), Vector(70.f, 0.f), 0.08f, 5);
 	
 	m_pAnimator->CreateAnimation(L"RInvinclvle", m_pInvincivleRImage, Vector(0.f, 0.f), Vector(100.f, 100.f), Vector(140.f, 0.f), 0.08f, 2);
-	m_pAnimator->CreateAnimation(L"LInvinclvle", m_pInvincivleLImage, Vector(140.f, 0.f), Vector(100.f, 100.f), Vector(-140.f, 0.f), 0.08f, 2);
+	m_pAnimator->CreateAnimation(L"LInvinclvle", m_pInvincivleLImage, Vector(180.f, 0.f), Vector(100.f, 100.f), Vector(-140.f, 0.f), 0.08f, 2);
 
 	m_pAnimator->CreateAnimation(L"RDamage",	m_pDamageRImage,	Vector(0.f,  0.f), Vector( 100.f,  100.f), Vector( 140.f,   0.f), 0.05f, 9,false);
 	m_pAnimator->CreateAnimation(L"LDamage",	m_pDamageLImage, Vector(1020.f, 0.f), Vector(100.f, 100.f), Vector(-140.f, 0.f), 0.05f, 9,false);
@@ -269,7 +269,7 @@ void CNomalKirby::DamageState()
 
 	if (damageTimer > 0.45f)
 	{
-		m_state = State::Idle;
+		m_state = State::Invincivle;
 		damageTimer = 0;
 
 	}
@@ -293,12 +293,12 @@ void CNomalKirby::InvincivleState()
 		normalkirbystate = L"RInvinclvle";
 	}
 	
-	if (invincivleTimer > 2.0f)
+	if (invincivleTimer > 0.45f)
 	{
 		m_state = State::Idle;
 		invincivleTimer = 0;
 	}
-	if (BUTTONSTAY(VK_LEFT))
+	/*if (BUTTONSTAY(VK_LEFT))
 	{
 		if (lastLeftInputTime < TIME_DASHABLE)
 		{
@@ -342,7 +342,7 @@ void CNomalKirby::InvincivleState()
 	{
 		Jump();
 		m_state = State::Jump;
-	}
+	}*/
 }
 
 #pragma region 상태패턴함수
@@ -971,9 +971,11 @@ void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)
 		if (GAME->HpNotDown == true)
 		{
 			playerHp -= 0;
+
 		}
 		else
 		{
+			SOUND->Play(DamageSound, 0.1f, false);
 			m_state = State::Damage;
 			playerHp -= 1;
 		}

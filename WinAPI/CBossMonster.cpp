@@ -400,6 +400,7 @@ void CBossMonster::JumpAttackState()
 		{
 			m_pWeapon->SetPos(m_vecPos.x + 150, m_vecPos.y);
 		}
+		
 	}
 	if (m_vecLookDir.x == 1)
 	{

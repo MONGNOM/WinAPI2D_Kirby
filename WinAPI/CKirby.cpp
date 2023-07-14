@@ -19,7 +19,7 @@ CKirby::CKirby()
 
 	2. 스테이지 마다 변신 자세 취하는거 바꿔줘야함 게임매니저에서 불값주고 스테이트 초기값을 불값트루일때 변신 아니면 아이들상태로 하면 될 듯?
 
-	3. 커비처럼 점핑다운 만들고 땅에 닿으면 별생성?
+	3. 커비처럼 점핑다운 만들고 땅에 닿으면 별생성? // groundcheke 활용해보자
 	ㄴ 아이들 넘어갈때 별생성으로 정정
 
 	4. 시작애니메이션 캡처 본으로 써도 될 듯 = 백터 저장해서 꺼내주면 될 것 같음 ?일단 다 자름? [반 완] 엔딩부분짤라야함 ㅇㅈ?
@@ -116,26 +116,26 @@ void CKirby::OnCollisionEnter(CCollider* pOtherCollider)
 	}
 	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Monster)
 	{
-		SOUND->Play(DamageSound, 0.1f, false);
 		if (GAME->HpNotDown == true)
 		{
 			playerHp -= 0;
 		}
 		else
 		{
+		SOUND->Play(DamageSound, 0.1f, false);
 			playerHp -= 1;
 		}
 		GAME->PlayerHit = true;
 	}
 	if (pOtherCollider->GetOwner()->GetLayer() == Layer::MWeapon)
 	{
-		SOUND->Play(DamageSound, 0.1f, false);
 		if (GAME->HpNotDown == true)
 		{
 			playerHp -= 0;
 		}
 		else
 		{
+		SOUND->Play(DamageSound, 0.1f, false);
 			playerHp -= 1;
 		}
 		GAME->PlayerHit = true;
