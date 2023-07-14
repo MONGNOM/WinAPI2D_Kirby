@@ -90,13 +90,30 @@ void CSceneState02::Enter()
 	icon->SetScale(125, 50);
 	AddGameObject(icon);
 
-	CAMERA->SetTargetPos(Vector(432, 400));
+	
+
 	CAMERA->FadeIn(0.25f);
 	LoadTile(GETPATH + L"Tile\\Stage03.tile");
 }
 
 void CSceneState02::Update()
 {
+	cameraTimer += DT;
+	if (bossMonster->bossAttack == true)
+	{
+		CAMERA->SetTargetPos(Vector(432, 405));
+		if (cameraTimer > 0.01f)
+		{
+			CAMERA->SetTargetPos(Vector(432, 390));
+			cameraTimer = 0;
+		}
+	}
+	else
+	{
+		CAMERA->SetTargetPos(Vector(432, 400));
+	}
+		Logger::Debug(to_wstring(bossMonster->bossAttack));
+
 	if (BUTTONDOWN(VK_ESCAPE))
 	{
 		CAMERA->FadeOut(0.25f);

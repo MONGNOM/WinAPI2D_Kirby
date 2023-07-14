@@ -8,6 +8,7 @@ CGameManager::CGameManager()
 	sword = false;
 	iceicon = false;
 	swordicon = false;
+	formChange = false;
 
 	icePanel = true;
 	swordPanel = true;

@@ -46,11 +46,14 @@ void BossMakeStar::Release()
 
 void BossMakeStar::OnCollisionEnter(CCollider* pOtherCollider)
 {
-	CNomalKirby* normalKirby = (CNomalKirby*)pOtherCollider->GetOwner();
-	if (normalKirby->eat)
+	if (pOtherCollider->GetObjName() == L"일반커비")
 	{
-		DELETEOBJECT(this);
-		normalKirby->eating = true;
+		CNomalKirby* normalKirby = (CNomalKirby*)pOtherCollider->GetOwner();
+		if (normalKirby->eat)
+		{
+			normalKirby->eating = true;
+			DELETEOBJECT(this);
+		}
 	}
 }
 

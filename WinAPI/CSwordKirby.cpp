@@ -12,8 +12,10 @@
 
 CSwordKirby::CSwordKirby()
 {
-	
-	m_state = State::ChangeForm;
+	if (GAME->formChange)
+		m_state = State::ChangeForm;
+	else
+		m_state = State::Idle;
 
 	attackTimer = 0;
 	GAME->ice				= false;
@@ -62,7 +64,8 @@ CSwordKirby::~CSwordKirby()
 void CSwordKirby::Init()
 {
 
-	
+	GAME->formChange = false;
+
 	CKirby::Init();
 	//¿À¸¥ÂÊ
 	m_pIdleImage			= RESOURCE->LoadImg(L"SwordKirbyIdleL",				L"Image\\Kirby\\SwordKirby\\sword kirby Idle.png");
@@ -201,6 +204,43 @@ void CSwordKirby::Render()
 
 void CSwordKirby::Release()
 {
+}
+
+void CSwordKirby::OnCollisionEnter(CCollider* pOtherCollider)
+{
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Wall)
+	{
+		m_groundCounter++;
+		m_groundchecker = true;
+	}
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Monster)
+	{
+		if (GAME->HpNotDown == true)
+		{
+			playerHp -= 0;
+		}
+		else
+		{
+			m_state = State::Takeoff;
+			SOUND->Play(DamageSound, 0.1f, false);
+			playerHp -= 1;
+		}
+		GAME->PlayerHit = true;
+	}
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::MWeapon)
+	{
+		if (GAME->HpNotDown == true)
+		{
+			playerHp -= 0;
+		}
+		else
+		{
+			m_state = State::Takeoff;
+			SOUND->Play(DamageSound, 0.1f, false);
+			playerHp -= 1;
+		}
+		GAME->PlayerHit = true;
+	}
 }
 
 void CSwordKirby::AnimatorUpdate()
@@ -763,33 +803,20 @@ void CSwordKirby::AttackingState()
 
 void CSwordKirby::TakeOffState()
 {
+	if (effect != nullptr)
+		DELETEOBJECT(effect);
 	changestar = new CChangeFormStar();
 	changestar->SetPos(m_vecPos);
 	ADDOBJECT(changestar);
 	changestar->ChangeStarName(L"Ä®º°");
 	m_pNormalKirby = new CNomalKirby();
-	m_pNormalKirby->SetPos(m_vecPos);
+	m_pNormalKirby->SetPos(m_vecPos.x+5, m_vecPos.y + 30);
 	ADDOBJECT(m_pNormalKirby);
 	DELETEOBJECT(this);
 	m_pNormalKirby->sword = false;
 }
 
-/*
-void CSwordKirby::AttackCollider()
-{
-	m_pSword = new CSword();
-	if (m_vecLookDir.x == -1)
-	{
-		m_pSword->SetPos(m_vecPos.x - 50, m_vecPos.y);
-	}
-	if (m_vecLookDir.x == 1)
-	{
-		m_pSword->SetPos(m_vecPos.x + 50, m_vecPos.y);
-	}
-	ADDOBJECT(m_pSword);
 
-}
-*/
 void CSwordKirby::AttackCollider(Vector position, Vector scale)
 {
 	//SOUND->Play(IceSound, 0.1f, true);

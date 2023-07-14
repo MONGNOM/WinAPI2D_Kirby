@@ -17,11 +17,15 @@ public:
 
 	bool monsterHit;
 	bool monsterhpnotDown;
+	
 	float monsterhitTime;
+	float HitTime;
 	float invincible;
+
 	bool PlayerHit;
 	bool HpNotDown;
-	float HitTime;
+	
+	bool formChange;
 
 	bool ice;
 	bool sword;
@@ -34,6 +38,7 @@ public:
 	float curHp;
 	float playerLoockDirX;
 	Vector playerPos;
+
 public:
 	void Init();		// 게임시작시 초기화 작업
 	void Update();		// 프레임마다 게임로직 진행

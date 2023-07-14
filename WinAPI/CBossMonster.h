@@ -14,7 +14,8 @@ class CBossMonster : public CMonster
 public:
 	CBossMonster();
 	virtual ~CBossMonster();
-
+	bool bossAttack;
+	float bosscameraTimer;
 	bool bossDeath;
 private:
 	wstring bossstate;
@@ -31,6 +32,8 @@ private:
 	bool Attack;
 	bool jumpDown;
 	float m_jumpSpeed;
+	float basicAttckTimer;
+
 	void IdleState();
 	void WalkState();
 	void AttackState();
@@ -47,11 +50,12 @@ private:
 	void JumpDown();
 	
 	void MonsterAttackCollider();
+	void MakeStar();
 
 	CImage* m_pBossImageR;
 	CImage* m_pBossImageL;
 
-
+	void BossEffect();
 	CMonsterWeapon* m_pWeapon;
 
 	void Init() override;

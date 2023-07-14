@@ -18,7 +18,7 @@ public:
 
 private:
 
-
+	float cameraTimer;
 	CBossMonster* bossMonster;
 	CNomalKirby* pkirby;
 	CSound* BossBGMSound;

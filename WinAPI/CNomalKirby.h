@@ -24,6 +24,8 @@ public:
 	bool iceicon;
 	bool swordicon;
 	void DisappearState();
+	void DamageState();
+	State m_state;
 
 private:
 	CSound* ChangeSound;
@@ -33,7 +35,6 @@ private:
 	CSound* ShotSound;
 
 	wstring normalkirbystate;
-	State m_state;
 	CAnimator* m_pAnimator;
 
 	float damageTimer;
@@ -42,7 +43,6 @@ private:
 	float changeTimer;
 	float shotTimer;
 	void Jump();
-	void DamageState();
 	void InvincivleState();
 	void IdleState();
 	void WalkState();

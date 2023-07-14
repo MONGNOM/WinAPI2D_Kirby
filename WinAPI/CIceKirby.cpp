@@ -7,7 +7,11 @@
 CIceKirby::CIceKirby()
 {
 	attackTimer = 0;
+	if(GAME->formChange)
 	m_state = State::ChangeForm;
+	else
+	m_state = State::Idle;
+
 	m_pNormalKirby = nullptr;
 	m_pAnimator = nullptr;
 	m_pIdleImage = nullptr;
@@ -34,7 +38,8 @@ void CIceKirby::Init()
 {
 	
 
-	
+	GAME->formChange = false;
+
 	CKirby::Init();
 	m_pIdleImage	= RESOURCE->LoadImg(L"IceKirbyIdleL",	L"Image\\Kirby\\Ice\\IceKirby.png");
 	m_pAttackImage	= RESOURCE->LoadImg(L"IceKirbyAttack",	L"Image\\Kirby\\Ice\\IceKirbyAttackPose.png");
@@ -145,7 +150,6 @@ void CIceKirby::Jump()
 
 void CIceKirby::IdleState()
 {
-	
 	if (m_groundchecker == false)
 	{
 		m_vecPos.y += m_gravity * DT;
@@ -595,6 +599,8 @@ void CIceKirby::DeleteAttackArea()
 
 void CIceKirby::TakeOffState()
 {
+	if (effect != nullptr)
+		DELETEOBJECT(effect);
 	Effect(m_vecPos.x);
 	effect->DropStarEffect();
 	effect->effectDestory = true;
@@ -607,6 +613,7 @@ void CIceKirby::TakeOffState()
 	ADDOBJECT(m_pNormalKirby);
 	DELETEOBJECT(this);
 	m_pNormalKirby->ice = false;
+	
 }
 
 void CIceKirby::ChangeFormState()
@@ -633,5 +640,43 @@ void CIceKirby::ChangeFormState()
 		}
 	}
 
+}
+
+void CIceKirby::OnCollisionEnter(CCollider* pOtherCollider)
+{
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Wall)
+	{
+		m_groundCounter++;
+		m_groundchecker = true;
+	}
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Monster)
+	{
+		if (GAME->HpNotDown == true)
+		{
+			playerHp -= 0;
+		}
+		else
+		{
+			m_state = State::Takeoff;
+			SOUND->Play(DamageSound, 0.1f, false);
+			playerHp -= 1;
+			
+		}
+		GAME->PlayerHit = true;
+	}
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::MWeapon)
+	{
+		if (GAME->HpNotDown == true)
+		{
+			playerHp -= 0;
+		}
+		else
+		{
+			m_state = State::Takeoff;
+			SOUND->Play(DamageSound, 0.1f, false);
+			playerHp -= 1;
+		}
+		GAME->PlayerHit = true;
+	}
 }
 

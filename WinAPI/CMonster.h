@@ -18,7 +18,6 @@ public:
 	float idleTimer;
 	float attackTimer;
 	
-
 	int hp;
 	bool bosseffect;
 	bool dizzy;
@@ -40,16 +39,16 @@ public:
 public:
 	void TakeDamage(int damage);
 	void Effect(float x, float y);
-	void BossEffect();
+	
 
 protected:
 	void Init() override;
 	void Update() override;
 	void Render() override;
 	void Release() override;
-private:
 
 	float bosseffectTimer;
+
 	CEffect* bossEffect;
 	CEffect* bossEffect1;
 	CEffect* bossEffect2;

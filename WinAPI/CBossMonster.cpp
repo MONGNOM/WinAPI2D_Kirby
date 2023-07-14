@@ -5,6 +5,7 @@
 
 CBossMonster::CBossMonster()
 {
+	star = nullptr;
 	m_pAnimator = nullptr;
 	m_pBossImageR = nullptr;
 	m_pBossImageL = nullptr;
@@ -22,6 +23,8 @@ CBossMonster::CBossMonster()
 	DeathSound = RESOURCE->LoadSound(L"BossDeathSound", L"Sound\\BossDeath.wav");
 	GAME->invincible = 1.0f;
 	bossDeath = false;
+	basicAttckTimer = 0;
+	bossAttack = false;
 
 }
 
@@ -29,6 +32,8 @@ CBossMonster::~CBossMonster()
 {
 
 }
+
+
 
 
 void CBossMonster::Init()
@@ -50,7 +55,7 @@ void CBossMonster::Init()
 	m_pAnimator->CreateAnimation(L"IdleR", m_pBossImageR, Vector(0.f, 0.f), Vector(200.f, 203.f), Vector(280.f, 0.f), 0.2f, 4);
 	m_pAnimator->CreateAnimation(L"WalkR", m_pBossImageR, Vector(1120.f, 0.f), Vector(200.f, 203.f), Vector(280.f, 0.f), 0.5f, 4);
 	m_pAnimator->CreateAnimation(L"DieR",	m_pBossImageR, Vector(280.f, 1500.f), Vector(210.f, 203.f), Vector(290.f, 0.f), 0.15f, 3);
-	m_pAnimator->CreateAnimation(L"AttackR", m_pBossImageR, Vector(0.f, 580.f), Vector(210.f, 250.f), Vector(280.f, 0.f), 0.2f, 8,false);
+	m_pAnimator->CreateAnimation(L"AttackR", m_pBossImageR, Vector(0.f, 580.f), Vector(210.f, 250.f), Vector(280.f, 0.f), 0.2f, 7,false);
 	m_pAnimator->CreateAnimation(L"JumpAttackR", m_pBossImageR, Vector(0.f, 900.f), Vector(200.f, 250.f), Vector(280.f, 0.f), 0.15f, 1,false);
 	m_pAnimator->CreateAnimation(L"DizzyR", m_pBossImageR, Vector(0.f, 1500.f), Vector(200.f, 203.f), Vector(280.f, 0.f), 0.1f, 1);
 	m_pAnimator->CreateAnimation(L"FearR", m_pBossImageR, Vector(0.f, 1200.f), Vector(200.f, 203.f), Vector(280.f, 0.f), 0.1f, 2);
@@ -62,7 +67,7 @@ void CBossMonster::Init()
 	m_pAnimator->CreateAnimation(L"IdleL", m_pBossImageL, Vector(2040.f, 0.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.2f, 4);
 	m_pAnimator->CreateAnimation(L"WalkL", m_pBossImageL, Vector(920.f, 0.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.5f, 4);
 	m_pAnimator->CreateAnimation(L"DieL", m_pBossImageL, Vector(1750.f, 1500.f), Vector(210.f, 203.f), Vector(-290.f, 0.f), 0.25f, 3);
-	m_pAnimator->CreateAnimation(L"AttackL", m_pBossImageL, Vector(2040.f, 580.f), Vector(210.f, 250.f), Vector(-280.f, 0.f), 0.2f, 8,false);
+	m_pAnimator->CreateAnimation(L"AttackL", m_pBossImageL, Vector(2040.f, 580.f), Vector(210.f, 250.f), Vector(-280.f, 0.f), 0.2f, 7,false);
 	m_pAnimator->CreateAnimation(L"JumpAttackL", m_pBossImageL, Vector(2040.f, 900.f), Vector(200.f, 250.f), Vector(-280.f, 0.f), 0.15f, 1,false);
 	m_pAnimator->CreateAnimation(L"DizzyL", m_pBossImageL, Vector(2040.f, 1500.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.15f, 1);
 	m_pAnimator->CreateAnimation(L"FearL", m_pBossImageL, Vector(2040.f, 1200.f), Vector(200.f, 203.f), Vector(-280.f, 0.f), 0.1f, 2);
@@ -86,6 +91,7 @@ void CBossMonster::Update()
 	GAME->BossHp = hp;
 	collider->SetPos(m_vecPos);
 
+	
 	CMonster::Update();
 	switch (m_state)
 	{
@@ -124,7 +130,35 @@ void CBossMonster::Update()
 	}
 
 	
+	if (BUTTONDOWN('1'))
+	{
+		hp = 0;
+	}
+	if (BUTTONDOWN('2'))
+	{
+		m_state = State::Attack;
+	}
+	if (BUTTONDOWN('3'))
+	{
+		m_state = State::Jump;
+
+	}
+	if (BUTTONDOWN('4'))
+	{
+		m_state = State::JumpDown;
+
+	}
+	if (BUTTONDOWN('5'))
+	{
+		m_state = State::JumpAttack;
+
+	}
+	bosseffectTimer += DT;
+
 	AnimatorUpdate();
+
+	Logger::Debug(to_wstring(bosscameraTimer));
+	Logger::Debug(to_wstring(bossAttack));
 }
 
 void CBossMonster::Render()
@@ -134,18 +168,95 @@ void CBossMonster::Render()
 void CBossMonster::Release()
 {
 }
+
+void CBossMonster::BossEffect()
+{
+
+	effect = new CEffect();
+	effect->SetPos(m_vecPos.x, m_vecPos.y - 15);
+	effect->BossAttackEffect();
+	ADDOBJECT(effect);
+	effect->effectDestory = true;
+
+	if (effect == nullptr && bosseffectTimer > 0.27f)
+	{
+		bossEffect = new CEffect();
+		bossEffect->SetPos(m_vecPos.x + 20, m_vecPos.y + 100);
+		ADDOBJECT(bossEffect);
+		bossEffect->BossAttackEffect();
+		bossEffect->effectDestory = true;
+	}
+	if (bosseffectTimer > 0.54f)
+	{
+		bossEffect1 = new CEffect();
+		bossEffect1->SetPos(m_vecPos.x - 50, m_vecPos.y + 20);
+		ADDOBJECT(bossEffect1);
+		bossEffect1->BossAttackEffect();
+		bossEffect1->effectDestory = true;
+	}
+	if (bosseffectTimer > 0.81f)
+	{
+		bossEffect2 = new CEffect();
+		bossEffect2->SetPos(m_vecPos.x, m_vecPos.y + 40);
+		ADDOBJECT(bossEffect2);
+		bossEffect2->BossAttackEffect();
+		bossEffect2->effectDestory = true;
+	}
+	if (bosseffectTimer > 0.81f)
+	{
+		bossEffect2 = new CEffect();
+		bossEffect2->SetPos(m_vecPos.x, m_vecPos.y + 40);
+		ADDOBJECT(bossEffect2);
+		bossEffect2->BossAttackEffect();
+		bossEffect2->effectDestory = true;
+	}
+	if (bosseffectTimer > 1.08f)
+	{
+		bossEffect3 = new CEffect();
+		bossEffect3->SetPos(m_vecPos.x - 35, m_vecPos.y + 70);
+		ADDOBJECT(bossEffect3);
+		bossEffect3->BossAttackEffect();
+		bossEffect3->effectDestory = true;
+	}
+	if (bosseffectTimer > 1.35f)
+	{
+		bossEffect4 = new CEffect();
+		bossEffect4->SetPos(m_vecPos.x + 50, m_vecPos.y + 55);
+		ADDOBJECT(bossEffect4);
+		bossEffect4->BossAttackEffect();
+		bossEffect4->effectDestory = true;
+	}
+	if (bosseffectTimer > 1.61f)
+	{
+		bossEffect5 = new CEffect();
+		bossEffect5->SetPos(m_vecPos.x + 50, m_vecPos.y - 5);
+		bossEffect5->BossAttackEffect();
+		ADDOBJECT(bossEffect5);
+		bossEffect5->effectDestory = true;
+	}
+	if (bosseffectTimer > 1.88f)
+	{
+		bossEffect6 = new CEffect();
+		bossEffect6->SetPos(m_vecPos.x - 30, m_vecPos.y + 50);
+		ADDOBJECT(bossEffect6);
+		bossEffect6->BossAttackEffect();
+		bossEffect6->effectDestory = true;
+		bosseffectTimer = 0;
+	}
+}
+
 void CBossMonster::IdleState()
 {
+	bossAttack = false;
+	bosscameraTimer = 0;
 	if (dizzy)
 	{
 		BossEffect();
-		
-
 		m_state = State::Dizzy;
-		dizzy = false;
 	}
 	if (hp <= 0)
 	{
+		RemoveCollider();
 		m_state = State::Die;
 	}
 	idleTimer += DT;
@@ -177,11 +288,13 @@ void CBossMonster::WalkState()
 	{
 		BossEffect();
 		m_state = State::Dizzy;
-		dizzy = false;
 	}
-	/*m_jumpSpeed = 10;
-
-	m_vecPos.y -= m_jumpSpeed * DT;*/
+	if (hp <= 0)
+	{
+		RemoveCollider();
+		m_state = State::Die;
+	}
+	
 	if (m_vecPos.y <= 200)
 	{
 		m_vecPos.y += m_jumpSpeed * DT;
@@ -213,29 +326,37 @@ void CBossMonster::WalkState()
 
 void CBossMonster::AttackState()
 {
+	basicAttckTimer += DT;
+	attackTimer += DT;
+	
+	if (basicAttckTimer > 1.4f)
+	{
+		if (m_pWeapon == nullptr)
+			MonsterAttackCollider();
+		MakeStar();
+		bossAttack = true;
+		basicAttckTimer = 0;
+	}
 	if (dizzy)
 	{
 		BossEffect();
 		m_state = State::Dizzy;
-		dizzy = false;
 	}
-	attackTimer += DT;
-	if (m_pWeapon == nullptr)
-		MonsterAttackCollider();
-
+	
 	if (m_vecLookDir.x == 1)
 	{
 		m_vecPos.x += 50 * DT;
 		bossstate = L"AttackR";
+		
 		if (attackTimer > 1.6f)
 		{
-
 			if (m_pWeapon != nullptr)
 			{
 				DELETEOBJECT(m_pWeapon);
 				m_pWeapon = nullptr;
 			}
 			attackTimer = 0;
+
 			m_state = State::Idle;
 		}
 	}
@@ -245,11 +366,11 @@ void CBossMonster::AttackState()
 		bossstate = L"AttackL";
 		if (attackTimer > 1.6f)
 		{
-
 			if (m_pWeapon != nullptr)
 			{
 				DELETEOBJECT(m_pWeapon);
 				m_pWeapon = nullptr;
+
 			}
 			attackTimer = 0;
 			m_state = State::Idle;
@@ -296,10 +417,10 @@ void CBossMonster::DizzyState()
 		bossstate = L"DizzyR";
 		if (dieTimer > 0.5f)
 		{
+
 			m_state = State::Idle;
 			dieTimer = 0;
 			dizzy = false;
-
 		}
 	}
 	if (m_vecLookDir.x == -1)
@@ -310,6 +431,7 @@ void CBossMonster::DizzyState()
 			m_state = State::Idle;
 			dizzy = false;
 			dieTimer = 0;
+
 		}
 	}
 }
@@ -343,44 +465,44 @@ void CBossMonster::JumpState()
 
 void CBossMonster::JumpDownState()
 {
-		m_vecPos.y -= m_jumpSpeed * DT;
+
+	//bossAttack = true;
+
+	m_vecPos.y -= m_jumpSpeed * DT;
 	if (m_pWeapon == nullptr)
-		MonsterAttackCollider();
-	else
 	{
-		if (m_vecLookDir.x == -1)
-		{
-			m_pWeapon->SetPos(m_vecPos.x - 150, m_vecPos.y);
-		}
-		if (m_vecLookDir.x == 1)
-		{
-			m_pWeapon->SetPos(m_vecPos.x + 150, m_vecPos.y);
-		}
+		MonsterAttackCollider();
 	}
 	if (m_vecLookDir.x == 1)
 	{
+		m_pWeapon->SetPos(m_vecPos.x + 150, m_vecPos.y);
 		bossstate = L"JumpDownR";
 		if (m_groundchecker)
 		{
+			Logger::Debug(to_wstring(m_groundchecker));
+
+			MakeStar();
+			m_state = State::Idle;
 			if (m_pWeapon != nullptr)
 			{
 				DELETEOBJECT(m_pWeapon);
 				m_pWeapon = nullptr;
 			}
-			m_state = State::Idle;
 		}
 	}
 	if (m_vecLookDir.x == -1)
 	{
 		bossstate = L"JumpDownL";
+		m_pWeapon->SetPos(m_vecPos.x - 150, m_vecPos.y);
 		if (m_groundchecker)
 		{
+			MakeStar();
+			m_state = State::Idle;
 			if (m_pWeapon != nullptr)
 			{
 				DELETEOBJECT(m_pWeapon);
 				m_pWeapon = nullptr;
 			}
-			m_state = State::Idle;
 		}
 	}
 }
@@ -388,22 +510,14 @@ void CBossMonster::JumpDownState()
 void CBossMonster::JumpAttackState()
 {
 	m_vecPos.y -= m_jumpSpeed * DT;
-	if (m_pWeapon == nullptr)
-		MonsterAttackCollider();
-	else
-	{
-		if (m_vecLookDir.x == -1)
-		{
-			m_pWeapon->SetPos(m_vecPos.x - 150, m_vecPos.y);
-		}
-		if (m_vecLookDir.x == 1)
-		{
-			m_pWeapon->SetPos(m_vecPos.x + 150, m_vecPos.y);
-		}
-		
-	}
+		//bossAttack = true;
+	
 	if (m_vecLookDir.x == 1)
 	{
+		if (m_pWeapon == nullptr)
+			MonsterAttackCollider();
+
+		m_pWeapon->SetPos(m_vecPos.x + 150, m_vecPos.y);
 		bossstate = L"JumpAttackR";
 		if (m_groundchecker)
 		{
@@ -412,11 +526,16 @@ void CBossMonster::JumpAttackState()
 				DELETEOBJECT(m_pWeapon);
 				m_pWeapon = nullptr;
 			}
+			MakeStar();
 			m_state = State::Idle;
 		}
 	}
 	if (m_vecLookDir.x == -1)
 	{
+		if (m_pWeapon == nullptr)
+		MonsterAttackCollider();
+		
+		m_pWeapon->SetPos(m_vecPos.x - 150, m_vecPos.y);
 		bossstate = L"JumpAttackL";
 		if (m_groundchecker)
 		{
@@ -425,6 +544,7 @@ void CBossMonster::JumpAttackState()
 				DELETEOBJECT(m_pWeapon);
 				m_pWeapon = nullptr;
 			}
+			MakeStar();
 			m_state = State::Idle;
 		}
 	}
@@ -468,23 +588,26 @@ void CBossMonster::DisappearState()
 	if (m_vecLookDir.x == 1)
 	{
 		
-		bossstate = L"DisappearR";
+		bossstate = L"DieR";
 		if (dieTimer > 0.42f)
 		{
 			dieTimer = 0;
+			RemoveCollider();
 			DELETEOBJECT(effect);
-			DELETEOBJECT(this); DELETEOBJECT(collider);
+			DELETEOBJECT(collider);
 		}
 	}
 	if (m_vecLookDir.x == -1)
 	{
 	
-		bossstate = L"DisappearL";
+		bossstate = L"DieL";
 		if (dieTimer > 0.42f)
 		{
 			dieTimer = 0;
+			RemoveCollider();
+
 			DELETEOBJECT(effect);
-			DELETEOBJECT(this); DELETEOBJECT(collider);
+			DELETEOBJECT(collider);
 		}
 	}
 }
@@ -496,7 +619,9 @@ void CBossMonster::Shout()
 
 void CBossMonster::BasicAttack()
 {
+	if (WalkSound != nullptr)
 	SOUND->Pause(WalkSound);
+
 	if (Attack)
 	{
 		
@@ -516,14 +641,13 @@ void CBossMonster::JumpDown()
 {
 	if (jumpDown)
 	{
-		jumpDown = false;
 		m_state = State::JumpDown;
+		jumpDown = false;
 	}
 	else
 	{
-		
-		jumpDown = true;
 		m_state = State::JumpAttack;
+		jumpDown = true;
 	}
 }
 
@@ -531,22 +655,34 @@ void CBossMonster::MonsterAttackCollider()
 {
 	SOUND->Play(AttackSound, 0.3f, false);
 	m_pWeapon = new CMonsterWeapon();
+	
+		if (m_vecLookDir.x == -1)
+		{
+			m_pWeapon->SetMonsterWeaponScale(150, 170);
+			m_pWeapon->SetPos(m_vecPos.x - 150, m_vecPos.y);
+		}
+		if (m_vecLookDir.x == 1)
+		{
+			m_pWeapon->SetMonsterWeaponScale(150, 170);
+			m_pWeapon->SetPos(m_vecPos.x + 150, m_vecPos.y);
+		}
+		ADDOBJECT(m_pWeapon);
+}
+
+void CBossMonster::MakeStar()
+{
 	star = new BossMakeStar();
 	if (m_vecLookDir.x == -1)
 	{
-		m_pWeapon->SetMonsterWeaponScale(150, 200);
-		m_pWeapon->SetPos(m_vecPos.x -150, m_vecPos.y);
 		star->SetPos(m_vecPos.x - 150, m_vecPos.y + 70);
 	}
 	if (m_vecLookDir.x == 1)
 	{
-		m_pWeapon->SetMonsterWeaponScale(150, 200);
-		m_pWeapon->SetPos(m_vecPos.x + 150, m_vecPos.y);
 		star->SetPos(m_vecPos.x + 150, m_vecPos.y + 70);
-
 	}
-	ADDOBJECT(m_pWeapon);
 	ADDOBJECT(star);
+	bossAttack = true;
+
 }
 
 void CBossMonster::AnimatorUpdate()

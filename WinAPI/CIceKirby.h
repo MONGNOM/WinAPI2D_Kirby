@@ -19,11 +19,11 @@ public:
 	
 
 private:
+	State m_state;
 	CSound* IceSound;
 	CSound* DropSound;
 
 	wstring icekirbystate;
-	State m_state;
 	CAnimator* m_pAnimator;
 	CIceAttack* m_piceAttack;
 	CNomalKirby* m_pNormalKirby;
@@ -59,6 +59,9 @@ private:
 	void Update() override;
 	void Render() override;
 	void Release() override;
+
+
+	void OnCollisionEnter(CCollider* pOtherCollider) override;
 
 	void AnimatorUpdate();
 };

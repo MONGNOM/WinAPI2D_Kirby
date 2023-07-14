@@ -20,8 +20,13 @@
 
 CNomalKirby::CNomalKirby()
 {
+		
 	m_strName			= L"일반커비";
+	if (GAME->HpNotDown == true)
+		m_state = State::Damage;
+	else
 	m_state				= State::Idle;
+
 	m_pAnimator			= nullptr;
 	m_pIdleLImage		= nullptr;
 	m_pIdleRImage		= nullptr;
@@ -62,7 +67,10 @@ CNomalKirby::~CNomalKirby()
 
 void CNomalKirby::Init()
 {
-	
+	GAME->formChange = false;
+
+	if (effect != nullptr)
+		DELETEOBJECT(effect);
 	CKirby::Init();
 	//오른쪽
 	m_pInvincivleRImage	= RESOURCE->LoadImg(L"KirbyInvincibleR",	L"Image\\Kirby\\Basic\\invincivle.png");
@@ -298,51 +306,6 @@ void CNomalKirby::InvincivleState()
 		m_state = State::Idle;
 		invincivleTimer = 0;
 	}
-	/*if (BUTTONSTAY(VK_LEFT))
-	{
-		if (lastLeftInputTime < TIME_DASHABLE)
-		{
-			SelectSound(RunSound, 0.1f, false);
-			Effect(m_vecPos.x);
-			effect->KirbyDashEffectL();
-			m_state = State::Run;
-		}
-		else
-			m_state = State::Walk;
-
-		lastLeftInputTime = 0;
-	}
-	if (BUTTONSTAY(VK_RIGHT))
-	{
-		if (lastRightInputTime < TIME_DASHABLE)
-		{
-			SelectSound(RunSound, 0.1f, false);
-			Effect(m_vecPos.x);
-			effect->KirbyDashEffectR();
-			m_state = State::Run;
-		}
-		else
-			m_state = State::Walk;
-
-		lastRightInputTime = 0;
-	}
-	if (BUTTONDOWN('S'))
-	{
-		m_state = State::Attack;
-	}
-	if (BUTTONSTAY(VK_DOWN))
-	{
-		m_state = State::Sit;
-	}
-	if (BUTTONSTAY(VK_UP))
-	{
-		m_state = State::Fly;
-	}
-	if (BUTTONDOWN('A'))
-	{
-		Jump();
-		m_state = State::Jump;
-	}*/
 }
 
 #pragma region 상태패턴함수
@@ -984,14 +947,19 @@ void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)
 	if (pOtherCollider->GetObjName() == L"얼음몬스터" && eat)
 	{
 			ice = true;
+			GAME->formChange = true;
+
 	}
 	if (pOtherCollider->GetObjName() == L"칼몬스터" && eat)
 	{
 			sword = true;
+			GAME->formChange = true;
+
 	}
 
 	if (pOtherCollider->GetObjName() == L"얼음아이템")
 	{
+		GAME->formChange = true;
 		ice = true;
 		Effect(m_vecPos.x);
 		effect->kirbyChangeEffect();
@@ -1001,6 +969,7 @@ void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)
 
 	if (pOtherCollider->GetObjName() == L"검아이템")
 	{
+		GAME->formChange = true;
 		sword = true;
 		Effect(m_vecPos.x);
 		effect->kirbyChangeEffect();
