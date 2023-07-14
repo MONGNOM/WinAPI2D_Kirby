@@ -25,7 +25,7 @@ CNomalKirby::CNomalKirby()
 	if (GAME->HpNotDown == true)
 		m_state = State::Damage;
 	else
-	m_state				= State::Idle;
+		m_state	= State::Idle; 
 
 	m_pAnimator			= nullptr;
 	m_pIdleLImage		= nullptr;
@@ -221,7 +221,6 @@ void CNomalKirby::AnimatorUpdate()
 
 void CNomalKirby::DisappearState()
 {
-
 	if (ice)
 	{
 		GAME->iceicon = true;
@@ -904,7 +903,7 @@ void CNomalKirby::Release()
 
 void CNomalKirby::IceKirbyChange()
 { 
-	CAMERA->FadeIn(0.1f, 0.7f);
+	CAMERA->FadeIn(0.1f, 0.9f);
 	SOUND->Play(ChangeSound, 0.1f, false);
 	icekirby = new CIceKirby();
 	icekirby->SetPos(m_vecPos);
@@ -914,7 +913,7 @@ void CNomalKirby::IceKirbyChange()
 
 void CNomalKirby::SwordirbyChange()
 {
-	CAMERA->FadeIn(0.1f, 0.7f);
+	CAMERA->FadeIn(0.1f, 0.9f);
 	SOUND->Play(ChangeSound, 0.1f, false);
 	swordKriby = new CSwordKirby();
 	swordKriby->SetPos(m_vecPos.x,m_vecPos.y -30);

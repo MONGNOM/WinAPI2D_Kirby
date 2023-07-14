@@ -7,11 +7,10 @@
 CIceKirby::CIceKirby()
 {
 	attackTimer = 0;
-	if(GAME->formChange)
-	m_state = State::ChangeForm;
+	if (GAME->formChange)
+		m_state = State::ChangeForm;
 	else
-	m_state = State::Idle;
-
+		m_state = State::Idle;
 	m_pNormalKirby = nullptr;
 	m_pAnimator = nullptr;
 	m_pIdleImage = nullptr;
@@ -36,10 +35,7 @@ CIceKirby::~CIceKirby()
 
 void CIceKirby::Init()
 {
-	
-
 	GAME->formChange = false;
-
 	CKirby::Init();
 	m_pIdleImage	= RESOURCE->LoadImg(L"IceKirbyIdleL",	L"Image\\Kirby\\Ice\\IceKirby.png");
 	m_pAttackImage	= RESOURCE->LoadImg(L"IceKirbyAttack",	L"Image\\Kirby\\Ice\\IceKirbyAttackPose.png");
@@ -599,6 +595,7 @@ void CIceKirby::DeleteAttackArea()
 
 void CIceKirby::TakeOffState()
 {
+	
 	if (effect != nullptr)
 		DELETEOBJECT(effect);
 	Effect(m_vecPos.x);
@@ -630,6 +627,7 @@ void CIceKirby::ChangeFormState()
 	{
 		CAMERA->FadeIn(0.0001f);
 		m_state = State::Idle;
+		m_formChangeTimer = 0;
 		if (GAME->icePanel)
 		{
 			panel = new CTransFormPanel();

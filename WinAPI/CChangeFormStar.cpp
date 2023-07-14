@@ -99,10 +99,12 @@ void CChangeFormStar::OnCollisionEnter(CCollider* pOtherCollider)
 		{
 			if (m_strName == L"¾óÀ½º°")
 			{
+				GAME->formChange = true;
 				normalKirby->ice = true;
 			}
 			if (m_strName == L"Ä®º°")
 			{
+				GAME->formChange = true;
 				normalKirby->sword = true;
 			}
 			SOUND->Play(DeathSound, 0.1f, false);

@@ -842,7 +842,6 @@ void CSwordKirby::ChangeFormState()
 	{
 		m_vecPos.y += m_gravity * DT;
 	}
-	// 여기 들어가면서 오류터짐 
 	m_formChangeTimer += DT;
 	swordkirbystate = L"SwordKirbyChangePose";
 
@@ -851,6 +850,8 @@ void CSwordKirby::ChangeFormState()
 	{
 		CAMERA->FadeIn(0.0001f);
 		m_state = State::Idle;
+		m_formChangeTimer = 0;
+
 		if (GAME->swordPanel)
 		{
 			panel = new CTransFormPanel();
