@@ -16,6 +16,7 @@ public:
 	virtual ~CBossMonster();
 	bool bossAttack;
 	float bosscameraTimer;
+	float jumpAttackTimer;
 	bool bossDeath;
 private:
 	wstring bossstate;

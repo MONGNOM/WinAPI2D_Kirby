@@ -25,7 +25,7 @@ CBossMonster::CBossMonster()
 	bossDeath = false;
 	basicAttckTimer = 0;
 	bossAttack = false;
-
+	jumpAttackTimer = 0;
 }
 
 CBossMonster::~CBossMonster()
@@ -333,10 +333,13 @@ void CBossMonster::AttackState()
 	{
 		if (m_pWeapon == nullptr)
 			MonsterAttackCollider();
+
 		MakeStar();
 		bossAttack = true;
 		basicAttckTimer = 0;
+
 	}
+
 	if (dizzy)
 	{
 		BossEffect();
@@ -356,7 +359,6 @@ void CBossMonster::AttackState()
 				m_pWeapon = nullptr;
 			}
 			attackTimer = 0;
-
 			m_state = State::Idle;
 		}
 	}
@@ -465,14 +467,23 @@ void CBossMonster::JumpState()
 
 void CBossMonster::JumpDownState()
 {
-
 	//bossAttack = true;
+	jumpAttackTimer += DT;
 
 	m_vecPos.y -= m_jumpSpeed * DT;
+	if (jumpAttackTimer > 0.9f)
+	{
+
+		bossAttack = true;
+		jumpAttackTimer = 0;
+	}
+
 	if (m_pWeapon == nullptr)
 	{
 		MonsterAttackCollider();
+		
 	}
+
 	if (m_vecLookDir.x == 1)
 	{
 		m_pWeapon->SetPos(m_vecPos.x + 150, m_vecPos.y);
@@ -509,9 +520,16 @@ void CBossMonster::JumpDownState()
 
 void CBossMonster::JumpAttackState()
 {
+	jumpAttackTimer += DT;
 	m_vecPos.y -= m_jumpSpeed * DT;
-		//bossAttack = true;
-	
+
+	if (jumpAttackTimer > 1.0f)
+	{
+
+		bossAttack = true;
+		jumpAttackTimer = 0;
+	}
+
 	if (m_vecLookDir.x == 1)
 	{
 		if (m_pWeapon == nullptr)
@@ -681,7 +699,7 @@ void CBossMonster::MakeStar()
 		star->SetPos(m_vecPos.x + 150, m_vecPos.y + 70);
 	}
 	ADDOBJECT(star);
-	bossAttack = true;
+	//bossAttack = true; 
 
 }
 
