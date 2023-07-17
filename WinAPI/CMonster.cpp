@@ -47,7 +47,6 @@ CMonster::~CMonster()
 
 void CMonster::Init()
 {
-	
 	collider = new CHitCollider();
 	collider->SetMonster(this);
 	ADDOBJECT(collider);

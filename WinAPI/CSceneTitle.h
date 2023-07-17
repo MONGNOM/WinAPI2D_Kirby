@@ -1,5 +1,6 @@
 #pragma once
 #include "CScene.h"
+#include "CSceneOpen.h"
 
 class CSceneTitle : public CScene
 {
@@ -9,7 +10,7 @@ public:
 
 	CSound* TitleSound;
 	CSound* ClickSound;
-
+	CSceneOpen* open;
 
 private:
 	void Init()		override;

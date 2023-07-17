@@ -6,6 +6,9 @@
 #include "CSceneTileTool.h"
 #include "CSceneStage01.h"
 #include "CSceneState02.h"
+#include "CEndingStage.h"
+#include "COpenScene.h"
+#include "EndingScene.h"
 #include "CBonusMap.h"
 
 CSceneManager::CSceneManager()
@@ -31,6 +34,12 @@ void CSceneManager::Init()
 	m_mapScene.insert(make_pair(GroupScene::Stage02, pSceneStage02));
 	CScene* pBonusMap = new CBonusMap();
 	m_mapScene.insert(make_pair(GroupScene::Bonus, pBonusMap));
+
+	CScene* pOpenstage = new COpenScene();
+	m_mapScene.insert(make_pair(GroupScene::Opne, pOpenstage));
+
+	CScene* pEndingScene = new CEndingStage();
+	m_mapScene.insert(make_pair(GroupScene::End, pEndingScene));
 
 	// 게임씬 자료구조를 순회하며 씬을 초기화
 	for (pair<GroupScene, CScene*> scene : m_mapScene)

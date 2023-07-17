@@ -44,7 +44,7 @@ void CIceKirby::Init()
 	m_pDownImage	= RESOURCE->LoadImg(L"IceKirbyDown",	L"Image\\Kirby\\Ice\\IceKirbyDown.png");
 	m_pFlyImage		= RESOURCE->LoadImg(L"IceKirbyFly",		L"Image\\Kirby\\Ice\\IceKirbyFly.png");
 	m_pJumpImage	= RESOURCE->LoadImg(L"IceKirbyJump",	L"Image\\Kirby\\Ice\\IceKirbyJump.png");
-	m_pChangeFormImage = RESOURCE->LoadImg(L"IceKirbyChageFormPose",	L"Image\\Kirby\\SwordKirby\\sword kirby change.png");
+	m_pChangeFormImage = RESOURCE->LoadImg(L"IceKirbyChageFormPose",	L"Image\\Kirby\\Ice\\icechange.png");
 
 	m_pAnimator = new CAnimator;
 	m_pAnimator->CreateAnimation(L"IdleR", m_pIdleImage, Vector(0.f, 0.f), Vector(50.f, 50.f), Vector(70.f, 0.f), 0.8f, 2);
@@ -67,7 +67,7 @@ void CIceKirby::Init()
 	m_pAnimator->CreateAnimation(L"LJumping", m_pJumpImage, Vector(130.f, 100.f), Vector(65.f, 50.f), Vector(-70.f, 0.f), 0.08f, 2);
 	m_pAnimator->CreateAnimation(L"RAttacking", m_pAttackImage, Vector(420.f, 0.f), Vector(60.f, 50.f), Vector(70.f, 0.f), 0.06f, 2);
 	m_pAnimator->CreateAnimation(L"LAttacking", m_pAttackImage, Vector(210.f, 100.f), Vector(60.f, 50.f), Vector(-70.f, 0.f), 0.06f, 2);
-	m_pAnimator->CreateAnimation(L"ChangeFormPose", m_pChangeFormImage, Vector(0.f, 0.f), Vector(45.f, 90.f), Vector(0.f, 0.f), 0.06f, 1);
+	m_pAnimator->CreateAnimation(L"ChangeFormPose", m_pChangeFormImage, Vector(0.f, 0.f), Vector(44.f, 57.f), Vector(0.f, 0.f), 0.06f, 1);
 	m_pAnimator->Play(L"IdleR", false);
 	AddComponent(m_pAnimator);
 	

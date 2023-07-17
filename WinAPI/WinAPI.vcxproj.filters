@@ -40,9 +40,6 @@
     <Filter Include="Engine\Asset\Resource">
       <UniqueIdentifier>{c5cfb52a-750e-43df-b17a-8d52a11c9f90}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Asset\UI">
-      <UniqueIdentifier>{c696e83c-93e9-4b47-9317-6e5ab9181467}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Asset\Tile">
       <UniqueIdentifier>{7d2c888e-7d12-4755-bc37-0d63eb9ab8c0}</UniqueIdentifier>
     </Filter>
@@ -72,6 +69,9 @@
     </Filter>
     <Filter Include="GameObject\Item">
       <UniqueIdentifier>{2eecebc1-0549-49fa-b0fa-029f8693f8ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Item\UI">
+      <UniqueIdentifier>{c696e83c-93e9-4b47-9317-6e5ab9181467}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -157,16 +157,16 @@
       <Filter>Engine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="CUI.h">
-      <Filter>Engine\Asset\UI</Filter>
+      <Filter>GameObject\Item\UI</Filter>
     </ClInclude>
     <ClInclude Include="CButton.h">
-      <Filter>Engine\Asset\UI</Filter>
+      <Filter>GameObject\Item\UI</Filter>
     </ClInclude>
     <ClInclude Include="CUIManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="CPanel.h">
-      <Filter>Engine\Asset\UI</Filter>
+      <Filter>GameObject\Item\UI</Filter>
     </ClInclude>
     <ClInclude Include="CSceneTileTool.h">
       <Filter>Scene</Filter>
@@ -184,10 +184,10 @@
       <Filter>GameObject\Common</Filter>
     </ClInclude>
     <ClInclude Include="CTilePanel.h">
-      <Filter>Engine\Asset\UI</Filter>
+      <Filter>GameObject\Item\UI</Filter>
     </ClInclude>
     <ClInclude Include="CTileButton.h">
-      <Filter>Engine\Asset\UI</Filter>
+      <Filter>GameObject\Item\UI</Filter>
     </ClInclude>
     <ClInclude Include="CSound.h">
       <Filter>Engine\Asset\Resource</Filter>
@@ -273,47 +273,59 @@
     <ClInclude Include="CIceItem.h">
       <Filter>GameObject\Item</Filter>
     </ClInclude>
-    <ClInclude Include="CGameManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CKirbyHp.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CBossHp.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CKirbyIcon.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="CMonsterWeapon.h">
       <Filter>GameObject\Stage01\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="CHitCollider.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CMonsterIceAttack.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CMonsterAttackCollider.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CEffect.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CChangeFormStar.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CTransFormPanel.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="BossMakeStar.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CBossDeathBackGround.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="CWallTile.h">
       <Filter>Engine\Asset\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneOpen.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="BossMakeStar.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossDeathBackGround.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossHp.h">
+      <Filter>GameObject\Item\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CChangeFormStar.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CEffect.h">
+      <Filter>GameObject\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameManager.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CHitCollider.h">
+      <Filter>Engine\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="CTransFormPanel.h">
+      <Filter>GameObject\Item\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CKirbyHp.h">
+      <Filter>GameObject\Item\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CKirbyIcon.h">
+      <Filter>GameObject\Item\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonsterAttackCollider.h">
+      <Filter>Engine\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonsterIceAttack.h">
+      <Filter>GameObject\Stage01\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="COpenScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CEndingStage.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -381,16 +393,16 @@
       <Filter>Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="CUI.cpp">
-      <Filter>Engine\Asset\UI</Filter>
+      <Filter>GameObject\Item\UI</Filter>
     </ClCompile>
     <ClCompile Include="CButton.cpp">
-      <Filter>Engine\Asset\UI</Filter>
+      <Filter>GameObject\Item\UI</Filter>
     </ClCompile>
     <ClCompile Include="CUIManager.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="CPanel.cpp">
-      <Filter>Engine\Asset\UI</Filter>
+      <Filter>GameObject\Item\UI</Filter>
     </ClCompile>
     <ClCompile Include="CSceneTileTool.cpp">
       <Filter>Scene</Filter>
@@ -408,10 +420,10 @@
       <Filter>GameObject\Common</Filter>
     </ClCompile>
     <ClCompile Include="CTileButton.cpp">
-      <Filter>Engine\Asset\UI</Filter>
+      <Filter>GameObject\Item\UI</Filter>
     </ClCompile>
     <ClCompile Include="CTilePanel.cpp">
-      <Filter>Engine\Asset\UI</Filter>
+      <Filter>GameObject\Item\UI</Filter>
     </ClCompile>
     <ClCompile Include="CSound.cpp">
       <Filter>Engine\Asset\Resource</Filter>
@@ -497,47 +509,59 @@
     <ClCompile Include="CSwordItem.cpp">
       <Filter>GameObject\Item</Filter>
     </ClCompile>
-    <ClCompile Include="CGameManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CKirbyHp.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CBossHp.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CKirbyIcon.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CMonsterWeapon.cpp">
       <Filter>GameObject\Stage01\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="CHitCollider.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CMonsterIceAttack.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CMonsterAttackCollider.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CEffect.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CTransFormPanel.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="BossMakeStar.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CBossDeathBackGround.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CChangeFormStar.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CWallTile.cpp">
       <Filter>Engine\Asset\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneOpen.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="BossMakeStar.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossDeathBackGround.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossHp.cpp">
+      <Filter>GameObject\Item\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CChangeFormStar.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CEffect.cpp">
+      <Filter>GameObject\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameManager.cpp">
+      <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CHitCollider.cpp">
+      <Filter>Engine\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="CTransFormPanel.cpp">
+      <Filter>GameObject\Item\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CKirbyHp.cpp">
+      <Filter>GameObject\Item\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CKirbyIcon.cpp">
+      <Filter>GameObject\Item\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonsterAttackCollider.cpp">
+      <Filter>Engine\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonsterIceAttack.cpp">
+      <Filter>GameObject\Stage01\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="COpenScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CEndingStage.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -12,6 +12,7 @@ CSceneTitle::CSceneTitle()
 {
 	ClickSound = RESOURCE->LoadSound(L"ClickSound", L"Sound\\Click.wav");
 	TitleSound = RESOURCE->LoadSound(L"TitleSound", L"Sound\\KirbyMainBgm.mp3");
+	open = nullptr;
 }
 
 CSceneTitle::~CSceneTitle()
@@ -20,6 +21,7 @@ CSceneTitle::~CSceneTitle()
 
 void CSceneTitle::Init()
 {
+	
 }
 
 void CSceneTitle::Enter()
@@ -38,11 +40,15 @@ void CSceneTitle::Update()
 	{
 		CHANGESCENE(GroupScene::TileTool);
 	}
+	if (BUTTONDOWN('1'))
+	{
+		CHANGESCENE(GroupScene::Stage01);
+	}
 	if (BUTTONDOWN(VK_SPACE))
 	{
 		CAMERA->FadeOut(0.25f);
 		SOUND->Play(ClickSound, 0.1f, false);
-		DELAYCHANGESCENE(GroupScene::Stage01, 0.25f);
+		DELAYCHANGESCENE(GroupScene::Opne, 0.25f);
 	}
 }
 

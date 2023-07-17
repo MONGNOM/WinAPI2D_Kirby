@@ -286,6 +286,10 @@ void CBossMonster::WalkState()
 {
 	if (dizzy)
 	{
+		if (WalkSound != nullptr)
+		{
+			SOUND->Pause(WalkSound);
+		}
 		BossEffect();
 		m_state = State::Dizzy;
 	}
@@ -699,7 +703,7 @@ void CBossMonster::MakeStar()
 		star->SetPos(m_vecPos.x + 150, m_vecPos.y + 70);
 	}
 	ADDOBJECT(star);
-	//bossAttack = true; 
+	bossAttack = true; 
 
 }
 

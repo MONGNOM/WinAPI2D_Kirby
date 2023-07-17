@@ -159,6 +159,7 @@
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CDoor.h" />
     <ClInclude Include="CEffect.h" />
+    <ClInclude Include="CEndingStage.h" />
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CGameManager.h" />
     <ClInclude Include="CGameObject.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="CNomalKirby.h" />
     <ClInclude Include="CMissile.h" />
     <ClInclude Include="CMonster.h" />
+    <ClInclude Include="COpenScene.h" />
     <ClInclude Include="CPanel.h" />
     <ClInclude Include="CPathManager.h" />
     <ClInclude Include="CPersimmon.h" />
@@ -196,6 +198,7 @@
     <ClInclude Include="CResourceManager.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneManager.h" />
+    <ClInclude Include="CSceneOpen.h" />
     <ClInclude Include="CSceneStage01.h" />
     <ClInclude Include="CSceneState02.h" />
     <ClInclude Include="CSceneTileTool.h" />
@@ -215,6 +218,7 @@
     <ClInclude Include="CUI.h" />
     <ClInclude Include="CUIManager.h" />
     <ClInclude Include="CWallTile.h" />
+    <ClInclude Include="EndingScene.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="CKirby.h" />
     <ClInclude Include="Logger.h" />
@@ -245,6 +249,7 @@
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CDoor.cpp" />
     <ClCompile Include="CEffect.cpp" />
+    <ClCompile Include="CEndingStage.cpp" />
     <ClCompile Include="CEventManager.cpp" />
     <ClCompile Include="CGameManager.cpp" />
     <ClCompile Include="CGameObject.cpp" />
@@ -271,6 +276,7 @@
     <ClCompile Include="CNomalKirby.cpp" />
     <ClCompile Include="CMissile.cpp" />
     <ClCompile Include="CMonster.cpp" />
+    <ClCompile Include="COpenScene.cpp" />
     <ClCompile Include="CPanel.cpp" />
     <ClCompile Include="CPathManager.cpp" />
     <ClCompile Include="CPersimmon.cpp" />
@@ -282,6 +288,7 @@
     <ClCompile Include="CResourceManager.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CSceneManager.cpp" />
+    <ClCompile Include="CSceneOpen.cpp" />
     <ClCompile Include="CSceneStage01.cpp" />
     <ClCompile Include="CSceneState02.cpp" />
     <ClCompile Include="CSceneTileTool.cpp" />
@@ -302,6 +309,7 @@
     <ClCompile Include="CUIManager.cpp" />
     <ClCompile Include="CKirby.cpp" />
     <ClCompile Include="CWallTile.cpp" />
+    <ClCompile Include="EndingScene.cpp" />
     <ClCompile Include="WinAPI.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -30,7 +30,6 @@ CSceneState02::CSceneState02()
 	pkirby = nullptr;
 	bossMonster = nullptr;
 	BossBGMSound = RESOURCE->LoadSound(L"BossMapSound", L"Sound\\BossBgm.mp3");
-	ClickSound = RESOURCE->LoadSound(L"BossClickSound", L"Sound\\Click.wav");
 	bossDeathBackGround = nullptr;
 
 }
@@ -46,9 +45,6 @@ void CSceneState02::Init()
 
 void CSceneState02::Enter()
 {
-
-
-	
 
 	SOUND->Play(BossBGMSound, 0.1f, true);
 
@@ -114,11 +110,11 @@ void CSceneState02::Update()
 	}
 		Logger::Debug(to_wstring(bossMonster->bossAttack));
 
-	if (BUTTONDOWN(VK_ESCAPE))
+
+	if (bossMonster->bossDeath)
 	{
-		CAMERA->FadeOut(0.25f);
-		DELAYCHANGESCENE(GroupScene::Title, 0.25f);
-		SOUND->Play(ClickSound, 0.1f, false);
+		CAMERA->FadeOut(0.7f);
+		DELAYCHANGESCENE(GroupScene::End, 2.5f);
 	}
 
 }

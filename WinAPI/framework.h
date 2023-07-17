@@ -25,7 +25,9 @@
 #include <cassert>
 #include <queue>
 #include <stack>
+#include <vector>
 
+#include <iostream>
 using namespace std;
 
 // Direct2D

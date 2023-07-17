@@ -5,6 +5,7 @@
 #include "CSwordKirby.h"
 #include "CBossMonster.h"
 #include "CBossDeathBackGround.h"
+#include "EndingScene.h"
 
 class Image;
 class Animaotr;
@@ -24,7 +25,6 @@ private:
 	CSound* BossBGMSound;
 	CSound* ClickSound;
 	CBossDeathBackGround* bossDeathBackGround;
-
 
 private:
 	void Init()		override;
