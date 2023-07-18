@@ -20,6 +20,7 @@ CBasicMonster::CBasicMonster()
 	m_pDieImage = nullptr;
 	m_pAnimator = nullptr;
 	m_pIceDieImage = nullptr;
+	m_vecLookDir = Vector(-1, 0);
 
 	hp = 2;
 }

@@ -22,6 +22,8 @@ CGameManager::CGameManager()
 	monsterhpnotDown = false;
 	monsterhitTime = 0;
 
+	m_bIsDebugMode = false;
+
 	BossHp = 11;
 	maxHp = 5;
 	curHp = maxHp;
@@ -40,7 +42,10 @@ void CGameManager::Init()
 
 void CGameManager::Update()
 {
-
+	if (BUTTONDOWN(VK_F3))
+	{
+		m_bIsDebugMode = !m_bIsDebugMode;
+	}
 
 	if (PlayerHit == true)
 	{

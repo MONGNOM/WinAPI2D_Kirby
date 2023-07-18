@@ -14,6 +14,8 @@ public:
 
 	float attackTimer;
 	CSound* DropSound;
+	CSound* swordSound;
+	CSound* swordAttackingSound;
 
 
 private:

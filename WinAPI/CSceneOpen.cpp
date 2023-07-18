@@ -21,7 +21,6 @@ CSceneOpen::~CSceneOpen()
 
 void CSceneOpen::Init()
 {
-
 	m_queOpenImage.push(OpenImage1);
 	m_queOpenImage.push(OpenImage2);
 	m_queOpenImage.push(OpenImage3);

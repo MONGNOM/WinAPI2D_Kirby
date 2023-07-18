@@ -50,25 +50,38 @@ void CSceneStage01::Enter()
 {
 	SOUND->Play(Stage1Sound, 0.1f, true);
 	pkirby = new CNomalKirby();
-	pkirby->SetPos(100, 300);
+	pkirby->SetPos(2750, 400);
 	AddGameObject(pkirby);
 
 	pBasicMonster = new CBasicMonster();
-	pBasicMonster->SetPos(400, 300);
+	pBasicMonster->SetPos(600, 400);
 	AddGameObject(pBasicMonster);
 
+	CBasicMonster* pBasicMonster1 = new CBasicMonster();
+	pBasicMonster1->SetPos(1500, 400);
+	AddGameObject(pBasicMonster1);
+
+	CIceMonster* iceMonster1 = new CIceMonster();
+	iceMonster1->SetPos(900, 400);
+	AddGameObject(iceMonster1);
+
+	CSwordMonster* swordMonster1 = new CSwordMonster();
+	swordMonster1->SetPos(2650, 300);
+	AddGameObject(swordMonster1);
+
 	iceMonster = new CIceMonster();
-	iceMonster->SetPos(500, 300);
+	iceMonster->SetPos(3200, 400);
 	AddGameObject(iceMonster);
 
+	swordMonster = new CSwordMonster();
+	swordMonster->SetPos(2000, 300);
+	AddGameObject(swordMonster);
+	
 	CDoor* door = new CDoor();
 	door->SetPos(3115, 355); 
 	AddGameObject(door);
 
 
-	swordMonster = new CSwordMonster();
-	swordMonster->SetPos(800, 200);
-	AddGameObject(swordMonster);
 
 	CCameraController* pCamController = new CCameraController;
 	AddGameObject(pCamController);
@@ -128,6 +141,9 @@ void CSceneStage01::Update()
 		CAMERA->FadeOut(0.25f);
 		DELAYCHANGESCENE(GroupScene::Stage02, 0.25f);
 	}
+
+	
+
 }
 
 void CSceneStage01::Render()

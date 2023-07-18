@@ -32,6 +32,7 @@ public:
 	bool iceicon;
 	bool swordicon;
 
+	bool m_bIsDebugMode;
 
 	int BossHp;
 	float maxHp;

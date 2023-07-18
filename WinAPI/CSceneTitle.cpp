@@ -32,6 +32,13 @@ void CSceneTitle::Enter()
 	CImageObject* Title = new CImageObject;
 	Title->SetImage(RESOURCE->LoadImg(L"Title", L"Image\\Title.bmp"));
 	AddGameObject(Title);
+
+	CImageObject* press = new CImageObject;
+	press->SetImage(RESOURCE->LoadImg(L"font", L"Image\\font-2.png"));
+	press->SetPos(250, 425);
+	AddGameObject(press);
+
+
 }
 
 void CSceneTitle::Update()
@@ -44,7 +51,7 @@ void CSceneTitle::Update()
 	{
 		CHANGESCENE(GroupScene::Stage01);
 	}
-	if (BUTTONDOWN(VK_SPACE))
+	if (BUTTONDOWN(VK_RETURN))
 	{
 		CAMERA->FadeOut(0.25f);
 		SOUND->Play(ClickSound, 0.1f, false);
@@ -54,13 +61,7 @@ void CSceneTitle::Update()
 
 void CSceneTitle::Render()
 {
-	RENDER->Text(L"press space to start",
-		WINSIZEX * 0.5f - 100,
-		WINSIZEY * 0.5f - 10,
-		WINSIZEX * 0.5f + 100,
-		WINSIZEY * 0.5f + 295,
-		Color(0, 0, 0, 1.f),
-		20.f);
+	
 }
 
 void CSceneTitle::Exit()

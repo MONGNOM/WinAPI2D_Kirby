@@ -95,6 +95,16 @@ void CMonster::OnCollisionEnter(CCollider* pOtherCollider)
 	{
 		m_groundCounter++;
 		m_groundchecker = true;
+
+		CTile* wall = (CTile*)pOtherCollider->GetOwner();
+		if (wall->GetPos().x >= m_vecPos.x && wall->GetPos().y <= m_vecPos.y)
+		{
+			m_vecLookDir.x = -1;
+		}
+		else if (wall->GetPos().x <= m_vecPos.x && wall->GetPos().y <= m_vecPos.y)
+		{
+			m_vecLookDir.x = 1;
+		}
 	}
 
 	if (pOtherCollider->GetObjName() == L"¹«±â")
@@ -154,10 +164,7 @@ void CMonster::OnCollisionStay(CCollider* pOtherCollider)
 		}
 		GAME->monsterHit = true;
 	}
-	else
-	{
-		//iceDie = false;
-	}
+
 }
 
 void CMonster::OnCollisionExit(CCollider* pOtherCollider)

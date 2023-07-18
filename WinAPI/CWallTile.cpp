@@ -11,6 +11,7 @@ CWallTile::CWallTile()
 	m_vecScale = Vector(64, 80);
 	m_layer = Layer::Wall;
 	m_colDir = CollisionDir::None;
+	m_strName = L"º®µ¹";
 	m_offSet = 0.25f;
 }
 
