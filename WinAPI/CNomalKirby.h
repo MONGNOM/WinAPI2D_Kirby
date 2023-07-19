@@ -95,6 +95,7 @@ private:
 
 	void AnimatorUpdate();
 
+	void OnCollisionStay(CCollider* pOtherCollider) override;
 	void OnCollisionEnter(CCollider* pOtherCollider) override;
 
 

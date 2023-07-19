@@ -12,6 +12,7 @@
 
 CSwordKirby::CSwordKirby()
 {
+	GAME->PlayerHit = true;
 	if (GAME->formChange)
 		m_state = State::ChangeForm;
 	else
@@ -754,6 +755,9 @@ void CSwordKirby::DownJumpAttackState()
 
 void CSwordKirby::AttackingState()
 {
+	attackTimer += DT;
+	Logger::Debug(to_wstring(attackTimer));
+
 	if (m_pSword == nullptr)
 	{
 		AttackCollider(Vector(50, 0), Vector(90, 90));
@@ -767,11 +771,11 @@ void CSwordKirby::AttackingState()
 			m_pSword = nullptr;
 		}
 	}
-	else if (attackTimer > 0.4f)
+	if (attackTimer > 0.4f)
 	{
 		AttackCollider(Vector(50, 0), Vector(90, 90));
 	}
-	else if (attackTimer > 0.7f)
+	if (attackTimer > 0.7f)
 	{
 		if (m_pSword != nullptr)
 		{
@@ -779,19 +783,9 @@ void CSwordKirby::AttackingState()
 			m_pSword = nullptr;
 		}
 	}
-	else if (attackTimer > 0.8f)
+	if (attackTimer > 0.8f)
 	{
 		AttackCollider(Vector(50, 0), Vector(90, 90));
-	}
-
-	attackTimer += DT;
-	if (m_vecLookDir.x == 1)
-	{
-		swordkirbystate = L"RAttacking";
-	}
-	if (m_vecLookDir.x == -1)
-	{
-		swordkirbystate = L"LAttacking";
 	}
 	if (attackTimer > 1.f)
 	{
@@ -802,6 +796,16 @@ void CSwordKirby::AttackingState()
 		}
 		attackTimer = 0;
 		m_state = State::Idle;
+	}
+
+	
+	if (m_vecLookDir.x == 1)
+	{
+		swordkirbystate = L"RAttacking";
+	}
+	if (m_vecLookDir.x == -1)
+	{
+		swordkirbystate = L"LAttacking";
 	}
 	if (m_groundchecker == false)
 	{

@@ -2,6 +2,7 @@
 #include "CBossMonster.h"
 #include "CBossHp.h"
 #include "CGameManager.h"
+#include "CNomalKirby.h"
 
 CBossMonster::CBossMonster()
 {
@@ -26,6 +27,7 @@ CBossMonster::CBossMonster()
 	basicAttckTimer = 0;
 	bossAttack = false;
 	jumpAttackTimer = 0;
+	bosscameraTimer = 0;
 }
 
 CBossMonster::~CBossMonster()
@@ -166,6 +168,44 @@ void CBossMonster::Render()
 }
 
 void CBossMonster::Release()
+{
+}
+
+void CBossMonster::OnCollisionEnter(CCollider* pOtherCollider)
+{
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Wall)
+	{
+		m_groundCounter++;
+		m_groundchecker = true;
+
+		CTile* wall = (CTile*)pOtherCollider->GetOwner();
+		if (wall->GetPos().x >= m_vecPos.x && wall->GetPos().y <= m_vecPos.y)
+		{
+			m_vecLookDir.x = -1;
+		}
+		else if (wall->GetPos().x <= m_vecPos.x && wall->GetPos().y <= m_vecPos.y)
+		{
+			m_vecLookDir.x = 1;
+		}
+	}
+
+	if (pOtherCollider->GetObjName() == L"¹«±â")
+	{
+		CKirbyWeapon* pWeapon = (CKirbyWeapon*)pOtherCollider->GetOwner();
+
+		if (GAME->monsterhpnotDown == true)
+		{
+			hp -= 0;
+		}
+		else
+		{
+			TakeDamage(pWeapon->damage);
+		}
+		GAME->monsterHit = true;
+	}
+}
+
+void CBossMonster::OnCollisionStay(CCollider* pOtherCollider)
 {
 }
 

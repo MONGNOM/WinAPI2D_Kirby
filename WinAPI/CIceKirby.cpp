@@ -6,6 +6,8 @@
 
 CIceKirby::CIceKirby()
 {
+	GAME->PlayerHit = true;
+
 	attackTimer = 0;
 	if (GAME->formChange)
 		m_state = State::ChangeForm;

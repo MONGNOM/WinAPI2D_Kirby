@@ -50,7 +50,7 @@ void CSceneStage01::Enter()
 {
 	SOUND->Play(Stage1Sound, 0.1f, true);
 	pkirby = new CNomalKirby();
-	pkirby->SetPos(2750, 400);
+	pkirby->SetPos(100, 400);
 	AddGameObject(pkirby);
 
 	pBasicMonster = new CBasicMonster();
@@ -66,11 +66,11 @@ void CSceneStage01::Enter()
 	AddGameObject(iceMonster1);
 
 	CSwordMonster* swordMonster1 = new CSwordMonster();
-	swordMonster1->SetPos(2650, 300);
+	swordMonster1->SetPos(2650, 400);
 	AddGameObject(swordMonster1);
 
 	iceMonster = new CIceMonster();
-	iceMonster->SetPos(3200, 400);
+	iceMonster->SetPos(3100, 400);
 	AddGameObject(iceMonster);
 
 	swordMonster = new CSwordMonster();

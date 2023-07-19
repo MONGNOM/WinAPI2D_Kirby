@@ -165,6 +165,19 @@ void CMonster::OnCollisionStay(CCollider* pOtherCollider)
 		GAME->monsterHit = true;
 	}
 
+	if (pOtherCollider->GetObjName() == L"일반커비")
+	{
+		CNomalKirby* normalKirby = (CNomalKirby*)pOtherCollider->GetOwner();
+		if (normalKirby->eat)
+		{
+			DELETEOBJECT(this);
+			DELETEOBJECT(collider);
+			SOUND->Play(DeathSound, 0.1f, false);
+			normalKirby->eating = true;
+		}
+
+	}
+
 }
 
 void CMonster::OnCollisionExit(CCollider* pOtherCollider)

@@ -921,6 +921,22 @@ void CNomalKirby::SwordirbyChange()
 	
 }
 
+void CNomalKirby::OnCollisionStay(CCollider* pOtherCollider)
+{
+	if (pOtherCollider->GetObjName() == L"얼음몬스터" && eat)
+	{
+		ice = true;
+		GAME->formChange = true;
+
+	}
+	if (pOtherCollider->GetObjName() == L"칼몬스터" && eat)
+	{
+		sword = true;
+		GAME->formChange = true;
+
+	}
+}
+
 void CNomalKirby::OnCollisionEnter(CCollider* pOtherCollider)
 {
 	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Wall)
