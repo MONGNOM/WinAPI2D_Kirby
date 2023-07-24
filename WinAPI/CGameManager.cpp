@@ -25,8 +25,11 @@ CGameManager::CGameManager()
 	m_bIsDebugMode = false;
 
 	BossHp = 11;
-	maxHp = 5;
+	Bosscurhp = BossHp;
+
+	maxHp = 20;
 	curHp = maxHp;
+
 	playerPos = Vector(0, 0);
 	invincible = 0;
 	playerLoockDirX = 0;

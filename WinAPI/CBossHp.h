@@ -7,7 +7,8 @@ public:
 	virtual~CBossHp();
 
 private:
-	CImage* HpImage;
+	CImage* m_pBossGaugeHpImage;
+	CImage* m_pBossFrameHpImage;
 public:
 
 	void OnMouseEnter();

@@ -151,6 +151,11 @@ void CNomalKirby::Update()
 	GAME->iceicon = iceicon;
 	GAME->swordicon = swordicon;
 
+	if (BUTTONDOWN('5'))
+	{
+		playerHp -= 1;
+	}
+	
 	CKirby::Update();
 	switch (m_state)
 	{

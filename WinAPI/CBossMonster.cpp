@@ -15,7 +15,7 @@ CBossMonster::CBossMonster()
 	jumpDown = true;
 	m_vecLookDir = Vector(-1, 0);
 	m_state = State::Fear;
-	hp = GAME->BossHp;
+	hp = GAME->Bosscurhp;
 	m_jumpSpeed = 0.f;
 	JumpSound = RESOURCE->LoadSound(L"BossJumpSound", L"Sound\\BossJump.wav");
 	AttackSound = RESOURCE->LoadSound(L"BossAttackSound", L"Sound\\BossAttack.wav");
@@ -90,7 +90,7 @@ void CBossMonster::Update()
 { 
 	m_jumpSpeed -= m_gravity * DT;
 
-	GAME->BossHp = hp;
+	GAME->Bosscurhp = hp;
 	collider->SetPos(m_vecPos);
 
 	

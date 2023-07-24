@@ -6,7 +6,8 @@ public:
 	CKirbyHp();
 	virtual~CKirbyHp();
 private:
-	CImage* hpImage;
+	CImage* GaugehpImage;
+	CImage* FramehpImage;
 
 	void OnMouseEnter();
 	void OnMouseOver();
