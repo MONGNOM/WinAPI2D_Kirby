@@ -65,7 +65,6 @@ private:
 	void Release() override;
 
 	void OnCollisionEnter(CCollider* pOtherCollider) override;
-	void OnCollisionStay(CCollider* pOtherCollider) override;
 
 
 	void AnimatorUpdate();

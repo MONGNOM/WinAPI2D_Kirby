@@ -24,7 +24,7 @@ CGameManager::CGameManager()
 
 	m_bIsDebugMode = false;
 
-	BossHp = 11;
+	BossHp = 10;
 	Bosscurhp = BossHp;
 
 	maxHp = 20;

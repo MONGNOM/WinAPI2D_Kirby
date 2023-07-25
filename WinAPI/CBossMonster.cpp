@@ -93,6 +93,7 @@ void CBossMonster::Update()
 	GAME->Bosscurhp = hp;
 	collider->SetPos(m_vecPos);
 
+	Logger::Debug(to_wstring(hp));
 	
 	CMonster::Update();
 	switch (m_state)
@@ -134,7 +135,7 @@ void CBossMonster::Update()
 	
 	if (BUTTONDOWN('1'))
 	{
-		hp = 0;
+		hp = 2;
 	}
 	if (BUTTONDOWN('2'))
 	{
@@ -205,9 +206,7 @@ void CBossMonster::OnCollisionEnter(CCollider* pOtherCollider)
 	}
 }
 
-void CBossMonster::OnCollisionStay(CCollider* pOtherCollider)
-{
-}
+
 
 void CBossMonster::BossEffect()
 {

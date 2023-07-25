@@ -161,21 +161,13 @@ void CSwordMonster::WalkState()
 	{
 		swordstate = L"WalkR";
 		m_vecPos.x += 50 * DT;
-		if (walkTimer > 5.f)
-		{
-			walkTimer = 0;
-			m_state = State::Attack;
-		}
+		
 	}
 	if (m_vecLookDir.x == -1)
 	{
 		swordstate = L"WalkL";
 		m_vecPos.x -= 50 * DT;
-		if (walkTimer > 5.f)
-		{
-			walkTimer = 0;
-			m_state = State::Attack;
-		}
+		
 	}
 }
 

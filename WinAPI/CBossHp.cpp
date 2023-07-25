@@ -48,9 +48,9 @@ void CBossHp::Update()
 
 void CBossHp::Render()
 {
-	RENDER->Image(m_pBossFrameHpImage, m_vecRenderPos.x, m_vecRenderPos.y, m_vecRenderPos.x + 200, m_vecRenderPos.y + 64);
+	RENDER->Image(m_pBossFrameHpImage, m_vecRenderPos.x-25, m_vecRenderPos.y, m_vecRenderPos.x + 230, m_vecRenderPos.y + 64);
 	float hpWidth = (m_vecRenderPos.x + 200 - m_vecRenderPos.x) *   GAME->Bosscurhp / GAME->BossHp;
-	RENDER->FrameImage(m_pBossGaugeHpImage, m_vecRenderPos.x - 23, m_vecRenderPos.y - 15 , m_vecRenderPos.x + hpWidth -22, m_vecRenderPos.y + 49, 0, 0, hpWidth, 64);
+	RENDER->FrameImage(m_pBossGaugeHpImage, m_vecRenderPos.x , m_vecRenderPos.y +25  , m_vecRenderPos.x + hpWidth , m_vecRenderPos.y +50, 0, 0, hpWidth, 64);
 	
 	
 }

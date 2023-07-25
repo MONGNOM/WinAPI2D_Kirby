@@ -34,8 +34,8 @@ public:
 
 	bool m_bIsDebugMode;
 
-	int BossHp;
-	int Bosscurhp;
+	float BossHp;
+	float Bosscurhp;
 	float maxHp;
 	float curHp;
 	float playerLoockDirX;

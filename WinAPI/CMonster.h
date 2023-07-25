@@ -18,7 +18,7 @@ public:
 	float idleTimer;
 	float attackTimer;
 	
-	int hp;
+	float hp;
 	bool bosseffect;
 	bool dizzy;
 	bool m_groundchecker;
