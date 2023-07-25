@@ -817,6 +817,7 @@ void CSwordKirby::TakeOffState()
 {
 	if (effect != nullptr)
 		DELETEOBJECT(effect);
+	GAME->HpNotDown = false;
 	changestar = new CChangeFormStar();
 	changestar->SetPos(m_vecPos);
 	ADDOBJECT(changestar);
