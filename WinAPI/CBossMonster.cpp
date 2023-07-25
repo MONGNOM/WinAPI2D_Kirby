@@ -206,6 +206,27 @@ void CBossMonster::OnCollisionEnter(CCollider* pOtherCollider)
 	}
 }
 
+void CBossMonster::OnCollisionStay(CCollider* pOtherCollider)
+{
+	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Ice)
+	{
+		iceDie = true;
+		CKirbyWeapon* pWeapon = (CKirbyWeapon*)pOtherCollider->GetOwner();
+		if (GAME->monsterhpnotDown == true)
+		{
+			hp -= 0;
+		}
+		else
+		{
+			TakeDamage(pWeapon->damage);
+		}
+		GAME->monsterHit = true;
+	}
+
+	
+	
+}
+
 
 
 void CBossMonster::BossEffect()

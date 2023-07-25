@@ -42,7 +42,7 @@ void CMeat::OnCollisionEnter(CCollider* pOtherCollider)
 	if (pOtherCollider->GetOwner()->GetLayer() == Layer::Player)
 	{
 		CKirby* Kirby = (CKirby*)pOtherCollider->GetOwner();
-		if (Kirby->playerHp + 1 > 5)
+		if (Kirby->playerHp + 1 > 30)
 			Kirby->playerHp = GAME->maxHp;
 		else
 			Kirby->playerHp += 1;

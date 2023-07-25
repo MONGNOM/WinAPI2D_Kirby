@@ -597,8 +597,6 @@ void CIceKirby::DeleteAttackArea()
 
 void CIceKirby::TakeOffState()
 {
-	GAME->HpNotDown = false;
-
 	if (effect != nullptr)
 		DELETEOBJECT(effect);
 	Effect(m_vecPos.x);
