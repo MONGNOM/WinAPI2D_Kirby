@@ -63,7 +63,7 @@ void CIceMonster::Init()
 	m_pAnimator->Play(L"WalkR", false);
 	AddComponent(m_pAnimator);
 	collider->SetColliderScale(200, 100);
-	attackCollider->SetColliderScale(250, 100);
+	attackCollider->SetColliderScale(150, 100);
 	AddCollider(ColliderType::Circle, Vector(20, 20), Vector(0, 10));
 
 }
